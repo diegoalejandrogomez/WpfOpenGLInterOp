@@ -12,3 +12,10 @@
 
 
 // TODO: reference additional headers your program requires here
+#include <string>
+#include <Windows.h>
+#include <gl\glew.h>
+#include <GL\GL.h>
+#include <glm\glm.hpp>
+#include <vector>
+#include "SimpleDebug.h"

@@ -5,6 +5,7 @@
 #include "SimpleEngineTest.h"
 
 #define MAX_LOADSTRING 100
+#include <SimpleEngine.h>
 
 // Global Variables:
 HINSTANCE hInst;                                // current instance
@@ -16,6 +17,9 @@ ATOM                MyRegisterClass(HINSTANCE hInstance);
 BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
+
+
+SimpleEngine * engine = nullptr;
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,
@@ -42,20 +46,30 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     MSG msg;
 
+	
+
     // Main message loop:
-    while (GetMessage(&msg, nullptr, 0, 0))
-    {
-        if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
-        {
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
-        }
+	bool done = false;
+	while (!done)
+	{
+		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
+			if (msg.message == WM_QUIT)				// Have We Received A Quit Message?
+			{
+				done = TRUE;							// If So done=TRUE
+			}
+			if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
+			{
+				TranslateMessage(&msg);
+				DispatchMessage(&msg);
+			}
+		}
+		else {
+			engine->Render(0.0f);
+		}
     }
 
     return (int) msg.wParam;
 }
-
-
 
 //
 //  FUNCTION: MyRegisterClass()
@@ -68,7 +82,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 
     wcex.cbSize = sizeof(WNDCLASSEX);
 
-    wcex.style          = CS_HREDRAW | CS_VREDRAW;
+    wcex.style          = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
     wcex.lpfnWndProc    = WndProc;
     wcex.cbClsExtra     = 0;
     wcex.cbWndExtra     = 0;
@@ -97,8 +111,27 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // Store instance handle in our global variable
 
-   HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
+   DWORD		dwExStyle;				// Window Extended Style
+   DWORD		dwStyle;				// Window Style
+
+   dwExStyle = WS_EX_APPWINDOW | WS_EX_WINDOWEDGE;			// Window Extended Style
+   dwStyle = WS_OVERLAPPEDWINDOW;							// Windows Style
+
+	   // Create The Window
+   HWND hWnd;
+	 if (!(hWnd = CreateWindowEx(dwExStyle,		// Extended Style For The Window
+			szWindowClass,							// Class Name
+		   L"Test",								// Window Title
+		   dwStyle |							// Defined Window Style
+		   WS_CLIPSIBLINGS |					// Required Window Style
+		   WS_CLIPCHILDREN,						// Required Window Style
+		   0, 0,								// Window Position
+		   CW_USEDEFAULT,						// Calculate Window Width
+		   0,									// Calculate Window Height
+		   NULL,								// No Parent Window
+		   NULL,								// No Menu
+		   hInstance,							// Instance
+		   NULL)))								// Dont Pass Anything To WM_CREATE
 
    if (!hWnd)
    {
@@ -107,6 +140,11 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);
+
+   engine = new SimpleEngine();
+   RECT clientArea;
+   GetClientRect(hWnd, &clientArea);
+   engine->InitRenderer(hWnd, clientArea.right- clientArea.left, clientArea.bottom - clientArea.top);
 
    return TRUE;
 }
@@ -142,14 +180,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             }
         }
         break;
-    case WM_PAINT:
-        {
-            PAINTSTRUCT ps;
-            HDC hdc = BeginPaint(hWnd, &ps);
-            // TODO: Add any drawing code that uses hdc here...
-            EndPaint(hWnd, &ps);
-        }
-        break;
+  
     case WM_DESTROY:
         PostQuitMessage(0);
         break;
