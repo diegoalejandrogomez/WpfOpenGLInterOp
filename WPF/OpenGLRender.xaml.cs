@@ -24,13 +24,16 @@ namespace WPF
 
         private readonly System.Windows.Threading.DispatcherTimer updateTimer;
 
-        public OpenGLUserControl OpenGLControl;
+        public bool DrawLine { get; set; }
+
+        public System.Windows.Forms.UserControl OpenGLControl { get; set; }
+
         public int Ticks = 1600;
 
         public OpenGLRender()
         {
             InitializeComponent();
-            OpenGLControl = new WPFOpenGLLib.OpenGLUserControl();
+            OpenGLControl = OpenGLControl == null ? new OpenGLUserControl() : OpenGLControl;
             host.Child = OpenGLControl;
             updateTimer = new System.Windows.Threading.DispatcherTimer();
             updateTimer.Interval = new TimeSpan(Ticks);

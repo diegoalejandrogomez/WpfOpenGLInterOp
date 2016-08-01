@@ -81,6 +81,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Infrastructure\Command.cs" />
+    <Compile Include="ViewModel\DrawViewModel.cs" />
+    <Compile Include="ViewModel\PaintViewModel.cs" />
+    <Compile Include="ViewModel\ToolBarViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
