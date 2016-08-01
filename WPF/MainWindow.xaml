@@ -5,8 +5,37 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        xmlns:oglc="clr-namespace:WPFOpenGLLib;assembly=OpenGLManagedCpp"
+        Title="WPF - OpenGl InterOp" Height="350" Width="525">
     <Grid>
-        
+        <Grid x:Name="panel" Style="{StaticResource Panel}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid x:Name="toolBar" Style="{StaticResource ToolBar}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Button Grid.Row="0" Grid.Column="0">
+                    <Image Name="line" Source="./Resources/Icons/line.png"  Style="{StaticResource ToolIcon}"></Image>
+                </Button>
+                <Button Grid.Row="0" Grid.Column="1">
+                    <Image Name="square" Source="./Resources/Icons/square.png" Style="{StaticResource ToolIcon}"></Image>
+                </Button>
+                
+            </Grid>
+            <Grid x:Name="drawingArea" Grid.Column="1">
+                <local:OpenGLRender></local:OpenGLRender>
+            </Grid>
+        </Grid>
     </Grid>
 </Window>

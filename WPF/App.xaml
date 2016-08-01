@@ -4,6 +4,17 @@
              xmlns:local="clr-namespace:WPF"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <Style x:Key="ToolIcon">
+            <Setter Property="Image.Width" Value="30"></Setter>
+            <Setter Property="Image.Height" Value="30"></Setter>
+            <Setter Property="Image.Margin" Value="2,2,2,2"></Setter>
+        </Style>
+        <Style x:Key="ToolBar">
+            <Setter Property="Grid.Background" Value="LightGray"></Setter>
+            <Setter Property="Grid.Margin" Value="2,2,2,2"></Setter>
+        </Style>
+        <Style x:Key="Panel">
+            <Setter Property="Grid.Margin" Value="2,2,2,2"></Setter>
+        </Style>
     </Application.Resources>
 </Application>
