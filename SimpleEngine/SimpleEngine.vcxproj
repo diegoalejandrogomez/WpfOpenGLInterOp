@@ -132,13 +132,19 @@
     <ClInclude Include="Include\RenderPass.h" />
     <ClInclude Include="Include\SimpleDebug.h" />
     <ClInclude Include="Include\SimpleEngine.h" />
+    <ClInclude Include="Include\SimpleObject.h" />
+    <ClInclude Include="Include\SimpleObjectsRenderPass.h" />
     <ClInclude Include="Include\SimpleRenderer.h" />
+    <ClInclude Include="Include\SimpleScene.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\SimpleEngine.cpp" />
+    <ClCompile Include="Src\SimpleObject.cpp" />
+    <ClCompile Include="Src\SimpleObjectsRenderPass.cpp" />
     <ClCompile Include="Src\SimpleRenderer.cpp" />
+    <ClCompile Include="Src\SimpleScene.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

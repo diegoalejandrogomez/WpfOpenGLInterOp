@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "SimpleRenderer.h"
+#include "SimpleScene.h"
 
 
 SimpleRenderer::SimpleRenderer() {
@@ -21,11 +22,11 @@ SimpleRenderer::~SimpleRenderer() {
 };
 
 
-void SimpleRenderer::Render() {
+void SimpleRenderer::Render(float dt, SimpleScene* scene ) {
 
 	for (auto &pass : _passes) {
 		
-		pass->Render();
+		pass->Render(dt, scene);
 	
 	}
 
@@ -87,6 +88,7 @@ bool SimpleRenderer::InitializeOpenGL(HWND hWnd, int width , int height) {
 
 	SIMPLE_LOG("OPENGL VERSION: %s", (char*)glGetString(GL_VERSION));
 
+	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_defaultRenderBuffer);
 	return true;
 }
 

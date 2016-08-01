@@ -6,7 +6,7 @@ class DebugRenderPass : public RenderPass {
 
 public:
 
-	void Render() {
+	void Render(float dt, SimpleScene* scene) {
 		// Set the color to clear the screen to.
 		glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
 

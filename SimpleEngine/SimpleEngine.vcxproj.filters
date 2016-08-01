@@ -16,6 +16,12 @@
     <Filter Include="Resource Files\Shaders">
       <UniqueIdentifier>{41de487a-b6c0-4c41-acf3-85ecaba343aa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\RenderPasses">
+      <UniqueIdentifier>{5de49a8a-25c1-45a1-a4c0-e8421e9ac226}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\RenderPasses">
+      <UniqueIdentifier>{18e036c6-7834-416f-9a24-15af0b3732bd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -36,11 +42,20 @@
     <ClInclude Include="Include\SimpleDebug.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\DebugRenderPass.h">
+    <ClInclude Include="Include\SimpleScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\RenderPass.h">
+    <ClInclude Include="Include\SimpleObject.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\DebugRenderPass.h">
+      <Filter>Header Files\RenderPasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\RenderPass.h">
+      <Filter>Header Files\RenderPasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\SimpleObjectsRenderPass.h">
+      <Filter>Header Files\RenderPasses</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -52,6 +67,15 @@
     </ClCompile>
     <ClCompile Include="Src\SimpleRenderer.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\SimpleScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\SimpleObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\SimpleObjectsRenderPass.cpp">
+      <Filter>Source Files\RenderPasses</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

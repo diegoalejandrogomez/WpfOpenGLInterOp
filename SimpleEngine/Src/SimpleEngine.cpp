@@ -23,12 +23,14 @@ void SimpleEngine::InitRenderer(HWND hWnd, uint32_t width, uint32_t height) {
 
 void SimpleEngine::Render(float dt) {
 	
-	_renderer->Render();
+	if (_scene != nullptr)
+		_scene->Render(dt);
 
 }
 
-
 void SimpleEngine::Advance(float dt) {
-
+	
+	if (_scene != nullptr)
+		_scene->Advance(dt);
 
 }

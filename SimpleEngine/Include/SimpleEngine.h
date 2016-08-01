@@ -1,10 +1,11 @@
 #pragma once
 #include "SimpleRenderer.h"
+#include "SimpleScene.h"
 
 class SimpleEngine final{
 
 	SimpleRenderer * _renderer = nullptr;
-
+	SimpleScene* _scene = nullptr;
 public:
 
 	SimpleEngine();
