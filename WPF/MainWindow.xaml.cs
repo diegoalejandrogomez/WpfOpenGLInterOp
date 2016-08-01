@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WPF.ViewModel;
 
 namespace WPF
 {
@@ -23,6 +24,7 @@ namespace WPF
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new PaintViewModel();
         }
     }
 }
