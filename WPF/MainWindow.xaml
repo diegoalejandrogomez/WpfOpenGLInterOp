@@ -13,7 +13,7 @@
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Grid x:Name="toolBar" Style="{StaticResource ToolBar}" DataContext="{Binding ToolBar}">
+            <Grid x:Name="toolBar" Style="{StaticResource ToolBar}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"></ColumnDefinition>
                     <ColumnDefinition Width="Auto"></ColumnDefinition>
