@@ -132,6 +132,7 @@
     <ClInclude Include="Include\RenderPass.h" />
     <ClInclude Include="Include\SimpleDebug.h" />
     <ClInclude Include="Include\SimpleEngine.h" />
+    <ClInclude Include="Include\SimpleGameMode.h" />
     <ClInclude Include="Include\SimpleObject.h" />
     <ClInclude Include="Include\SimpleObjectsRenderPass.h" />
     <ClInclude Include="Include\SimpleRenderer.h" />

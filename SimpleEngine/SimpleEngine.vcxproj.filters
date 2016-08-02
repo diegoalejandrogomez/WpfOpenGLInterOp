@@ -16,11 +16,11 @@
     <Filter Include="Resource Files\Shaders">
       <UniqueIdentifier>{41de487a-b6c0-4c41-acf3-85ecaba343aa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\RenderPasses">
-      <UniqueIdentifier>{5de49a8a-25c1-45a1-a4c0-e8421e9ac226}</UniqueIdentifier>
+    <Filter Include="Engine">
+      <UniqueIdentifier>{32f118ce-134b-476e-b59e-71a9dfcf4693}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\RenderPasses">
-      <UniqueIdentifier>{18e036c6-7834-416f-9a24-15af0b3732bd}</UniqueIdentifier>
+    <Filter Include="Engine\RenderPasses">
+      <UniqueIdentifier>{5de49a8a-25c1-45a1-a4c0-e8421e9ac226}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -33,49 +33,52 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\SimpleEngine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\SimpleRenderer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\SimpleDebug.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\SimpleScene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\SimpleObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Include\DebugRenderPass.h">
-      <Filter>Header Files\RenderPasses</Filter>
+      <Filter>Engine\RenderPasses</Filter>
     </ClInclude>
     <ClInclude Include="Include\RenderPass.h">
-      <Filter>Header Files\RenderPasses</Filter>
+      <Filter>Engine\RenderPasses</Filter>
     </ClInclude>
     <ClInclude Include="Include\SimpleObjectsRenderPass.h">
-      <Filter>Header Files\RenderPasses</Filter>
+      <Filter>Engine\RenderPasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\SimpleDebug.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\SimpleEngine.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\SimpleObject.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\SimpleRenderer.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\SimpleScene.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\SimpleGameMode.h">
+      <Filter>Engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Src\SimpleObjectsRenderPass.cpp">
+      <Filter>Engine\RenderPasses</Filter>
+    </ClCompile>
     <ClCompile Include="Src\SimpleEngine.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\SimpleRenderer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\SimpleScene.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="Src\SimpleObject.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Src\SimpleObjectsRenderPass.cpp">
-      <Filter>Source Files\RenderPasses</Filter>
+    <ClCompile Include="Src\SimpleRenderer.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\SimpleScene.cpp">
+      <Filter>Engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

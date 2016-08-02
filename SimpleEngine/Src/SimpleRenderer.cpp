@@ -18,7 +18,6 @@ SimpleRenderer::~SimpleRenderer() {
 		wglDeleteContext(_renderingContext);
 		_renderingContext = nullptr;
 	}
-
 };
 
 

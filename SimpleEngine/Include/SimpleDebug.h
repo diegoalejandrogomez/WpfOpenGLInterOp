@@ -10,6 +10,16 @@
 	f += " -> File: %s:%d";		\
 	sprintf_s(str, f.c_str() , __VA_ARGS__, __FILE__, __LINE__); \
 	OutputDebugStringA(str); 
+
+#define SIMPLE_ASSERT(test)\
+if(! (test) ){					\
+	char str[1024];				\
+	std::string f = #test;		\
+	f += " -> File: %s:%d";		\
+	sprintf_s(str, f.c_str(), __FILE__, __LINE__); \
+	OutputDebugStringA(str);	\
+}			
+
 #else
 #define SIMPLE_LOG(format, ...)
 #endif

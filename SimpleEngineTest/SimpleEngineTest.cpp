@@ -141,10 +141,11 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);
 
-   engine = new SimpleEngine();
+   engine = SimpleEngine::Instance();
    RECT clientArea;
    GetClientRect(hWnd, &clientArea);
    engine->InitRenderer(hWnd, clientArea.right- clientArea.left, clientArea.bottom - clientArea.top);
+   engine->Initialize();
 
    return TRUE;
 }
