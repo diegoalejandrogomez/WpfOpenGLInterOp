@@ -4,8 +4,6 @@
 #include "SimpleGamemode.h"
 
 class SimpleEngine final{
-
-	
 public:
 
 	static SimpleEngine*  Instance()
