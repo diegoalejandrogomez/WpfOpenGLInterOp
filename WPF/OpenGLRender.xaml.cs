@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WPFOpenGLLib;
+using SimpleEngineControls;
+using System.ComponentModel;
 
 namespace WPF
 {
@@ -33,12 +35,17 @@ namespace WPF
         public OpenGLRender()
         {
             InitializeComponent();
-            OpenGLControl = OpenGLControl == null ? new OpenGLUserControl() : OpenGLControl;
-            host.Child = OpenGLControl;
-            updateTimer = new System.Windows.Threading.DispatcherTimer();
-            updateTimer.Interval = new TimeSpan(Ticks);
-            updateTimer.Tick += new EventHandler(UpdateTimer_Tick);
-            updateTimer.Start();
+            // Check for design mode. 
+            if (!(bool)(DesignerProperties.IsInDesignModeProperty.GetMetadata(typeof(DependencyObject)).DefaultValue))
+            {
+                //in Design mode
+                OpenGLControl = OpenGLControl == null ? new SimpleEngineViewerControl() : OpenGLControl;
+                host.Child = OpenGLControl;
+                updateTimer = new System.Windows.Threading.DispatcherTimer();
+                updateTimer.Interval = new TimeSpan(Ticks);
+                updateTimer.Tick += new EventHandler(UpdateTimer_Tick);
+                updateTimer.Start();
+            }
         }
 
         private void UpdateTimer_Tick(object sender, EventArgs e)

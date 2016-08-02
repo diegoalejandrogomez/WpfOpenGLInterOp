@@ -23,4 +23,7 @@ void SimpleEngineViewerControl::OnPaintBackground(PaintEventArgs^ e)  {
 }
 void SimpleEngineViewerControl::OnPaint(PaintEventArgs^ e)  {
 
+	SimpleEngine::Instance()->Advance(0.0f);
+	SimpleEngine::Instance()->Render(0.0f);
+
 }

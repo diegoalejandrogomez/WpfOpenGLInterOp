@@ -6,9 +6,14 @@ using namespace System;
 using namespace System::Windows::Forms;
 
 namespace SimpleEngineControls {
-
-	public ref class Class1 : public UserControl
+	
+	static bool IsInDesignMode()
 	{
-		// TODO: Add your methods for this class here.
-	};
+		if (System::Reflection::Assembly::GetExecutingAssembly()->Location->Contains("VisualStudio"))
+		{
+			return true;
+		}
+		return false;
+	}
+	
 }
