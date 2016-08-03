@@ -27,6 +27,18 @@ namespace WPF.ViewModel
             }
         }
 
+        public string color;
+
+        public string Color
+        {
+            get { return color; }
+            set
+            {
+                color = value;
+                PropertyChanged(this, new PropertyChangedEventArgs("Color"));
+            }
+        }
+
         public bool DrawSquare;
 
         #endregion
