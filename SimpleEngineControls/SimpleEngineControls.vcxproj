@@ -74,7 +74,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)\SimpleEngine\Include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\SimpleEngine\Include;$(SolutionDir)\SimpleEngine\External\glm\;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)\Debug\;$(SolutionDir)\SimpleEngine\External\glew\lib\Release\Win32\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -95,7 +95,8 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>SimpleEngine.lib;opengl32.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <DelayLoadDLLs>glew32.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+      <DelayLoadDLLs>%(DelayLoadDLLs)</DelayLoadDLLs>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

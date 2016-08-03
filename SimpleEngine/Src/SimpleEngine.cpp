@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "SimpleEngine.h"
 #include "DebugRenderPass.h"
-
+#include "SimpleObjectsRenderPass.h"
 
 void SimpleEngine::InitRenderer(HWND hWnd, uint32_t width, uint32_t height) {
 	
@@ -9,6 +9,7 @@ void SimpleEngine::InitRenderer(HWND hWnd, uint32_t width, uint32_t height) {
 	_renderer->InitializeOpenGL(hWnd, width, height);
 
 	_renderer->AddPass(new DebugRenderPass());
+	_renderer->AddPass(new SimpleObjectsRenderPass());
 }
 
 void SimpleEngine::SetGameMode(SimpleGameMode* _newGameMode) {
@@ -61,6 +62,7 @@ void SimpleEngine::Initialize() {
 
 	//Loads a default scene
 	CreateScene();
+	_scene->GetCamera()->SetViewportSize((float)_renderer->GetWidth(), (float)_renderer->GetHeight());
 
 }
 void SimpleEngine::Shutdown() {

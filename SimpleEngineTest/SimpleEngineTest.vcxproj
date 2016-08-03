@@ -71,7 +71,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>..\SimpleEngine\Include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\SimpleEngine\External\glm\;..\SimpleEngine\Include;$(IncludePath)</IncludePath>
     <LibraryPath>..\SimpleEngine\External\glew\lib\Release\Win32;..\Debug\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

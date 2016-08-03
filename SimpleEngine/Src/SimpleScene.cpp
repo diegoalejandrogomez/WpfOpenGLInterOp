@@ -1,11 +1,15 @@
 #include "stdafx.h"
 #include "SimpleScene.h"
 
+
+SimpleScene::SimpleScene() {
+	_camera = new SimpleCamera2D();
+}
+
 void SimpleScene::Render(float dt) {
 
 	for (auto &entity : _entities)
 		entity->Render(dt);
-
 }
 
 

@@ -88,6 +88,9 @@ bool SimpleRenderer::InitializeOpenGL(HWND hWnd, int width , int height) {
 	SIMPLE_LOG("OPENGL VERSION: %s", (char*)glGetString(GL_VERSION));
 
 	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_defaultRenderBuffer);
+
+	_LoadDefaultShaders();
+
 	return true;
 }
 
@@ -211,6 +214,41 @@ bool SimpleRenderer::_InitializeExtensions() {
 	DestroyWindow(hwnd);
 	hwnd = nullptr;
 
+
+	return true;
+
+}
+
+
+void SimpleRenderer::ResizeWindow(int width, int height) {
+	
+	_width = width;
+	_height = height;
+}
+
+bool SimpleRenderer::CreateProgram(std::string name, std::string vertexShaderPath, std::string fragmentShaderPath) {
+	
+	//Don't reload if it already exists
+	if (_programs.find(name) == _programs.end()) {
+		SimpleShaderProgram* program = new SimpleShaderProgram();
+		if (!program->CompileFromFile(vertexShaderPath, fragmentShaderPath)) {
+			SIMPLE_LOG("Coulnd't compile shader %s",name );
+			return false;
+		}
+		if (!program->Link()) {
+			SIMPLE_LOG("Coulnd't link shader %s", name);
+			return false;
+		}
+	}
+
+	return true;
+}
+
+
+bool SimpleRenderer::_LoadDefaultShaders() {
+
+	if (!CreateProgram("VertexColor", "./shaders/SimpleColorShader.vert", "./shaders/SimpleColorShader.frag"))
+		return false;
 
 	return true;
 

@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Resource Files\Shaders">
-      <UniqueIdentifier>{41de487a-b6c0-4c41-acf3-85ecaba343aa}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine">
       <UniqueIdentifier>{32f118ce-134b-476e-b59e-71a9dfcf4693}</UniqueIdentifier>
     </Filter>
@@ -60,6 +57,15 @@
     <ClInclude Include="Include\SimpleGameMode.h">
       <Filter>Engine</Filter>
     </ClInclude>
+    <ClInclude Include="Include\SimpleCamera2D.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\SimpleShaderProgram.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -80,13 +86,24 @@
     <ClCompile Include="Src\SimpleScene.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
+    <ClCompile Include="Src\SimpleCamera2D.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\SimpleShaderProgram.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Src\SimpleColorShader.vert">
-      <Filter>Resource Files\Shaders</Filter>
+    <None Include="Src\shaders\SimpleColorShader.frag">
+      <Filter>Resource Files</Filter>
     </None>
-    <None Include="Src\SimpleColorShader.frag">
-      <Filter>Resource Files\Shaders</Filter>
+    <None Include="Src\shaders\SimpleColorShader.vert">
+      <Filter>Resource Files</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

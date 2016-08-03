@@ -7,7 +7,7 @@
 #define SIMPLE_LOG(format, ...) \
 	char str[1024];				\
 	std::string f = format;		\
-	f += " -> File: %s:%d";		\
+	f += " -> File: %s:%d \n";		\
 	sprintf_s(str, f.c_str() , __VA_ARGS__, __FILE__, __LINE__); \
 	OutputDebugStringA(str); 
 
