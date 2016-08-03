@@ -24,7 +24,6 @@ void SimpleEngineViewerControl::OnSizeChanged(System::Object ^sender, System::Ev
 
 void SimpleEngineViewerControl::OnPaintBackground(PaintEventArgs^ e)  {
 
-
 }
 void SimpleEngineViewerControl::OnPaint(PaintEventArgs^ e)  {
 
