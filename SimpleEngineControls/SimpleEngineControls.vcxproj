@@ -138,6 +138,9 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BaseControl.h" />
+    <ClInclude Include="CoordinatesControl.h" />
+    <ClInclude Include="LineControl.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="SimpleEngineControls.h" />
     <ClInclude Include="SimpleEngineViewerControl.h" />
@@ -145,6 +148,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp" />
+    <ClCompile Include="BaseControl.cpp" />
+    <ClCompile Include="CoordinatesControl.cpp" />
+    <ClCompile Include="LineControl.cpp" />
     <ClCompile Include="SimpleEngineControls.cpp" />
     <ClCompile Include="SimpleEngineViewerControl.cpp" />
     <ClCompile Include="Stdafx.cpp">
