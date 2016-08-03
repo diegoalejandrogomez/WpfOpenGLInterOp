@@ -70,14 +70,14 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(ProjectDir);./External/glm/;./External/glew/include;./Include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir);./External/glm/;./External/glew/;./Include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>GLEW_STATIC;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -86,8 +86,7 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Lib>
     <PostBuildEvent>
-      <Command>xcopy /E /Y "$(ProjectDir)Src\shaders" "$(TargetDir)shaders\"
-xcopy /Y  "$(ProjectDir)External\glew\bin\Release\Win32\glew32.dll" "$(TargetDir)"</Command>
+      <Command>xcopy /E /Y "$(ProjectDir)Src\shaders" "$(TargetDir)shaders\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -151,6 +150,7 @@ xcopy /Y  "$(ProjectDir)External\glew\bin\Release\Win32\glew32.dll" "$(TargetDir
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="External\glew\glew.cpp" />
     <ClCompile Include="Src\SimpleCamera2D.cpp" />
     <ClCompile Include="Src\SimpleEngine.cpp" />
     <ClCompile Include="Src\SimpleObject.cpp" />

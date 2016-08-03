@@ -25,6 +25,7 @@ public:
 	void SetGameMode(SimpleGameMode* _newGameMode);
 	void CreateScene();
 
+	SimpleRenderer* GetRenderer() { return _renderer; };
 
 	//Used by external event loops
 	void Render(float dt);

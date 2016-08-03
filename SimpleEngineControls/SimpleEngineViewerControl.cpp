@@ -1,6 +1,7 @@
 #include "Stdafx.h"
 #include "SimpleEngineViewerControl.h"
 #include <SimpleEngine.h>
+#include <SimpleRenderer.h>
 
 using namespace SimpleEngineControls;
 
@@ -14,6 +15,10 @@ void SimpleEngineViewerControl::OnLoad(System::Object ^sender, System::EventArgs
 
 void SimpleEngineViewerControl::OnSizeChanged(System::Object ^sender, System::EventArgs ^e){
 	
+	SimpleEngine* eng = SimpleEngine::Instance();
+	SimpleRenderer* render = eng->GetRenderer();
+	if (render != nullptr)
+		render->ResizeWindow(Width, Height);
 }
 
 

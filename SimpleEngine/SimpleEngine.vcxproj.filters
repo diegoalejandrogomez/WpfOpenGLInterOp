@@ -19,6 +19,9 @@
     <Filter Include="Engine\RenderPasses">
       <UniqueIdentifier>{5de49a8a-25c1-45a1-a4c0-e8421e9ac226}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Glew">
+      <UniqueIdentifier>{eb219a0c-dbb1-48d1-9e23-91533b3f1ddf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -91,6 +94,9 @@
     </ClCompile>
     <ClCompile Include="Src\SimpleShaderProgram.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="External\glew\glew.cpp">
+      <Filter>Engine\Glew</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
