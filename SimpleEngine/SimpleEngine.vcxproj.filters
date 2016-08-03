@@ -21,6 +21,9 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
+    <Filter Include="Engine\Events">
+      <UniqueIdentifier>{0864b506-811b-42d7-8a69-5fabf4b4f7d3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -68,6 +71,15 @@
     <ClInclude Include="Include\SimpleShaderProgram.h">
       <Filter>Engine\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="Include\Events.h">
+      <Filter>Engine\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\SimpleEvent.h">
+      <Filter>Engine\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\SimpleDispatcher.h">
+      <Filter>Engine\Events</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\SimpleObjectsRenderPass.cpp">
@@ -96,6 +108,9 @@
     </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <Filter>Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\SimpleDispatcher.cpp">
+      <Filter>Engine\Events</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

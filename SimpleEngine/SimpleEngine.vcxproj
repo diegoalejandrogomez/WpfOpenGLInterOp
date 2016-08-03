@@ -135,6 +135,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\DebugRenderPass.h" />
+    <ClInclude Include="Include\SimpleDispatcher.h" />
+    <ClInclude Include="Include\SimpleEvent.h" />
+    <ClInclude Include="Include\Events.h" />
     <ClInclude Include="Include\RenderPass.h" />
     <ClInclude Include="Include\SimpleCamera2D.h" />
     <ClInclude Include="Include\SimpleDebug.h" />
@@ -152,6 +155,7 @@
   <ItemGroup>
     <ClCompile Include="External\glew\glew.cpp" />
     <ClCompile Include="Src\SimpleCamera2D.cpp" />
+    <ClCompile Include="Src\SimpleDispatcher.cpp" />
     <ClCompile Include="Src\SimpleEngine.cpp" />
     <ClCompile Include="Src\SimpleObject.cpp" />
     <ClCompile Include="Src\SimpleObjectsRenderPass.cpp" />

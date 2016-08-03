@@ -6,6 +6,8 @@ class SimpleCamera2D {
 public:
 
 	SimpleCamera2D();
+	~SimpleCamera2D();
+
 	void SetPosition(float x, float y);
 	void SetZoom(float zoom);
 	void Move(float dx, float dt);

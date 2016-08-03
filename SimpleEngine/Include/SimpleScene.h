@@ -11,6 +11,8 @@ class SimpleScene {
 public:
 
 	SimpleScene();
+	virtual ~SimpleScene();
+
 	void Render(float dt);
 	void Advance(float dt);
 	void AddEntity(SimpleObject* sObj);

@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "SimpleCamera2D.h"
 #include <glm/gtc/matrix_transform.hpp>
-
+#include "SimpleDispatcher.h"
 
 
 SimpleCamera2D::SimpleCamera2D() {
@@ -12,9 +12,25 @@ SimpleCamera2D::SimpleCamera2D() {
 	_position = glm::vec3(0.0f);
 	_size = glm::vec2(0.0f);
 	_zoom = 1.0f;
+			
+	SimpleDispatcher::Instance()->AddListener(WindowResizeEvent::descriptor, {
+		this,
+		[this](const SimpleEvent& evt) {
+		const WindowResizeEvent &res = static_cast<const WindowResizeEvent&>(evt);
+		this->SetViewportSize(res.width,res.height);
+		}
+	});
 	
 
 }
+
+
+SimpleCamera2D::~SimpleCamera2D() {
+
+	SimpleDispatcher::Instance()->RemoveListener(WindowResizeEvent::descriptor, this);
+
+}
+
 void SimpleCamera2D::_UpdateTransform() {
 	
 	_view = glm::translate(glm::mat4(1.0f), _position);

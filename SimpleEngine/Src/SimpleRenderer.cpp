@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "SimpleRenderer.h"
 #include "SimpleScene.h"
-
+#include "SimpleDispatcher.h"
 
 SimpleRenderer::SimpleRenderer() {
 	_deviceContext = nullptr;
@@ -224,6 +224,10 @@ void SimpleRenderer::ResizeWindow(int width, int height) {
 	
 	_width = width;
 	_height = height;
+
+	//Notify all listeners that the window has changed its size
+	SimpleDispatcher::Instance()->Send<WindowResizeEvent>((float)_width, (float)_height);
+
 }
 
 bool SimpleRenderer::CreateProgram(std::string name, std::string vertexShaderPath, std::string fragmentShaderPath) {

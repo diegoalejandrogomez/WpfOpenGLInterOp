@@ -2,6 +2,7 @@
 #include "SimpleEngine.h"
 #include "DebugRenderPass.h"
 #include "SimpleObjectsRenderPass.h"
+#include "SimpleDispatcher.h"
 
 void SimpleEngine::InitRenderer(HWND hWnd, uint32_t width, uint32_t height) {
 	
@@ -54,6 +55,8 @@ void SimpleEngine::Advance(float dt) {
 			_scene->Advance(dt);
 	}
 
+	//Flush pending events
+	SimpleDispatcher::Instance()->Flush();
 }
 
 void SimpleEngine::Initialize() {

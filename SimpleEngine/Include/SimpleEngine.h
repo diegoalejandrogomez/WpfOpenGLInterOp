@@ -39,8 +39,8 @@ protected:
 	SimpleEngine() {};
 	~SimpleEngine() {};
 
-	SimpleRenderer * _renderer = nullptr;
-	SimpleScene* _scene = nullptr;
+	SimpleRenderer*	_renderer = nullptr;
+	SimpleScene*	_scene = nullptr;
 	SimpleGameMode* _gameMode = nullptr;
 	SimpleGameMode* _nextGameMode = nullptr;
 

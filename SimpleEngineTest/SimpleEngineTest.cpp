@@ -64,6 +64,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 			}
 		}
 		else {
+			engine->Advance(0.0f);
 			engine->Render(0.0f);
 		}
     }
@@ -182,7 +183,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         }
         break;
   
-    case WM_DESTROY:
+	case WM_SIZE: {
+		SimpleRenderer* renderer = SimpleEngine::Instance()->GetRenderer();
+		if (renderer != nullptr)
+			renderer->ResizeWindow(LOWORD(lParam), HIWORD(lParam));
+	}
+		break;
+
+	case WM_DESTROY:
         PostQuitMessage(0);
         break;
     default:
