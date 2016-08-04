@@ -3,7 +3,7 @@
 #include "DebugRenderPass.h"
 #include "SimpleObjectsRenderPass.h"
 #include "SimpleDispatcher.h"
-
+#include "DebugGameLogic.h"
 void SimpleEngine::InitRenderer(HWND hWnd, uint32_t width, uint32_t height) {
 	
 	_renderer = new SimpleRenderer();
@@ -59,6 +59,7 @@ void SimpleEngine::Advance(float dt) {
 	SimpleDispatcher::Instance()->Flush();
 }
 
+#define DEBUG_CONTENT
 void SimpleEngine::Initialize() {
 
 	SIMPLE_ASSERT(_renderer != nullptr);
@@ -66,6 +67,10 @@ void SimpleEngine::Initialize() {
 	//Loads a default scene
 	CreateScene();
 	_scene->GetCamera()->SetViewportSize((float)_renderer->GetWidth(), (float)_renderer->GetHeight());
+
+#ifdef DEBUG_CONTENT
+	SetGameLogic(new DebugGameLogic());
+#endif
 
 }
 void SimpleEngine::Shutdown() {

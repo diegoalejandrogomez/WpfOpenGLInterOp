@@ -23,6 +23,7 @@ public:
 	int GetHeight(){ return _height; };
 
 	bool CreateProgram(std::string name, std::string vertexShaderPath, std::string fragmentShaderPath);
+	SimpleShaderProgram* GetProgram(std::string name);
 
 private:
 

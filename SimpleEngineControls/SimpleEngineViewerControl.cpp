@@ -10,8 +10,8 @@ using namespace SimpleEngineControls;
 SimpleEngineViewerControl::SimpleEngineViewerControl() {
 	this->Load += gcnew System::EventHandler(this, &SimpleEngineViewerControl::OnLoad);
 	this->SizeChanged += gcnew System::EventHandler(this, &SimpleEngineViewerControl::OnSizeChanged);
-	_appLogic = new DrawingAppLogic();
-	SimpleEngine::Instance()->SetGameLogic(_appLogic);
+	/*_appLogic = new DrawingAppLogic();
+	SimpleEngine::Instance()->SetGameLogic(_appLogic);*/
 
 }
 
@@ -21,7 +21,8 @@ void SimpleEngineViewerControl::OnLoad(System::Object ^sender, System::EventArgs
 
 	SimpleEngine* eng = SimpleEngine::Instance();
 	eng->InitRenderer(_hWnd, Width, Height);
-}
+	eng->Initialize();
+}	
 
 
 void SimpleEngineViewerControl::OnSizeChanged(System::Object ^sender, System::EventArgs ^e){

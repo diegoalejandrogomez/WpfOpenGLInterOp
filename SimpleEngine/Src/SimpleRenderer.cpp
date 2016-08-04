@@ -35,6 +35,8 @@ void SimpleRenderer::Render(float dt, SimpleScene* scene ) {
 
 bool SimpleRenderer::InitializeOpenGL(HWND hWnd, int width , int height) {
 	
+	_width = width;
+	_height = height;
 	PIXELFORMATDESCRIPTOR pfd =
 	{
 		sizeof(PIXELFORMATDESCRIPTOR),
@@ -243,11 +245,18 @@ bool SimpleRenderer::CreateProgram(std::string name, std::string vertexShaderPat
 			SIMPLE_LOG("Coulnd't link shader %s", name);
 			return false;
 		}
+		_programs[name] = program;
 	}
 
 	return true;
 }
 
+SimpleShaderProgram* SimpleRenderer::GetProgram(std::string name) {
+	auto it = _programs.find(name);
+	if(it== _programs.end())
+		return nullptr;
+	return it->second;
+}
 
 bool SimpleRenderer::_LoadDefaultShaders() {
 

@@ -16,7 +16,9 @@ public:
 	glm::mat4 &GetViewProjection() {return _viewProjection;}
 	glm::mat4 &GetView() {return _view;}
 	glm::mat4 &GetProjection() {return _projection;}
-
+	float GetWidth() { return _size.x / _zoom; };
+	float GetHeight() { return _size.y / _zoom; };
+		
 private:
 	
 	void _UpdateTransform();

@@ -8,7 +8,7 @@ public:
 
 	void Render(float dt, SimpleScene* scene) {
 		// Set the color to clear the screen to.
-		glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+		glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
 
 		// Clear the screen and depth buffer.
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

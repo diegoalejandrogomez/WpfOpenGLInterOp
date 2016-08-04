@@ -86,6 +86,12 @@
     <ClInclude Include="Include\SimpleGameLogic.h">
       <Filter>Engine</Filter>
     </ClInclude>
+    <ClInclude Include="Include\VertexFormats.h">
+      <Filter>Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\DebugGameLogic.h">
+      <Filter>Engine\Debug</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\SimpleObjectsRenderPass.cpp">
@@ -119,6 +125,9 @@
       <Filter>Engine\Events</Filter>
     </ClCompile>
     <ClCompile Include="Src\SimpleDebugObject.cpp">
+      <Filter>Engine\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\DebugGameLogic.cpp">
       <Filter>Engine\Debug</Filter>
     </ClCompile>
   </ItemGroup>

@@ -25,6 +25,8 @@ public:
 	void SetGameLogic(SimpleGameLogic* _newGameMode);
 	void CreateScene();
 
+	//Getter
+	SimpleScene* GetScene() { return _scene; ; }
 	SimpleRenderer* GetRenderer() { return _renderer; };
 
 	//Used by external event loops
