@@ -24,6 +24,9 @@
     <Filter Include="Engine\Events">
       <UniqueIdentifier>{0864b506-811b-42d7-8a69-5fabf4b4f7d3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Debug">
+      <UniqueIdentifier>{0b6e59e0-63aa-493a-85aa-2d504f53576d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -44,9 +47,6 @@
     <ClInclude Include="Include\SimpleObjectsRenderPass.h">
       <Filter>Engine\Graphics\RenderPasses</Filter>
     </ClInclude>
-    <ClInclude Include="Include\SimpleDebug.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
     <ClInclude Include="Include\SimpleEngine.h">
       <Filter>Engine</Filter>
     </ClInclude>
@@ -57,9 +57,6 @@
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="Include\SimpleScene.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\SimpleGameMode.h">
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
@@ -79,6 +76,15 @@
     </ClInclude>
     <ClInclude Include="Include\SimpleDispatcher.h">
       <Filter>Engine\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\SimpleDebug.h">
+      <Filter>Engine\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\SimpleDebugObject.h">
+      <Filter>Engine\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\SimpleGameLogic.h">
+      <Filter>Engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -111,6 +117,9 @@
     </ClCompile>
     <ClCompile Include="Src\SimpleDispatcher.cpp">
       <Filter>Engine\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\SimpleDebugObject.cpp">
+      <Filter>Engine\Debug</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

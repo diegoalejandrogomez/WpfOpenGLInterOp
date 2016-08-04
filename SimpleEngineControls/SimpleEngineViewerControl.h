@@ -2,6 +2,7 @@
 using namespace System;
 using namespace System::Windows::Forms;
 #include "SimpleEngineControls.h"
+#include "DrawingAppLogic.h"
 
 namespace SimpleEngineControls {
 
@@ -9,15 +10,18 @@ namespace SimpleEngineControls {
 	{
 	public:
 
-		SimpleEngineViewerControl() {
-				this->Load += gcnew System::EventHandler(this, &SimpleEngineViewerControl::OnLoad);
-				this->SizeChanged += gcnew System::EventHandler(this, &SimpleEngineViewerControl::OnSizeChanged);
-		}
+		SimpleEngineViewerControl();
 		void OnLoad(System::Object ^sender, System::EventArgs ^e);
 		void OnSizeChanged(System::Object ^sender, System::EventArgs ^e);
 		void OnPaintBackground(PaintEventArgs^ e) override;
 		void OnPaint(PaintEventArgs^ e) override;
+
+	private:
+		DrawingAppLogic * _appLogic;
+		
 	};
+
+
 }
 
 

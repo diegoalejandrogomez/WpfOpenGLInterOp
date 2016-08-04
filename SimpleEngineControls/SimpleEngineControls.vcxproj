@@ -140,6 +140,7 @@
   <ItemGroup>
     <ClInclude Include="BaseControl.h" />
     <ClInclude Include="CoordinatesControl.h" />
+    <ClInclude Include="DrawingAppLogic.h" />
     <ClInclude Include="LineControl.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="SimpleEngineControls.h" />
@@ -150,6 +151,7 @@
     <ClCompile Include="AssemblyInfo.cpp" />
     <ClCompile Include="BaseControl.cpp" />
     <ClCompile Include="CoordinatesControl.cpp" />
+    <ClCompile Include="DrawingAppLogic.cpp" />
     <ClCompile Include="LineControl.cpp" />
     <ClCompile Include="SimpleEngineControls.cpp" />
     <ClCompile Include="SimpleEngineViewerControl.cpp" />

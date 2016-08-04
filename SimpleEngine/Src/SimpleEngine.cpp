@@ -13,9 +13,9 @@ void SimpleEngine::InitRenderer(HWND hWnd, uint32_t width, uint32_t height) {
 	_renderer->AddPass(new SimpleObjectsRenderPass());
 }
 
-void SimpleEngine::SetGameMode(SimpleGameMode* _newGameMode) {
+void SimpleEngine::SetGameLogic(SimpleGameLogic* _newGameLogic) {
 
-	_nextGameMode = _newGameMode;
+	_nextGameLogic = _newGameLogic;
 }
 
 void SimpleEngine::CreateScene() {
@@ -23,15 +23,15 @@ void SimpleEngine::CreateScene() {
 		delete _scene;
 	_scene = new SimpleScene();
 }
-void SimpleEngine::_SwitchGameMode() {
+void SimpleEngine::_SwitchGameLogic() {
 
-	if (_gameMode != nullptr)
-		_gameMode->Shutdown();
+	if (_gameLogic != nullptr)
+		_gameLogic->Shutdown();
 
-	_gameMode = _nextGameMode;
-	if (_gameMode != nullptr) { //Could be switching to nullptr
-		_gameMode->Init();
-		_nextGameMode = nullptr;
+	_gameLogic = _nextGameLogic;
+	if (_gameLogic != nullptr) { //Could be switching to nullptr
+		_gameLogic->Init();
+		_nextGameLogic = nullptr;
 	}
 
 }
@@ -46,11 +46,11 @@ void SimpleEngine::Render(float dt) {
 void SimpleEngine::Advance(float dt) {
 	
 	//Check if we must switch the game mode
-	if (_nextGameMode != nullptr)
-		_SwitchGameMode();
+	if (_nextGameLogic != nullptr)
+		_SwitchGameLogic();
 
-	if (_gameMode != nullptr && _gameMode->IsRunning()) {
-		_gameMode->Advance(dt);
+	if (_gameLogic != nullptr && _gameLogic->IsRunning()) {
+		_gameLogic->Advance(dt);
 		if (_scene != nullptr)
 			_scene->Advance(dt);
 	}

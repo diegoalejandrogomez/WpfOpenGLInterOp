@@ -1,6 +1,6 @@
 #pragma once
 
-class SimpleGameMode {
+class SimpleGameLogic {
 public:
 
 	virtual void Init() = 0;

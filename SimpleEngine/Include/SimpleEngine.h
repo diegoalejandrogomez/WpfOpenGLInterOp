@@ -1,7 +1,7 @@
 #pragma once
 #include "SimpleRenderer.h"
 #include "SimpleScene.h"
-#include "SimpleGamemode.h"
+#include "SimpleGameLogic.h"
 
 class SimpleEngine final{
 public:
@@ -22,7 +22,7 @@ public:
 	void Shutdown();
 	
 	void InitRenderer(HWND hWnd, uint32_t width, uint32_t height);
-	void SetGameMode(SimpleGameMode* _newGameMode);
+	void SetGameLogic(SimpleGameLogic* _newGameMode);
 	void CreateScene();
 
 	SimpleRenderer* GetRenderer() { return _renderer; };
@@ -41,8 +41,8 @@ protected:
 
 	SimpleRenderer*	_renderer = nullptr;
 	SimpleScene*	_scene = nullptr;
-	SimpleGameMode* _gameMode = nullptr;
-	SimpleGameMode* _nextGameMode = nullptr;
+	SimpleGameLogic* _gameLogic = nullptr;
+	SimpleGameLogic* _nextGameLogic = nullptr;
 
-	void _SwitchGameMode();
+	void _SwitchGameLogic();
 };

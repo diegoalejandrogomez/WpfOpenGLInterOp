@@ -5,6 +5,17 @@
 
 using namespace SimpleEngineControls;
 
+
+
+SimpleEngineViewerControl::SimpleEngineViewerControl() {
+	this->Load += gcnew System::EventHandler(this, &SimpleEngineViewerControl::OnLoad);
+	this->SizeChanged += gcnew System::EventHandler(this, &SimpleEngineViewerControl::OnSizeChanged);
+	_appLogic = new DrawingAppLogic();
+	SimpleEngine::Instance()->SetGameLogic(_appLogic);
+
+}
+
+
 void SimpleEngineViewerControl::OnLoad(System::Object ^sender, System::EventArgs ^e){
 	HWND  _hWnd= (HWND) this->Handle.ToPointer();
 
