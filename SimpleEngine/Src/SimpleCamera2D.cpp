@@ -13,13 +13,13 @@ SimpleCamera2D::SimpleCamera2D() {
 	_size = glm::vec2(0.0f);
 	_zoom = 1.0f;
 			
-	SimpleDispatcher::Instance()->AddListener(WindowResizeEvent::descriptor, {
+	/*SimpleDispatcher::Instance()->AddListener(WindowResizeEvent::descriptor, {
 		this,
 		[this](const SimpleEvent& evt) {
 		const WindowResizeEvent &res = static_cast<const WindowResizeEvent&>(evt);
 		this->SetViewportSize(res.width,res.height);
 		}
-	});
+	});*/
 	
 
 }
@@ -33,7 +33,7 @@ SimpleCamera2D::~SimpleCamera2D() {
 
 void SimpleCamera2D::_UpdateTransform() {
 	
-	_view = glm::translate(glm::mat4(1.0f), _position);
+	_view = glm::translate(glm::mat4(1.0f), -_position);
 
 	float halfWidth	= _size.x *0.5f / _zoom;
 	float halfHeight= _size.y * 0.5f / _zoom;
@@ -53,6 +53,11 @@ void SimpleCamera2D::SetZoom(float zoom) {
 	_zoom = zoom;
 	_UpdateTransform();
 }
+void SimpleCamera2D::DeltaZoom(float dz) {
+	_zoom += dz;
+	_UpdateTransform();
+}
+
 void SimpleCamera2D::Move(float dx, float dy) {
 	_position.x += dx;
 	_position.y += dy;
@@ -62,8 +67,9 @@ void SimpleCamera2D::Move(float dx, float dy) {
 void SimpleCamera2D::SetViewportSize(float w, float h) {
 
 	_aspectRatio = w / h;
+
 	_size.x = w;
-	_size.y = h;
+	_size.y = w / _aspectRatio;
 
 	_UpdateTransform();
 }

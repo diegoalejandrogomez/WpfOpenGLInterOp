@@ -98,6 +98,9 @@
     <ClInclude Include="Texture.h">
       <Filter>Engine</Filter>
     </ClInclude>
+    <ClInclude Include="Include\SimpleSprite.h">
+      <Filter>Engine\Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\SimpleObjectsRenderPass.cpp">
@@ -138,6 +141,9 @@
     </ClCompile>
     <ClCompile Include="SimpleTexture.cpp">
       <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\SimpleSprite.cpp">
+      <Filter>Engine\Debug</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

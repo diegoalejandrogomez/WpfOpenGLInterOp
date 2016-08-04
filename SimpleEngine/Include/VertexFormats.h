@@ -4,3 +4,9 @@ struct VertexColorFormat2D {
 	float pos[2];	//xy
 	float color[3]; //rgb
 };
+
+
+struct VertexTextureFormat2D {
+	float pos[2];	//xy
+	float uv[2]; //uv 
+};

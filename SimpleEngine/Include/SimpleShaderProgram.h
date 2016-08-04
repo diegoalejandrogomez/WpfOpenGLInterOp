@@ -10,6 +10,8 @@ public:
 	bool CompileFromResource(int vertexResource, int fragmentResource);
 	bool CompileFromString(const std::string& vertexSource,const std::string& fragmentSource);
 	bool Link();
+	void Bind();
+	GLuint GetLocationFor(const char* name);
 
 	GLuint GetHandle() { return _program; };
 private:

@@ -5,13 +5,13 @@
 #include "SimpleCamera2D.h"
 class SimpleShaderProgram;
 
-class SimpleDebugObject : public SimpleObject{
+class SimpleSprite : public SimpleObject {
 public:
 
-	SimpleDebugObject();
-	~SimpleDebugObject();
+	SimpleSprite();
 	void Advance(float dt);
 	void Render(float dt);
+	~SimpleSprite();
 
 private:
 	unsigned int _vertexCount;
@@ -20,9 +20,11 @@ private:
 	GLuint _vbos[2]; //Position and color in the same buffer and indexes in a separate one
 	SimpleShaderProgram* _shader;
 	SimpleCamera2D* _cam;
-	void _GeneratePositionAndColor(	VertexColorFormat2D* &vertexs,
-									unsigned int &verticesSize,
-									unsigned int* &indices,
-									unsigned int &indicesSize);
+	
+	void _GeneratePositionAndColor(VertexColorFormat2D* &vertexs,
+		unsigned int &verticesSize,
+		unsigned int* &indices,
+		unsigned int &indicesSize);
 
 };
+

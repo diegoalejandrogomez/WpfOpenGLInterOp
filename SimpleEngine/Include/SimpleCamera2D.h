@@ -10,7 +10,8 @@ public:
 
 	void SetPosition(float x, float y);
 	void SetZoom(float zoom);
-	void Move(float dx, float dt);
+	void Move(float dx, float dy);
+	void DeltaZoom(float dz);
 	void SetViewportSize(float w, float h);
 		
 	glm::mat4 &GetViewProjection() {return _viewProjection;}

@@ -135,6 +135,13 @@ bool SimpleShaderProgram::Link() {
 	return true;
 }
 
+void SimpleShaderProgram::Bind() {
+	GL_CHECK(glUseProgram(_program));
+}
+
+GLuint SimpleShaderProgram::GetLocationFor(const char* name) {
+	return glGetUniformLocation(_program, name);
+}
 std::string SimpleShaderProgram::_LoadFile(std::string filePath) {
 	
 	std::ifstream t(filePath);

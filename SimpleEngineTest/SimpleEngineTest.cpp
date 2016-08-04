@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "SimpleEngineTest.h"
+#include <windowsx.h>
 
 #define MAX_LOADSTRING 100
 #include <SimpleEngine.h>
@@ -127,8 +128,8 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 		   WS_CLIPSIBLINGS |					// Required Window Style
 		   WS_CLIPCHILDREN,						// Required Window Style
 		   0, 0,								// Window Position
-		   CW_USEDEFAULT,						// Calculate Window Width
-		   0,									// Calculate Window Height
+		   1024,						// Calculate Window Width
+		   480,									// Calculate Window Height
 		   NULL,								// No Parent Window
 		   NULL,								// No Menu
 		   hInstance,							// Instance
@@ -188,6 +189,30 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		if (renderer != nullptr)
 			renderer->ResizeWindow(LOWORD(lParam), HIWORD(lParam));
 	}
+		break;
+	case WM_KEYDOWN:
+		
+		switch (wParam)
+		{
+			case 'A':
+				engine->GetScene()->GetCamera()->Move(-10, 0);
+				break;
+			case 'D':
+				engine->GetScene()->GetCamera()->Move(10, 0);
+				break;
+			case 'W':
+				engine->GetScene()->GetCamera()->Move(0, 10);
+				break;
+			case 'S':
+				engine->GetScene()->GetCamera()->Move(0, -10);
+				break;
+			case 'Q':
+				engine->GetScene()->GetCamera()->DeltaZoom(0.1);
+				break;
+			case 'E':
+				engine->GetScene()->GetCamera()->DeltaZoom(-0.1);
+				break;
+		}
 		break;
 
 	case WM_DESTROY:

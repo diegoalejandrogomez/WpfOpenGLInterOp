@@ -134,6 +134,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Include\SimpleSprite.h" />
     <ClInclude Include="SimpleTexture.h" />
     <ClInclude Include="Include\DebugGameLogic.h" />
     <ClInclude Include="Include\DebugRenderPass.h" />
@@ -170,6 +171,7 @@
     <ClCompile Include="Src\SimpleRenderer.cpp" />
     <ClCompile Include="Src\SimpleScene.cpp" />
     <ClCompile Include="Src\SimpleShaderProgram.cpp" />
+    <ClCompile Include="Src\SimpleSprite.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
