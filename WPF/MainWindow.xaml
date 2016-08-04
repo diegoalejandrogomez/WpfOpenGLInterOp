@@ -9,35 +9,53 @@
         xmlns:se ="clr-namespace:SimpleEngineControls;assembly=SimpleEngineControls"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         Title="WPF - OpenGl InterOp" Height="350" Width="525">
+
     <Grid>
-        <Grid x:Name="panel" Style="{StaticResource Panel}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Grid x:Name="toolBar" Style="{StaticResource ToolBar}">
+        <Grid x:Name="window">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <DockPanel Grid.Row="0">
+                <Menu DockPanel.Dock="Top">
+                    <MenuItem Header="_File">
+                        <MenuItem Header="_New" />
+                        <MenuItem Header="_Open" Command="{Binding Path=OpenFileCommand}"/>
+                        <MenuItem Header="_Save" />
+                        <Separator />
+                        <MenuItem Header="_Exit" />
+                    </MenuItem>
+                </Menu>
+            </DockPanel>
+            <Grid x:Name="panel" Style="{StaticResource Panel}" Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"></ColumnDefinition>
-                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                </Grid.RowDefinitions>
-                <Button Grid.Row="0" Grid.Column="0" Command="{Binding Path=SetDrawLineCommand}">
-                    <Image Name="line" Source="./Resources/Icons/line.png"  Style="{StaticResource ToolIcon}"></Image> 
-                </Button>
-                <Button Grid.Row="0" Grid.Column="1" Command="{Binding Path=SetDrawSquareCommand}">
-                    <Image Name="square" Source="./Resources/Icons/square.png" Style="{StaticResource ToolIcon}"></Image>
-                </Button>
-                <xctk:ColorPicker Name="Picker" Grid.Row="1" Grid.Column="0"  Style="{StaticResource ToolIcon}" SelectedColor="{Binding Color}"></xctk:ColorPicker>
-                
-            </Grid>
-            <Grid x:Name="drawingArea" Grid.Column="1">
-                <local:OpenGLRender ></local:OpenGLRender>
+                <Grid x:Name="toolBar" Style="{StaticResource ToolBar}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Button Grid.Row="0" Grid.Column="0" Command="{Binding Path=SetDrawLineCommand}">
+                        <Image Name="line" Source="./Resources/Icons/line.png"  Style="{StaticResource ToolIcon}"></Image>
+                    </Button>
+                    <Button Grid.Row="0" Grid.Column="1" Command="{Binding Path=SetDrawSquareCommand}">
+                        <Image Name="square" Source="./Resources/Icons/square.png" Style="{StaticResource ToolIcon}"></Image>
+                    </Button>
+                    <xctk:ColorPicker Name="Picker" Grid.Row="1" Grid.Column="0"  Style="{StaticResource ToolIcon}" SelectedColor="{Binding Color}"></xctk:ColorPicker>
+
+                </Grid>
+                <Grid x:Name="drawingArea" Grid.Column="1">
+                    <local:OpenGLRender ></local:OpenGLRender>
+                </Grid>
             </Grid>
         </Grid>
     </Grid>

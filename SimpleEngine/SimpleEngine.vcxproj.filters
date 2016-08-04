@@ -92,6 +92,12 @@
     <ClInclude Include="Include\DebugGameLogic.h">
       <Filter>Engine\Debug</Filter>
     </ClInclude>
+    <ClInclude Include="SimpleTexture.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\SimpleObjectsRenderPass.cpp">
@@ -129,6 +135,9 @@
     </ClCompile>
     <ClCompile Include="Src\DebugGameLogic.cpp">
       <Filter>Engine\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleTexture.cpp">
+      <Filter>Engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

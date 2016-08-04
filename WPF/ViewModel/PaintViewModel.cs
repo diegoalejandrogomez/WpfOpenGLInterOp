@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -41,6 +42,17 @@ namespace WPF.ViewModel
 
         public bool DrawSquare;
 
+        public string filePath;
+
+        public string FilePath
+        {
+            get { return filePath; }
+            set
+            {
+                filePath = value;
+                PropertyChanged(this, new PropertyChangedEventArgs("FilePath"));
+            }
+        }
         #endregion
 
         #region Methods
@@ -56,6 +68,8 @@ namespace WPF.ViewModel
         private ICommand setDrawLineCommand;
 
         private ICommand setDrawSquareCommand;
+
+        private ICommand openFileCommand;
 
         public event PropertyChangedEventHandler PropertyChanged = delegate(object sender, PropertyChangedEventArgs e)
         {
@@ -105,6 +119,29 @@ namespace WPF.ViewModel
                 }
 
                 return setDrawSquareCommand;
+            }
+
+            set { }
+        }
+
+        public ICommand OpenFileCommand
+        {
+            get
+            {
+                if (openFileCommand == null)
+                {
+
+                    openFileCommand = new Command((vm) =>
+                    {
+                        OpenFileDialog dialog = new OpenFileDialog();
+                        if (dialog.ShowDialog() == true)
+                        {
+                            this.FilePath = dialog.FileName;
+                        }
+                    });
+                }
+
+                return openFileCommand;
             }
 
             set { }
