@@ -70,7 +70,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(ProjectDir);./External/glm/;./External/glew/;./Include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <IncludePath>./External/devil/include/;$(ProjectDir);./External/glm/;./External/glew/;./Include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -134,6 +134,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SimpleTexture.h" />
     <ClInclude Include="Include\DebugRenderPass.h" />
     <ClInclude Include="Include\SimpleDebugObject.h" />
     <ClInclude Include="Include\SimpleDispatcher.h" />
@@ -152,9 +153,11 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="Texture.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="External\glew\glew.cpp" />
+    <ClCompile Include="SimpleTexture.cpp" />
     <ClCompile Include="Src\SimpleCamera2D.cpp" />
     <ClCompile Include="Src\SimpleDebugObject.cpp" />
     <ClCompile Include="Src\SimpleDispatcher.cpp" />
