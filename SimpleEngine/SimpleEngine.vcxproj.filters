@@ -98,6 +98,12 @@
     <ClInclude Include="Texture.h">
       <Filter>Engine</Filter>
     </ClInclude>
+    <ClInclude Include="Include\SimpleLayer.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\LowerZIndex.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\SimpleObjectsRenderPass.cpp">
@@ -137,6 +143,9 @@
       <Filter>Engine\Debug</Filter>
     </ClCompile>
     <ClCompile Include="SimpleTexture.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\SimpleLayer.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
   </ItemGroup>
