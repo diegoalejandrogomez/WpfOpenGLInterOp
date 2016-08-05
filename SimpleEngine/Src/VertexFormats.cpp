@@ -72,7 +72,7 @@ void VertexTextureFormat2D::GetQuad(VertexTextureFormat2D* &vertexs,
 
 
 	vertexs[0].pos[0] = -halfSize; vertexs[0].pos[1] = -halfSize;	// Bottom left corner  
-	vertexs[0].uv[0] = 1.0; vertexs[0].uv[1] = 0.0;					// Bottom left corner  
+	vertexs[0].uv[0] = 0.0; vertexs[0].uv[1] = 0.0;					// Bottom left corner  
 
 	vertexs[1].pos[0] = -halfSize; vertexs[1].pos[1] = halfSize;	// Top left corner  
 	vertexs[1].uv[0] = 0.0; vertexs[1].uv[1] = 1.0;					// Top left corner  

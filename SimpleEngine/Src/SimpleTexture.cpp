@@ -36,7 +36,7 @@ void SimpleTexture::_UploadData() {
 	
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, _tex);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture.width, texture.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, texture.imageData);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, _potSize.x, _potSize.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, texture.imageData);
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
@@ -64,9 +64,14 @@ void SimpleTexture::LoadTexture(const char* path)
 	
 	ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
 	
-	this->texture.imageData = new BYTE[this->texture.width * this->texture.height * 4];
-	IL_CHECK(ilCopyPixels(0, 0, 0, texture.width, this->texture.height, 1, IL_RGBA,
-		IL_UNSIGNED_BYTE, this->texture.imageData));
+	ILubyte *data = ilGetData();
+	texture.imageData = new BYTE[_potSize.x * _potSize.y * 4];
+	memset(texture.imageData, 0, _potSize.x * _potSize.y * 4);
+	for (unsigned int i = 0; i < texture.height; ++i) {
+
+		memcpy(&texture.imageData[ (texture.height-i-1) * _potSize.x * 4 ], &data[i*texture.width * 4], texture.width * 4);
+			
+	}
 	
 	_UploadData();
 }
