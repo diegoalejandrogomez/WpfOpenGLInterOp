@@ -5,6 +5,10 @@
 #include <unordered_map>
 #include <GL\GL.h>
 #include "SimpleShaderProgram.h"
+#include "SimpleMesh.h"
+#include "SimpleTexture.h"
+#include "VertexFormats.h"
+
 
 class SimpleScene;
 
@@ -19,12 +23,17 @@ public:
 	void Render(float dt, SimpleScene* scene);
 	void ResizeWindow(int width, int height);
 
-	int GetWidth() { return _width; };
-	int GetHeight(){ return _height; };
+	inline int GetWidth()const { return _width; } ;
+	inline int GetHeight()const { return _height; } ;
 
 	bool CreateProgram(std::string name, std::string vertexShaderPath, std::string fragmentShaderPath);
-	SimpleShaderProgram* GetProgram(std::string name);
+	SimpleShaderProgram* GetProgram(std::string name) const;
+	
+	bool LoadTexture(std::string texturePath);
+	SimpleTexture* GetTexture(std::string name) ;
 
+	inline SimpleMesh<VertexTextureFormat2D>* GetUnitaryQuad() { return _texturedQuad; };
+	
 private:
 
 	bool _InitializeExtensions();
@@ -47,5 +56,10 @@ private:
 
 	//This class also serves as a mini graphics resource admin
 	std::unordered_map<std::string, SimpleShaderProgram*> _programs;
+	std::unordered_map<std::string, SimpleTexture*> _textures;
+
+	//Reusable meshes
+	SimpleMesh<VertexTextureFormat2D>* _texturedQuad;
+	
 
 };

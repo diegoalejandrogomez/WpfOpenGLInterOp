@@ -35,21 +35,19 @@ SimpleDebugObject::SimpleDebugObject() {
 
 	//Upload data to buffer
 	GL_CHECK(glBufferData(GL_ARRAY_BUFFER, sizeof(VertexColorFormat2D)*verticesSize,vertices ,GL_STATIC_DRAW));
-	
-	
-
+		
 	//Configure vertex channels to currently bounded vao at position 0
 	GL_CHECK(glBindVertexBuffer(0, _vbos[0], 0 , sizeof(VertexColorFormat2D)));
 	
+	//Configure vertex format for index 0 
 	GL_CHECK(glVertexAttribFormat(0, 2, GL_FLOAT, GL_FALSE, offsetof(VertexColorFormat2D, pos)));
 	GL_CHECK(glVertexAttribBinding(0, 0));
 	GL_CHECK(glVertexAttribFormat(1, 3, GL_FLOAT, GL_FALSE, offsetof(VertexColorFormat2D, color)));
 	GL_CHECK(glVertexAttribBinding(1, 0));
-	
 	//Enable vertex attributes 0 and 1 for position and colour
 	GL_CHECK(glEnableVertexAttribArray(0));
 	GL_CHECK(glEnableVertexAttribArray(1));
-	
+		
 	//Bind the index buffer
 	GL_CHECK(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _vbos[1]));
 

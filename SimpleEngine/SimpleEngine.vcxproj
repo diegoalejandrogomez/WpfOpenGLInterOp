@@ -29,7 +29,7 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>NotSet</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -135,7 +135,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\SimpleSprite.h" />
-    <ClInclude Include="SimpleTexture.h" />
     <ClInclude Include="Include\DebugGameLogic.h" />
     <ClInclude Include="Include\DebugRenderPass.h" />
     <ClInclude Include="Include\SimpleDebugObject.h" />
@@ -152,16 +151,17 @@
     <ClInclude Include="Include\SimpleRenderer.h" />
     <ClInclude Include="Include\SimpleScene.h" />
     <ClInclude Include="Include\SimpleShaderProgram.h" />
+    <ClInclude Include="Include\SimpleTexture.h" />
+    <ClInclude Include="Include\Texture.h" />
     <ClInclude Include="Include\VertexFormats.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="Texture.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="External\glew\glew.cpp" />
+    <ClCompile Include="Include\SimpleMesh.h" />
     <ClCompile Include="Src\DebugGameLogic.cpp" />
-    <ClCompile Include="SimpleTexture.cpp" />
     <ClCompile Include="Src\SimpleCamera2D.cpp" />
     <ClCompile Include="Src\SimpleDebugObject.cpp" />
     <ClCompile Include="Src\SimpleDispatcher.cpp" />
@@ -172,6 +172,8 @@
     <ClCompile Include="Src\SimpleScene.cpp" />
     <ClCompile Include="Src\SimpleShaderProgram.cpp" />
     <ClCompile Include="Src\SimpleSprite.cpp" />
+    <ClCompile Include="Src\SimpleTexture.cpp" />
+    <ClCompile Include="Src\VertexFormats.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

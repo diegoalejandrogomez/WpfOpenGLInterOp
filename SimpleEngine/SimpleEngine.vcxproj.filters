@@ -92,13 +92,13 @@
     <ClInclude Include="Include\DebugGameLogic.h">
       <Filter>Engine\Debug</Filter>
     </ClInclude>
-    <ClInclude Include="SimpleTexture.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Texture.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
     <ClInclude Include="Include\SimpleSprite.h">
+      <Filter>Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\SimpleTexture.h">
+      <Filter>Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Texture.h">
       <Filter>Engine\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
@@ -139,11 +139,17 @@
     <ClCompile Include="Src\DebugGameLogic.cpp">
       <Filter>Engine\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="SimpleTexture.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
     <ClCompile Include="Src\SimpleSprite.cpp">
       <Filter>Engine\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\SimpleMesh.h">
+      <Filter>Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\VertexFormats.cpp">
+      <Filter>Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\SimpleTexture.cpp">
+      <Filter>Engine\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

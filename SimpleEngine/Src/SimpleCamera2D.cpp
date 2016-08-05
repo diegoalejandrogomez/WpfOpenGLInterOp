@@ -69,7 +69,7 @@ void SimpleCamera2D::SetViewportSize(float w, float h) {
 	_aspectRatio = w / h;
 
 	_size.x = w;
-	_size.y = w / _aspectRatio;
+	_size.y = h;
 
 	_UpdateTransform();
 }

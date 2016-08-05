@@ -3,6 +3,9 @@
 #include "SimpleObject.h"
 #include "VertexFormats.h"
 #include "SimpleCamera2D.h"
+#include "SimpleMesh.h"
+#include "SimpleTexture.h"
+
 class SimpleShaderProgram;
 
 class SimpleSprite : public SimpleObject {
@@ -11,6 +14,8 @@ public:
 	SimpleSprite();
 	void Advance(float dt);
 	void Render(float dt);
+	void SetAsTexture(std::string && name);
+	void SetAsTextureRect(std::string && name, glm::vec2 offset, glm::vec2 size);
 	~SimpleSprite();
 
 private:
@@ -20,11 +25,15 @@ private:
 	GLuint _vbos[2]; //Position and color in the same buffer and indexes in a separate one
 	SimpleShaderProgram* _shader;
 	SimpleCamera2D* _cam;
-	
-	void _GeneratePositionAndColor(VertexColorFormat2D* &vertexs,
-		unsigned int &verticesSize,
-		unsigned int* &indices,
-		unsigned int &indicesSize);
 
+	//A simple mesh using positions and texture coordinates
+	SimpleMesh<VertexTextureFormat2D> *_mesh;
+	//Texture used for renering
+	SimpleTexture* _tex;
+	
+	//Offset and size in pixel coordinates (to make life easier to the user)
+	glm::vec2 _offset;
+	glm::vec2 _size;
+	
 };
 

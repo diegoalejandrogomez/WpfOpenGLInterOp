@@ -92,6 +92,10 @@ bool SimpleRenderer::InitializeOpenGL(HWND hWnd, int width , int height) {
 	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_defaultRenderBuffer);
 
 	_LoadDefaultShaders();
+	
+	//Simple textured quad
+	_texturedQuad = new SimpleMesh<VertexTextureFormat2D>();
+	_texturedQuad->LoadQuad();
 
 	return true;
 }
@@ -122,7 +126,7 @@ bool SimpleRenderer::_InitializeExtensions() {
 	HINSTANCE hinstance = GetModuleHandle(NULL);
 
 	// Give the application a name.
-	LPCWSTR applicationName = L"Engine";
+	LPCSTR applicationName = "Engine";
 
 	// Setup the windows class with default settings.
 	wc.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
@@ -251,16 +255,46 @@ bool SimpleRenderer::CreateProgram(std::string name, std::string vertexShaderPat
 	return true;
 }
 
-SimpleShaderProgram* SimpleRenderer::GetProgram(std::string name) {
+SimpleShaderProgram* SimpleRenderer::GetProgram(std::string name) const {
 	auto it = _programs.find(name);
 	if(it== _programs.end())
 		return nullptr;
 	return it->second;
 }
 
+
+bool SimpleRenderer::LoadTexture(std::string texturePath) {
+	
+	if (_textures.find(texturePath) != _textures.end())
+		return true; //Already loaded
+
+	SimpleTexture* _tex = new SimpleTexture();
+	_tex->LoadTexture(texturePath.c_str());
+	_textures[texturePath] = _tex;
+	return true;
+}
+
+SimpleTexture* SimpleRenderer::GetTexture(std::string texturePath) {
+
+	auto tex = _textures.find(texturePath);
+	if (tex == _textures.end()) {
+		//Try to load it
+		if (LoadTexture(texturePath))
+			return _textures[texturePath];
+		return nullptr;
+	}
+	return tex->second;
+
+
+}
+
+
 bool SimpleRenderer::_LoadDefaultShaders() {
 
 	if (!CreateProgram("VertexColor", "./shaders/SimpleColorShader.vert", "./shaders/SimpleColorShader.frag"))
+		return false;
+
+	if (!CreateProgram("VertexSprite", "./shaders/SimpleSpriteShader.vert", "./shaders/SimpleSpriteShader.frag"))
 		return false;
 
 	return true;

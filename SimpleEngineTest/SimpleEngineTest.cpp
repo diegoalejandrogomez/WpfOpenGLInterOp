@@ -207,10 +207,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				engine->GetScene()->GetCamera()->Move(0, -10);
 				break;
 			case 'Q':
-				engine->GetScene()->GetCamera()->DeltaZoom(0.1);
+				engine->GetScene()->GetCamera()->DeltaZoom(0.1f);
 				break;
 			case 'E':
-				engine->GetScene()->GetCamera()->DeltaZoom(-0.1);
+				engine->GetScene()->GetCamera()->DeltaZoom(-0.1f);
 				break;
 		}
 		break;

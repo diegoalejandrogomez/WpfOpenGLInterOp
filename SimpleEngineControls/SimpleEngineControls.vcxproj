@@ -75,7 +75,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>$(SolutionDir)\SimpleEngine\Include;$(SolutionDir)\SimpleEngine\External\glm\;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)\Debug\;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)\SimpleEngine\External\devil\lib\;$(SolutionDir)\Debug\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -94,8 +94,8 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>SimpleEngine.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <DelayLoadDLLs>%(DelayLoadDLLs)</DelayLoadDLLs>
+      <AdditionalDependencies>DevIL.lib ;SimpleEngine.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <DelayLoadDLLs>DevIL.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
