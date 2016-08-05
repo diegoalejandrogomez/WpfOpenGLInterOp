@@ -16,7 +16,7 @@ void DebugGameLogic::Init()
 
 	SimpleSpriteRenderer * sprite = new SimpleSpriteRenderer();
 	sprite->SetAsTexture("./media/spriteFull.png");
-	sprite->SetSize(glm::vec2(100, 100));
+	sprite->SetSize(glm::vec2(200, 200));
 	SimpleEngine::Instance()->GetScene()->AddEntity(sprite, layer);
 
 }

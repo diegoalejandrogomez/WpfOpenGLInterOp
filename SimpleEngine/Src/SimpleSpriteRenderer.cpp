@@ -53,8 +53,8 @@ void SimpleSpriteRenderer::Render(float dt) {
 
 	//Not efficient at all, but easier to read for now
 	
-	glm::mat4 model = glm::translate(_position) * glm::rotate(_orientation, glm::vec3(0.0f, 0.0f, 1.0f)) * glm::scale(glm::vec3(_size.x, _size.y, 1.0f ));
-	
+	//glm::mat4 model = glm::translate(_position) * glm::rotate(_orientation, glm::vec3(0.0f, 0.0f, 1.0f)) * glm::scale(glm::vec3(_size.x, _size.y, 1.0f ));
+	glm::mat4 model = glm::scale(glm::vec3(_size.x, _size.y, 1.0f));
 
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, &model[0][0]);
 
@@ -73,6 +73,10 @@ void SimpleSpriteRenderer::Render(float dt) {
 	GLuint sizeRatioLoc = _shader->GetLocationFor("sizeRatio");
 	glUniform2f(sizeRatioLoc,	_tex->GetWidthRatio(),
 								_tex->GetHeightRatio());
+
+
+	GLuint textureLoc = _shader->GetLocationFor("texSampler");
+	glUniform1i(textureLoc, 0); //Texture unit 0 is for base images.
 
 	//end uniform query
 

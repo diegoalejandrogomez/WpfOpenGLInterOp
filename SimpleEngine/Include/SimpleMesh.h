@@ -1,6 +1,6 @@
 #pragma once
 #include "stdafx.h"
-
+#include <GL\GL.h>
 template <class VERTEX_TYPE>
 class SimpleMesh {
 
@@ -66,7 +66,7 @@ public:
 
 	void Draw(GLenum mode = GL_TRIANGLES) {
 
-		GL_CHECK(glDrawElements(mode, _verticesSize, GL_UNSIGNED_INT, 0)); // Draw our square  
+		GL_CHECK(glDrawElements(mode, _indicesSize, GL_UNSIGNED_INT, 0)); // Draw our square  
 
 	}
 	void Unbind() {

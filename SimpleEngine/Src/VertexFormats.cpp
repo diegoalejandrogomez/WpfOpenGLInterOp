@@ -14,13 +14,13 @@ void VertexColorFormat2D::Bind(int index) {
 }
 
 //returns an unit origin centered quad. Returns ownership of the allocated memory
-void VertexColorFormat2DGetQuad(VertexColorFormat2D* &vertexs,
+void VertexColorFormat2D::GetQuad(VertexColorFormat2D* &vertexs,
 	unsigned int &verticesSize,
 	unsigned int* &indices,
 	unsigned int &indicesSize) {
 
 	float halfSize = 0.5f;
-	verticesSize = 4;
+	verticesSize = 12;
 	vertexs = new VertexColorFormat2D[12];
 	indices = new unsigned int[6];
 	indicesSize = 6;
@@ -65,8 +65,8 @@ void VertexTextureFormat2D::GetQuad(VertexTextureFormat2D* &vertexs,
 	unsigned int &indicesSize) {
 
 	float halfSize = 0.5f;
-	verticesSize = 4;
-	vertexs = new VertexTextureFormat2D[12];
+	verticesSize = 12;
+	vertexs = new VertexTextureFormat2D[verticesSize];
 	indices = new unsigned int[6];
 	indicesSize = 6;
 

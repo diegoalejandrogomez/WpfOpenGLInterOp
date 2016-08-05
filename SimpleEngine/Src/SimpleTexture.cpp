@@ -9,6 +9,14 @@ SimpleTexture::SimpleTexture() {
 
 	//Create texture
 	glGenTextures(1, &_tex);
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, _tex);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 }
 
 SimpleTexture::SimpleTexture(const char* path) {
@@ -16,7 +24,9 @@ SimpleTexture::SimpleTexture(const char* path) {
 }
 
 void SimpleTexture::BindTo(int textureChannel) {
+
 	glActiveTexture(GL_TEXTURE0 + textureChannel);
+	glBindTexture(GL_TEXTURE_2D, _tex);
 }
 
 SimpleTexture::~SimpleTexture()
@@ -56,8 +66,8 @@ void SimpleTexture::LoadTexture(const char* path)
 	_potSize.x = SimpleUtils::NextPOT(texture.width);
 	_potSize.y = SimpleUtils::NextPOT(texture.height);
 	
-	_sizeRatio.x = _potSize.x / (float)texture.width;
-	_sizeRatio.y = _potSize.y / (float)texture.height;
+	_sizeRatio.x = texture.width / (float)_potSize.x;
+	_sizeRatio.y = texture.height / (float)_potSize.y;
 
 	ILenum format = ilGetInteger(IL_IMAGE_FORMAT);
 	ILenum type = ilGetInteger(IL_IMAGE_TYPE);

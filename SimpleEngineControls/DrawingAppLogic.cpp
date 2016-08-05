@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "DrawingAppLogic.h"
-
+#include "SimpleSpriteRenderer.h"
 void DrawingAppLogic::Init()
 {
 }
