@@ -86,7 +86,10 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Lib>
     <PostBuildEvent>
-      <Command>xcopy /E /Y "$(ProjectDir)Src\shaders" "$(TargetDir)shaders\"</Command>
+      <Command>xcopy /E /Y "$(ProjectDir)Src\shaders" "$(TargetDir)shaders\"
+xcopy /E /Y "$(ProjectDir)media" "$(TargetDir)media\"
+copy /Y "$(ProjectDir)\External\devil\lib\DevIL.dll" "$(TargetDir)"
+copy /Y "$(ProjectDir)\External\devil\lib\ILU.dll" "$(TargetDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -136,8 +139,7 @@
   <ItemGroup>
     <ClInclude Include="Include\SimpleLayer.h" />
     <ClInclude Include="Include\LowerZIndex.h" />
-    <ClInclude Include="SimpleTexture.h" />
-    <ClInclude Include="Include\SimpleSprite.h" />
+    <ClInclude Include="Include\SimpleSpriteRenderer.h" />
     <ClInclude Include="Include\DebugGameLogic.h" />
     <ClInclude Include="Include\DebugRenderPass.h" />
     <ClInclude Include="Include\SimpleDebugObject.h" />
@@ -155,6 +157,7 @@
     <ClInclude Include="Include\SimpleScene.h" />
     <ClInclude Include="Include\SimpleShaderProgram.h" />
     <ClInclude Include="Include\SimpleTexture.h" />
+    <ClInclude Include="Include\SimpleUtils.h" />
     <ClInclude Include="Include\Texture.h" />
     <ClInclude Include="Include\VertexFormats.h" />
     <ClInclude Include="resource.h" />
@@ -175,7 +178,7 @@
     <ClCompile Include="Src\SimpleRenderer.cpp" />
     <ClCompile Include="Src\SimpleScene.cpp" />
     <ClCompile Include="Src\SimpleShaderProgram.cpp" />
-    <ClCompile Include="Src\SimpleSprite.cpp" />
+    <ClCompile Include="Src\SimpleSpriteRenderer.cpp" />
     <ClCompile Include="Src\SimpleTexture.cpp" />
     <ClCompile Include="Src\VertexFormats.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -192,6 +195,8 @@
     <None Include="Src\shaders\SimpleColorShader.vert">
       <FileType>Text</FileType>
     </None>
+    <None Include="Src\shaders\SimpleSpriteShader.frag" />
+    <None Include="Src\shaders\SimpleSpriteShader.vert" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">

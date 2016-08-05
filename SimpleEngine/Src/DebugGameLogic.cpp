@@ -2,15 +2,23 @@
 #include "DebugGameLogic.h"
 #include "SimpleDebugObject.h"
 #include "SimpleEngine.h"
-#include "SimpleLayer.h";
+#include "SimpleLayer.h"
+#include "SimpleSpriteRenderer.h"
 
 void DebugGameLogic::Init()
 {
 
-	SimpleDebugObject* obj = new SimpleDebugObject();
 	SimpleLayer* layer = new SimpleLayer();
 	SimpleEngine::Instance()->GetScene()->AddLayer(layer);
-	SimpleEngine::Instance()->GetScene()->AddEntity(obj, layer);
+	
+	//SimpleDebugObject* obj = new SimpleDebugObject();
+	//SimpleEngine::Instance()->GetScene()->AddEntity(obj, layer);
+
+	SimpleSpriteRenderer * sprite = new SimpleSpriteRenderer();
+	sprite->SetAsTexture("./media/spriteFull.png");
+	sprite->SetSize(glm::vec2(100, 100));
+	//SimpleEngine::Instance()->GetScene()->AddEntity(sprite, layer);
+
 }
 
 void DebugGameLogic::Advance(float dt)

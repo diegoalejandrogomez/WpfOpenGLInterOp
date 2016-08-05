@@ -8,15 +8,15 @@
 
 class SimpleShaderProgram;
 
-class SimpleSprite : public SimpleObject {
+class SimpleSpriteRenderer : public SimpleObject {
 public:
 
-	SimpleSprite();
+	SimpleSpriteRenderer();
 	void Advance(float dt);
 	void Render(float dt);
 	void SetAsTexture(std::string && name);
 	void SetAsTextureRect(std::string && name, glm::vec2 offset, glm::vec2 size);
-	~SimpleSprite();
+	~SimpleSpriteRenderer();
 
 private:
 	unsigned int _vertexCount;
@@ -32,8 +32,8 @@ private:
 	SimpleTexture* _tex;
 	
 	//Offset and size in pixel coordinates (to make life easier to the user)
-	glm::vec2 _offset;
-	glm::vec2 _size;
+	glm::vec2 _rectOffset;
+	glm::vec2 _rectSize;
 	
 };
 

@@ -2,6 +2,8 @@
 #include "SimpleRenderer.h"
 #include "SimpleScene.h"
 #include "SimpleDispatcher.h"
+#include <IL/il.h>
+#include <IL/ilu.h>
 
 SimpleRenderer::SimpleRenderer() {
 	_deviceContext = nullptr;
@@ -96,6 +98,10 @@ bool SimpleRenderer::InitializeOpenGL(HWND hWnd, int width , int height) {
 	//Simple textured quad
 	_texturedQuad = new SimpleMesh<VertexTextureFormat2D>();
 	_texturedQuad->LoadQuad();
+
+	//Initialized image library Devil
+	ilInit();
+	iluInit();
 
 	return true;
 }

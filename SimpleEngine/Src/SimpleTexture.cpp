@@ -3,7 +3,7 @@
 #include <IL/il.h>
 #include <IL/ilu.h>
 #include <IL/ilut.h>
-
+#include "SimpleUtils.h"
 
 SimpleTexture::SimpleTexture() {
 
@@ -42,16 +42,31 @@ void SimpleTexture::_UploadData() {
 
 void SimpleTexture::LoadTexture(const char* path)
 {
+
 	ILuint ImgId = 0;
-	ilGenImages(1, &ImgId);
+	IL_CHECK(ilGenImages(1, &ImgId));
 	this->texture.id = ImgId;
-	ilBindImage(ImgId);
-	ilLoadImage(path);
+	IL_CHECK(ilBindImage(ImgId));
+	IL_CHECK(ilLoadImage(path));
+
 	this->texture.width = ilGetInteger(IL_IMAGE_WIDTH);
 	this->texture.height = ilGetInteger(IL_IMAGE_HEIGHT);
-	this->texture.imageData = new BYTE[this->texture.width * this->texture.height * 3];
-	ilCopyPixels(0, 0, 0, texture.width, this->texture.height, 1, IL_RGBA,
-		IL_UNSIGNED_BYTE, this->texture.imageData);
+	
+	//create as pot texture
+	_potSize.x = SimpleUtils::NextPOT(texture.width);
+	_potSize.y = SimpleUtils::NextPOT(texture.height);
+	
+	_sizeRatio.x = _potSize.x / (float)texture.width;
+	_sizeRatio.y = _potSize.y / (float)texture.height;
+
+	ILenum format = ilGetInteger(IL_IMAGE_FORMAT);
+	ILenum type = ilGetInteger(IL_IMAGE_TYPE);
+	
+	ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
+	
+	this->texture.imageData = new BYTE[this->texture.width * this->texture.height * 4];
+	IL_CHECK(ilCopyPixels(0, 0, 0, texture.width, this->texture.height, 1, IL_RGBA,
+		IL_UNSIGNED_BYTE, this->texture.imageData));
 	
 	_UploadData();
 }

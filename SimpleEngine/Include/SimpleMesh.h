@@ -82,9 +82,9 @@ public:
 		unsigned int indicesSize;
 		unsigned int* indices;
 		unsigned int size = 0;
-		VERTEX_TYPE::GetQuad(vertices, verticesSize, indices, _indicesSize);
+		VERTEX_TYPE::GetQuad(vertices, verticesSize, indices, indicesSize);
 		SetVertices(vertices, verticesSize);
-		SetIndices(indices, _indicesSize);
+		SetIndices(indices, indicesSize);
 		//Delete the CPU buffers
 		delete[] vertices;
 		delete[] indices;

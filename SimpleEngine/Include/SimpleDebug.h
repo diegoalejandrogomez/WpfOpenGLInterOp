@@ -2,21 +2,35 @@
 
 #include <Windows.h>
 #include <string>
+#include <IL/il.h>
+#include <IL/ilu.h>
+#include <IL/ilut.h>
 
 inline void CheckOpenGLError(const char* stmt, const char* fname, int line)
 {
 	GLenum err = glGetError();
 	if (err != GL_NO_ERROR)
 	{		
-		printf("OpenGL error %08x, at %s:%i - for %s\n", err, fname, line, stmt);
-		abort();
-
-		char str[1024];				\
-			std::string f  = "OpenGL error %08x - %s -> File: %s:%d \n";		\
-			sprintf_s(str, f.c_str(), err , stmt, __FILE__, __LINE__); \
-			OutputDebugStringA(str);
+		char str[1024];				
+		std::string f  = "OpenGL error %08x - %s -> File: %s:%d \n";	
+		sprintf_s(str, f.c_str(), err , stmt, fname, line); 
+		OutputDebugStringA(str);
 	}
 }
+
+inline void CheckILError(const char* stmt, const char* fname, int line) {
+	
+	ILenum Error;
+	while ((Error = ilGetError()) != IL_NO_ERROR) {
+
+		char str[2048];
+		std::string f = "DevIL error %d : %s  - %s -> File: %s:%d \n";
+		sprintf_s(str, f.c_str(), Error, iluErrorString(Error), stmt, fname, line);
+		OutputDebugStringA(str);
+
+	}
+}
+
 
 #ifdef _DEBUG
 #define SIMPLE_LOG(format, ...) \
@@ -40,10 +54,16 @@ stmt; \
 CheckOpenGLError(#stmt, __FILE__, __LINE__); \
 } while (0)
 
+#define IL_CHECK(stmt) do { \
+stmt; \
+CheckILError(#stmt, __FILE__, __LINE__); \
+} while (0)
+
 #else
 #define SIMPLE_ASSERT(test)
 #define SIMPLE_LOG(format, ...)
 #define GL_CHECK(stmt) stmt
+#define IL_CHECK(stmt) stmt
 #endif
 
 inline std::string GetLastErrorAsString()
@@ -64,3 +84,4 @@ inline std::string GetLastErrorAsString()
 
 	return message;
 }
+

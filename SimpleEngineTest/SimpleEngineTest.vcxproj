@@ -93,7 +93,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>DevIL.lib; opengl32.lib; SimpleEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ILU.lib; DevIL.lib; opengl32.lib; SimpleEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <DelayLoadDLLs>DevIL.dll</DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>

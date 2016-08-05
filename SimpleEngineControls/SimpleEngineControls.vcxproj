@@ -94,7 +94,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>DevIL.lib ;SimpleEngine.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ILU.lib;DevIL.lib ;SimpleEngine.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <DelayLoadDLLs>DevIL.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
