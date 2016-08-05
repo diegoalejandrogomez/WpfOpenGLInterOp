@@ -134,6 +134,9 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Include\SimpleLayer.h" />
+    <ClInclude Include="Include\LowerZIndex.h" />
+    <ClInclude Include="SimpleTexture.h" />
     <ClInclude Include="Include\SimpleSprite.h" />
     <ClInclude Include="Include\DebugGameLogic.h" />
     <ClInclude Include="Include\DebugRenderPass.h" />
@@ -160,6 +163,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="External\glew\glew.cpp" />
+    <ClCompile Include="Src\SimpleLayer.cpp" />
     <ClCompile Include="Include\SimpleMesh.h" />
     <ClCompile Include="Src\DebugGameLogic.cpp" />
     <ClCompile Include="Src\SimpleCamera2D.cpp" />

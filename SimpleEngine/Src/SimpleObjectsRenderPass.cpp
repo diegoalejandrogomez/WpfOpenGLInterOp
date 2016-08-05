@@ -8,8 +8,9 @@ void SimpleObjectsRenderPass::Render(float dt, SimpleScene* scene) {
 	if (scene == nullptr)
 		return;
 
-	for (auto ent : scene->GetEntities()) {
-		ent->Render(dt);
+	for (auto layer : scene->GetLayers()) {
+		for (auto ent : layer->GetEntities()) {
+			ent->Render(dt);
+		}
 	}
-
 }
