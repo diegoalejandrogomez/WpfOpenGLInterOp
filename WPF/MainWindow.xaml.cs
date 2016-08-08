@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SimpleEngineControls;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,7 +25,10 @@ namespace WPF
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new PaintViewModel();
+            openGlRender.OpenGLControl = new SimpleEngineViewerControl();
+            var paintViewModel = new PaintViewModel();
+            paintViewModel.OpenGLRenderControl = openGlRender.OpenGLControl;
+            DataContext = paintViewModel;
         }
     }
 }

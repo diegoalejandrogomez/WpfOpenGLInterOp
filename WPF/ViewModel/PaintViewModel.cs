@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using SimpleEngineControls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -137,6 +138,9 @@ namespace WPF.ViewModel
                         if (dialog.ShowDialog() == true)
                         {
                             this.FilePath = dialog.FileName;
+                            var spriteControl = new SpriteControl();
+                            
+                            spriteControl.AddControl(this.FilePath);
                         }
                     });
                 }

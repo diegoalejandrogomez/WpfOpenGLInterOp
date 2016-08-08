@@ -13,7 +13,7 @@ void DebugGameLogic::Init()
 	
 	//SimpleDebugObject* obj = new SimpleDebugObject();
 	//SimpleEngine::Instance()->GetScene()->AddEntity(obj, layer);
-
+/*
 	SimpleSpriteRenderer * sprite = new SimpleSpriteRenderer();
 	sprite->SetAsTexture("./media/spriteFull.png");
 	//sprite->SetRect({ 100.0f,0.0f, }, {100,100});
@@ -21,7 +21,7 @@ void DebugGameLogic::Init()
 
 	//sprite->SetSize(glm::vec2(200, 200));
 	SimpleEngine::Instance()->GetScene()->AddEntity(sprite, layer);
-
+	*/
 }
 
 void DebugGameLogic::Advance(float dt)

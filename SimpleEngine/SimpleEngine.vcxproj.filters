@@ -104,14 +104,14 @@
     <ClInclude Include="Include\SimpleLayer.h">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Include\LowerZIndex.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
     <ClInclude Include="Include\SimpleUtils.h">
       <Filter>Engine\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Include\SimpleSpriteRenderer.h">
       <Filter>Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\LowerZIndex.h">
+      <Filter>Engine\Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
