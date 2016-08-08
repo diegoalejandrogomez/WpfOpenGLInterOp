@@ -18,6 +18,8 @@ public:
 	void SetAsTextureRect(std::string && name, glm::vec2 offset, glm::vec2 size);
 	~SimpleSpriteRenderer();
 
+	inline SimpleTexture* GetTexture() { return _tex; };
+
 private:
 	unsigned int _vertexCount;
 	unsigned int _indexCount;

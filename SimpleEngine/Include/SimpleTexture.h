@@ -21,6 +21,10 @@ public:
 	float GetHeightRatio() { return _sizeRatio.y; };
 
 	void BindTo(int textureChannel);
+
+	//No mipmaps for now...
+	void SetSmooth();
+	void SetPixelated();
 private:
 	//CPU data
 	Texture texture;

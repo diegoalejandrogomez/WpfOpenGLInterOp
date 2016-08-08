@@ -9,12 +9,28 @@ SimpleTexture::SimpleTexture() {
 
 	//Create texture
 	glGenTextures(1, &_tex);
+	SetSmooth();
+}
+
+
+void SimpleTexture::SetSmooth() {
 
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, _tex);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+
+}
+void SimpleTexture::SetPixelated() {
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, _tex);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 }
@@ -77,7 +93,7 @@ void SimpleTexture::LoadTexture(const char* path)
 	ILubyte *data = ilGetData();
 	texture.imageData = new BYTE[_potSize.x * _potSize.y * 4];
 	memset(texture.imageData, 0, _potSize.x * _potSize.y * 4);
-	for (unsigned int i = 0; i < texture.height; ++i) {
+	for (unsigned int i = 0; i < texture.height ; ++i) {
 
 		memcpy(&texture.imageData[ (texture.height-i-1) * _potSize.x * 4 ], &data[i*texture.width * 4], texture.width * 4);
 			

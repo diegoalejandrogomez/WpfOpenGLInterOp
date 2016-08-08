@@ -28,6 +28,8 @@ void SimpleSpriteRenderer::SetAsTexture(std::string && name) {
 	_tex = render->GetTexture(name);
 	_rectOffset = { 0,0 };
 	_rectSize = { _tex->GetWidth(), _tex->GetHeight() };
+	//Set sprite size using texture resolution
+	_size = _rectSize;
 }
 
 void SimpleSpriteRenderer::SetAsTextureRect(std::string && name, glm::vec2 offset, glm::vec2 size) {
@@ -35,6 +37,7 @@ void SimpleSpriteRenderer::SetAsTextureRect(std::string && name, glm::vec2 offse
 	_tex = render->GetTexture(name);
 	_rectOffset = offset;
 	_rectSize = size;
+	_size = _rectSize;
 }
 
 
