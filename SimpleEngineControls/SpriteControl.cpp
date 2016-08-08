@@ -23,7 +23,8 @@ void SpriteControl::AddControl(System::String^ path)// , glm::vec3 _position, gl
 
 	_simpleSpriteRenderer->SetAsTexture(chars);
 	_simpleSpriteRenderer->SetSize(glm::vec2(500, 500));
-	SimpleEngine::Instance()->GetScene()->AddLayer(_simpleLayer);
 	
+	_simpleLayer->SetZ(SimpleEngine::Instance()->GetScene()->GetLowerZIndex() -1);
+	SimpleEngine::Instance()->GetScene()->AddLayer(_simpleLayer);
 	SimpleEngine::Instance()->GetScene()->AddEntity(_simpleSpriteRenderer, _simpleLayer);
 }
