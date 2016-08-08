@@ -31,8 +31,8 @@ public:
 	inline SimpleScene* GetScene() { return _scene; ; }
 	inline SimpleRenderer* GetRenderer() { return _renderer; };
 	inline SimpleInput* GetInput() { return _input; };
-	inline float GetRenderFPS() { return _renderTime.count() > 0? 1.0f / _renderTime.count(): 0; };
-	inline float GetLogicFPS() { return _renderTime.count() > 0?  1.0f / _logicTime.count(): 0; };
+	inline float GetRenderFPS() { return _renderTime.count() > 0? 1000.0f / _renderTime.count() : 0; };
+	inline float GetLogicFPS() { return _renderTime.count() > 0?  1000.0f / _logicTime.count(): 0; };
 
 	//Used by external event loops
 	void Render(float dt);
@@ -52,9 +52,9 @@ protected:
 	SimpleGameLogic* _nextGameLogic = nullptr;
 	SimpleInput*	_input;
 
-	 
-	std::chrono::duration<double> _renderTime;
-	std::chrono::duration<double> _logicTime;
+	 //Instant frame time for logic and render update
+	std::chrono::milliseconds _renderTime;
+	std::chrono::milliseconds _logicTime;
 
 	void _SwitchGameLogic();
 };
