@@ -16,6 +16,13 @@ SimpleSpriteRenderer::SimpleSpriteRenderer() {
 	_rectSize = glm::vec2(0.0f);
 }
 
+void SimpleSpriteRenderer::SetRect(glm::vec2 offset, glm::vec2 size) {
+	_rectOffset = offset;
+	_rectSize = size;
+	//Resize accordingly
+	_size = _rectSize;
+}
+
 SimpleSpriteRenderer::~SimpleSpriteRenderer() {
 
 	delete _mesh;
@@ -35,9 +42,7 @@ void SimpleSpriteRenderer::SetAsTexture(std::string && name) {
 void SimpleSpriteRenderer::SetAsTextureRect(std::string && name, glm::vec2 offset, glm::vec2 size) {
 	SimpleRenderer* render = SimpleEngine::Instance()->GetRenderer();
 	_tex = render->GetTexture(name);
-	_rectOffset = offset;
-	_rectSize = size;
-	_size = _rectSize;
+	SetRect(offset, size);
 }
 
 

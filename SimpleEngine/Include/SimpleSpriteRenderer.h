@@ -16,6 +16,7 @@ public:
 	void Render(float dt);
 	void SetAsTexture(std::string && name);
 	void SetAsTextureRect(std::string && name, glm::vec2 offset, glm::vec2 size);
+	void SetRect(glm::vec2 offset, glm::vec2 size);
 	~SimpleSpriteRenderer();
 
 	inline SimpleTexture* GetTexture() { return _tex; };
