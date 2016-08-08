@@ -25,6 +25,7 @@ SimpleRenderer::~SimpleRenderer() {
 
 void SimpleRenderer::Render(float dt, SimpleScene* scene ) {
 
+	glViewport(0, 0, _width, _height);
 	for (auto &pass : _passes) {
 		
 		pass->Render(dt, scene);

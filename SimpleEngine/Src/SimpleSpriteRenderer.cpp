@@ -62,7 +62,7 @@ void SimpleSpriteRenderer::Render(float dt) {
 	//Not efficient at all, but easier to read for now
 	
 	glm::mat4 model = glm::translate(_position) * glm::rotate(_orientation, glm::vec3(0.0f, 0.0f, 1.0f)) * glm::scale(glm::vec3(_size.x, _size.y, 1.0f ));
-	//glm::mat4 model = glm::scale(glm::vec3(_size.x, _size.y, 1.0f));
+	
 
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, &model[0][0]);
 
