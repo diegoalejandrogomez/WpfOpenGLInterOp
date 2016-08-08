@@ -30,6 +30,9 @@
     <Filter Include="Engine\Utils">
       <UniqueIdentifier>{72ba70d2-9f49-4318-9cbb-3a7d86191557}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Input">
+      <UniqueIdentifier>{b8217132-f83c-48f0-8f29-bf22fb29e529}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -113,6 +116,9 @@
     <ClInclude Include="Include\LowerZIndex.h">
       <Filter>Engine\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Include\SimpleInput.h">
+      <Filter>Engine\Input</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\SimpleObjectsRenderPass.cpp">
@@ -165,6 +171,9 @@
     </ClCompile>
     <ClCompile Include="Src\SimpleSpriteRenderer.cpp">
       <Filter>Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\SimpleInput.cpp">
+      <Filter>Engine\Input</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
