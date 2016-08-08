@@ -54,7 +54,7 @@
 
                 </Grid>
                 <Grid x:Name="drawingArea" Grid.Column="1">
-                    <local:OpenGLRender ></local:OpenGLRender>
+                    <local:OpenGLRender x:Name="openGlRender"></local:OpenGLRender>
                 </Grid>
             </Grid>
         </Grid>

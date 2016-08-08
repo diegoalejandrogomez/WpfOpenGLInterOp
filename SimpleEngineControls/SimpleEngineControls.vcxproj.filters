@@ -27,16 +27,10 @@
     <ClInclude Include="SimpleEngineViewerControl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="LineControl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CoordinatesControl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BaseControl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="DrawingAppLogic.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteControl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -53,16 +47,10 @@
     <ClCompile Include="SimpleEngineViewerControl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BaseControl.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CoordinatesControl.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LineControl.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="DrawingAppLogic.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteControl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

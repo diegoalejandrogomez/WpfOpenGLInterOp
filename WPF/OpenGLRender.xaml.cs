@@ -24,7 +24,7 @@ namespace WPF
     public partial class OpenGLRender : UserControl
     {
 
-        private readonly System.Windows.Threading.DispatcherTimer updateTimer;
+        private System.Windows.Threading.DispatcherTimer updateTimer;
 
         public bool DrawLine { get; set; }
 
@@ -32,20 +32,22 @@ namespace WPF
 
         public int Ticks = 1600;
 
+        public override void EndInit()
+        {
+            base.EndInit();
+            //in Design mode
+            OpenGLControl = OpenGLControl == null ? new SimpleEngineViewerControl() : OpenGLControl;
+            DataContext = OpenGLControl;
+            host.Child = OpenGLControl;  
+        }
+
         public OpenGLRender()
         {
             InitializeComponent();
-            // Check for design mode. 
-            if (!(bool)(DesignerProperties.IsInDesignModeProperty.GetMetadata(typeof(DependencyObject)).DefaultValue))
-            {
-                //in Design mode
-                OpenGLControl = OpenGLControl == null ? new SimpleEngineViewerControl() : OpenGLControl;
-                host.Child = OpenGLControl;
-                updateTimer = new System.Windows.Threading.DispatcherTimer();
-                updateTimer.Interval = new TimeSpan(Ticks);
-                updateTimer.Tick += new EventHandler(UpdateTimer_Tick);
-                updateTimer.Start();
-            }
+            updateTimer = new System.Windows.Threading.DispatcherTimer();
+            updateTimer.Interval = new TimeSpan(Ticks);
+            updateTimer.Tick += new EventHandler(UpdateTimer_Tick);
+            updateTimer.Start();
         }
 
         private void UpdateTimer_Tick(object sender, EventArgs e)
