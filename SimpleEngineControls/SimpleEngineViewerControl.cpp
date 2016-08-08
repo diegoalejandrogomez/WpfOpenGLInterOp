@@ -31,6 +31,8 @@ void SimpleEngineViewerControl::OnSizeChanged(System::Object ^sender, System::Ev
 	SimpleRenderer* render = eng->GetRenderer();
 	if (render != nullptr)
 		render->ResizeWindow(Width, Height);
+
+	System::Diagnostics::Debug::WriteLine("OnSizeChanged");
 }
 
 
@@ -41,5 +43,6 @@ void SimpleEngineViewerControl::OnPaint(PaintEventArgs^ e)  {
 
 	SimpleEngine::Instance()->Advance(0.0f);
 	SimpleEngine::Instance()->Render(0.0f);
+	System::Diagnostics::Debug::WriteLine("OnPaint");
 
 }

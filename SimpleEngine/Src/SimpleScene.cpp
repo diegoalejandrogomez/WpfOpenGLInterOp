@@ -57,3 +57,17 @@ void SimpleScene::RemoveLayer(SimpleLayer* sLayer) {
 	if (it != _layers.end())
 		_layers.erase(it);
 }
+
+float SimpleScene::GetLowerZIndex() {
+	std::vector<SimpleLayer*> layers = GetLayers();
+	float min = 10000;
+	for (auto layer : layers) // access by reference to avoid copying
+	{
+		if (layer->GetZ() < min)
+		{
+			min = layer->GetZ();
+		}
+	}
+
+	return min;
+}

@@ -15,13 +15,15 @@ using System.Windows.Shapes;
 using WPFOpenGLLib;
 using SimpleEngineControls;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Windows.Forms;
 
 namespace WPF
 {
     /// <summary>
     /// Interaction logic for OpenGLRender.xaml
     /// </summary>
-    public partial class OpenGLRender : UserControl
+    public partial class OpenGLRender : System.Windows.Controls.UserControl
     {
 
         private System.Windows.Threading.DispatcherTimer updateTimer;
@@ -31,7 +33,7 @@ namespace WPF
         public System.Windows.Forms.UserControl OpenGLControl { get; set; }
 
         public int Ticks = 1600;
-
+        int total = 0;
         public override void EndInit()
         {
             base.EndInit();
@@ -52,7 +54,11 @@ namespace WPF
 
         private void UpdateTimer_Tick(object sender, EventArgs e)
         {
-            OpenGLControl.Invalidate();
+            //Debug.WriteLine("Entre " + total);
+            total++;
+            OpenGLControl.Refresh();
+            
+            //System.Windows.Forms.Application.DoEvents();
         }
     }
 }

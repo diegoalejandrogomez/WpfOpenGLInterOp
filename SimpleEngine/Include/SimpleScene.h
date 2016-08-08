@@ -26,4 +26,6 @@ public:
 
 	void AddLayer(SimpleLayer* sLayer);
 	void RemoveLayer(SimpleLayer* sLayer);
+
+	float GetLowerZIndex();
 };
