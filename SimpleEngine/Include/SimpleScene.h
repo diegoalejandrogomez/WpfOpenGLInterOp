@@ -28,4 +28,6 @@ public:
 	void RemoveLayer(SimpleLayer* sLayer);
 
 	float GetLowerZIndex();
+
+	float GetFPS(); 
 };

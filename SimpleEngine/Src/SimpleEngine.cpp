@@ -4,6 +4,8 @@
 #include "SimpleObjectsRenderPass.h"
 #include "SimpleDispatcher.h"
 #include "DebugGameLogic.h"
+using namespace std::chrono;
+
 void SimpleEngine::InitRenderer(HWND hWnd, uint32_t width, uint32_t height) {
 	
 	_renderer = new SimpleRenderer();
@@ -38,13 +40,26 @@ void SimpleEngine::_SwitchGameLogic() {
 
 void SimpleEngine::Render(float dt) {
 	
+
 	SIMPLE_ASSERT(_renderer != nullptr);
-		
+
+	//Internal fps measuring
+	static high_resolution_clock::time_point prev = high_resolution_clock::now();
+	high_resolution_clock::time_point current = high_resolution_clock::now();
+	_renderTime = current - prev;
+	prev = current;
+	
 	_renderer->Render(dt, _scene);
 }
 
 void SimpleEngine::Advance(float dt) {
 	
+	//Internal fps measuring
+	static high_resolution_clock::time_point prev = high_resolution_clock::now();
+	high_resolution_clock::time_point current = high_resolution_clock::now();
+	_logicTime = current - prev;
+	prev = current;
+
 	//Check if we must switch the game mode
 	if (_nextGameLogic != nullptr)
 		_SwitchGameLogic();
@@ -60,6 +75,8 @@ void SimpleEngine::Advance(float dt) {
 
 	//Flush pending events
 	SimpleDispatcher::Instance()->Flush();
+
+	//SIMPLE_LOG("FPS: %.2f", GetRenderFPS());
 }
 
 //#define DEBUG_CONTENT

@@ -4,6 +4,7 @@
 #include "SimpleScene.h"
 #include "stdlib.h"
 #include "LowerzIndex.h"
+#include "SimpleEngine.h"
 
 SimpleScene::SimpleScene() {
 	_camera = new SimpleCamera2D();
@@ -74,4 +75,9 @@ float SimpleScene::GetLowerZIndex() {
 	}
 
 	return min;
+}
+
+
+float SimpleScene::GetFPS() {
+	return SimpleEngine::Instance()->GetRenderFPS();
 }
