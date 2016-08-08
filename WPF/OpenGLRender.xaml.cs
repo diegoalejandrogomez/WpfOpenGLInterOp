@@ -54,11 +54,8 @@ namespace WPF
 
         private void UpdateTimer_Tick(object sender, EventArgs e)
         {
-            //Debug.WriteLine("Entre " + total);
-            total++;
-            OpenGLControl.Refresh();
-            
-            //System.Windows.Forms.Application.DoEvents();
+            host.Child.Invalidate();
+            host.Child.Refresh();
         }
     }
 }
