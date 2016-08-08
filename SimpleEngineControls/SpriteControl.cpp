@@ -22,7 +22,7 @@ void SpriteControl::AddControl(System::String^ path)// , glm::vec3 _position, gl
 		(const char*)(Marshal::StringToHGlobalAnsi(path)).ToPointer();
 
 	_simpleSpriteRenderer->SetAsTexture(chars);
-	_simpleSpriteRenderer->SetSize(glm::vec2(500, 500));
+	//_simpleSpriteRenderer->SetSize(glm::vec2(500, 500));
 	
 	_simpleLayer->SetZ(SimpleEngine::Instance()->GetScene()->GetLowerZIndex() -1);
 	SimpleEngine::Instance()->GetScene()->AddLayer(_simpleLayer);

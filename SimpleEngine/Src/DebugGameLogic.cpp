@@ -8,7 +8,7 @@
 void DebugGameLogic::Init()
 {
 
-	SimpleLayer* layer = new SimpleLayer();
+	//SimpleLayer* layer = new SimpleLayer();
 	//SimpleEngine::Instance()->GetScene()->AddLayer(layer);
 	
 	//SimpleDebugObject* obj = new SimpleDebugObject();

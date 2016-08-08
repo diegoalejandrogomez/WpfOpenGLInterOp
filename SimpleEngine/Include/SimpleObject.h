@@ -19,8 +19,8 @@ public:
 
 protected:
 
-	glm::vec3 _position;
-	glm::vec2 _size;
-	float _orientation;
+	glm::vec3 _position = glm::vec3(0.0f);
+	glm::vec2 _size		= glm::vec2(0.0f);
+	float _orientation	= 0.0f;
 
 };

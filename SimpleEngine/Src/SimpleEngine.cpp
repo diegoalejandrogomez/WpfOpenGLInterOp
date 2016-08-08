@@ -59,7 +59,7 @@ void SimpleEngine::Advance(float dt) {
 	SimpleDispatcher::Instance()->Flush();
 }
 
-#define DEBUG_CONTENT
+//#define DEBUG_CONTENT
 void SimpleEngine::Initialize() {
 
 	SIMPLE_ASSERT(_renderer != nullptr);
