@@ -8,6 +8,7 @@
 SimpleRenderer::SimpleRenderer() {
 	_deviceContext = nullptr;
 	_renderingContext = nullptr;
+	_hWnd = 0;
 	_InitializeExtensions();
 }
 
@@ -63,6 +64,7 @@ bool SimpleRenderer::InitializeOpenGL(HWND hWnd, int width , int height) {
 		0, 0, 0
 	};
 
+	_hWnd = hWnd;
 	_deviceContext = GetDC(hWnd);
 
 	if (!_deviceContext) {

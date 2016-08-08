@@ -36,18 +36,33 @@ void DebugGameLogic::Init()
 	sprite->SetAsTexture("./media/spriteFull.png");
 	SimpleEngine::Instance()->GetScene()->AddEntity(sprite, layer);
 
+	//Configure input system we are going to use
+	//SimpleEngine::Instance()->GetInput()->CreateKeyboard();
 	
 }
 
 void DebugGameLogic::Advance(float dt)
 {
+	//auto keyboard = SimpleEngine::Instance()->GetInput()->GetKeyboard();
+	//auto camera = SimpleEngine::Instance()->GetScene()->GetCamera();
+
+	//if (keyboard->isKeyDown(OIS::KeyCode::KC_UP))
+	//	camera->Move(0.0, 1.0f);
+	//if (keyboard->isKeyDown(OIS::KeyCode::KC_DOWN))
+	//	camera->Move(0.0, -1.0f);
+	//if (keyboard->isKeyDown(OIS::KeyCode::KC_LEFT))
+	//	camera->Move(-1.0, 0.0f);
+	//if (keyboard->isKeyDown(OIS::KeyCode::KC_RIGHT))
+	//	camera->Move(1.0, 0.0f);
+	
 }
 
 void DebugGameLogic::Shutdown()
 {
+	//SimpleEngine::Instance()->GetInput()->DestroyKeyboard();
 }
 
 bool DebugGameLogic::IsRunning()
 {
-	return false;
+	return true;
 }

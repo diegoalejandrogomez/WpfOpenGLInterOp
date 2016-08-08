@@ -8,9 +8,20 @@
 
 class SimpleInput : public OIS::KeyListener, public OIS::MouseListener, public OIS::JoyStickListener {
 public:
+	
 	SimpleInput();
 	virtual ~SimpleInput();
-	void Initialize();
+	
+	void Initialize(bool exclusive);
+	void CreateKeyboard(bool buffered = false);
+	void CreateMouse(bool buffered = false);
+	void CreateJoystics(bool buffered = false);
+
+	void DestroyKeyboard();
+	void DestroyMouse();
+	void DestroyJoysticks();
+
+
 	void Capture();
 
 	void AddKeyListener(OIS::KeyListener *keyListener, const std::string& instanceName);
@@ -38,42 +49,30 @@ public:
 
 	int GetNumOfJoysticks(void);
 
-	static SimpleInput* Instance();
-
 private:
 	
 
-	bool KeyPressed(const OIS::KeyEvent &e);
-	bool KeyReleased(const OIS::KeyEvent &e);
+	bool keyPressed(const OIS::KeyEvent &e);
+	bool keyReleased(const OIS::KeyEvent &e);
 
-	bool MouseMoved(const OIS::MouseEvent &e);
-	bool MousePressed(const OIS::MouseEvent &e, OIS::MouseButtonID id);
-	bool MouseReleased(const OIS::MouseEvent &e, OIS::MouseButtonID id);
+	bool mouseMoved(const OIS::MouseEvent &e);
+	bool mousePressed(const OIS::MouseEvent &e, OIS::MouseButtonID id);
+	bool mouseReleased(const OIS::MouseEvent &e, OIS::MouseButtonID id);
 
-	bool PovMoved(const OIS::JoyStickEvent &e, int pov);
-	bool AxisMoved(const OIS::JoyStickEvent &e, int axis);
-	bool SliderMoved(const OIS::JoyStickEvent &e, int sliderID);
-	bool ButtonPressed(const OIS::JoyStickEvent &e, int button);
-	bool ButtonReleased(const OIS::JoyStickEvent &e, int button);
+	bool povMoved(const OIS::JoyStickEvent &e, int pov);
+	bool axisMoved(const OIS::JoyStickEvent &e, int axis);
+	bool sliderMoved(const OIS::JoyStickEvent &e, int sliderID);
+	bool buttonPressed(const OIS::JoyStickEvent &e, int button);
+	bool buttonReleased(const OIS::JoyStickEvent &e, int button);
 
 	OIS::Mouse        *_mouse;
 	OIS::Keyboard     *_keyboard;
 	OIS::InputManager *_inputSystem;
 
 	std::vector<OIS::JoyStick*> _joysticks;
-	std::vector<OIS::JoyStick*>::iterator _itJoystick;
-	std::vector<OIS::JoyStick*>::iterator _itJoystickEnd;
-
+	
 	std::map<std::string, OIS::KeyListener*> _keyListeners;
 	std::map<std::string, OIS::MouseListener*> _mouseListeners;
 	std::map<std::string, OIS::JoyStickListener*> _joystickListeners;
-
-	std::map<std::string, OIS::KeyListener*>::iterator _itKeyListener;
-	std::map<std::string, OIS::MouseListener*>::iterator _itMouseListener;
-	std::map<std::string, OIS::JoyStickListener*>::iterator _itJoystickListener;
-
-	std::map<std::string, OIS::KeyListener*>::iterator _itKeyListenerEnd;
-	std::map<std::string, OIS::MouseListener*>::iterator _itMouseListenerEnd;
-	std::map<std::string, OIS::JoyStickListener*>::iterator _itJoystickListenerEnd;
 
 };

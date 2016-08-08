@@ -33,7 +33,7 @@ public:
 	SimpleTexture* GetTexture(std::string name) ;
 
 	inline SimpleMesh<VertexTextureFormat2D>* GetUnitaryQuad() { return _texturedQuad; };
-	
+	inline HWND GetWindowHandle() { return _hWnd; };
 private:
 
 	bool _InitializeExtensions();
@@ -47,6 +47,9 @@ private:
 	//Opengl fields
 	HDC _deviceContext;
 	HGLRC _renderingContext;
+
+	//Window handle caching
+	HWND _hWnd;
 
 	//Default render buffer
 	GLint _defaultRenderBuffer;

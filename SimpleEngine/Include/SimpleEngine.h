@@ -2,6 +2,7 @@
 #include "SimpleRenderer.h"
 #include "SimpleScene.h"
 #include "SimpleGameLogic.h"
+#include "SimpleInput.h"
 
 class SimpleEngine final{
 public:
@@ -26,9 +27,9 @@ public:
 	void CreateScene();
 
 	//Getter
-	SimpleScene* GetScene() { return _scene; ; }
-	SimpleRenderer* GetRenderer() { return _renderer; };
-
+	inline SimpleScene* GetScene() { return _scene; ; }
+	inline SimpleRenderer* GetRenderer() { return _renderer; };
+	inline SimpleInput* GetInput() { return _input; };
 	//Used by external event loops
 	void Render(float dt);
 	void Advance(float dt);
@@ -45,6 +46,7 @@ protected:
 	SimpleScene*	_scene = nullptr;
 	SimpleGameLogic* _gameLogic = nullptr;
 	SimpleGameLogic* _nextGameLogic = nullptr;
+	SimpleInput*	_input;
 
 	void _SwitchGameLogic();
 };

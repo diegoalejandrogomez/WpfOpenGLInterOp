@@ -71,8 +71,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)\SimpleEngine\External\glm\;..\SimpleEngine\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)SimpleEngine\External\devil\lib\;..\Debug\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)\SimpleEngine\External\ois\include\;$(SolutionDir)\SimpleEngine\External\glm\;..\SimpleEngine\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\SimpleEngine\External\ois\lib\;$(SolutionDir)SimpleEngine\External\devil\lib\;..\Debug\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -93,7 +93,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>ILU.lib; DevIL.lib; opengl32.lib; SimpleEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OIS_static_d.lib; ILU.lib; DevIL.lib; opengl32.lib; SimpleEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <DelayLoadDLLs>DevIL.dll</DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>

@@ -49,6 +49,9 @@ void SimpleEngine::Advance(float dt) {
 	if (_nextGameLogic != nullptr)
 		_SwitchGameLogic();
 
+	//Capture buffered input
+	_input->Capture();
+
 	if (_gameLogic != nullptr && _gameLogic->IsRunning()) {
 		_gameLogic->Advance(dt);
 		if (_scene != nullptr)
@@ -63,6 +66,10 @@ void SimpleEngine::Advance(float dt) {
 void SimpleEngine::Initialize() {
 
 	SIMPLE_ASSERT(_renderer != nullptr);
+
+	//Create a simple input instance once the renderer is configured
+	_input = new SimpleInput();
+	_input->Initialize(false);
 
 	//Loads a default scene
 	CreateScene();
