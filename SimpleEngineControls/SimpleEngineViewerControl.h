@@ -2,7 +2,7 @@
 using namespace System;
 using namespace System::Windows::Forms;
 #include "SimpleEngineControls.h"
-#include "DrawingAppLogic.h"
+#include "TileEditorApp.h"
 
 namespace SimpleEngineControls {
 
@@ -20,7 +20,7 @@ namespace SimpleEngineControls {
 	
 		void Initialize();
 	private:
-		DrawingAppLogic * _appLogic;
+		TileEditorApp * _appLogic;
 		
 	};
 

@@ -11,8 +11,6 @@ SimpleEngineViewerControl::SimpleEngineViewerControl() {
 	this->Load += gcnew System::EventHandler(this, &SimpleEngineViewerControl::OnLoad);
 	this->SizeChanged += gcnew System::EventHandler(this, &SimpleEngineViewerControl::OnSizeChanged);
 	
-	/*_appLogic = new DrawingAppLogic();
-	SimpleEngine::Instance()->SetGameLogic(_appLogic);*/
 }
 
 
@@ -27,6 +25,9 @@ void SimpleEngineViewerControl::Initialize() {
 	eng->InitRenderer(_hWnd, Width, Height);
 	eng->InitInput((HWND)WPFWindowHandle.ToPointer(), false);
 	eng->Initialize();
+
+	_appLogic = new TileEditorApp();
+	SimpleEngine::Instance()->SetGameLogic(_appLogic);
 
 }
 

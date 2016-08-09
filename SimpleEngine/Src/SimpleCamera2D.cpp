@@ -82,3 +82,26 @@ glm::vec2 SimpleCamera2D::ScreenToWorld(glm::vec2 viewPos) {
 	//-> to world space
 	return{ worldPos.x, worldPos.y };
 }
+
+glm::vec2 SimpleCamera2D::ViewportToWorld(glm::vec2 viewPos) {
+	glm::vec2 normalized = viewPos / _size * 2.0f - 1.0f;
+	//to normalized [-1:1]
+	glm::vec4 worldPos = glm::inverse(_viewProjection) * glm::vec4{ normalized.x, normalized.y, 0.0f, 1.0f };
+	//-> to world space
+	return{ worldPos.x, worldPos.y };
+}
+
+
+glm::vec2 SimpleCamera2D::WorldToScreen(glm::vec2 worldPos) {
+	
+	glm::vec4 normalized = _viewProjection *glm::vec4{ worldPos.x, worldPos.y, 0.0f, 1.0f };
+	normalized = (normalized + 1.0f) * 0.5f;
+	return{ normalized.x * _size.x ,  _size.y - normalized.y * _size.y };
+
+}
+glm::vec2 SimpleCamera2D::WorldToViewport(glm::vec2 worldPos) {
+
+	glm::vec4 normalized = _viewProjection *glm::vec4{ worldPos.x, worldPos.y, 0.0f, 1.0f };
+	normalized = (normalized + 1.0f) * 0.5f;
+	return{ normalized.x * _size.x , normalized.y * _size.y };
+}

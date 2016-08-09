@@ -21,6 +21,10 @@ public:
 	float GetHeight() { return _size.y / _zoom; };
 	
 	glm::vec2 ScreenToWorld(glm::vec2 viewPos);
+	glm::vec2 ViewportToWorld(glm::vec2 viewPos);
+	
+	glm::vec2 WorldToScreen(glm::vec2 worldPos);
+	glm::vec2 WorldToViewport(glm::vec2 worldPos);
 	
 private:
 	
