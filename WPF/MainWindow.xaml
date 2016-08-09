@@ -8,7 +8,7 @@
         xmlns:oglc="clr-namespace:WPFOpenGLLib;assembly=OpenGLManagedCpp"
         xmlns:se ="clr-namespace:SimpleEngineControls;assembly=SimpleEngineControls"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-        Title="WPF - OpenGl InterOp" Height="350" Width="525">
+        Title="WPF - OpenGl InterOp" >
 
     <Grid>
         <Grid x:Name="window">
@@ -54,7 +54,12 @@
 
                 </Grid>
                 <Grid x:Name="drawingArea" Grid.Column="1">
-                    <local:OpenGLRender x:Name="openGlRender"></local:OpenGLRender>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <xctk:PropertyGrid x:Name="propertyGrid" Grid.Column="0" AutoGenerateProperties="true" SelectedObject="{Binding OpenGLRenderControl}"></xctk:PropertyGrid>
+                    <local:OpenGLRender x:Name="openGlRender" Grid.Column="1"></local:OpenGLRender>
                 </Grid>
             </Grid>
         </Grid>
