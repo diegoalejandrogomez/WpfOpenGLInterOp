@@ -29,6 +29,7 @@ namespace WPF.ViewModel
             }
         }
 
+
         public string color;
 
         public string Color
@@ -38,6 +39,18 @@ namespace WPF.ViewModel
             {
                 color = value;
                 PropertyChanged(this, new PropertyChangedEventArgs("Color"));
+            }
+        }
+
+        public string fps;
+
+        public string Fps
+        {
+            get { return fps; }
+            set
+            {
+                fps = value;
+                PropertyChanged(this, new PropertyChangedEventArgs("Fps"));
             }
         }
 
