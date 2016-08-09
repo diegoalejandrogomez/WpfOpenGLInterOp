@@ -15,6 +15,15 @@ void SimpleEngine::InitRenderer(HWND hWnd, uint32_t width, uint32_t height) {
 	_renderer->AddPass(new SimpleObjectsRenderPass());
 }
 
+
+void SimpleEngine::InitInput(HWND hWnd, bool exclusive) {
+
+	//Create a simple input instance once the renderer is configured
+	_input = new SimpleInput();
+	_input->Initialize(hWnd, exclusive);
+
+}
+
 void SimpleEngine::SetGameLogic(SimpleGameLogic* _newGameLogic) {
 
 	_nextGameLogic = _newGameLogic;
@@ -46,7 +55,7 @@ void SimpleEngine::Render(float dt) {
 	//Internal fps measuring
 	static high_resolution_clock::time_point prev = high_resolution_clock::now();
 	high_resolution_clock::time_point current = high_resolution_clock::now();
-	_renderTime = current - prev;
+	_renderTime = duration_cast<nanoseconds>(current - prev);
 	prev = current;
 	
 	_renderer->Render(dt, _scene);
@@ -57,10 +66,10 @@ void SimpleEngine::Advance(float dt) {
 	//Internal fps measuring
 	static high_resolution_clock::time_point prev = high_resolution_clock::now();
 	high_resolution_clock::time_point current = high_resolution_clock::now();
-	_logicTime = current - prev;
+	_logicTime = duration_cast<nanoseconds>(current - prev);
 	prev = current;
 
-	//Check if we must switch the game mode
+	////Check if we must switch the game mode
 	if (_nextGameLogic != nullptr)
 		_SwitchGameLogic();
 
@@ -79,14 +88,12 @@ void SimpleEngine::Advance(float dt) {
 	//SIMPLE_LOG("FPS: %.2f", GetRenderFPS());
 }
 
-//#define DEBUG_CONTENT
+#define DEBUG_CONTENT
 void SimpleEngine::Initialize() {
 
 	SIMPLE_ASSERT(_renderer != nullptr);
-
-	//Create a simple input instance once the renderer is configured
-	_input = new SimpleInput();
-	_input->Initialize(false);
+	SIMPLE_ASSERT(_input != nullptr);
+	
 
 	//Loads a default scene
 	CreateScene();
