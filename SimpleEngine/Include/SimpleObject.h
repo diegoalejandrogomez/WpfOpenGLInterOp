@@ -15,8 +15,11 @@ public:
 	inline const float& GetOrientation()const { return _orientation; };
 
 	inline void SetPosition(glm::vec3&& pos) { _aabb.position = pos; };
+	inline void SetPosition(glm::vec3& pos) { _aabb.position = pos; };
 	inline void SetSize(glm::vec2&& size) { _aabb.size = size; };
+	inline void SetSize(glm::vec2& size) { _aabb.size = size; };
 	inline void SetOrientation(float&& orientation) { _orientation = orientation; };
+	inline void SetOrientation(float& orientation) { _orientation = orientation; };
 	inline const SimpleAABB& GetAABB()const { return _aabb; };
 
 protected:
