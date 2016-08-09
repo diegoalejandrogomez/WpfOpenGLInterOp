@@ -73,3 +73,12 @@ void SimpleCamera2D::SetViewportSize(float w, float h) {
 
 	_UpdateTransform();
 }
+
+glm::vec2 SimpleCamera2D::ScreenToWorld(glm::vec2 viewPos) {
+	viewPos.y = _size.y - viewPos.y;
+	glm::vec2 normalized = viewPos / _size * 2.0f - 1.0f;
+	//to normalized [-1:1]
+	glm::vec4 worldPos = glm::inverse(_viewProjection) * glm::vec4{ normalized.x, normalized.y, 0.0f, 1.0f };
+	//-> to world space
+	return{ worldPos.x, worldPos.y };
+}

@@ -19,7 +19,9 @@ public:
 	glm::mat4 &GetProjection() {return _projection;}
 	float GetWidth() { return _size.x / _zoom; };
 	float GetHeight() { return _size.y / _zoom; };
-		
+	
+	glm::vec2 ScreenToWorld(glm::vec2 viewPos);
+	
 private:
 	
 	void _UpdateTransform();

@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "SimpleInput.h"
 #include "SimpleEngine.h"
+#include "SimpleDispatcher.h"
 
 #include <sstream>
 
@@ -23,6 +24,7 @@ void SimpleInput::DestroyMouse() {
 	if (_mouse) {
 		_inputSystem->destroyInputObject(_mouse);
 		_mouse = nullptr;
+		SimpleDispatcher::Instance()->RemoveListener(WindowResizeEvent::descriptor, this);
 	}
 }
 
@@ -121,6 +123,16 @@ void SimpleInput::CreateMouse(bool buffered) {
 		if (buffered)
 			_mouse->setEventCallback(this);
 		SetWindowExtents(render->GetWidth(), render->GetHeight());
+		
+		//Listen to window resize
+		SimpleDispatcher::Instance()->AddListener(WindowResizeEvent::descriptor, {
+			this,
+			[this](const SimpleEvent& evt) {
+			const WindowResizeEvent &res = static_cast<const WindowResizeEvent&>(evt);
+			SetWindowExtents(res.width,res.height);
+		}
+		});
+
 	}
 }
 void SimpleInput::CreateJoystics(bool buffered) {
