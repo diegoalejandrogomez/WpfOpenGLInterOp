@@ -58,7 +58,7 @@
                         <ColumnDefinition Width="Auto"></ColumnDefinition>
                         <ColumnDefinition Width="*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <xctk:PropertyGrid x:Name="propertyGrid" Grid.Column="0" AutoGenerateProperties="true" SelectedObject="{Binding OpenGLRenderControl}"></xctk:PropertyGrid>
+                    <xctk:PropertyGrid x:Name="propertyGrid" Grid.Column="0" AutoGenerateProperties="true" SelectedObject="{Binding Selected}"></xctk:PropertyGrid>
                     <local:OpenGLRender x:Name="openGlRender" Grid.Column="1"></local:OpenGLRender>
                 </Grid>
             </Grid>

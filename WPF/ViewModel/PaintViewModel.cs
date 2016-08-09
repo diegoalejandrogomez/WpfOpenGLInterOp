@@ -17,6 +17,18 @@ namespace WPF.ViewModel
         #region Properties
         public System.Windows.Forms.UserControl OpenGLRenderControl { get; set; }
 
+        private ManagedSimpleObject selected;
+
+        public ManagedSimpleObject Selected
+        {
+            get { return selected; }
+            set
+            {
+                selected = value;
+                PropertyChanged(this, new PropertyChangedEventArgs("Selected"));
+            }
+        }
+
         public bool drawLine;
 
         public bool DrawLine
@@ -154,6 +166,7 @@ namespace WPF.ViewModel
                             var spriteControl = new SpriteControl();
                             
                             spriteControl.AddControl(this.FilePath);
+                            Selected = spriteControl.GetManagedSimpleObject();
                         }
                     });
                 }

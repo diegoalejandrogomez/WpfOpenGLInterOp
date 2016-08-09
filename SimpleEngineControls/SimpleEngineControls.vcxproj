@@ -138,6 +138,7 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ManagedSimpleObject.h" />
     <ClInclude Include="TileEditorApp.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="SimpleEngineControls.h" />
@@ -147,6 +148,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp" />
+    <ClCompile Include="ManagedSimpleObject.cpp" />
     <ClCompile Include="TileEditorApp.cpp" />
     <ClCompile Include="SimpleEngineControls.cpp" />
     <ClCompile Include="SimpleEngineViewerControl.cpp" />

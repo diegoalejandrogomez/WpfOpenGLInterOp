@@ -9,7 +9,8 @@ using namespace SimpleEngineControls;
 SpriteControl::SpriteControl() {
 	_simpleLayer = new SimpleLayer();
 	_simpleSpriteRenderer = new SimpleSpriteRenderer();
-	
+	_managedSimpleObject = gcnew ManagedSimpleObject();
+	_managedSimpleObject->SetSimpleObject(_simpleSpriteRenderer);
 }
 
 SpriteControl::~SpriteControl() {
@@ -27,4 +28,8 @@ void SpriteControl::AddControl(System::String^ path)// , glm::vec3 _position, gl
 	_simpleLayer->SetZ(SimpleEngine::Instance()->GetScene()->GetLowerZIndex() -1);
 	SimpleEngine::Instance()->GetScene()->AddLayer(_simpleLayer);
 	SimpleEngine::Instance()->GetScene()->AddEntity(_simpleSpriteRenderer, _simpleLayer);
+}
+
+ManagedSimpleObject^ SpriteControl::GetManagedSimpleObject() {
+	return this->_managedSimpleObject;
 }
