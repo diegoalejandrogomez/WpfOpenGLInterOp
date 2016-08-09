@@ -167,6 +167,7 @@ namespace WPF.ViewModel
                             
                             spriteControl.AddControl(this.FilePath);
                             Selected = spriteControl.GetManagedSimpleObject();
+                            
                         }
                     });
                 }

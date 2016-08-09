@@ -1,5 +1,6 @@
 #pragma once
 #include "SimpleObject.h"
+#include <string>
 
 public ref class ManagedSimpleObject {
 public:
@@ -8,19 +9,65 @@ public:
 
 	void SetSimpleObject(SimpleObject* simpleObject) { this->simpleObject = simpleObject; };
 
-	/*property glm::vec3 position
+	property float positionX
 	{
-		glm::vec3 get() {
-			return _position;
+		float get() {
+			return simpleObject->GetPosition().x;
 		}
 
-		void set(glm::vec3 position)
+		void set(float position)
 		{
-			_position = position;
+			simpleObject->SetPosition(glm::vec3(position, simpleObject->GetPosition().y, simpleObject->GetPosition().z));
 		}
-	};*/
+	};
 
-	glm::vec2 GetSize();
+	property float positionY
+	{
+		float get() {
+			return simpleObject->GetPosition().y;
+		}
+
+		void set(float position)
+		{
+			simpleObject->SetPosition(glm::vec3(simpleObject->GetPosition().x, position, simpleObject->GetPosition().z));
+		}
+	};
+
+	property float positionZ
+	{
+		float get() {
+			return simpleObject->GetPosition().z;
+		}
+
+		void set(float position)
+		{
+			simpleObject->SetPosition(glm::vec3(simpleObject->GetPosition().x, simpleObject->GetPosition().y, position));
+		}
+	};
+
+	property float sizeW
+	{
+		float get() {
+			return simpleObject->GetSize().x;
+		}
+
+		void set(float width)
+		{
+			simpleObject->SetSize(glm::vec2(width, simpleObject->GetSize().y));
+		}
+	};
+
+	property float sizeH
+	{
+		float get() {
+			return simpleObject->GetSize().y;
+		}
+
+		void set(float heigth)
+		{
+			simpleObject->SetSize(glm::vec2(simpleObject->GetSize().x, heigth));
+		}
+	};
 
 	property float Orientation
 	{
@@ -34,11 +81,7 @@ public:
 		}
 	};
 
-	void SetPosition(glm::vec3& pos);
-	void SetSize(glm::vec2& size);
-	void SetOrientation(float orientation);
-
 private:
 	SimpleObject* simpleObject;
-	float _Orientation;
+
 };
