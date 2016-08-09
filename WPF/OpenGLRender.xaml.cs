@@ -17,6 +17,7 @@ using SimpleEngineControls;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Forms;
+using System.Windows.Interop;
 
 namespace WPF
 {
@@ -38,9 +39,7 @@ namespace WPF
         {
             base.EndInit();
             //in Design mode
-            OpenGLControl = OpenGLControl == null ? new SimpleEngineViewerControl() : OpenGLControl;
-            DataContext = OpenGLControl;
-            host.Child = OpenGLControl;  
+            
         }
 
         public OpenGLRender()
@@ -50,12 +49,26 @@ namespace WPF
             updateTimer.Interval = new TimeSpan(Ticks);
             updateTimer.Tick += new EventHandler(UpdateTimer_Tick);
             updateTimer.Start();
+            Loaded += OpenGLRender_Loaded;
+        }
+
+        private void OpenGLRender_Loaded(object sender, RoutedEventArgs e)
+        {
+            OpenGLControl = OpenGLControl == null ? new SimpleEngineViewerControl() : OpenGLControl;
+            DataContext = OpenGLControl;
+            host.Child = OpenGLControl;
+            //So we have a valid hwnd
+            IntPtr windowHandle = new WindowInteropHelper(System.Windows.Application.Current.MainWindow).Handle;
+            (OpenGLControl as SimpleEngineViewerControl).WPFWindowHandle = windowHandle;
+            (OpenGLControl as SimpleEngineViewerControl).Initialize();
+
         }
 
         private void UpdateTimer_Tick(object sender, EventArgs e)
         {
             host.Child.Invalidate();
             host.Child.Refresh();
+        
         }
     }
 }

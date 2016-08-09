@@ -55,7 +55,7 @@ SimpleInput::~SimpleInput() {
 }
 
 
-void SimpleInput::Initialize(bool exclusive) {
+void SimpleInput::Initialize(HWND hWnd, bool exclusive) {
 
 	if (!_inputSystem) {
 
@@ -66,7 +66,8 @@ void SimpleInput::Initialize(bool exclusive) {
 		std::ostringstream windowHndStr;
 
 		// Fill parameter list
-		windowHndStr << (unsigned int)render->GetWindowHandle();
+		//windowHndStr << (unsigned int)render->GetWindowHandle();
+		windowHndStr << (unsigned int) hWnd;
 		paramList.insert(std::make_pair(std::string("WINDOW"), windowHndStr.str()));
 		/*
 		To set coop level use 
@@ -77,11 +78,23 @@ void SimpleInput::Initialize(bool exclusive) {
 		if (!exclusive)
 		{
 			paramList.insert(std::make_pair(std::string("w32_keyboard"), "DISCL_NONEXCLUSIVE"));
-			paramList.insert(std::make_pair(std::string("w32_keyboard"), "DISCL_BACKGROUND"));
+			paramList.insert(std::make_pair(std::string("w32_keyboard"), "DISCL_FOREGROUND"));
+			paramList.insert(std::make_pair(std::string("w32_keyboard"), "DISCL_NOWINKEY"));
 			paramList.insert(std::make_pair(std::string("w32_mouse"), "DISCL_NONEXCLUSIVE"));
-			paramList.insert(std::make_pair(std::string("w32_mouse"), "DISCL_BACKGROUND"));
+			paramList.insert(std::make_pair(std::string("w32_mouse"), "DISCL_FOREGROUND"));
 			paramList.insert(std::make_pair(std::string("w32_joystick"), "DISCL_NONEXCLUSIVE"));
+			paramList.insert(std::make_pair(std::string("w32_joystick"), "DISCL_FOREGROUND"));
+		}
+		else {
+		
+			paramList.insert(std::make_pair(std::string("w32_keyboard"), "DISCL_EXCLUSIVE"));
+			paramList.insert(std::make_pair(std::string("w32_keyboard"), "DISCL_FOREGROUND"));
+			paramList.insert(std::make_pair(std::string("w32_keyboard"), "DISCL_NOWINKEY"));
+			paramList.insert(std::make_pair(std::string("w32_mouse"), "DISCL_EXCLUSIVE"));
+			paramList.insert(std::make_pair(std::string("w32_mouse"), "DISCL_BACKGROUND"));
+			paramList.insert(std::make_pair(std::string("w32_joystick"), "DISCL_EXCLUSIVE"));
 			paramList.insert(std::make_pair(std::string("w32_joystick"), "DISCL_BACKGROUND"));
+
 		}
 		// Create inputsystem
 		_inputSystem = OIS::InputManager::createInputSystem(paramList);

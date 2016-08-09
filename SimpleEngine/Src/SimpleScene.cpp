@@ -12,6 +12,9 @@ SimpleScene::SimpleScene() {
 	auto layer = new SimpleLayer();
 	layer->SetZ(0);
 	AddLayer(layer);
+
+	//Initialize spatial query auxiliaries
+	_queryResults.reserve(_maxQueryResults);
 }
 
 SimpleScene::~SimpleScene() {
@@ -75,6 +78,59 @@ float SimpleScene::GetLowerZIndex() {
 	}
 
 	return min;
+}
+
+
+//Returns all the entities at point
+std::vector<SimpleObject*>& SimpleScene::PickAll(glm::vec2 point) {
+	_queryResults.clear();
+	for (SimpleLayer* &l : _layers) {
+		for (SimpleObject* obj : l->GetEntities()) {
+			if (obj->GetAABB().Contains(point.x, point.y))
+				_queryResults.push_back(obj);
+			if (_queryResults.size() == _maxQueryResults)
+				return _queryResults;
+		}
+	}
+	return _queryResults;
+
+	
+
+}
+//Returns all the entities that overlap rect
+std::vector<SimpleObject*>& SimpleScene::PickAll(SimpleAABB rect) {
+	_queryResults.clear();
+	for (SimpleLayer* &l : _layers) {
+		for (SimpleObject* obj : l->GetEntities()) {
+			if(rect.Overlaps(obj->GetAABB()))
+				_queryResults.push_back(obj);
+			if (_queryResults.size() == _maxQueryResults)
+				return _queryResults;
+		}
+	}
+	return _queryResults;
+}
+
+//Returns the first entity at point
+SimpleObject* SimpleScene::PickFirst(glm::vec2 point) {
+	for (SimpleLayer* &l : _layers) {
+		for (SimpleObject* obj : l->GetEntities()) {
+			if (obj->GetAABB().Contains(point.x, point.y))
+				return obj;
+		}
+	}
+	return nullptr;
+}
+
+//Returns the first entity that overlaps
+SimpleObject* SimpleScene::PickFirst(SimpleAABB rect) {
+	for (SimpleLayer* &l : _layers) {
+		for (SimpleObject* obj : l->GetEntities()) {
+			if (rect.Overlaps(obj->GetAABB()))
+				return obj;	
+		}
+	}
+	return nullptr;
 }
 
 

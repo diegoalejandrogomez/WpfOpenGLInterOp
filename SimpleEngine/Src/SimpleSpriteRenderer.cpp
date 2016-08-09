@@ -20,7 +20,7 @@ void SimpleSpriteRenderer::SetRect(glm::vec2 offset, glm::vec2 size) {
 	_rectOffset = offset;
 	_rectSize = size;
 	//Resize accordingly
-	_size = _rectSize;
+	_aabb.size = _rectSize;
 }
 
 SimpleSpriteRenderer::~SimpleSpriteRenderer() {
@@ -36,7 +36,7 @@ void SimpleSpriteRenderer::SetAsTexture(std::string && name) {
 	_rectOffset = { 0,0 };
 	_rectSize = { _tex->GetWidth(), _tex->GetHeight() };
 	//Set sprite size using texture resolution
-	_size = _rectSize;
+	_aabb.size = _rectSize;
 }
 
 void SimpleSpriteRenderer::SetAsTextureRect(std::string && name, glm::vec2 offset, glm::vec2 size) {
@@ -61,7 +61,7 @@ void SimpleSpriteRenderer::Render(float dt) {
 
 	//Not efficient at all, but easier to read for now
 	
-	glm::mat4 model = glm::translate(_position) * glm::rotate(_orientation, glm::vec3(0.0f, 0.0f, 1.0f)) * glm::scale(glm::vec3(_size.x, _size.y, 1.0f ));
+	glm::mat4 model = glm::translate(_aabb.position) * glm::rotate(_orientation, glm::vec3(0.0f, 0.0f, 1.0f)) * glm::scale(glm::vec3(_aabb.size.x, _aabb.size.y, 1.0f ));
 	
 
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, &model[0][0]);

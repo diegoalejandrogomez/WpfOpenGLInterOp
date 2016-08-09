@@ -12,7 +12,7 @@ public:
 	SimpleInput();
 	virtual ~SimpleInput();
 	
-	void Initialize(bool exclusive);
+	void Initialize(HWND hWnd, bool exclusive);
 	void CreateKeyboard(bool buffered = false);
 	void CreateMouse(bool buffered = false);
 	void CreateJoystics(bool buffered = false);

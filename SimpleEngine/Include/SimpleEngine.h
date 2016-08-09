@@ -24,6 +24,7 @@ public:
 	void Shutdown();
 	
 	void InitRenderer(HWND hWnd, uint32_t width, uint32_t height);
+	void InitInput(HWND hWnd, bool exclusive);
 	void SetGameLogic(SimpleGameLogic* _newGameMode);
 	void CreateScene();
 
@@ -31,8 +32,8 @@ public:
 	inline SimpleScene* GetScene() { return _scene; ; }
 	inline SimpleRenderer* GetRenderer() { return _renderer; };
 	inline SimpleInput* GetInput() { return _input; };
-	inline float GetRenderFPS() { return _renderTime.count() > 0? 1000.0f / _renderTime.count() : 0; };
-	inline float GetLogicFPS() { return _renderTime.count() > 0?  1000.0f / _logicTime.count(): 0; };
+	inline float GetRenderFPS() { return _renderTime.count() > 0? 1.0e9f / _renderTime.count() : 0; };
+	inline float GetLogicFPS() { return _renderTime.count() > 0?  1.0e9f / _logicTime.count(): 0; };
 
 	//Used by external event loops
 	void Render(float dt);
@@ -53,8 +54,8 @@ protected:
 	SimpleInput*	_input;
 
 	 //Instant frame time for logic and render update
-	std::chrono::milliseconds _renderTime;
-	std::chrono::milliseconds _logicTime;
+	std::chrono::nanoseconds _renderTime;
+	std::chrono::nanoseconds _logicTime;
 
 	void _SwitchGameLogic();
 };

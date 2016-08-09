@@ -147,6 +147,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    RECT clientArea;
    GetClientRect(hWnd, &clientArea);
    engine->InitRenderer(hWnd, clientArea.right- clientArea.left, clientArea.bottom - clientArea.top);
+   engine->InitInput(hWnd, false);
    engine->Initialize();
 
    return TRUE;
