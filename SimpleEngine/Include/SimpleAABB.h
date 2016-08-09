@@ -7,4 +7,8 @@ struct SimpleAABB {
 
 	bool Contains(float px, float py) const;
 	bool Overlaps(const SimpleAABB &other) const;
+
+	//Ok, we should have this in a separate class, but will keep them here for now... collision check using transformed AABB
+	bool Contains(const glm::mat4& transform, float px, float py) const;
+	bool Overlaps(const glm::mat4& transform, const SimpleAABB &other, const glm::mat4& otherTransform) const;
 };

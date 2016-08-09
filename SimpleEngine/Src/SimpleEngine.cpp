@@ -88,7 +88,7 @@ void SimpleEngine::Advance(float dt) {
 	//SIMPLE_LOG("FPS: %.2f", GetRenderFPS());
 }
 
-//#define DEBUG_CONTENT
+#define DEBUG_CONTENT
 void SimpleEngine::Initialize() {
 
 	SIMPLE_ASSERT(_renderer != nullptr);

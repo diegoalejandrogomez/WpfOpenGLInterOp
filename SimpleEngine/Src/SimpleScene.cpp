@@ -86,7 +86,7 @@ std::vector<SimpleObject*>& SimpleScene::PickAll(glm::vec2 point) {
 	_queryResults.clear();
 	for (SimpleLayer* &l : _layers) {
 		for (SimpleObject* obj : l->GetEntities()) {
-			if (obj->GetAABB().Contains(point.x, point.y))
+			if (obj->GetAABB().Contains(obj->GetTransform(), point.x, point.y))
 				_queryResults.push_back(obj);
 			if (_queryResults.size() == _maxQueryResults)
 				return _queryResults;
@@ -102,7 +102,7 @@ std::vector<SimpleObject*>& SimpleScene::PickAll(SimpleAABB rect) {
 	_queryResults.clear();
 	for (SimpleLayer* &l : _layers) {
 		for (SimpleObject* obj : l->GetEntities()) {
-			if(rect.Overlaps(obj->GetAABB()))
+			if(rect.Overlaps(glm::mat4(1.0f), obj->GetAABB(), obj->GetTransform()))
 				_queryResults.push_back(obj);
 			if (_queryResults.size() == _maxQueryResults)
 				return _queryResults;
@@ -115,7 +115,7 @@ std::vector<SimpleObject*>& SimpleScene::PickAll(SimpleAABB rect) {
 SimpleObject* SimpleScene::PickFirst(glm::vec2 point) {
 	for (SimpleLayer* &l : _layers) {
 		for (SimpleObject* obj : l->GetEntities()) {
-			if (obj->GetAABB().Contains(point.x, point.y))
+			if (obj->GetAABB().Contains(obj->GetTransform(),point.x, point.y))
 				return obj;
 		}
 	}
@@ -126,7 +126,7 @@ SimpleObject* SimpleScene::PickFirst(glm::vec2 point) {
 SimpleObject* SimpleScene::PickFirst(SimpleAABB rect) {
 	for (SimpleLayer* &l : _layers) {
 		for (SimpleObject* obj : l->GetEntities()) {
-			if (rect.Overlaps(obj->GetAABB()))
+			if (rect.Overlaps(glm::mat4(1.0f), obj->GetAABB(), obj->GetTransform()))
 				return obj;	
 		}
 	}

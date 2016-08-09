@@ -21,6 +21,8 @@ public:
 	inline void SetOrientation(float&& orientation) { _orientation = orientation; };
 	inline void SetOrientation(float& orientation) { _orientation = orientation; };
 	inline const SimpleAABB& GetAABB()const { return _aabb; };
+	//Not efficient... we could do a lot better
+	const glm::mat4 GetTransform() const;
 
 protected:
 	SimpleAABB _aabb;
