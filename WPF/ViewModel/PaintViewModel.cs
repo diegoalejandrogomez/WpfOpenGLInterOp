@@ -46,8 +46,12 @@ namespace WPF.ViewModel
             MousePosition = e.Location.X + ":" + e.Location.Y;
             if (this.Drag && Selected != null)
             {
-                Selected.positionX = e.Location.X;
-                Selected.positionY = e.Location.Y;
+                //Check if can be dragged ie ManagedSimpleObject
+                ManagedSimpleObject sel = Selected as ManagedSimpleObject;
+                if(sel != null) { 
+                    sel.positionX = e.Location.X;
+                    sel.positionY = e.Location.Y;
+                }
                 //Selected = null;
                 //Selected = ((SimpleEngineViewerControl)OpenGLRenderControl).SetItem(e.Location.X, e.Location.Y);
             }

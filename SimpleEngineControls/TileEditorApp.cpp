@@ -38,7 +38,7 @@ void TileEditorApp::SetMapSize(int width, int height) {
 
 	_CreateGrid();
 
-	SimpleEngine::Instance()->GetScene()->GetCamera()->ZoomToArea(SimpleAABB({ 0.0f,0.0f }, _tileMapSize));
+	//SimpleEngine::Instance()->GetScene()->GetCamera()->ZoomToArea(SimpleAABB({ 0.0f,0.0f }, _tileMapSize));
 }
 
 
@@ -49,7 +49,7 @@ void TileEditorApp::SetMapWidth(int width) {
 	_ResizeGrid();
 	_CreateGrid();
 
-	SimpleEngine::Instance()->GetScene()->GetCamera()->ZoomToArea(SimpleAABB({ 0.0f,0.0f }, _tileMapSize));
+	//SimpleEngine::Instance()->GetScene()->GetCamera()->ZoomToArea(SimpleAABB({ 0.0f,0.0f }, _tileMapSize));
 }
 
 
@@ -60,7 +60,7 @@ void TileEditorApp::SetMapHeight(int height) {
 	_ResizeGrid();
 	_CreateGrid();
 
-	SimpleEngine::Instance()->GetScene()->GetCamera()->ZoomToArea(SimpleAABB({ 0.0f,0.0f }, _tileMapSize));
+	//SimpleEngine::Instance()->GetScene()->GetCamera()->ZoomToArea(SimpleAABB({ 0.0f,0.0f }, _tileMapSize));
 }
 
 void TileEditorApp::_CreateGrid() {
