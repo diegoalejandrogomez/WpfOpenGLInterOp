@@ -26,7 +26,8 @@ namespace WPF.ViewModel
             Selected = ((SimpleEngineViewerControl)OpenGLRenderControl).SetItem(x, y);
             if (Selected == null)
                 Selected = _tileMap;
-        
+
+            PropertyChanged(this, new PropertyChangedEventArgs("Layers"));
         }
 
         #region Properties
@@ -44,7 +45,7 @@ namespace WPF.ViewModel
                 openGLRenderControl.Click += new EventHandler(this.OnClick);
                 openGLRenderControl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.OnDrag);
                 (openGLRenderControl as SimpleEngineViewerControl).OnEngineInitialized += OnGameLogicCreated;
-                
+                PropertyChanged(this, new PropertyChangedEventArgs("Layers"));
             }
         }
 
@@ -154,6 +155,16 @@ namespace WPF.ViewModel
             }
         }
 
+        public List<ManagedSimpleLayer> Layers
+        {
+            get
+            {
+                return ((SimpleEngineViewerControl)OpenGLRenderControl).ManagedSimpleLayers;
+            }
+
+        }
+
+
         TileMapControl _tileMap;
         #endregion
 
@@ -244,6 +255,7 @@ namespace WPF.ViewModel
                             var spriteControl = new SpriteControl();
 
                             spriteControl.AddControl(this.FilePath);
+                            PropertyChanged(this, new PropertyChangedEventArgs("Layers"));
                         }
                     });
                 }

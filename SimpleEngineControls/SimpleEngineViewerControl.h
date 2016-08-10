@@ -4,6 +4,7 @@ using namespace System::Windows::Forms;
 #include "SimpleEngineControls.h"
 #include "ManagedSimpleObject.h"
 #include "TileEditorApp.h"
+#include "ManagedSimpleLayer.h"
 
 namespace SimpleEngineControls {
 
@@ -19,11 +20,38 @@ namespace SimpleEngineControls {
 		void OnPaintBackground(PaintEventArgs^ e) override;
 		void OnPaint(PaintEventArgs^ e) override;
 		ManagedSimpleObject^ SetItem(float x, float y);
+
 		void Initialize();
 
 		//Custom events
 		event EventHandler^ OnEngineInitialized;
 			
+		property System::Collections::Generic::List<ManagedSimpleLayer^>^ ManagedSimpleLayers
+		{
+			System::Collections::Generic::List<ManagedSimpleLayer^>^ get() {
+				System::Collections::Generic::List<ManagedSimpleLayer^>^ managedSimpleLayers =
+					gcnew System::Collections::Generic::List<ManagedSimpleLayer^>();
+
+				if (SimpleEngine::Instance()->GetScene() != nullptr)
+				{
+					std::vector<SimpleLayer*> simpleLayers = SimpleEngine::Instance()->GetScene()->GetLayers();
+
+
+					if (simpleLayers.size() != 0)
+					{
+						for (auto *layer : simpleLayers)
+						{
+							ManagedSimpleLayer^ newManagedLayer = gcnew ManagedSimpleLayer(layer);
+							managedSimpleLayers->Add(newManagedLayer);
+						}
+
+					}
+				}
+				
+				return managedSimpleLayers;
+			};
+			
+		};
 
 	private:
 		TileEditorApp* _appLogic;

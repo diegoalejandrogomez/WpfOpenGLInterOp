@@ -141,6 +141,7 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ManagedSimpleLayer.h" />
     <ClInclude Include="ManagedSimpleObject.h" />
     <ClInclude Include="TileEditorApp.h" />
     <ClInclude Include="resource.h" />

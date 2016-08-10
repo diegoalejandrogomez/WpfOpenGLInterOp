@@ -61,7 +61,21 @@
                         <ColumnDefinition Width="Auto"></ColumnDefinition>
                         <ColumnDefinition Width="*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <xctk:PropertyGrid x:Name="propertyGrid" Grid.Column="0" AutoGenerateProperties="true" SelectedObject="{Binding Selected}"></xctk:PropertyGrid>
+                    <Grid Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <xctk:PropertyGrid x:Name="propertyGrid" Grid.Row="0" AutoGenerateProperties="true" SelectedObject="{Binding Selected}"></xctk:PropertyGrid>
+                        <StackPanel Grid.Row="1">
+                            <Label Content="Layers"></Label>
+                            <DataGrid  ItemsSource="{Binding Layers}" AutoGenerateColumns="True">
+
+                            </DataGrid>
+                        </StackPanel>
+                        
+                    </Grid>
+                    
                     <local:OpenGLRender x:Name="openGlRender" Grid.Column="1"></local:OpenGLRender>
                 </Grid>
             </Grid>
