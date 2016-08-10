@@ -21,6 +21,9 @@ namespace SimpleEngineControls {
 		ManagedSimpleObject^ SetItem(float x, float y);
 		void Initialize();
 
+		void MoveCamera(float dx, float dy);
+		void DeltaZoom(float dz);
+
 		//Custom events
 		event EventHandler^ OnEngineInitialized;
 			

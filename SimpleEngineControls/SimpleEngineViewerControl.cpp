@@ -69,3 +69,12 @@ ManagedSimpleObject^ SimpleEngineViewerControl::SetItem(float x, float y)
 	return nullptr;
 }
 
+void SimpleEngineViewerControl::MoveCamera(float dx, float dy) {
+
+	SimpleEngine::Instance()->GetScene()->GetCamera()->Move(dx, dy);
+
+}
+void SimpleEngineViewerControl::DeltaZoom(float dz){
+
+	SimpleEngine::Instance()->GetScene()->GetCamera()->DeltaZoom(dz);
+}
