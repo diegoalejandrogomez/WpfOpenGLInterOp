@@ -45,8 +45,18 @@ namespace WPF.ViewModel
                 openGLRenderControl.Click += new EventHandler(this.OnClick);
                 openGLRenderControl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.OnDrag);
                 (openGLRenderControl as SimpleEngineViewerControl).OnEngineInitialized += OnGameLogicCreated;
+                openGLRenderControl.MouseWheel += OnMouseWheel;
                 PropertyChanged(this, new PropertyChangedEventArgs("Layers"));
+               
+                
             }
+        }
+
+        private void OnMouseWheel(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            SimpleEngineViewerControl view = openGLRenderControl as SimpleEngineViewerControl;
+            view.DeltaZoom(e.Delta * _zoomSpeed);
+      
         }
 
         private void OnGameLogicCreated(object sender, EventArgs e)
@@ -56,6 +66,13 @@ namespace WPF.ViewModel
 
         public void OnDrag(object sender, System.Windows.Forms.MouseEventArgs e)
         {
+
+            //Panning
+            if (e.Button == System.Windows.Forms.MouseButtons.Right) {
+                SimpleEngineViewerControl view = openGLRenderControl as SimpleEngineViewerControl;
+                view.MoveCamera(-(e.X - _prevX) * _panSpeed, (e.Y - _prevY) * _panSpeed );               
+            }
+
             MousePosition = e.Location.X + ":" + e.Location.Y;
             if (this.Drag && Selected != null)
             {
@@ -68,6 +85,9 @@ namespace WPF.ViewModel
                 //Selected = null;
                 //Selected = ((SimpleEngineViewerControl)OpenGLRenderControl).SetItem(e.Location.X, e.Location.Y);
             }
+
+            _prevX = e.X;
+            _prevY = e.Y;
         }
 
         private String mousePosition;
@@ -166,6 +186,11 @@ namespace WPF.ViewModel
 
 
         TileMapControl _tileMap;
+        float _panSpeed = 1.0f;
+        float _zoomSpeed = 0.005f;
+        float _prevX, _prevY;
+        
+
         #endregion
 
         #region Methods

@@ -36,6 +36,8 @@ void SimpleCamera2D::_UpdateTransform() {
 	
 	_view = glm::translate(glm::mat4(1.0f), -_position);
 
+	_zoom = std::max(1e-3f, _zoom);
+
 	float halfWidth	= _size.x *0.5f / _zoom;
 	float halfHeight= _size.y * 0.5f / _zoom;
 	

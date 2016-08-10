@@ -9,6 +9,7 @@ void TileEditorApp::Init()
 
 	_tileMapLayer = new SimpleLayer();
 	_tileMapLayer->SetZ(-1.0f);
+	_tileMapLayer->SetName("MainTileMap");
 }
 
 void TileEditorApp::Advance(float dt)
@@ -75,6 +76,7 @@ void TileEditorApp::_CreateGrid() {
 	_gridLayer = new SimpleLayer();
 	_gridLayer->SetZ(-1000.0f);
 	_gridLayer->AddEntity(_grid);
+	_gridLayer->SetName("Grid");
 	SimpleEngine::Instance()->GetScene()->AddLayer(_gridLayer);
 	
 	//Unitary tiles

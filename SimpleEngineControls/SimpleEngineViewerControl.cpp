@@ -69,3 +69,16 @@ ManagedSimpleObject^ SimpleEngineViewerControl::SetItem(float x, float y)
 	return nullptr;
 }
 
+//Move deltas in screen space... This methods translates 'em to world space
+void SimpleEngineViewerControl::MoveCamera(float dx, float dy) {
+	
+	glm::vec2 worldPos = SimpleEngine::Instance()->GetScene()->GetCamera()->ScreenToWorld({ dx, dy });
+	glm::vec2 worldOrigin = SimpleEngine::Instance()->GetScene()->GetCamera()->ScreenToWorld({ 0, 0 });
+	glm::vec2 delta = worldPos - worldOrigin;
+	SimpleEngine::Instance()->GetScene()->GetCamera()->Move(delta.x, -delta.y);
+
+}
+void SimpleEngineViewerControl::DeltaZoom(float dz){
+
+	SimpleEngine::Instance()->GetScene()->GetCamera()->DeltaZoom(dz);
+}
