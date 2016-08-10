@@ -40,8 +40,8 @@ namespace WPF.ViewModel
             }
         }
 
-        public ManagedSimpleObject selected;
-        public ManagedSimpleObject Selected
+        public Object selected;
+        public Object Selected
         {
             get
             {

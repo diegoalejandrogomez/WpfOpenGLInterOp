@@ -34,9 +34,12 @@ public:
 	void RemoveEntity(SimpleObject* sObj, SimpleLayer* sLayer);
 
 	void AddLayer(SimpleLayer* sLayer);
+	void RemoveLayer(SimpleLayer* sLayer);
+
 	SimpleLayer* GetLayer(int nLayer);
 	SimpleLayer* GetLayer(std::string layerName);
-	void RemoveLayer(SimpleLayer* sLayer);
+	inline std::vector<SimpleLayer*>& GetLayers(std::string layerName) { return _layers; }
+	
 
 	float GetLowerZIndex();
 

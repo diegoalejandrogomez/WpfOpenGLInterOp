@@ -28,7 +28,7 @@ bool TileEditorApp::IsRunning()
 void TileEditorApp::SetMapSize(int width, int height) {
 	if (_tiles != nullptr)
 		delete[] _tiles;
-	
+
 	_tileMapSize.x = width;
 	_tileMapSize.y = height;
 
@@ -38,7 +38,29 @@ void TileEditorApp::SetMapSize(int width, int height) {
 
 	_CreateGrid();
 
-	SimpleEngine::Instance()->GetScene()->GetCamera()->ZoomToArea(SimpleAABB({ 0.0f,0.0f } , _tileMapSize ));
+	SimpleEngine::Instance()->GetScene()->GetCamera()->ZoomToArea(SimpleAABB({ 0.0f,0.0f }, _tileMapSize));
+}
+
+
+void TileEditorApp::SetMapWidth(int width) {
+	
+
+	_tileMapSize.x = width;
+	_ResizeGrid();
+	_CreateGrid();
+
+	SimpleEngine::Instance()->GetScene()->GetCamera()->ZoomToArea(SimpleAABB({ 0.0f,0.0f }, _tileMapSize));
+}
+
+
+void TileEditorApp::SetMapHeight(int height) {
+
+
+	_tileMapSize.y = height;
+	_ResizeGrid();
+	_CreateGrid();
+
+	SimpleEngine::Instance()->GetScene()->GetCamera()->ZoomToArea(SimpleAABB({ 0.0f,0.0f }, _tileMapSize));
 }
 
 void TileEditorApp::_CreateGrid() {
@@ -63,4 +85,15 @@ void TileEditorApp::_CreateGrid() {
 		_grid->AddLine({ 0, j }, { _tileMapSize.x, j }, { 1.0f,1.0f,1.0f });
 
 	_grid->Flush();
+}
+
+
+void TileEditorApp::_ResizeGrid() {
+
+	if (_tiles != nullptr)
+		delete[] _tiles;
+	int tileAmount = _tileMapSize.x * _tileMapSize.y;
+	_tiles = new SimpleSpriteRenderer*[tileAmount];
+	memset(_tiles, 0, tileAmount * sizeof(SimpleSpriteRenderer*));
+
 }

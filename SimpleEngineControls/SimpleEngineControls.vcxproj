@@ -148,6 +148,7 @@
     <ClInclude Include="SimpleEngineViewerControl.h" />
     <ClInclude Include="SpriteControl.h" />
     <ClInclude Include="Stdafx.h" />
+    <ClInclude Include="TileMapControl.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp" />

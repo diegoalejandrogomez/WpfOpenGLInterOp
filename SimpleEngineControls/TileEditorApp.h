@@ -16,10 +16,16 @@ public:
 
 	//Tile editor methods
 	void SetMapSize(int width, int height);	
+	void SetMapWidth(int width);
+	void SetMapHeight(int height);
+
+	inline int  GetMapWidth()const { return _tileMapSize.x; }
+	inline int  GetMapHeight()const { return _tileMapSize.y; }
 
 private:
 
 	void _CreateGrid();
+	void _ResizeGrid();
 
 	//We should have a SimpleObject for the whole tileset... but let's do this for now...
 	SimpleLayer*			_gridLayer = nullptr;
