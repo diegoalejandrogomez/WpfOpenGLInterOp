@@ -2,17 +2,18 @@
 #include "SimpleCamera2D.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include "SimpleDispatcher.h"
-
+#include "SimpleEngine.h"
 
 SimpleCamera2D::SimpleCamera2D() {
-	
+	SimpleRenderer* render = SimpleEngine::Instance()->GetRenderer();
+
 	_view = glm::mat4(1.0f);
 	_projection = glm::mat4(1.0f);
 	_viewProjection = glm::mat4(1.0);
 	_position = glm::vec3(0.0f);
-	_size = glm::vec2(0.0f);
+	_size = { render->GetWidth(), render->GetHeight() };
 	_zoom = 1.0f;
-			
+	
 	SimpleDispatcher::Instance()->AddListener(WindowResizeEvent::descriptor, {
 		this,
 		[this](const SimpleEvent& evt) {
@@ -21,7 +22,7 @@ SimpleCamera2D::SimpleCamera2D() {
 		}
 	});
 	
-
+	_UpdateTransform();
 }
 
 
@@ -68,10 +69,20 @@ void SimpleCamera2D::SetViewportSize(float w, float h) {
 
 	_aspectRatio = w / h;
 
+	//Readjust zoom
+	//_zoom *= std::max(w / _size.x, h / _size.y);
 	_size.x = w;
 	_size.y = h;
-
+		
 	_UpdateTransform();
+}
+
+void SimpleCamera2D::ZoomToArea(SimpleAABB area) {
+	_position = area.position;
+
+	//Change zoom accordingly maintaining aspect ratio
+	glm::vec2 zoomFactors =  _size / area.size;
+	SetZoom(std::min(zoomFactors.x, zoomFactors.y));
 }
 
 glm::vec2 SimpleCamera2D::ScreenToWorld(glm::vec2 viewPos) {

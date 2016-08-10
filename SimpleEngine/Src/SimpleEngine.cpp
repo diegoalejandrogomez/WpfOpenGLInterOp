@@ -11,7 +11,7 @@ void SimpleEngine::InitRenderer(HWND hWnd, uint32_t width, uint32_t height) {
 	_renderer = new SimpleRenderer();
 	_renderer->InitializeOpenGL(hWnd, width, height);
 
-	_renderer->AddPass(new DebugRenderPass());
+	//_renderer->AddPass(new DebugRenderPass());
 	_renderer->AddPass(new SimpleObjectsRenderPass());
 }
 
