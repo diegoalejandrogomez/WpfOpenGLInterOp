@@ -17,7 +17,9 @@ namespace WPF.ViewModel
 
         public void OnClick(Object sender, EventArgs e)
         {
-            
+
+            if (Selected != null)
+                Drag = false;
             int x = ((System.Windows.Forms.MouseEventArgs)e).X;
             int y = ((System.Windows.Forms.MouseEventArgs)e).Y;
             Selected = null;

@@ -1,6 +1,6 @@
 #pragma once
 #include "SimpleObject.h"
-
+#include "SimpleEngine.h"
 public ref class ManagedSimpleObject {
 public:
 	ManagedSimpleObject();
@@ -13,12 +13,16 @@ public:
 		float get() {
 			if (this->simpleObject == nullptr)
 				return 0;
-			return simpleObject->GetPosition().x;
+			auto originalPosition = simpleObject->GetPosition().x;
+			auto newX = SimpleEngine::Instance()->GetScene()->GetCamera()->WorldToScreen(glm::vec2(originalPosition, 0)).x;
+			return newX;
 		}
 
 		void set(float position)
 		{
-			simpleObject->SetPosition(glm::vec3(position, simpleObject->GetPosition().y, simpleObject->GetPosition().z));
+			
+			auto newPosition = SimpleEngine::Instance()->GetScene()->GetCamera()->ScreenToWorld(glm::vec2(position, simpleObject->GetPosition().y)); 
+			simpleObject->SetPosition(glm::vec3(newPosition.x, simpleObject->GetPosition().y, simpleObject->GetPosition().z));
 		}
 	};
 
@@ -27,12 +31,15 @@ public:
 		float get() {
 			if (this->simpleObject == nullptr)
 				return 0;
-			return simpleObject->GetPosition().y;
+			auto originalPosition = simpleObject->GetPosition().y;
+			auto newY = SimpleEngine::Instance()->GetScene()->GetCamera()->WorldToScreen(glm::vec2(0, originalPosition)).y;
+			return newY;
 		}
 
 		void set(float position)
 		{
-			simpleObject->SetPosition(glm::vec3(simpleObject->GetPosition().x, position, simpleObject->GetPosition().z));
+			auto newPosition = SimpleEngine::Instance()->GetScene()->GetCamera()->ScreenToWorld(glm::vec2(simpleObject->GetPosition().x, position));
+			simpleObject->SetPosition(glm::vec3(simpleObject->GetPosition().x, newPosition.y, simpleObject->GetPosition().z));
 		}
 	};
 
