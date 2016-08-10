@@ -5,6 +5,7 @@
 #include "stdlib.h"
 #include "LowerzIndex.h"
 #include "SimpleEngine.h"
+#include <algorithm>
 
 SimpleScene::SimpleScene() {
 	
@@ -48,9 +49,40 @@ void SimpleScene::Advance(float dt) {
 	}
 }
 
+void SimpleScene::AddEntity(SimpleObject* sObj, int nLayer) {
+	SimpleLayer* layer = GetLayer(nLayer);
+	if(layer != nullptr)
+		layer->AddEntity(sObj);
+}
+
+void SimpleScene::AddEntity(SimpleObject* sObj, std::string layerName) {
+	
+	SimpleLayer* layer = GetLayer(layerName);
+	if (layer != nullptr)
+		layer->AddEntity(sObj);
+}
+
 void SimpleScene::AddEntity(SimpleObject* sObj, SimpleLayer* sLay) {
 	sLay->AddEntity(sObj);
 }
+
+SimpleLayer* SimpleScene::GetLayer(int nLayer) {
+	auto layer = find_if(_layers.begin(), _layers.end(), [&nLayer](SimpleLayer* l) {return l->GetZ() == nLayer;});
+	if (layer != _layers.end())
+		return *layer;
+
+	return nullptr;
+}
+
+SimpleLayer* SimpleScene::GetLayer(std::string layerName) {
+	
+	auto layer = find_if(_layers.begin(), _layers.end(), [&layerName](SimpleLayer* l) {return l->GetName() == layerName;});
+	if (layer != _layers.end())
+		return *layer;
+	return nullptr;
+
+}
+
 
 void SimpleScene::RemoveEntity(SimpleObject* sObj, SimpleLayer* sLay) {
 	sLay->RemoveEntity(sObj);

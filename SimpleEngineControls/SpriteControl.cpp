@@ -14,7 +14,8 @@ SpriteControl::SpriteControl() {
 }
 
 SpriteControl::~SpriteControl() {
-	free(_simpleSpriteRenderer);
+	//free(_simpleSpriteRenderer); This won't call the destructor, its the c way
+	delete _simpleSpriteRenderer;
 }
 
 void SpriteControl::AddControl(System::String^ path)// , glm::vec3 _position, glm::vec2 _size) 
@@ -23,11 +24,9 @@ void SpriteControl::AddControl(System::String^ path)// , glm::vec3 _position, gl
 		(const char*)(Marshal::StringToHGlobalAnsi(path)).ToPointer();
 
 	_simpleSpriteRenderer->SetAsTexture(chars);
-	//_simpleSpriteRenderer->SetSize(glm::vec2(500, 500));
 	
-	_simpleLayer->SetZ(SimpleEngine::Instance()->GetScene()->GetLowerZIndex() -1);
-	SimpleEngine::Instance()->GetScene()->AddLayer(_simpleLayer);
-	SimpleEngine::Instance()->GetScene()->AddEntity(_simpleSpriteRenderer, _simpleLayer);
+	//For now all the images go to the default layer (0)
+	SimpleEngine::Instance()->GetScene()->AddEntity(_simpleSpriteRenderer, 0);
 }
 
 ManagedSimpleObject^ SpriteControl::GetManagedSimpleObject() {

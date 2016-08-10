@@ -28,9 +28,14 @@ public:
 	const std::vector<SimpleLayer*>& GetLayers() { return _layers; };
 	
 	void AddEntity(SimpleObject* sObj, SimpleLayer* sLayer);
+	void AddEntity(SimpleObject* sObj, int nLayer);
+	void AddEntity(SimpleObject* sObj, std::string layerName);
+
 	void RemoveEntity(SimpleObject* sObj, SimpleLayer* sLayer);
 
 	void AddLayer(SimpleLayer* sLayer);
+	SimpleLayer* GetLayer(int nLayer);
+	SimpleLayer* GetLayer(std::string layerName);
 	void RemoveLayer(SimpleLayer* sLayer);
 
 	float GetLowerZIndex();
