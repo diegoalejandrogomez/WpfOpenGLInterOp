@@ -14,20 +14,47 @@ namespace WPF.ViewModel
 {
     public class PaintViewModel: INotifyPropertyChanged
     {
+
+        public void OnClick(Object sender, EventArgs e)
+        {
+            
+            int x = ((System.Windows.Forms.MouseEventArgs)e).X;
+            int y = ((System.Windows.Forms.MouseEventArgs)e).Y;
+            Selected = null;
+            Selected = ((SimpleEngineViewerControl)OpenGLRenderControl).SetItem(x, y);
+        }
+
         #region Properties
-        public System.Windows.Forms.UserControl OpenGLRenderControl { get; set; }
 
-        private ManagedSimpleObject selected;
+        private System.Windows.Forms.UserControl openGLRenderControl;
+        public System.Windows.Forms.UserControl OpenGLRenderControl
+        {
+            get
+            {
+                return openGLRenderControl;
+            }
+            set
+            {
+                openGLRenderControl = value;
+                openGLRenderControl.Click += new EventHandler(this.OnClick);
+            }
+        }
 
+        public ManagedSimpleObject selected;
         public ManagedSimpleObject Selected
         {
-            get { return selected; }
+            get
+            {
+                return selected;
+            }
             set
             {
                 selected = value;
                 PropertyChanged(this, new PropertyChangedEventArgs("Selected"));
             }
         }
+
+        
 
         public bool drawLine;
 
@@ -165,9 +192,7 @@ namespace WPF.ViewModel
                             this.FilePath = dialog.FileName;
                             var spriteControl = new SpriteControl();
                             
-                            spriteControl.AddControl(this.FilePath);
-                            Selected = spriteControl.GetManagedSimpleObject();
-                            
+                            spriteControl.AddControl(this.FilePath);                            
                         }
                     });
                 }

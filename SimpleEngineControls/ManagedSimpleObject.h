@@ -1,6 +1,5 @@
 #pragma once
 #include "SimpleObject.h"
-#include <string>
 
 public ref class ManagedSimpleObject {
 public:
@@ -12,6 +11,8 @@ public:
 	property float positionX
 	{
 		float get() {
+			if (this->simpleObject == nullptr)
+				return 0;
 			return simpleObject->GetPosition().x;
 		}
 
@@ -24,6 +25,8 @@ public:
 	property float positionY
 	{
 		float get() {
+			if (this->simpleObject == nullptr)
+				return 0;
 			return simpleObject->GetPosition().y;
 		}
 
@@ -36,6 +39,8 @@ public:
 	property float positionZ
 	{
 		float get() {
+			if (this->simpleObject == nullptr)
+				return 0;
 			return simpleObject->GetPosition().z;
 		}
 
@@ -48,6 +53,8 @@ public:
 	property float sizeW
 	{
 		float get() {
+			if (this->simpleObject == nullptr)
+				return 0;
 			return simpleObject->GetSize().x;
 		}
 
@@ -60,6 +67,8 @@ public:
 	property float sizeH
 	{
 		float get() {
+			if (this->simpleObject == nullptr)
+				return 0;
 			return simpleObject->GetSize().y;
 		}
 
@@ -72,6 +81,8 @@ public:
 	property float Orientation
 	{
 		float get() {
+			if (this->simpleObject == nullptr)
+				return 0;
 			return this->simpleObject->GetOrientation();
 		}
 
