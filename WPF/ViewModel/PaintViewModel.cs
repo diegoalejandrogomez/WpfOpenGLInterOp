@@ -69,8 +69,7 @@ namespace WPF.ViewModel
             //Panning
             if (e.Button == System.Windows.Forms.MouseButtons.Right) {
                 SimpleEngineViewerControl view = openGLRenderControl as SimpleEngineViewerControl;
-                view.MoveCamera(-(e.X - _prevX) * _panSpeed, (e.Y - _prevY) * _panSpeed );
-                return;
+                view.MoveCamera(-(e.X - _prevX) * _panSpeed, (e.Y - _prevY) * _panSpeed );               
             }
 
             MousePosition = e.Location.X + ":" + e.Location.Y;
@@ -177,7 +176,7 @@ namespace WPF.ViewModel
 
         //Private state variables
         TileMapControl _tileMap;
-        float _panSpeed = 0.005f;
+        float _panSpeed = 1.0f;
         float _zoomSpeed = 0.005f;
         float _prevX, _prevY;
         
