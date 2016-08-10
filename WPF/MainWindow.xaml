@@ -15,6 +15,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
             <DockPanel Grid.Row="0">
                 <Menu DockPanel.Dock="Top">
@@ -51,7 +52,9 @@
                         <Image Name="square" Source="./Resources/Icons/square.png" Style="{StaticResource ToolIcon}"></Image>
                     </Button>
                     <xctk:ColorPicker Name="Picker" Grid.Row="1" Grid.Column="0"  Style="{StaticResource ToolIcon}" SelectedColor="{Binding Color}"></xctk:ColorPicker>
-
+                    <Button Grid.Row="1" Grid.Column="1" Command="{Binding Path=SetDragCommand}">
+                        <Image Name="drag" Source="./Resources/Icons/drag.png" Style="{StaticResource ToolIcon}"></Image>
+                    </Button>
                 </Grid>
                 <Grid x:Name="drawingArea" Grid.Column="1">
                     <Grid.ColumnDefinitions>
@@ -62,6 +65,7 @@
                     <local:OpenGLRender x:Name="openGlRender" Grid.Column="1"></local:OpenGLRender>
                 </Grid>
             </Grid>
+            <Label Content="{Binding MousePosition}" Grid.Row="2"></Label>
         </Grid>
     </Grid>
 </Window>

@@ -37,8 +37,37 @@ namespace WPF.ViewModel
             {
                 openGLRenderControl = value;
                 openGLRenderControl.Click += new EventHandler(this.OnClick);
+                openGLRenderControl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.OnDrag);
             }
         }
+        
+        public void OnDrag(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            MousePosition = e.Location.X + ":" + e.Location.Y;
+            if (this.Drag && Selected != null)
+            {
+                Selected.positionX = e.Location.X;
+                Selected.positionY = e.Location.Y;
+                //Selected = null;
+                //Selected = ((SimpleEngineViewerControl)OpenGLRenderControl).SetItem(e.Location.X, e.Location.Y);
+            }
+        }
+
+        private String mousePosition;
+
+        public String MousePosition
+        {
+            get
+            {
+                return mousePosition;
+            }
+            set
+            {
+                mousePosition = value;
+                PropertyChanged(this, new PropertyChangedEventArgs("MousePosition"));
+            }
+        }
+            
 
         public Object selected;
         public Object Selected
@@ -95,6 +124,8 @@ namespace WPF.ViewModel
 
         public bool DrawSquare;
 
+        public bool Drag;
+
         public string filePath;
 
         public string FilePath
@@ -113,6 +144,7 @@ namespace WPF.ViewModel
         {
             this.DrawSquare = false;
             this.DrawLine = false;
+            this.Drag = false;
         }
 
         #endregion
@@ -123,6 +155,8 @@ namespace WPF.ViewModel
         private ICommand setDrawSquareCommand;
 
         private ICommand openFileCommand;
+
+        private ICommand setDragCommand;
 
         public event PropertyChangedEventHandler PropertyChanged = delegate(object sender, PropertyChangedEventArgs e)
         {
@@ -183,7 +217,6 @@ namespace WPF.ViewModel
             {
                 if (openFileCommand == null)
                 {
-
                     openFileCommand = new Command((vm) =>
                     {
                         OpenFileDialog dialog = new OpenFileDialog();
@@ -191,17 +224,39 @@ namespace WPF.ViewModel
                         {
                             this.FilePath = dialog.FileName;
                             var spriteControl = new SpriteControl();
-                            
-                            spriteControl.AddControl(this.FilePath);                            
+
+                            spriteControl.AddControl(this.FilePath);
                         }
                     });
                 }
 
                 return openFileCommand;
+        }
+
+            set { }
+        }
+
+        public ICommand SetDragCommand
+        {
+            get
+            {
+                if (setDragCommand == null)
+                {
+
+                    setDragCommand = new Command((vm) =>
+                    {
+                        var originaldrag = Drag;
+                        ClearParameters();
+                        Drag = !originaldrag;
+                    });
+                }
+
+                return setDragCommand;
             }
 
             set { }
         }
+        
         #endregion
     }
 }
