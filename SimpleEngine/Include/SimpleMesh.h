@@ -7,12 +7,12 @@ class SimpleMesh {
 public:
 
 	//Initialize the buffers without data
-	SimpleMesh() {
+	SimpleMesh(bool indexed = true) {
 		//Generate vertex array VAO
 		GL_CHECK(glGenVertexArrays(1, &_vao));
 
 		//Generate buffers
-		GL_CHECK(glGenBuffers(2, _vbos));
+		GL_CHECK(glGenBuffers(1, _vbos));
 
 		//Bind VAO
 		GL_CHECK(glBindVertexArray(_vao));
@@ -25,12 +25,19 @@ public:
 		
 		//Configure vertex format
 		VERTEX_TYPE::Bind(0);
-
+		
 		//Bind the index buffer
-		GL_CHECK(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _vbos[1]));
+		if (indexed) {
+			GL_CHECK(glGenBuffers(1, &_vbos[1]));
+			GL_CHECK(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _vbos[1]));
+		}
 
 		//unbind vao
 		GL_CHECK(glBindVertexArray(0));
+
+		//Init variables
+		_verticesSize = 0; 
+		_indicesSize = 0;
 	}
 
 	~SimpleMesh() {
@@ -69,6 +76,13 @@ public:
 		GL_CHECK(glDrawElements(mode, _indicesSize, GL_UNSIGNED_INT, 0)); // Draw our square  
 
 	}
+
+	void DrawUnindexed(GLenum mode = GL_TRIANGLES) {
+
+		GL_CHECK(glDrawArrays(mode, 0, _verticesSize)); // Draw our square  
+
+	}
+
 	void Unbind() {
 
 		//Bind VAO

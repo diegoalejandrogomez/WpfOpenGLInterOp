@@ -7,6 +7,7 @@
 #include "SimpleEngine.h"
 
 SimpleScene::SimpleScene() {
+	
 	_camera = new SimpleCamera2D();
 	//Create a default layer at z = 0
 	auto layer = new SimpleLayer();

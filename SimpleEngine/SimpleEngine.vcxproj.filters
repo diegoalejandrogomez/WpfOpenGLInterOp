@@ -122,6 +122,9 @@
     <ClInclude Include="Include\SimpleAABB.h">
       <Filter>Engine</Filter>
     </ClInclude>
+    <ClInclude Include="Include\SimpleLineRenderer.h">
+      <Filter>Engine\Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\SimpleObjectsRenderPass.cpp">
@@ -180,6 +183,9 @@
     </ClCompile>
     <ClCompile Include="Src\SimpleAABB.cpp">
       <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\SimpleLineRenderer.cpp">
+      <Filter>Engine\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

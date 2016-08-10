@@ -1,5 +1,6 @@
 #pragma once
 #include <glm\glm.hpp>
+#include "SimpleAABB.h"
 
 class SimpleCamera2D {
 	
@@ -12,6 +13,7 @@ public:
 	void SetZoom(float zoom);
 	void Move(float dx, float dy);
 	void DeltaZoom(float dz);
+	void ZoomToArea(SimpleAABB area);
 	void SetViewportSize(float w, float h);
 		
 	glm::mat4 &GetViewProjection() {return _viewProjection;}

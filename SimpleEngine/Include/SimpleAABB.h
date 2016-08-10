@@ -4,6 +4,14 @@
 struct SimpleAABB {
 	glm::vec3 position = glm::vec3(0.0f);
 	glm::vec2 size = glm::vec2(0.0f);
+	
+	SimpleAABB() {}
+	SimpleAABB(glm::vec2 lowerLeft, glm::vec2 upperRight) {
+		position.x = (upperRight.x + lowerLeft.x) * 0.5f;
+		position.y = (upperRight.y + lowerLeft.y) * 0.5f;
+		position.z = 0.0f ;
+		size = (upperRight - lowerLeft);
+	}
 
 	bool Contains(float px, float py) const;
 	bool Overlaps(const SimpleAABB &other) const;

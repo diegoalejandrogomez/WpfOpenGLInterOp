@@ -3,6 +3,7 @@
 #include "SimpleRenderer.h"
 #include "SimpleLayer.h"
 #include "SimpleSpriteRenderer.h"
+#include "SimpleLineRenderer.h"
 
 class TileEditorApp : public SimpleGameLogic{
 	
@@ -17,7 +18,12 @@ public:
 	void SetMapSize(int width, int height);	
 
 private:
+
+	void _CreateGrid();
+
 	//We should have a SimpleObject for the whole tileset... but let's do this for now...
+	SimpleLayer*			_gridLayer = nullptr;
+	SimpleLineRenderer*		_grid;
 	SimpleLayer*			_tileMapLayer = nullptr;
 	glm::ivec2				_tileMapSize = glm::ivec2(0);
 	SimpleSpriteRenderer**	_tiles = nullptr;
