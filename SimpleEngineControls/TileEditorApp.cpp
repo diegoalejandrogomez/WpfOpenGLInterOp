@@ -68,7 +68,6 @@ void TileEditorApp::_CreateGrid() {
 	
 	if (_gridLayer != nullptr) {
 		SimpleEngine::Instance()->GetScene()->RemoveLayer(_gridLayer);
-		delete _grid;
 		delete _gridLayer;
 	}
 

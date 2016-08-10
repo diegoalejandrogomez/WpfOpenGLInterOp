@@ -27,7 +27,8 @@ void SimpleEngineViewerControl::Initialize() {
 
 	_appLogic = new TileEditorApp();
 	SimpleEngine::Instance()->SetGameLogic(_appLogic);
-
+	
+	OnEngineInitialized(this, EventArgs::Empty);
 }
 
 void SimpleEngineViewerControl::OnSizeChanged(System::Object ^sender, System::EventArgs ^e){

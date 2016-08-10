@@ -21,6 +21,10 @@ namespace SimpleEngineControls {
 		ManagedSimpleObject^ SetItem(float x, float y);
 		void Initialize();
 
+		//Custom events
+		event EventHandler^ OnEngineInitialized;
+			
+
 	private:
 		TileEditorApp* _appLogic;
 		

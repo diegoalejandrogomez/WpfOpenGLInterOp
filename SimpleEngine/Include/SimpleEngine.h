@@ -30,6 +30,8 @@ public:
 
 	//Getter
 	inline SimpleScene* GetScene() { return _scene; ; }
+	//Obtain current or next game logic
+	inline SimpleGameLogic*  GetGameLogic() { return _gameLogic == nullptr? _nextGameLogic:_gameLogic; };
 	inline SimpleRenderer* GetRenderer() { return _renderer; };
 	inline SimpleInput* GetInput() { return _input; };
 	inline float GetRenderFPS() { return _renderTime.count() > 0? 1.0e9f / _renderTime.count() : 0; };

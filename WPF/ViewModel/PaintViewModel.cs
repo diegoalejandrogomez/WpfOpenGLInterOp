@@ -22,6 +22,9 @@ namespace WPF.ViewModel
             int y = ((System.Windows.Forms.MouseEventArgs)e).Y;
             Selected = null;
             Selected = ((SimpleEngineViewerControl)OpenGLRenderControl).SetItem(x, y);
+            if (Selected == null)
+                Selected = _tileMap;
+        
         }
 
         #region Properties
@@ -38,9 +41,16 @@ namespace WPF.ViewModel
                 openGLRenderControl = value;
                 openGLRenderControl.Click += new EventHandler(this.OnClick);
                 openGLRenderControl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.OnDrag);
+                (openGLRenderControl as SimpleEngineViewerControl).OnEngineInitialized += OnGameLogicCreated;
+                
             }
         }
-        
+
+        private void OnGameLogicCreated(object sender, EventArgs e)
+        {
+            _tileMap = new TileMapControl();
+        }
+
         public void OnDrag(object sender, System.Windows.Forms.MouseEventArgs e)
         {
             MousePosition = e.Location.X + ":" + e.Location.Y;
@@ -141,6 +151,8 @@ namespace WPF.ViewModel
                 PropertyChanged(this, new PropertyChangedEventArgs("FilePath"));
             }
         }
+
+        TileMapControl _tileMap;
         #endregion
 
         #region Methods

@@ -2,14 +2,14 @@
 #include "TileEditorApp.h"
 
 namespace SimpleEngineControls {
-	public ref class TileMapcontrol
+	public ref class TileMapControl
 	{
 	private:
 		TileEditorApp* _app = nullptr;
 	public:
 		
-		TileMapcontrol();
-		~TileMapcontrol();
+		TileMapControl();
+		~TileMapControl();
 
 		//Properties
 
