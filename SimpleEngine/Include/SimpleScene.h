@@ -50,13 +50,22 @@ public:
 
 	//Returns all the entities at point
 	std::vector<SimpleObject*>& PickAll(glm::vec2 point);
+	//Returns all the entities at point from a given layer
+	std::vector<SimpleObject*>& SimpleScene::PickAll(glm::vec2 point, SimpleLayer* l);
+
 	//Returns all the entities that overlap rect
 	std::vector<SimpleObject*>& PickAll(SimpleAABB rect);
+	//Returns all the entities that overlap rect from a given layer
+	std::vector<SimpleObject*>& PickAll(SimpleAABB rect, SimpleLayer* l);
 
 	//Returns the first entity at point
 	SimpleObject* PickFirst(glm::vec2 point);
+	SimpleObject* PickFirst(glm::vec2 point, SimpleLayer* l);
+
 	//Returns the first entity that overlaps
 	SimpleObject* PickFirst(SimpleAABB rect);
+	//Returns the first entity that overlaps from a given layer
+	SimpleObject* PickFirst(SimpleAABB rect, SimpleLayer* l);
 
 
 };

@@ -118,6 +118,8 @@ float SimpleScene::GetLowerZIndex() {
 std::vector<SimpleObject*>& SimpleScene::PickAll(glm::vec2 point) {
 	_queryResults.clear();
 	for (SimpleLayer* &l : _layers) {
+		if (!l->IsQueryable())
+			continue;
 		for (SimpleObject* obj : l->GetEntities()) {
 			if (obj->GetAABB().Contains(obj->GetTransform(), point.x, point.y))
 				_queryResults.push_back(obj);
@@ -126,14 +128,29 @@ std::vector<SimpleObject*>& SimpleScene::PickAll(glm::vec2 point) {
 		}
 	}
 	return _queryResults;
-
-	
-
 }
+
+//Returns all entities at point from given layer
+std::vector<SimpleObject*>& SimpleScene::PickAll(glm::vec2 point, SimpleLayer* l) {
+	_queryResults.clear();
+	if (!l->IsQueryable())
+		return _queryResults;
+
+	for (SimpleObject* obj : l->GetEntities()) {
+		if (obj->GetAABB().Contains(obj->GetTransform(), point.x, point.y))
+			_queryResults.push_back(obj);
+		if (_queryResults.size() == _maxQueryResults)
+			return _queryResults;
+	}
+	return _queryResults;
+}
+
 //Returns all the entities that overlap rect
 std::vector<SimpleObject*>& SimpleScene::PickAll(SimpleAABB rect) {
 	_queryResults.clear();
 	for (SimpleLayer* &l : _layers) {
+		if (!l->IsQueryable())
+			continue;
 		for (SimpleObject* obj : l->GetEntities()) {
 			if(rect.Overlaps(glm::mat4(1.0f), obj->GetAABB(), obj->GetTransform()))
 				_queryResults.push_back(obj);
@@ -144,9 +161,26 @@ std::vector<SimpleObject*>& SimpleScene::PickAll(SimpleAABB rect) {
 	return _queryResults;
 }
 
+//Returns all the entities that overlap rect
+std::vector<SimpleObject*>& SimpleScene::PickAll(SimpleAABB rect, SimpleLayer* l) {
+	_queryResults.clear();
+	if (!l->IsQueryable())
+		return _queryResults;
+	for (SimpleObject* obj : l->GetEntities()) {
+		if (rect.Overlaps(glm::mat4(1.0f), obj->GetAABB(), obj->GetTransform()))
+			_queryResults.push_back(obj);
+		if (_queryResults.size() == _maxQueryResults)
+			return _queryResults;
+	}
+	
+	return _queryResults;
+}
+
 //Returns the first entity at point
 SimpleObject* SimpleScene::PickFirst(glm::vec2 point) {
 	for (SimpleLayer* &l : _layers) {
+		if (!l->IsQueryable())
+			continue;
 		for (SimpleObject* obj : l->GetEntities()) {
 			if (obj->GetAABB().Contains(obj->GetTransform(),point.x, point.y))
 				return obj;
@@ -155,9 +189,23 @@ SimpleObject* SimpleScene::PickFirst(glm::vec2 point) {
 	return nullptr;
 }
 
+//Returns the first entity at point from a given layer
+SimpleObject* SimpleScene::PickFirst(glm::vec2 point, SimpleLayer* l) {
+	if (!l->IsQueryable())
+		return nullptr;
+
+	for (SimpleObject* obj : l->GetEntities()) {
+		if (obj->GetAABB().Contains(obj->GetTransform(), point.x, point.y))
+			return obj;
+	}
+	
+	return nullptr;
+}
 //Returns the first entity that overlaps
 SimpleObject* SimpleScene::PickFirst(SimpleAABB rect) {
 	for (SimpleLayer* &l : _layers) {
+		if (!l->IsQueryable())
+			continue;
 		for (SimpleObject* obj : l->GetEntities()) {
 			if (rect.Overlaps(glm::mat4(1.0f), obj->GetAABB(), obj->GetTransform()))
 				return obj;	
@@ -166,6 +214,18 @@ SimpleObject* SimpleScene::PickFirst(SimpleAABB rect) {
 	return nullptr;
 }
 
+//Returns the first entity that overlaps from a given layer
+SimpleObject* SimpleScene::PickFirst(SimpleAABB rect, SimpleLayer* l) {
+	if (!l->IsQueryable())
+		return nullptr;
+
+	for (SimpleObject* obj : l->GetEntities()) {
+		if (rect.Overlaps(glm::mat4(1.0f), obj->GetAABB(), obj->GetTransform()))
+			return obj;
+	}
+	
+	return nullptr;
+}
 
 float SimpleScene::GetFPS() {
 	return SimpleEngine::Instance()->GetRenderFPS();

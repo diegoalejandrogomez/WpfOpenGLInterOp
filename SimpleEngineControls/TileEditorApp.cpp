@@ -15,6 +15,8 @@ void TileEditorApp::Init()
 	_uiLayer = new SimpleLayer();
 	_uiLayer->SetZ(1000.0f);
 	_uiLayer->SetName("UI");
+	_uiLayer->SetQueryable(false);
+
 	SimpleEngine::Instance()->GetScene()->AddLayer(_uiLayer);
 
 	_cursor = new SimpleSpriteRenderer();

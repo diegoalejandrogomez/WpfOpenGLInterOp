@@ -14,8 +14,11 @@ public:
 	float GetZ();
 	inline const std::string& GetName()const { return _layerName; }
 	inline void  SetName(std::string name) {_layerName = name; }
+	inline void SetQueryable(bool value) { _queryable = value; };
+	inline bool IsQueryable() { return _queryable; };
 private:
 	std::vector<SimpleObject*> _entities;
 	float Z;
 	std::string _layerName;
+	bool _queryable;
 };

@@ -2,6 +2,7 @@
 #include "SimpleLayer.h"
 
 SimpleLayer::SimpleLayer() {
+	_queryable = true;
 }
 
 
