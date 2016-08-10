@@ -12,12 +12,15 @@ class SimpleSpriteRenderer : public SimpleObject {
 public:
 
 	SimpleSpriteRenderer();
+	~SimpleSpriteRenderer();
 	void Advance(float dt);
 	void Render(float dt);
 	void SetAsTexture(std::string && name);
 	void SetAsTextureRect(std::string && name, glm::vec2 offset, glm::vec2 size);
 	void SetRect(glm::vec2 offset, glm::vec2 size);
-	~SimpleSpriteRenderer();
+	void SnapToGrid(bool snap) { _snapToGrid = snap; };
+	void SetSnapGridSize(glm::vec2 snapGridSize) { _snapSize = snapGridSize; };
+	
 
 	inline SimpleTexture* GetTexture() { return _tex; };
 
@@ -37,6 +40,10 @@ private:
 	//Offset and size in pixel coordinates (to make life easier to the user)
 	glm::vec2 _rectOffset;
 	glm::vec2 _rectSize;
+
+	//Snapping utilities
+	bool _snapToGrid;
+	glm::vec2 _snapSize;
 	
 };
 

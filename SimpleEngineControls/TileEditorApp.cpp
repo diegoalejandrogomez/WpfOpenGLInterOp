@@ -10,6 +10,25 @@ void TileEditorApp::Init()
 	_tileMapLayer = new SimpleLayer();
 	_tileMapLayer->SetZ(-1.0f);
 	_tileMapLayer->SetName("MainTileMap");
+	SimpleEngine::Instance()->GetScene()->AddLayer(_tileMapLayer);
+
+	_uiLayer = new SimpleLayer();
+	_uiLayer->SetZ(1000.0f);
+	_uiLayer->SetName("UI");
+	SimpleEngine::Instance()->GetScene()->AddLayer(_uiLayer);
+
+	_cursor = new SimpleSpriteRenderer();
+	_cursor->SetAsTexture("media/grid.png");
+	_cursor->SetSize({ 1.0f, 1.0f });
+	_cursor->SnapToGrid(true);
+	_cursor->SetSnapGridSize({ 1.0f, 1.0f });
+	SimpleEngine::Instance()->GetScene()->AddEntity(_cursor, "UI");
+
+}
+
+void TileEditorApp::SetCursorPosition(float x, float y) {
+	if(_cursor != nullptr)
+		_cursor->SetPosition({ x, y, 0.0f });
 }
 
 void TileEditorApp::Advance(float dt)

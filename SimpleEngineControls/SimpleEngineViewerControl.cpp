@@ -42,6 +42,13 @@ void SimpleEngineViewerControl::OnSizeChanged(System::Object ^sender, System::Ev
 }
 
 
+void SimpleEngineViewerControl::SetMousePosition(float x, float y) {
+
+	glm::vec2 worldPos = SimpleEngine::Instance()->GetScene()->GetCamera()->ScreenToWorld({ x, y });
+	_appLogic->SetCursorPosition(worldPos.x, worldPos.y);
+
+}
+
 void SimpleEngineViewerControl::OnPaintBackground(PaintEventArgs^ e)  {
 
 }

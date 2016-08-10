@@ -14,6 +14,9 @@ SimpleSpriteRenderer::SimpleSpriteRenderer() {
 
 	_rectOffset = glm::vec2(0.0f);
 	_rectSize = glm::vec2(0.0f);
+
+	_snapToGrid = false;
+	_snapSize = glm::vec2(1.0);
 }
 
 void SimpleSpriteRenderer::SetRect(glm::vec2 offset, glm::vec2 size) {
@@ -59,9 +62,13 @@ void SimpleSpriteRenderer::Render(float dt) {
 	//Bad way of querying uniforms
 	GLuint modelLoc = _shader->GetLocationFor( "modelMatrix");
 
+	glm::vec3 pos = _aabb.position;
 	//Not efficient at all, but easier to read for now
-	
-	glm::mat4 model = glm::translate(_aabb.position) * glm::rotate(_orientation, glm::vec3(0.0f, 0.0f, 1.0f)) * glm::scale(glm::vec3(_aabb.size.x, _aabb.size.y, 1.0f ));
+	if (_snapToGrid) {
+		pos.x = std::floor(pos.x / _snapSize.x) + 0.5f * _aabb.size.x;
+		pos.y = std::floor(pos.y / _snapSize.y) + 0.5f * _aabb.size.x;
+	}
+	glm::mat4 model = glm::translate(pos) * glm::rotate(_orientation, glm::vec3(0.0f, 0.0f, 1.0f)) * glm::scale(glm::vec3(_aabb.size.x, _aabb.size.y, 1.0f ));
 	
 
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, &model[0][0]);

@@ -25,6 +25,7 @@ namespace SimpleEngineControls {
 
 		void MoveCamera(float dx, float dy);
 		void DeltaZoom(float dz);
+		void SetMousePosition(float x, float y);
 
 		//Custom events
 		event EventHandler^ OnEngineInitialized;

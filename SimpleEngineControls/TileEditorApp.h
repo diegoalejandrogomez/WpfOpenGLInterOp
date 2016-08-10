@@ -19,6 +19,8 @@ public:
 	void SetMapWidth(int width);
 	void SetMapHeight(int height);
 
+	void SetCursorPosition(float x, float y);
+
 	inline int  GetMapWidth()const { return _tileMapSize.x; }
 	inline int  GetMapHeight()const { return _tileMapSize.y; }
 
@@ -28,11 +30,14 @@ private:
 	void _ResizeGrid();
 
 	//We should have a SimpleObject for the whole tileset... but let's do this for now...
-	SimpleLayer*			_gridLayer = nullptr;
-	SimpleLineRenderer*		_grid;
+	SimpleLayer*			_gridLayer	= nullptr;
+	SimpleLineRenderer*		_grid		= nullptr;
+	SimpleLayer*			_uiLayer	= nullptr;
+	SimpleSpriteRenderer*	_cursor		= nullptr;
 	SimpleLayer*			_tileMapLayer = nullptr;
 	glm::ivec2				_tileMapSize = glm::ivec2(0);
 	SimpleSpriteRenderer**	_tiles = nullptr;
 
 	
 };
+

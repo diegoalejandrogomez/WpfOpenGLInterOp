@@ -66,12 +66,12 @@ namespace WPF.ViewModel
 
         public void OnDrag(object sender, System.Windows.Forms.MouseEventArgs e)
         {
+            SimpleEngineViewerControl view = openGLRenderControl as SimpleEngineViewerControl;
 
             //Panning
-            if (e.Button == System.Windows.Forms.MouseButtons.Right) {
-                SimpleEngineViewerControl view = openGLRenderControl as SimpleEngineViewerControl;
+            if (e.Button == System.Windows.Forms.MouseButtons.Right)               
                 view.MoveCamera(-(e.X - _prevX) * _panSpeed, (e.Y - _prevY) * _panSpeed );               
-            }
+            
 
             MousePosition = e.Location.X + ":" + e.Location.Y;
             if (this.Drag && Selected != null)
@@ -88,6 +88,9 @@ namespace WPF.ViewModel
 
             _prevX = e.X;
             _prevY = e.Y;
+
+            //Update cursor position
+            view.SetMousePosition(e.X, e.Y);
         }
 
         private String mousePosition;
