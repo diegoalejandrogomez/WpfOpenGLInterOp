@@ -33,6 +33,12 @@
     <Filter Include="Engine\Input">
       <UniqueIdentifier>{b8217132-f83c-48f0-8f29-bf22fb29e529}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Graphics\Animation">
+      <UniqueIdentifier>{933d46db-cdea-4424-8db4-f54b14c841a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Graphics\Sprites">
+      <UniqueIdentifier>{f1dfaaea-cda2-49a8-b67c-d8c526ea8d4f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -57,9 +63,6 @@
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="Include\SimpleObject.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\SimpleRenderer.h">
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="Include\SimpleScene.h">
@@ -110,9 +113,6 @@
     <ClInclude Include="Include\SimpleUtils.h">
       <Filter>Engine\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Include\SimpleSpriteRenderer.h">
-      <Filter>Engine\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="Include\LowerZIndex.h">
       <Filter>Engine\Utils</Filter>
     </ClInclude>
@@ -125,6 +125,24 @@
     <ClInclude Include="Include\SimpleLineRenderer.h">
       <Filter>Engine\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="Include\SimpleRenderer.h">
+      <Filter>Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\SimpleSpriteAnimation.h">
+      <Filter>Engine\Graphics\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\SimpleAnimatedSpriteRenderer.h">
+      <Filter>Engine\Graphics\Sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\SimpleSpriteRenderer.h">
+      <Filter>Engine\Graphics\Sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\SimpleSpriteSheet.h">
+      <Filter>Engine\Graphics\Sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\SimpleSpriteSheetRenderer.h">
+      <Filter>Engine\Graphics\Sprites</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\SimpleObjectsRenderPass.cpp">
@@ -134,9 +152,6 @@
       <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="Src\SimpleObject.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\SimpleRenderer.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="Src\SimpleScene.cpp">
@@ -175,9 +190,6 @@
     <ClCompile Include="Src\SimpleLayer.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Src\SimpleSpriteRenderer.cpp">
-      <Filter>Engine\Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="Src\SimpleInput.cpp">
       <Filter>Engine\Input</Filter>
     </ClCompile>
@@ -186,6 +198,24 @@
     </ClCompile>
     <ClCompile Include="Src\SimpleLineRenderer.cpp">
       <Filter>Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\SimpleRenderer.cpp">
+      <Filter>Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\SimpleSpriteAnimation.cpp">
+      <Filter>Engine\Graphics\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\SimpleAnimatedSpriteRenderer.cpp">
+      <Filter>Engine\Graphics\Sprites</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\SimpleSpriteRenderer.cpp">
+      <Filter>Engine\Graphics\Sprites</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\SimpleSpriteSheet.cpp">
+      <Filter>Engine\Graphics\Sprites</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\SimpleSpriteSheetRenderer.cpp">
+      <Filter>Engine\Graphics\Sprites</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

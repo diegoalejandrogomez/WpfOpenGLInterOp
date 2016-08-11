@@ -138,10 +138,12 @@ copy /Y "$(ProjectDir)\External\devil\lib\ILU.dll" "$(TargetDir)"</Command>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\SimpleAABB.h" />
+    <ClInclude Include="Include\SimpleAnimatedSpriteRenderer.h" />
     <ClInclude Include="Include\SimpleInput.h" />
     <ClInclude Include="Include\SimpleLayer.h" />
     <ClInclude Include="Include\LowerZIndex.h" />
     <ClInclude Include="Include\SimpleLineRenderer.h" />
+    <ClInclude Include="Include\SimpleSpriteAnimation.h" />
     <ClInclude Include="Include\SimpleSpriteRenderer.h" />
     <ClInclude Include="Include\DebugGameLogic.h" />
     <ClInclude Include="Include\DebugRenderPass.h" />
@@ -159,6 +161,8 @@ copy /Y "$(ProjectDir)\External\devil\lib\ILU.dll" "$(TargetDir)"</Command>
     <ClInclude Include="Include\SimpleRenderer.h" />
     <ClInclude Include="Include\SimpleScene.h" />
     <ClInclude Include="Include\SimpleShaderProgram.h" />
+    <ClInclude Include="Include\SimpleSpriteSheet.h" />
+    <ClInclude Include="Include\SimpleSpriteSheetRenderer.h" />
     <ClInclude Include="Include\SimpleTexture.h" />
     <ClInclude Include="Include\SimpleUtils.h" />
     <ClInclude Include="Include\Texture.h" />
@@ -170,6 +174,7 @@ copy /Y "$(ProjectDir)\External\devil\lib\ILU.dll" "$(TargetDir)"</Command>
   <ItemGroup>
     <ClCompile Include="External\glew\glew.cpp" />
     <ClCompile Include="Src\SimpleAABB.cpp" />
+    <ClCompile Include="Src\SimpleAnimatedSpriteRenderer.cpp" />
     <ClCompile Include="Src\SimpleInput.cpp" />
     <ClCompile Include="Src\SimpleLayer.cpp" />
     <ClCompile Include="Include\SimpleMesh.h" />
@@ -184,7 +189,10 @@ copy /Y "$(ProjectDir)\External\devil\lib\ILU.dll" "$(TargetDir)"</Command>
     <ClCompile Include="Src\SimpleRenderer.cpp" />
     <ClCompile Include="Src\SimpleScene.cpp" />
     <ClCompile Include="Src\SimpleShaderProgram.cpp" />
+    <ClCompile Include="Src\SimpleSpriteAnimation.cpp" />
     <ClCompile Include="Src\SimpleSpriteRenderer.cpp" />
+    <ClCompile Include="Src\SimpleSpriteSheet.cpp" />
+    <ClCompile Include="Src\SimpleSpriteSheetRenderer.cpp" />
     <ClCompile Include="Src\SimpleTexture.cpp" />
     <ClCompile Include="Src\VertexFormats.cpp" />
     <ClCompile Include="stdafx.cpp">

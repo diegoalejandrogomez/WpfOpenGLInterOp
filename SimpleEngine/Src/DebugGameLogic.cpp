@@ -4,6 +4,8 @@
 #include "SimpleEngine.h"
 #include "SimpleLayer.h"
 #include "SimpleSpriteRenderer.h"
+#include "SimpleSpriteSheetRenderer.h"
+#include "SimpleAnimatedSpriteRenderer.h"
 
 void DebugGameLogic::Init()
 {
@@ -15,10 +17,32 @@ void DebugGameLogic::Init()
 	layer = new SimpleLayer();
 	layer->SetZ(SimpleEngine::Instance()->GetScene()->GetLowerZIndex() - 1);
 	SimpleEngine::Instance()->GetScene()->AddLayer(layer);
-	SimpleSpriteRenderer* sprite = new SimpleSpriteRenderer();
+	
+	/*SimpleSpriteRenderer* sprite = new SimpleSpriteRenderer();
 	sprite->SetAsTexture("./media/spriteFull.png");
-	sprite->SetOrientation(1.0f);
-	SimpleEngine::Instance()->GetScene()->AddEntity(sprite, layer);
+	sprite->SetOrientation(1.0f);*/
+	//SimpleEngine::Instance()->GetScene()->AddEntity(sprite, layer);
+	
+	SimpleEngine::Instance()->GetRenderer()->CreateSpriteSheet("media/spriteSheet.png", { 104,149 }, { 6,3 });
+
+	
+	/*
+	SimpleSpriteSheetRenderer* guybrush = new SimpleSpriteSheetRenderer();
+	guybrush->SetSpriteSheet("media/spriteSheet.png");
+	guybrush->SetIndex(1, 0);*/
+	//SimpleEngine::Instance()->GetScene()->AddEntity(guybrush, layer);
+	
+	//Guybrush animation
+	SimpleEngine::Instance()->GetRenderer()->CreateSpriteAnimation(	"walking","media/spriteSheet.png",
+		std::vector<SimpleSpriteAnimation::AnimationIndex>{ {0, 0}, { 1,0 }, { 2,0 }, { 3,0 }, { 4,0 }, { 5,0 } }, 0.15f);
+		
+	SimpleSpriteAnimation *walkingAnim = SimpleEngine::Instance()->GetRenderer()->GetSpriteAnimation("walking");
+	
+	SimpleAnimatedSpriteRenderer* walkingGuybrush = new SimpleAnimatedSpriteRenderer();
+	walkingGuybrush->SetAnimation(walkingAnim);
+	walkingGuybrush->Play();
+	SimpleEngine::Instance()->GetScene()->AddEntity(walkingGuybrush, layer);
+
 
 	//Configure input system we are going to use
 	SimpleEngine::Instance()->GetInput()->CreateKeyboard();
