@@ -42,12 +42,27 @@ void SimpleSpriteRenderer::SetAsTexture(std::string && name) {
 	_aabb.size = _rectSize;
 }
 
+void SimpleSpriteRenderer::SetAsTexture(SimpleTexture* t) {
+	_tex = t;
+	_rectOffset = { 0,0 };
+	_rectSize = { _tex->GetWidth(), _tex->GetHeight() };
+	//Set sprite size using texture resolution
+	_aabb.size = _rectSize;
+}
+
+
+
 void SimpleSpriteRenderer::SetAsTextureRect(std::string && name, glm::vec2 offset, glm::vec2 size) {
 	SimpleRenderer* render = SimpleEngine::Instance()->GetRenderer();
 	_tex = render->GetTexture(name);
 	SetRect(offset, size);
 }
 
+
+void SimpleSpriteRenderer::SetAsTextureRect(SimpleTexture* t, glm::vec2 offset, glm::vec2 size) {
+	_tex = t;
+	SetRect(offset, size);
+}
 
 void SimpleSpriteRenderer::Advance(float dt) {
 

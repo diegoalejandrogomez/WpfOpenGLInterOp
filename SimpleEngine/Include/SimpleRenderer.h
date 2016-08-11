@@ -8,7 +8,8 @@
 #include "SimpleMesh.h"
 #include "SimpleTexture.h"
 #include "VertexFormats.h"
-
+#include "SimpleSpriteSheet.h"
+#include "SimpleSpriteAnimation.h"
 
 class SimpleScene;
 
@@ -31,6 +32,12 @@ public:
 	
 	bool LoadTexture(std::string texturePath);
 	SimpleTexture* GetTexture(std::string name) ;
+
+	bool CreateSpriteSheet(std::string texturePath, glm::ivec2 frameSize, glm::ivec2 frameCount);
+	SimpleSpriteSheet* GetSpriteSheet(std::string texturePath);
+
+	bool CreateSpriteAnimation(std::string name, std::string spriteSheet, std::vector<SimpleSpriteAnimation::AnimationIndex> &frames, float frameTime);
+	SimpleSpriteAnimation* GetSpriteAnimation(std::string name);
 
 	inline SimpleMesh<VertexTextureFormat2D>* GetUnitaryQuad() { return _texturedQuad; };
 	inline HWND GetWindowHandle() { return _hWnd; };
@@ -58,8 +65,12 @@ private:
 	std::vector<RenderPass*> _passes;
 
 	//This class also serves as a mini graphics resource admin
+	//Memory owners
 	std::unordered_map<std::string, SimpleShaderProgram*> _programs;
 	std::unordered_map<std::string, SimpleTexture*> _textures;
+	std::unordered_map<std::string, SimpleSpriteSheet*> _spriteSheets;
+	//Don't own anything
+	std::unordered_map<std::string, SimpleSpriteAnimation*> _spriteAnimations;
 
 	//Reusable meshes
 	SimpleMesh<VertexTextureFormat2D>* _texturedQuad;

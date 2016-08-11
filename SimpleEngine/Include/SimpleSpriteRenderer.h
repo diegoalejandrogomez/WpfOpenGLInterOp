@@ -13,10 +13,12 @@ public:
 
 	SimpleSpriteRenderer();
 	~SimpleSpriteRenderer();
-	void Advance(float dt);
-	void Render(float dt);
+	virtual void Advance(float dt);
+	virtual void Render(float dt);
 	void SetAsTexture(std::string && name);
 	void SetAsTextureRect(std::string && name, glm::vec2 offset, glm::vec2 size);
+	void SetAsTexture(SimpleTexture *t);
+	void SetAsTextureRect(SimpleTexture *t, glm::vec2 offset, glm::vec2 size);
 	void SetRect(glm::vec2 offset, glm::vec2 size);
 	void SnapToGrid(bool snap) { _snapToGrid = snap; };
 	void SetSnapGridSize(glm::vec2 snapGridSize) { _snapSize = snapGridSize; };
@@ -24,7 +26,7 @@ public:
 
 	inline SimpleTexture* GetTexture() { return _tex; };
 
-private:
+protected:
 	unsigned int _vertexCount;
 	unsigned int _indexCount;
 	GLuint _vao;	//vertex array object

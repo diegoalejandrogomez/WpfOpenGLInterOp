@@ -65,7 +65,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 			}
 		}
 		else {
-			engine->Advance(0.0f);
+			static auto prevStamp = std::chrono::high_resolution_clock::now();
+			auto currentStamp = std::chrono::high_resolution_clock::now();
+			auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(currentStamp - prevStamp);
+			prevStamp = currentStamp;
+			engine->Advance(elapsed.count() * 1e-9f);
 			engine->Render(0.0f);
 		}
     }

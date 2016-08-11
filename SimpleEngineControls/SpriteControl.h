@@ -1,7 +1,7 @@
 #pragma once
 #include "SimpleObject.h"
 #include "SimpleSpriteRenderer.h"
-#include "SimpleLayer.h";
+#include "SimpleLayer.h"
 #include "ManagedSimpleObject.h"
 
 namespace SimpleEngineControls {

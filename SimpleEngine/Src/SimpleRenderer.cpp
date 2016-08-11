@@ -300,6 +300,55 @@ SimpleTexture* SimpleRenderer::GetTexture(std::string texturePath) {
 
 }
 
+bool SimpleRenderer::CreateSpriteSheet(std::string texturePath, glm::ivec2 frameSize, glm::ivec2 frameCount) {
+	
+	auto sheet = _spriteSheets.find(texturePath);
+	if (sheet == _spriteSheets.end()) {
+		//Try to load the texture
+		SimpleSpriteSheet* spriteSheet = new SimpleSpriteSheet();
+		spriteSheet->LoadTexture(texturePath.c_str());
+		spriteSheet->SetCellSize(frameSize);
+		spriteSheet->SetCellCount(frameCount);
+		_spriteSheets[texturePath] = spriteSheet;
+		
+	}
+	
+	return true;
+}
+SimpleSpriteSheet* SimpleRenderer::GetSpriteSheet(std::string texturePath) {
+	auto sheet = _spriteSheets.find(texturePath);
+	if (sheet == _spriteSheets.end())
+		return nullptr;
+	return sheet->second;
+
+}
+
+bool SimpleRenderer::CreateSpriteAnimation(std::string name, std::string spriteSheet, std::vector<SimpleSpriteAnimation::AnimationIndex> &frames, float frameTime) {
+
+	//Check if it doesn't exist already
+
+	if (_spriteAnimations.find(name) == _spriteAnimations.end()) {
+		SimpleSpriteAnimation* anim = new SimpleSpriteAnimation();
+		anim->SetAnimationName(name);
+		anim->SetSpriteSheet(spriteSheet);
+		anim->SetFrames(frames);
+		anim->SetFrameTime(frameTime);
+		_spriteAnimations[name] = anim;
+		return true;
+	}
+
+	return true;
+
+}
+SimpleSpriteAnimation* SimpleRenderer::GetSpriteAnimation(std::string name) {
+	auto it = _spriteAnimations.find(name);
+	
+	if (it == _spriteAnimations.end())
+		return nullptr;
+
+	return it->second;
+}
+
 
 bool SimpleRenderer::_LoadDefaultShaders() {
 
