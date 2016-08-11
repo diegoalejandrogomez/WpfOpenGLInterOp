@@ -24,6 +24,10 @@ void DebugGameLogic::Init()
 	//SimpleEngine::Instance()->GetScene()->AddEntity(sprite, layer);
 	
 	SimpleEngine::Instance()->GetRenderer()->CreateSpriteSheet("media/spriteSheet.png", { 104,149 }, { 6,3 });
+	//SimpleEngine::Instance()->GetRenderer()->CreateSpriteSheet("media/spriteSheet.png");
+	SimpleSpriteSheet* _spriteSheet = SimpleEngine::Instance()->GetRenderer()->GetSpriteSheet("media/spriteSheet.png");
+	//_spriteSheet->AddSpriteFrame({ 0,0 }, { 104,149 });
+	//_spriteSheet->AddSpriteFrame({ 105,150 }, { 104,149 });
 
 	
 	/*
@@ -34,7 +38,7 @@ void DebugGameLogic::Init()
 	
 	//Guybrush animation
 	SimpleEngine::Instance()->GetRenderer()->CreateSpriteAnimation(	"walking","media/spriteSheet.png",
-		std::vector<SimpleSpriteAnimation::AnimationIndex>{ {0, 0}, { 1,0 }, { 2,0 }, { 3,0 }, { 4,0 }, { 5,0 } }, 0.15f);
+		std::vector<int>{ 0,1,2,3,4,5}, 0.15f);
 		
 	SimpleSpriteAnimation *walkingAnim = SimpleEngine::Instance()->GetRenderer()->GetSpriteAnimation("walking");
 	

@@ -34,9 +34,10 @@ public:
 	SimpleTexture* GetTexture(std::string name) ;
 
 	bool CreateSpriteSheet(std::string texturePath, glm::ivec2 frameSize, glm::ivec2 frameCount);
+	bool CreateSpriteSheet(std::string texturePath);
 	SimpleSpriteSheet* GetSpriteSheet(std::string texturePath);
 
-	bool CreateSpriteAnimation(std::string name, std::string spriteSheet, std::vector<SimpleSpriteAnimation::AnimationIndex> &frames, float frameTime);
+	bool CreateSpriteAnimation(std::string name, std::string spriteSheet, std::vector<int> &frames, float frameTime);
 	SimpleSpriteAnimation* GetSpriteAnimation(std::string name);
 
 	inline SimpleMesh<VertexTextureFormat2D>* GetUnitaryQuad() { return _texturedQuad; };

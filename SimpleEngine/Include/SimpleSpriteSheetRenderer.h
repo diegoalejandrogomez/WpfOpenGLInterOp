@@ -21,12 +21,11 @@ public:
 
 	void SetSpriteSheet(std::string sheetName);
 	void SetSpriteSheet(SimpleSpriteSheet* sheet);
-	void SetIndex(int x, int y);
+	void SetIndex(int pos);
 
 protected:
 		
-	int _xPos;
-	int _yPos;
+	int _pos;
 	SimpleSpriteSheet* _spriteSheet = nullptr;
 	
 };

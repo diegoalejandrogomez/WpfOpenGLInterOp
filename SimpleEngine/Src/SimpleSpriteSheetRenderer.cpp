@@ -8,8 +8,7 @@
 #include "SimpleTexture.h"
 
 SimpleSpriteSheetRenderer::SimpleSpriteSheetRenderer() {
-	_xPos = 0;
-	_yPos = 0;
+	_pos = 0;
 }
 
 SimpleSpriteSheetRenderer::~SimpleSpriteSheetRenderer() {
@@ -37,15 +36,14 @@ void SimpleSpriteSheetRenderer::Advance(float dt) {
 
 }
 
-void SimpleSpriteSheetRenderer::SetIndex(int x, int y){
-	_xPos = x;
-	_yPos = y;
+void SimpleSpriteSheetRenderer::SetIndex(int pos){
+	_pos = pos;
 }
 
 void SimpleSpriteSheetRenderer::Render(float dt) {
 	
 	//Pick cell to render from sprite source
-	glm::vec4 frame = _spriteSheet->GetCoordsForIndex({ _xPos, _yPos });
+	glm::vec4 frame = _spriteSheet->GetCoordsForIndex(_pos);
 	SimpleTexture *t = static_cast<SimpleTexture*>(_spriteSheet);
 	SetAsTextureRect(t, glm::vec2{ frame.x, frame.y }, glm::vec2{ frame.z, frame.w });
 	SimpleSpriteRenderer::Render(dt);
