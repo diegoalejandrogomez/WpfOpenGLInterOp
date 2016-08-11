@@ -67,13 +67,16 @@
                             <RowDefinition Height="Auto"></RowDefinition>
                         </Grid.RowDefinitions>
                         <xctk:PropertyGrid x:Name="propertyGrid" Grid.Row="0" AutoGenerateProperties="true" SelectedObject="{Binding Selected}"></xctk:PropertyGrid>
+                        
                         <StackPanel Grid.Row="1">
                             <Label Content="Layers"></Label>
                             <DataGrid  ItemsSource="{Binding Layers}" AutoGenerateColumns="True">
 
                             </DataGrid>
                             <Label Content="Images"></Label>
-                            <DataGrid  ItemsSource="{Binding Tiles}" AutoGenerateColumns="False">
+                            <ScrollViewer>
+                            <DataGrid  ItemsSource="{Binding Tiles}" AutoGenerateColumns="False" SelectedItem="{Binding Row, UpdateSourceTrigger=PropertyChanged}" 
+                                       ScrollViewer.CanContentScroll="true" ScrollViewer.VerticalScrollBarVisibility="Visible" Height="400">
                                 <DataGrid.Columns>
                                     <DataGridTemplateColumn Header="Image" Width="SizeToCells">
                                         <DataGridTemplateColumn.CellTemplate>
@@ -82,15 +85,24 @@
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
-                                    <DataGridTemplateColumn Header="Path" Width="SizeToCells">
+                                    <DataGridTemplateColumn Header="Split" Width="SizeToCells">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <Label Content="{Binding Path}"/>
+                                                <Button  
+                                                    Command="{Binding DataContext.SplitSelectedImage, 
+                                                    RelativeSource={RelativeSource Mode=FindAncestor,  AncestorType={x:Type local:MainWindow}}}"
+                                                    CommandParameter="{Binding Image}" >
+                                                   <!-- CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}, Path=PlacementTarget.SelectedItem}" !-->
+                                                   
+                                                    <Image Name="split" Source="./Resources/Icons/split.png"  Style="{StaticResource ToolIcon}" />
+                                                
+                                                </Button>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
+                            </ScrollViewer>
                         </StackPanel>
                         
                     </Grid>

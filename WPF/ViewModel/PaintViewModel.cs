@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -218,6 +219,8 @@ namespace WPF.ViewModel
 
         private ICommand setDragCommand;
 
+        private ICommand splitSelectedImage;
+
         public event PropertyChangedEventHandler PropertyChanged = delegate(object sender, PropertyChangedEventArgs e)
         {
             var paintViewModel = sender as PaintViewModel;
@@ -228,6 +231,80 @@ namespace WPF.ViewModel
                 //paintViewModel.OpenGLRenderControl.SetProperty(e.PropertyName, true);
             }
         };
+
+        BitmapImage BitmapToImageSource(Bitmap bitmap)
+        {
+            using (MemoryStream memory = new MemoryStream())
+            {
+                bitmap.Save(memory, System.Drawing.Imaging.ImageFormat.Bmp);
+                memory.Position = 0;
+                BitmapImage bitmapimage = new BitmapImage();
+                bitmapimage.BeginInit();
+                bitmapimage.StreamSource = memory;
+                bitmapimage.CacheOption = BitmapCacheOption.OnLoad;
+                bitmapimage.EndInit();
+
+                return bitmapimage;
+            }
+        }
+
+        private Bitmap BitmapImage2Bitmap(BitmapImage bitmapImage)
+        {
+            // BitmapImage bitmapImage = new BitmapImage(new Uri("../Images/test.png", UriKind.Relative));
+
+            using (MemoryStream outStream = new MemoryStream())
+            {
+                BitmapEncoder enc = new BmpBitmapEncoder();
+                enc.Frames.Add(BitmapFrame.Create(bitmapImage));
+                enc.Save(outStream);
+                System.Drawing.Bitmap bitmap = new System.Drawing.Bitmap(outStream);
+
+                return new Bitmap(bitmap);
+            }
+        }
+
+
+        public ICommand SplitSelectedImage
+        {
+            get
+            {
+                if (splitSelectedImage == null)
+                {
+
+                    splitSelectedImage = new Command((image) =>
+                    {
+                        int width = (int)((BitmapImage)image).Width;
+                        int heigth = (int)((BitmapImage)image).Height;
+                        int x = 0;
+                        int y = 0;
+                        int proportionalWidth = width / 9;
+                        int proportionalHeigth = width / 9;
+
+                        
+                        while (y + proportionalHeigth <= heigth)
+                        {
+                            while (x + proportionalWidth <= width)
+                            {
+                                var asd = BitmapImage2Bitmap((BitmapImage)image).Clone(new Rectangle(x, y, proportionalWidth, proportionalHeigth), System.Drawing.Imaging.PixelFormat.DontCare);
+                                BitmapImage newImage = BitmapToImageSource(asd);
+                                var newTile = new Tile();
+                                newTile.Image = newImage;
+                                Tiles.Add(newTile);
+                                PropertyChanged(this, new PropertyChangedEventArgs("Tiles"));
+                                x += proportionalWidth;
+                            }
+
+                            x = 0;
+                            y += proportionalHeigth;
+                        }
+                    });
+                }
+
+                return splitSelectedImage;
+            }
+
+            set { }
+        }
 
         public ICommand SetDrawLineCommand
         {
