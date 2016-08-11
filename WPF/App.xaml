@@ -16,5 +16,10 @@
         <Style x:Key="Panel">
             <Setter Property="Grid.Margin" Value="2,2,2,2"></Setter>
         </Style>
+        <Style x:Key="MidImage">
+            <Setter Property="Image.Width" Value="75"></Setter>
+            <Setter Property="Image.Height" Value="75"></Setter>
+            <Setter Property="Image.Margin" Value="2,2,2,2"></Setter>
+        </Style>
     </Application.Resources>
 </Application>

@@ -72,6 +72,25 @@
                             <DataGrid  ItemsSource="{Binding Layers}" AutoGenerateColumns="True">
 
                             </DataGrid>
+                            <Label Content="Images"></Label>
+                            <DataGrid  ItemsSource="{Binding Tiles}" AutoGenerateColumns="False">
+                                <DataGrid.Columns>
+                                    <DataGridTemplateColumn Header="Image" Width="SizeToCells">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Image Source="{Binding Image}"  Style="{StaticResource MidImage}"/>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn Header="Path" Width="SizeToCells">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Label Content="{Binding Path}"/>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
                         </StackPanel>
                         
                     </Grid>

@@ -6,20 +6,9 @@ using namespace System::Runtime::InteropServices;
 
 public ref class ManagedSimpleLayer {
 public:
-	ManagedSimpleLayer(SimpleLayer *simpleLayer) {
-		this->simpleLayer = simpleLayer;
-		_simpleObjects = gcnew System::Collections::Generic::List<ManagedSimpleObject^>();
-		for (auto &entity : this->simpleLayer->GetEntities())
-		{
-			auto managedSimpleObject = gcnew ManagedSimpleObject();
-			managedSimpleObject->SetSimpleObject(entity);
-			_simpleObjects->Add(managedSimpleObject);
-		}
-	};
+	ManagedSimpleLayer(SimpleLayer *simpleLayer);
 
-	~ManagedSimpleLayer()
-	{};
-
+	~ManagedSimpleLayer();
 
 	property float Z
 	{

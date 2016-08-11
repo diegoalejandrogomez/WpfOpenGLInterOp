@@ -2,34 +2,22 @@
 using SimpleEngineControls;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 using WPF.Infrastructure;
+using WPF.Model;
 
 namespace WPF.ViewModel
 {
     public class PaintViewModel: INotifyPropertyChanged
     {
-
-        public void OnClick(Object sender, EventArgs e)
-        {
-
-            if (Selected != null)
-                Drag = false;
-            int x = ((System.Windows.Forms.MouseEventArgs)e).X;
-            int y = ((System.Windows.Forms.MouseEventArgs)e).Y;
-            Selected = null;
-            Selected = ((SimpleEngineViewerControl)OpenGLRenderControl).SetItem(x, y);
-            if (Selected == null)
-                Selected = _tileMap;
-
-            PropertyChanged(this, new PropertyChangedEventArgs("Layers"));
-        }
-
         #region Properties
 
         private System.Windows.Forms.UserControl openGLRenderControl;
@@ -187,6 +175,7 @@ namespace WPF.ViewModel
 
         }
 
+        public ObservableCollection<Tile> Tiles { get; set; }
 
         TileMapControl _tileMap;
         float _panSpeed = 1.0f;
@@ -204,6 +193,20 @@ namespace WPF.ViewModel
             this.Drag = false;
         }
 
+        public void OnClick(Object sender, EventArgs e)
+        {
+
+            if (Selected != null)
+                Drag = false;
+            int x = ((System.Windows.Forms.MouseEventArgs)e).X;
+            int y = ((System.Windows.Forms.MouseEventArgs)e).Y;
+            Selected = null;
+            Selected = ((SimpleEngineViewerControl)OpenGLRenderControl).SetItem(x, y);
+            if (Selected == null)
+                Selected = _tileMap;
+
+            PropertyChanged(this, new PropertyChangedEventArgs("Layers"));
+        }
         #endregion
 
         #region Commands
@@ -281,9 +284,15 @@ namespace WPF.ViewModel
                         {
                             this.FilePath = dialog.FileName;
                             var spriteControl = new SpriteControl();
-
-                            spriteControl.AddControl(this.FilePath);
-                            PropertyChanged(this, new PropertyChangedEventArgs("Layers"));
+                            var newTile = new Tile();
+                            newTile.Image = new BitmapImage(new Uri(this.FilePath));
+                            newTile.Path = this.FilePath;
+                            if (Tiles == null)
+                                Tiles = new ObservableCollection<Tile>();
+                            this.Tiles.Add(newTile);
+                            PropertyChanged(this, new PropertyChangedEventArgs("Tiles"));
+                            //spriteControl.AddControl(this.FilePath);
+                            //PropertyChanged(this, new PropertyChangedEventArgs("Layers"));
                         }
                     });
                 }
