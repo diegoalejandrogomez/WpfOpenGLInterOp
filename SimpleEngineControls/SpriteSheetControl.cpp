@@ -21,7 +21,14 @@ void SpriteSheetControl::AddControl(System::String^ path)
 	const char* chars =
 		(const char*)(Marshal::StringToHGlobalAnsi(path)).ToPointer();
 
-	SimpleEngine::Instance()->GetRenderer()->CreateSpriteSheet(chars, { width, heigth }, { positionX, positionY });
+	SimpleSpriteSheet* sheet = SimpleEngine::Instance()->GetRenderer()->GetSpriteSheet(chars);
+	if (sheet == nullptr) {
+		SimpleEngine::Instance()->GetRenderer()->CreateSpriteSheet(chars);
+		sheet = SimpleEngine::Instance()->GetRenderer()->GetSpriteSheet(chars);
+	}
+
+	sheet->AddSpriteFrame({ positionX,positionY }, { width,heigth });
+
 	_simpleSpriteSheetRenderer->SetSpriteSheet(chars);
 	_simpleSpriteSheetRenderer->SetIndex(0);
 	SimpleEngine::Instance()->GetScene()->AddEntity(_simpleSpriteSheetRenderer, "MainTileMap");
