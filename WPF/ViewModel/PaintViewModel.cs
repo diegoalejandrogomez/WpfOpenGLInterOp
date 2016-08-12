@@ -300,7 +300,7 @@ namespace WPF.ViewModel
                     addSelectedTile = new Command((tile) =>
                     {
                         var tileObject = (Tile)tile;
-                        tileObject.SpriteControl.AddControl(tileObject.Path);
+                        tileObject.SpriteControl.AddControl(tileObject.Path, tileObject.x, tileObject.y, tileObject.width, tileObject.heigth);
                     });
                 }
 
@@ -336,11 +336,16 @@ namespace WPF.ViewModel
                                 var newTile = new Tile();
                                 newTile.Image = newImage;
                                 newTile.Path = tileObject.Path;
+                                newTile.x = x;
+                                newTile.y = y;
+                                newTile.width = proportionalWidth;
+                                newTile.heigth = proportionalHeigth;                              
                                 newTile.SpriteControl = new SpriteSheetControl();
-                                newTile.SpriteControl.positionX = x;
-                                newTile.SpriteControl.positionY = y;
-                                newTile.SpriteControl.width = proportionalWidth;
-                                newTile.SpriteControl.heigth = proportionalHeigth;
+                                //Setting this changes the sprite size in the world, not the texture coordinates of it
+                                //newTile.SpriteControl.positionX = x;
+                                //newTile.SpriteControl.positionY = y;
+                                //newTile.SpriteControl.width = proportionalWidth;
+                                //newTile.SpriteControl.heigth = proportionalHeigth;
                                 Tiles.Add(newTile);
                                 PropertyChanged(this, new PropertyChangedEventArgs("Tiles"));
                                 x += proportionalWidth;
@@ -432,11 +437,15 @@ namespace WPF.ViewModel
                             var newTile = new Tile();
                             newTile.Image = new BitmapImage(new Uri(this.FilePath));
                             newTile.Path = this.FilePath;
+                            newTile.x = 0;
+                            newTile.y = 0;
+                            newTile.width = (int)newTile.Image.Width;
+                            newTile.heigth = (int)newTile.Image.Height;
                             newTile.SpriteControl = new SpriteSheetControl();
-                            newTile.SpriteControl.positionX = 0;
-                            newTile.SpriteControl.positionY = 0;
-                            newTile.SpriteControl.width = (int)newTile.Image.Width;
-                            newTile.SpriteControl.heigth = (int)newTile.Image.Height;
+                            //newTile.SpriteControl.positionX = 0;
+                            //newTile.SpriteControl.positionY = 0;
+                            //newTile.SpriteControl.width = (int)newTile.Image.Width;
+                            //newTile.SpriteControl.heigth = (int)newTile.Image.Height;
                             if (Tiles == null)
                                 Tiles = new ObservableCollection<Tile>();
                             this.Tiles.Add(newTile);

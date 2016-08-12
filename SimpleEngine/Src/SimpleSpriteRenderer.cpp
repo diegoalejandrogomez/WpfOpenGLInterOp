@@ -22,8 +22,6 @@ SimpleSpriteRenderer::SimpleSpriteRenderer() {
 void SimpleSpriteRenderer::SetRect(glm::vec2 offset, glm::vec2 size) {
 	_rectOffset = offset;
 	_rectSize = size;
-	//Resize accordingly
-	_aabb.size = _rectSize;
 }
 
 SimpleSpriteRenderer::~SimpleSpriteRenderer() {

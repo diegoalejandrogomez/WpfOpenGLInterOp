@@ -11,7 +11,7 @@ SimpleSpriteSheet::~SimpleSpriteSheet() {
 
 int SimpleSpriteSheet::AddSpriteFrame(glm::ivec2 position, glm::ivec2 size) {
 	
-	_frames.emplace_back(position.x, position.y, size.x, size.y);
+	_frames.emplace_back(position.x, GetHeight() - size.y - position.y, size.x, size.y);
 	return _frames.size()-1;
 }
 

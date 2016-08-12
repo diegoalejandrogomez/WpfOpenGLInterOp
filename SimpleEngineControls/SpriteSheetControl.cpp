@@ -16,7 +16,7 @@ SpriteSheetControl::~SpriteSheetControl() {
 	delete _simpleSpriteSheetRenderer;
 }
 
-void SpriteSheetControl::AddControl(System::String^ path)
+void SpriteSheetControl::AddControl(System::String^ path, int x, int y, int w, int h)
 {
 	const char* chars =
 		(const char*)(Marshal::StringToHGlobalAnsi(path)).ToPointer();
@@ -27,12 +27,18 @@ void SpriteSheetControl::AddControl(System::String^ path)
 		sheet = SimpleEngine::Instance()->GetRenderer()->GetSpriteSheet(chars);
 	}
 
-	int idx = sheet->GetFrameIndex({ positionX,positionY }, { width,heigth });
+	int idx = sheet->GetFrameIndex({ x,y }, { w,h });
 	if(idx == -1)
-		idx = sheet->AddSpriteFrame({ positionX,positionY }, { width,heigth });
+		idx = sheet->AddSpriteFrame({ x,y }, { w,h });
 
 	_simpleSpriteSheetRenderer->SetSpriteSheet(chars);
 	_simpleSpriteSheetRenderer->SetIndex(idx);
+	_simpleSpriteSheetRenderer->SetSize({ 1, 1 });
+	_simpleSpriteSheetRenderer->SnapToGrid(true);
+	_simpleSpriteSheetRenderer->SetSnapGridSize({ 1, 1 });
+	_simpleSpriteSheetRenderer->SetPosition({ 0.0f,0.0f,0.0f });
+
+	
 	SimpleEngine::Instance()->GetScene()->AddEntity(_simpleSpriteSheetRenderer, "MainTileMap");
 }
 
