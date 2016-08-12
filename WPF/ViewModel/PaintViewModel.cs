@@ -217,6 +217,8 @@ namespace WPF.ViewModel
 
         private ICommand openFileCommand;
 
+        private ICommand addSelectedTile;
+
         private ICommand setDragCommand;
 
         private ICommand splitSelectedImage;
@@ -263,6 +265,22 @@ namespace WPF.ViewModel
             }
         }
 
+        public ICommand AddSelectedTile
+        {
+            get
+            {
+                if (addSelectedTile == null)
+                {
+                    addSelectedTile = new Command((tile) =>
+                    {
+                        var tileObject = (Tile)tile;
+                        tileObject.SpriteControl.AddControl(tileObject.Path);
+                    });
+                }
+
+                return addSelectedTile;
+            }
+        }
 
         public ICommand SplitSelectedImage
         {
@@ -271,8 +289,10 @@ namespace WPF.ViewModel
                 if (splitSelectedImage == null)
                 {
 
-                    splitSelectedImage = new Command((image) =>
+                    splitSelectedImage = new Command((tile) =>
                     {
+                        var tileObject = (Tile)tile;
+                        var image = tileObject.Image;
                         int width = (int)((BitmapImage)image).Width;
                         int heigth = (int)((BitmapImage)image).Height;
                         int x = 0;
@@ -289,6 +309,12 @@ namespace WPF.ViewModel
                                 BitmapImage newImage = BitmapToImageSource(asd);
                                 var newTile = new Tile();
                                 newTile.Image = newImage;
+                                newTile.Path = tileObject.Path;
+                                newTile.SpriteControl = new SpriteSheetControl();
+                                newTile.SpriteControl.positionX = x;
+                                newTile.SpriteControl.positionY = y;
+                                newTile.SpriteControl.width = proportionalWidth;
+                                newTile.SpriteControl.heigth = proportionalHeigth;
                                 Tiles.Add(newTile);
                                 PropertyChanged(this, new PropertyChangedEventArgs("Tiles"));
                                 x += proportionalWidth;
@@ -360,16 +386,19 @@ namespace WPF.ViewModel
                         if (dialog.ShowDialog() == true)
                         {
                             this.FilePath = dialog.FileName;
-                            var spriteControl = new SpriteControl();
                             var newTile = new Tile();
                             newTile.Image = new BitmapImage(new Uri(this.FilePath));
                             newTile.Path = this.FilePath;
+                            newTile.SpriteControl = new SpriteSheetControl();
+                            newTile.SpriteControl.positionX = 0;
+                            newTile.SpriteControl.positionY = 0;
+                            newTile.SpriteControl.width = (int)newTile.Image.Width;
+                            newTile.SpriteControl.heigth = (int)newTile.Image.Height;
                             if (Tiles == null)
                                 Tiles = new ObservableCollection<Tile>();
                             this.Tiles.Add(newTile);
+
                             PropertyChanged(this, new PropertyChangedEventArgs("Tiles"));
-                            //spriteControl.AddControl(this.FilePath);
-                            //PropertyChanged(this, new PropertyChangedEventArgs("Layers"));
                         }
                     });
                 }

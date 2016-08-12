@@ -75,7 +75,7 @@
                             </DataGrid>
                             <Label Content="Images"></Label>
                             <ScrollViewer>
-                            <DataGrid  ItemsSource="{Binding Tiles}" AutoGenerateColumns="False" SelectedItem="{Binding Row, UpdateSourceTrigger=PropertyChanged}" 
+                                <DataGrid  ItemsSource="{Binding Tiles}" AutoGenerateColumns="False" SelectedItem="{Binding Row, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                        ScrollViewer.CanContentScroll="true" ScrollViewer.VerticalScrollBarVisibility="Visible" Height="400">
                                 <DataGrid.Columns>
                                     <DataGridTemplateColumn Header="Image" Width="SizeToCells">
@@ -88,15 +88,27 @@
                                     <DataGridTemplateColumn Header="Split" Width="SizeToCells">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <Button  
+                                                <StackPanel>
+                                                    <Button  
                                                     Command="{Binding DataContext.SplitSelectedImage, 
                                                     RelativeSource={RelativeSource Mode=FindAncestor,  AncestorType={x:Type local:MainWindow}}}"
-                                                    CommandParameter="{Binding Image}" >
-                                                   <!-- CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}, Path=PlacementTarget.SelectedItem}" !-->
-                                                   
-                                                    <Image Name="split" Source="./Resources/Icons/split.png"  Style="{StaticResource ToolIcon}" />
+                                                    CommandParameter="{Binding }" >
+                                                            <!-- CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}, Path=PlacementTarget.SelectedItem}" !-->
+
+                                                            <Image Name="split" Source="./Resources/Icons/split.png"  Style="{StaticResource ToolIcon}" />
+
+                                                        </Button>
+                                                    <Button  
+                                                    Command="{Binding DataContext.AddSelectedTile, 
+                                                    RelativeSource={RelativeSource Mode=FindAncestor,  AncestorType={x:Type local:MainWindow}}}"
+                                                    CommandParameter="{Binding }" >
+                                                            <!-- CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}, Path=PlacementTarget.SelectedItem}" !-->
+
+                                                            <Image Name="add" Source="./Resources/Icons/add.png"  Style="{StaticResource ToolIcon}" />
+
+                                                        </Button>
+                                                    </StackPanel>
                                                 
-                                                </Button>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>

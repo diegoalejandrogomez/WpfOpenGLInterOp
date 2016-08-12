@@ -143,6 +143,7 @@
   <ItemGroup>
     <ClInclude Include="ManagedSimpleLayer.h" />
     <ClInclude Include="ManagedSimpleObject.h" />
+    <ClInclude Include="SpriteSheetControl.h" />
     <ClInclude Include="TileEditorApp.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="SimpleEngineControls.h" />
@@ -155,6 +156,7 @@
     <ClCompile Include="AssemblyInfo.cpp" />
     <ClCompile Include="ManagedSimpleLayer.cpp" />
     <ClCompile Include="ManagedSimpleObject.cpp" />
+    <ClCompile Include="SpriteSheetControl.cpp" />
     <ClCompile Include="TileEditorApp.cpp" />
     <ClCompile Include="SimpleEngineControls.cpp" />
     <ClCompile Include="SimpleEngineViewerControl.cpp" />
