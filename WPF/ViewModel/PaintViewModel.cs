@@ -223,6 +223,8 @@ namespace WPF.ViewModel
 
         private ICommand splitSelectedImage;
 
+        private ICommand deleteSelectedTile;
+
         public event PropertyChangedEventHandler PropertyChanged = delegate(object sender, PropertyChangedEventArgs e)
         {
             var paintViewModel = sender as PaintViewModel;
@@ -332,6 +334,23 @@ namespace WPF.ViewModel
             set { }
         }
 
+        public ICommand DeleteSelectedTile
+        {
+            get
+            {
+                if (deleteSelectedTile == null)
+                {
+                    deleteSelectedTile = new Command((tile) =>
+                    {
+                        var tileObject = tile as Tile;
+                        if(tileObject != null)
+                            Tiles.Remove(tileObject);
+                    });
+                }
+
+                return deleteSelectedTile;
+            }
+        }
         public ICommand SetDrawLineCommand
         {
             get
