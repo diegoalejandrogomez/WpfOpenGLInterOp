@@ -74,6 +74,14 @@
 
                             </DataGrid>
                             <Label Content="Images"></Label>
+                           
+                                <Label Content="Column Quantity" ></Label>
+                                <TextBox Text="{Binding QuantityX}" ></TextBox>
+                                <Label Content="Row Quantity" ></Label>
+                                <TextBox Text="{Binding QuantityY}" ></TextBox>
+                           
+                            
+                            <Label Content="Images"></Label>
                             <ScrollViewer>
                                 <DataGrid  ItemsSource="{Binding Tiles}" AutoGenerateColumns="False" SelectedItem="{Binding Row, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                        ScrollViewer.CanContentScroll="true" ScrollViewer.VerticalScrollBarVisibility="Visible" Height="400">

@@ -127,6 +127,30 @@ namespace WPF.ViewModel
         }
 
 
+        private int quantityX;
+
+        public int QuantityX
+        {
+            get { return quantityX; }
+            set
+            {
+                quantityX = value;
+                PropertyChanged(this, new PropertyChangedEventArgs("QuantityX"));
+            }
+        }
+
+        private int quantityY;
+
+        public int QuantityY
+        {
+            get { return quantityY; }
+            set
+            {
+                quantityY = value;
+                PropertyChanged(this, new PropertyChangedEventArgs("QuantityY"));
+            }
+        }
+
         public string color;
 
         public string Color
@@ -299,8 +323,8 @@ namespace WPF.ViewModel
                         int heigth = (int)((BitmapImage)image).Height;
                         int x = 0;
                         int y = 0;
-                        int proportionalWidth = width / 9;
-                        int proportionalHeigth = width / 9;
+                        int proportionalWidth = width / QuantityX ;
+                        int proportionalHeigth = heigth / QuantityY;
 
                         
                         while (y + proportionalHeigth <= heigth)
