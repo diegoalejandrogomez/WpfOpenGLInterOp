@@ -2,6 +2,7 @@
 #include <string>
 #include "Texture.h"
 #include <glm\glm.hpp>
+#include <stdlib.h>
 
 class SimpleTexture {
 public:

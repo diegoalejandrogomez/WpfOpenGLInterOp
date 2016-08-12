@@ -23,7 +23,7 @@ void SpriteSheetControl::AddControl(System::String^ path)
 
 	SimpleEngine::Instance()->GetRenderer()->CreateSpriteSheet(chars, { width, heigth }, { positionX, positionY });
 	_simpleSpriteSheetRenderer->SetSpriteSheet(chars);
-	//_simpleSpriteSheetRenderer->SetIndex(0);
+	_simpleSpriteSheetRenderer->SetIndex(0);
 }
 
 ManagedSimpleObject^ SpriteSheetControl::GetManagedSimpleObject() {

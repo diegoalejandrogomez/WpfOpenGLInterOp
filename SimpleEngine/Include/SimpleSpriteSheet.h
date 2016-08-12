@@ -1,7 +1,7 @@
 #pragma once
 #include "SimpleTexture.h"
 #include "SimpleAABB.h"
-
+#include <stdlib.h>
 class SimpleSpriteSheet : public SimpleTexture{
 
 public:
