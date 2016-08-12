@@ -87,6 +87,8 @@ void SimpleSpriteRenderer::Render(float dt) {
 		pos.x = std::floor(pos.x / _snapSize.x) + 0.5f * _aabb.size.x;
 		pos.y = std::floor(pos.y / _snapSize.y) + 0.5f * _aabb.size.x;
 	}
+	_aabb.position = pos;
+
 	glm::mat4 model = glm::translate(pos) * glm::rotate(_orientation, glm::vec3(0.0f, 0.0f, 1.0f)) * glm::scale(glm::vec3(_aabb.size.x, _aabb.size.y, 1.0f ));
 	
 
