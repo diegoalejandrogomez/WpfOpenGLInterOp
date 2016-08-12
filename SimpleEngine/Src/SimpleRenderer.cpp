@@ -300,6 +300,7 @@ SimpleTexture* SimpleRenderer::GetTexture(std::string texturePath) {
 
 }
 
+//Equally spaced sprite sheet. Automatically creates the frames
 bool SimpleRenderer::CreateSpriteSheet(std::string texturePath, glm::ivec2 frameSize, glm::ivec2 frameCount) {
 	
 	auto sheet = _spriteSheets.find(texturePath);
@@ -307,14 +308,28 @@ bool SimpleRenderer::CreateSpriteSheet(std::string texturePath, glm::ivec2 frame
 		//Try to load the texture
 		SimpleSpriteSheet* spriteSheet = new SimpleSpriteSheet();
 		spriteSheet->LoadTexture(texturePath.c_str());
-		spriteSheet->SetCellSize(frameSize);
-		spriteSheet->SetCellCount(frameCount);
+		spriteSheet->CreateUniformFrames(frameSize, frameCount);
 		_spriteSheets[texturePath] = spriteSheet;
 		
 	}
 	
 	return true;
 }
+
+//Arbitrary sprite sheet. Must call AddSpriteFrame to set them
+bool SimpleRenderer::CreateSpriteSheet(std::string texturePath) {
+
+	auto sheet = _spriteSheets.find(texturePath);
+	if (sheet == _spriteSheets.end()) {
+		//Try to load the texture
+		SimpleSpriteSheet* spriteSheet = new SimpleSpriteSheet();
+		spriteSheet->LoadTexture(texturePath.c_str());
+		_spriteSheets[texturePath] = spriteSheet;
+	}
+
+	return true;
+}
+
 SimpleSpriteSheet* SimpleRenderer::GetSpriteSheet(std::string texturePath) {
 	auto sheet = _spriteSheets.find(texturePath);
 	if (sheet == _spriteSheets.end())
@@ -323,7 +338,7 @@ SimpleSpriteSheet* SimpleRenderer::GetSpriteSheet(std::string texturePath) {
 
 }
 
-bool SimpleRenderer::CreateSpriteAnimation(std::string name, std::string spriteSheet, std::vector<SimpleSpriteAnimation::AnimationIndex> &frames, float frameTime) {
+bool SimpleRenderer::CreateSpriteAnimation(std::string name, std::string spriteSheet, std::vector<int> &frames, float frameTime) {
 
 	//Check if it doesn't exist already
 

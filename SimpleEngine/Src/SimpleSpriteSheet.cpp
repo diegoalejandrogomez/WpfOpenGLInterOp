@@ -9,33 +9,25 @@ SimpleSpriteSheet::~SimpleSpriteSheet() {
 
 }
 
-//Returns an AABB with anchor point in lower left corner of texture
-SimpleAABB SimpleSpriteSheet::GetUVForIndex(glm::vec2 idxs) {
-
-	SIMPLE_ASSERT(idxs.x < _spriteCellCount.x && idxs.y < _spriteCellCount.y);
-
-	//Return the pixel coordinates for the current sheet
-	SimpleAABB aabb;
-	aabb.position.x = idxs.x * _spriteCellSize.x / (float)GetPOTWidth();
-	aabb.position.y = idxs.y * _spriteCellSize.y / (float) GetPOTHeight();
-	aabb.size.x = GetWidth() /  (float)_spriteCellCount.x / (float)GetPOTWidth();
-	aabb.size.y = GetHeight() / (float)_spriteCellCount.y / (float)GetPOTHeight();
-	return aabb;
-
+void SimpleSpriteSheet::AddSpriteFrame(glm::ivec2 position, glm::ivec2 size) {
+	
+	_frames.emplace_back(position.x, position.y, size.x, size.y);
 }
 
-glm::ivec4 SimpleSpriteSheet::GetCoordsForIndex(glm::vec2 idxs) {
 
-	SIMPLE_ASSERT(idxs.x < _spriteCellCount.x && idxs.y < _spriteCellCount.y);
+void SimpleSpriteSheet::CreateUniformFrames(glm::ivec2 size, glm::ivec2 count) {
+
+	for (int i = 0;i < count.y; ++i) 
+		for (int j = 0; j < count.x; ++j)
+			_frames.emplace_back(j*size.x, GetHeight() - (i+1)*size.y, size.x, size.y);
+}
+
+
+glm::ivec4 SimpleSpriteSheet::GetCoordsForIndex(int idx) {
+
+	SIMPLE_ASSERT(idx < _spriteCellCount.x * _spriteCellCount.y);
 
 	//Return the pixel coordinates for the current sheet
-	glm::ivec4 coords;
-	//XY
-	coords.x = idxs.x * _spriteCellSize.x;
-	coords.y = GetHeight() - (idxs.y+1) * _spriteCellSize.y;
-	//SIZE
-	coords.z = _spriteCellSize.x ;
-	coords.w = _spriteCellSize.y ;
-	return coords;
-
+	return _frames[idx];
 }
+

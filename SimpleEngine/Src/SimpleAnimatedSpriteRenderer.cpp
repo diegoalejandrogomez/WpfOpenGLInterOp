@@ -68,8 +68,8 @@ void SimpleAnimatedSpriteRenderer::SetAnimation(SimpleSpriteAnimation* anim) {
 void SimpleAnimatedSpriteRenderer::Render(float dt){
 
 	//Obtain information from current frame and render. The spritesheet must be previously configured
-	SimpleSpriteAnimation::AnimationIndex _animIndex = _anim->GetFrame(_currentFrame);
-	SimpleSpriteSheetRenderer::SetIndex(_animIndex.first, _animIndex.second);
+	int _animIndex = _anim->GetFrame(_currentFrame);
+	SimpleSpriteSheetRenderer::SetIndex(_animIndex);
 	SimpleSpriteSheetRenderer::Render(dt);
 }
 
