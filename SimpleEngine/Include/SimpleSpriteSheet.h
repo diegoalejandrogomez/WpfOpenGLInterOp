@@ -2,6 +2,8 @@
 #include "SimpleTexture.h"
 #include "SimpleAABB.h"
 #include <stdlib.h>
+#include <vector>
+
 class SimpleSpriteSheet : public SimpleTexture{
 
 public:

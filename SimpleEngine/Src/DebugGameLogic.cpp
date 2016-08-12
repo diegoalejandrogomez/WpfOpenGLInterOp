@@ -30,14 +30,14 @@ void DebugGameLogic::Init()
 	//_spriteSheet->AddSpriteFrame({ 105,150 }, { 104,149 });
 
 	
-	/*
+	
 	SimpleSpriteSheetRenderer* guybrush = new SimpleSpriteSheetRenderer();
 	guybrush->SetSpriteSheet("media/spriteSheet.png");
-	guybrush->SetIndex(1, 0);*/
-	//SimpleEngine::Instance()->GetScene()->AddEntity(guybrush, layer);
+	guybrush->SetIndex(0);
+	SimpleEngine::Instance()->GetScene()->AddEntity(guybrush, layer);
 	
 	//Guybrush animation
-	SimpleEngine::Instance()->GetRenderer()->CreateSpriteAnimation(	"walking","media/spriteSheet.png",
+	/*SimpleEngine::Instance()->GetRenderer()->CreateSpriteAnimation(	"walking","media/spriteSheet.png",
 		std::vector<int>{ 0,1,2,3,4,5}, 0.15f);
 		
 	SimpleSpriteAnimation *walkingAnim = SimpleEngine::Instance()->GetRenderer()->GetSpriteAnimation("walking");
@@ -45,7 +45,7 @@ void DebugGameLogic::Init()
 	SimpleAnimatedSpriteRenderer* walkingGuybrush = new SimpleAnimatedSpriteRenderer();
 	walkingGuybrush->SetAnimation(walkingAnim);
 	walkingGuybrush->Play();
-	SimpleEngine::Instance()->GetScene()->AddEntity(walkingGuybrush, layer);
+	SimpleEngine::Instance()->GetScene()->AddEntity(walkingGuybrush, layer);*/
 
 
 	//Configure input system we are going to use
