@@ -267,7 +267,7 @@ bool SimpleRenderer::CreateProgram(std::string name, std::string vertexShaderPat
 	return true;
 }
 
-SimpleShaderProgram* SimpleRenderer::GetProgram(std::string name) const {
+SimpleShaderProgram* SimpleRenderer::GetProgram(SimpleID name) const {
 	auto it = _programs.find(name);
 	if(it== _programs.end())
 		return nullptr;
@@ -286,15 +286,11 @@ bool SimpleRenderer::LoadTexture(std::string texturePath) {
 	return true;
 }
 
-SimpleTexture* SimpleRenderer::GetTexture(std::string texturePath) {
+SimpleTexture* SimpleRenderer::GetTexture(SimpleID texturePath) {
 
 	auto tex = _textures.find(texturePath);
-	if (tex == _textures.end()) {
-		//Try to load it
-		if (LoadTexture(texturePath))
-			return _textures[texturePath];
+	if (tex == _textures.end()) 
 		return nullptr;
-	}
 	return tex->second;
 
 
@@ -330,7 +326,7 @@ bool SimpleRenderer::CreateSpriteSheet(std::string texturePath) {
 	return true;
 }
 
-SimpleSpriteSheet* SimpleRenderer::GetSpriteSheet(std::string texturePath) {
+SimpleSpriteSheet* SimpleRenderer::GetSpriteSheet(SimpleID texturePath) {
 	auto sheet = _spriteSheets.find(texturePath);
 	if (sheet == _spriteSheets.end())
 		return nullptr;
@@ -355,7 +351,7 @@ bool SimpleRenderer::CreateSpriteAnimation(std::string name, std::string spriteS
 	return true;
 
 }
-SimpleSpriteAnimation* SimpleRenderer::GetSpriteAnimation(std::string name) {
+SimpleSpriteAnimation* SimpleRenderer::GetSpriteAnimation(SimpleID name) {
 	auto it = _spriteAnimations.find(name);
 	
 	if (it == _spriteAnimations.end())

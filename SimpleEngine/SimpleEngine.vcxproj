@@ -176,6 +176,7 @@ copy /Y "$(ProjectDir)\External\devil\lib\ILU.dll" "$(TargetDir)"</Command>
     <ClCompile Include="External\glew\glew.cpp" />
     <ClCompile Include="Src\SimpleAABB.cpp" />
     <ClCompile Include="Src\SimpleAnimatedSpriteRenderer.cpp" />
+    <ClCompile Include="Src\SimpleID.cpp" />
     <ClCompile Include="Src\SimpleInput.cpp" />
     <ClCompile Include="Src\SimpleLayer.cpp" />
     <ClCompile Include="Include\SimpleMesh.h" />

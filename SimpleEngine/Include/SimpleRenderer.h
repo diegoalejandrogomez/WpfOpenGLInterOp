@@ -10,6 +10,7 @@
 #include "VertexFormats.h"
 #include "SimpleSpriteSheet.h"
 #include "SimpleSpriteAnimation.h"
+#include "SimpleID.h"
 
 class SimpleScene;
 
@@ -28,17 +29,18 @@ public:
 	inline int GetHeight()const { return _height; } ;
 
 	bool CreateProgram(std::string name, std::string vertexShaderPath, std::string fragmentShaderPath);
-	SimpleShaderProgram* GetProgram(std::string name) const;
+	SimpleShaderProgram* GetProgram(SimpleID name) const;
 	
 	bool LoadTexture(std::string texturePath);
-	SimpleTexture* GetTexture(std::string name) ;
+	SimpleTexture* GetTexture(SimpleID name) ;
+	
 
 	bool CreateSpriteSheet(std::string texturePath, glm::ivec2 frameSize, glm::ivec2 frameCount);
 	bool CreateSpriteSheet(std::string texturePath);
-	SimpleSpriteSheet* GetSpriteSheet(std::string texturePath);
+	SimpleSpriteSheet* GetSpriteSheet(SimpleID texturePath);
 
 	bool CreateSpriteAnimation(std::string name, std::string spriteSheet, std::vector<int> &frames, float frameTime);
-	SimpleSpriteAnimation* GetSpriteAnimation(std::string name);
+	SimpleSpriteAnimation* GetSpriteAnimation(SimpleID name);
 
 	inline SimpleMesh<VertexTextureFormat2D>* GetUnitaryQuad() { return _texturedQuad; };
 	inline HWND GetWindowHandle() { return _hWnd; };
@@ -67,11 +69,11 @@ private:
 
 	//This class also serves as a mini graphics resource admin
 	//Memory owners
-	std::unordered_map<std::string, SimpleShaderProgram*> _programs;
-	std::unordered_map<std::string, SimpleTexture*> _textures;
-	std::unordered_map<std::string, SimpleSpriteSheet*> _spriteSheets;
+	std::unordered_map<SimpleID, SimpleShaderProgram*> _programs;
+	std::unordered_map<SimpleID, SimpleTexture*> _textures;
+	std::unordered_map<SimpleID, SimpleSpriteSheet*> _spriteSheets;
 	//Don't own anything
-	std::unordered_map<std::string, SimpleSpriteAnimation*> _spriteAnimations;
+	std::unordered_map<SimpleID, SimpleSpriteAnimation*> _spriteAnimations;
 
 	//Reusable meshes
 	SimpleMesh<VertexTextureFormat2D>* _texturedQuad;

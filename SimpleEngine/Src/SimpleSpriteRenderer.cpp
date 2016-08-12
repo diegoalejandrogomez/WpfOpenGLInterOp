@@ -36,6 +36,12 @@ void SimpleSpriteRenderer::SetAsTexture(std::string && name) {
 	
 	SimpleRenderer* render = SimpleEngine::Instance()->GetRenderer();
 	_tex = render->GetTexture(name);
+	if (_tex == nullptr) {
+		render->LoadTexture(name);
+		_tex = render->GetTexture(name);
+	}
+	SIMPLE_ASSERT(_tex != nullptr);
+
 	_rectOffset = { 0,0 };
 	_rectSize = { _tex->GetWidth(), _tex->GetHeight() };
 	//Set sprite size using texture resolution

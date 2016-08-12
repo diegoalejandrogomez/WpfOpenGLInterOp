@@ -1,16 +1,22 @@
 #pragma once
 #include <string>
 #include <map>
-#include "SimpleDebug.h"
-
+//This configures if the hash has hash->string functionality
+#define HASH_DB
 class SimpleID {
 
-
 public:
-	SimpleID(std::string && name) {
+	
+	typedef uint32_t Type;
+
+	SimpleID(const char* name) {
 		_getHash(std::move(name));
 	}
-	SimpleID(std::string & name) {
+
+	SimpleID(const std::string && name) {
+		_getHash(std::move(name));
+	}
+	SimpleID(const std::string & name) {
 		_getHash(std::move(name));
 	}
 
@@ -24,23 +30,39 @@ public:
 		return _id <  other._id;
 	};
 
+	operator Type() const { return _id; }
+
+#ifdef HASH_DB
+	const std::string& GetString()const { return _hashDB[_id]; }
+#endif //HASH_DB
 private:
 
-	inline void _getHash(std::string &&name) {
+	inline void _getHash(const std::string &&name) {
 		_id = std::hash<std::string>{}(name);
-
-#ifdef _DEBUG //Check if no collition happens in debug mode
+#ifdef HASH_DB //Check if no collition happens in debug mode
 		auto it = _hashDB.find(_id);
 		if(it != _hashDB.end()) //check the hashes match
-			SIMPLE_ASSERT(it->second == name);
-#endif // _DEBUG	
+			assert(it->second == name);
+		else
+			_hashDB[_id] = name;
+#endif // HASH_DB	
 	};
 
 	uint32_t _id;
 
-
-#ifdef _DEBUG
+#ifdef HASH_DB
 	static std::map<uint32_t, std::string> _hashDB;
-#endif // _DEBUG
+#endif // HASH_DB
 
 };
+
+//Hash function 
+namespace std {
+	template <> struct hash<SimpleID>
+	{
+		size_t operator()(const SimpleID & x) const
+		{
+			return (size_t)x;
+		}
+	};
+}

@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "SimpleLayer.h"
 
-SimpleLayer::SimpleLayer() {
+SimpleLayer::SimpleLayer():_layerName ("") {
 	_queryable = true;
 }
 

@@ -25,7 +25,7 @@ public:
 	property System::String^ Name
 	{
 		System::String^ get() {
-			return gcnew System::String(simpleLayer->GetName().c_str());
+			return gcnew System::String(simpleLayer->GetName().GetString().c_str());
 
 		}
 

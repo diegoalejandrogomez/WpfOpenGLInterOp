@@ -12,13 +12,13 @@ public:
 	void RemoveEntity(SimpleObject* sObj);
 	void SetZ(float Z);
 	float GetZ();
-	inline const std::string& GetName()const { return _layerName; }
-	inline void  SetName(std::string name) {_layerName = name; }
+	inline const SimpleID& GetName()const { return _layerName; }
+	inline void  SetName(SimpleID name) {_layerName = name; }
 	inline void SetQueryable(bool value) { _queryable = value; };
 	inline bool IsQueryable() { return _queryable; };
 private:
 	std::vector<SimpleObject*> _entities;
 	float Z;
-	std::string _layerName;
+	SimpleID _layerName;
 	bool _queryable;
 };

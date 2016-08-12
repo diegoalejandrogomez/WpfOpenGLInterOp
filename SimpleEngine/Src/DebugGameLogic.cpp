@@ -25,6 +25,7 @@ void DebugGameLogic::Init()
 	
 	SimpleEngine::Instance()->GetRenderer()->CreateSpriteSheet("media/spriteSheet.png", { 104,149 }, { 6,3 });
 	//SimpleEngine::Instance()->GetRenderer()->CreateSpriteSheet("media/spriteSheet.png");
+	
 	SimpleSpriteSheet* _spriteSheet = SimpleEngine::Instance()->GetRenderer()->GetSpriteSheet("media/spriteSheet.png");
 	//_spriteSheet->AddSpriteFrame({ 0,0 }, { 104,149 });
 	//_spriteSheet->AddSpriteFrame({ 105,150 }, { 104,149 });
