@@ -27,10 +27,12 @@ void SpriteSheetControl::AddControl(System::String^ path)
 		sheet = SimpleEngine::Instance()->GetRenderer()->GetSpriteSheet(chars);
 	}
 
-	sheet->AddSpriteFrame({ positionX,positionY }, { width,heigth });
+	int idx = sheet->GetFrameIndex({ positionX,positionY }, { width,heigth });
+	if(idx == -1)
+		idx = sheet->AddSpriteFrame({ positionX,positionY }, { width,heigth });
 
 	_simpleSpriteSheetRenderer->SetSpriteSheet(chars);
-	_simpleSpriteSheetRenderer->SetIndex(0);
+	_simpleSpriteSheetRenderer->SetIndex(idx);
 	SimpleEngine::Instance()->GetScene()->AddEntity(_simpleSpriteSheetRenderer, "MainTileMap");
 }
 

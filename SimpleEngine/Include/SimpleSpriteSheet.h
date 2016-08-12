@@ -12,7 +12,8 @@ public:
 	~SimpleSpriteSheet();
 
 	void CreateUniformFrames(glm::ivec2 size, glm::ivec2 count);
-	void AddSpriteFrame(glm::ivec2 position, glm::ivec2 size);
+	int AddSpriteFrame(glm::ivec2 position, glm::ivec2 size);
+	int GetFrameIndex(glm::ivec2 position, glm::ivec2 size);
 	void ClearFrames() { _frames.clear(); }
 	glm::ivec4 GetCoordsForIndex(int idx);
 private:
