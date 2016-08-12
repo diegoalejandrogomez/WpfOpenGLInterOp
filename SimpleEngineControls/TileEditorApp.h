@@ -4,6 +4,7 @@
 #include "SimpleLayer.h"
 #include "SimpleSpriteRenderer.h"
 #include "SimpleLineRenderer.h"
+#include "SimpleSpriteSheetRenderer.h"
 
 class TileEditorApp : public SimpleGameLogic{
 	
@@ -20,6 +21,9 @@ public:
 	void SetMapHeight(int height);
 
 	void SetCursorPosition(float x, float y);
+	void SetCursorIdle();
+	void SetCursorTile(SimpleID sheet, int index);
+	void Paint();
 
 	inline int  GetMapWidth()const { return _tileMapSize.x; }
 	inline int  GetMapHeight()const { return _tileMapSize.y; }
@@ -30,13 +34,14 @@ private:
 	void _ResizeGrid();
 
 	//We should have a SimpleObject for the whole tileset... but let's do this for now...
-	SimpleLayer*			_gridLayer	= nullptr;
-	SimpleLineRenderer*		_grid		= nullptr;
-	SimpleLayer*			_uiLayer	= nullptr;
-	SimpleSpriteRenderer*	_cursor		= nullptr;
-	SimpleLayer*			_tileMapLayer = nullptr;
-	glm::ivec2				_tileMapSize = glm::ivec2(0);
-	SimpleSpriteRenderer**	_tiles = nullptr;
+	SimpleLayer*				_gridLayer	= nullptr;
+	SimpleLineRenderer*			_grid		= nullptr;
+	SimpleLayer*				_uiLayer	= nullptr;
+	SimpleSpriteSheetRenderer*	_cursor		= nullptr;
+	SimpleLayer*				_tileMapLayer = nullptr;
+	glm::ivec2					_tileMapSize = glm::ivec2(0);
+	SimpleSpriteRenderer**		_tiles = nullptr;
+	bool						_hasTile = false;
 
 	
 };

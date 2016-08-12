@@ -26,7 +26,7 @@ void SimpleSpriteRenderer::SetRect(glm::vec2 offset, glm::vec2 size) {
 
 SimpleSpriteRenderer::~SimpleSpriteRenderer() {
 
-	delete _mesh;
+	
 
 }
 

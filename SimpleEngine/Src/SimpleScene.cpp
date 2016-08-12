@@ -74,7 +74,7 @@ SimpleLayer* SimpleScene::GetLayer(int nLayer) {
 	return nullptr;
 }
 
-SimpleLayer* SimpleScene::GetLayer(std::string layerName) {
+SimpleLayer* SimpleScene::GetLayer(SimpleID layerName) {
 	
 	auto layer = find_if(_layers.begin(), _layers.end(), [&layerName](SimpleLayer* l) {return l->GetName() == layerName;});
 	if (layer != _layers.end())
@@ -83,9 +83,24 @@ SimpleLayer* SimpleScene::GetLayer(std::string layerName) {
 
 }
 
+void SimpleScene::RemoveEntity(SimpleObject* sObj, SimpleID sLay) {
+
+	auto l = GetLayer(sLay);
+	if (l != nullptr) {
+		l->RemoveEntity(sObj);
+	}
+}
+
 
 void SimpleScene::RemoveEntity(SimpleObject* sObj, SimpleLayer* sLay) {
 	sLay->RemoveEntity(sObj);
+}
+
+
+void SimpleScene::RemoveEntity(SimpleObject* sObj) {
+	for (auto* &layer : _layers)
+		if (layer->RemoveEntity(sObj))
+			return;	
 }
 
 void SimpleScene::AddLayer(SimpleLayer* sLayer){

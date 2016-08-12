@@ -25,10 +25,13 @@ void SimpleLayer::AddEntity(SimpleObject* sObj) {
 }
 
 
-void SimpleLayer::RemoveEntity(SimpleObject* sObj) {
+bool SimpleLayer::RemoveEntity(SimpleObject* sObj) {
 	auto it = find(_entities.begin(), _entities.end(), sObj);
-	if (it != _entities.end())
+	if (it != _entities.end()) {
 		_entities.erase(it);
+		return true;
+	}
+	return false;
 }
 
 void SimpleLayer::SetZ(float Z) {

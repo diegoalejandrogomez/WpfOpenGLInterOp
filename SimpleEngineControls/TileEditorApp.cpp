@@ -1,36 +1,88 @@
 #include "stdafx.h"
 #include "TileEditorApp.h"
 #include "SimpleEngine.h"
+#include "SimpleSpriteSheetRenderer.h"
 
 void TileEditorApp::Init()
 {
+
+	SimpleEngine* engine = SimpleEngine::Instance();
 
 	SetMapSize(10, 10);
 
 	_tileMapLayer = new SimpleLayer();
 	_tileMapLayer->SetZ(-1.0f);
 	_tileMapLayer->SetName("MainTileMap");
-	SimpleEngine::Instance()->GetScene()->AddLayer(_tileMapLayer);
+	engine->GetScene()->AddLayer(_tileMapLayer);
 
 	_uiLayer = new SimpleLayer();
 	_uiLayer->SetZ(1000.0f);
 	_uiLayer->SetName("UI");
 	_uiLayer->SetQueryable(false);
 
-	SimpleEngine::Instance()->GetScene()->AddLayer(_uiLayer);
+	engine->GetScene()->AddLayer(_uiLayer);
 
-	_cursor = new SimpleSpriteRenderer();
-	_cursor->SetAsTexture("media/grid.png");
-	_cursor->SetSize({ 1.0f, 1.0f });
-	_cursor->SnapToGrid(true);
-	_cursor->SetSnapGridSize({ 1.0f, 1.0f });
-	SimpleEngine::Instance()->GetScene()->AddEntity(_cursor, "UI");
+	//Load cursor spritesheet
+	engine->GetRenderer()->CreateSpriteSheet("media/grid.png");
+	SimpleSpriteSheet *spriteSheet = engine->GetRenderer()->GetSpriteSheet("media/grid.png");
+	spriteSheet->AddSpriteFrame({ 0,0 }, { spriteSheet->GetWidth(), spriteSheet->GetHeight() });
+	
+	SetCursorIdle();
 
 }
 
 void TileEditorApp::SetCursorPosition(float x, float y) {
 	if(_cursor != nullptr)
 		_cursor->SetPosition({ x, y, 0.0f });
+}
+
+void TileEditorApp::Paint() {
+	
+	//We SHOULD implement copy constructor/assignation operator
+	if (_hasTile) {
+		SimpleSpriteSheetRenderer *tile = new SimpleSpriteSheetRenderer();
+		tile->SetSpriteSheet(_cursor->GetSpriteSheet());
+		tile->SetIndex(_cursor->GetIndex());
+		tile->SetSize({ 1.0f,1.0f });
+		tile->SnapToGrid(true);
+		tile->SetSnapGridSize({ 1.0f,1.0f });
+		tile->SetPosition(_cursor->GetPosition());
+		glm::vec3 pos = _cursor->GetPosition();
+		int idx = _tileMapSize.x * int(pos.y) + (int)pos.x;
+		_tiles[idx] = tile;
+		SimpleEngine::Instance()->GetScene()->AddEntity(tile, "MainTileMap");
+	}
+}
+
+void TileEditorApp::SetCursorIdle() {
+	_hasTile = false;
+	auto c = new SimpleSpriteSheetRenderer();
+	c->SetSpriteSheet("media/grid.png");
+	c->SetIndex(0);
+	c->SetSize({ 1.0f, 1.0f });
+	c->SnapToGrid(true);
+	c->SetSnapGridSize({ 1.0f, 1.0f });
+	_cursor = c;
+	SimpleEngine::Instance()->GetScene()->AddEntity(_cursor, "UI");
+	
+}
+void TileEditorApp::SetCursorTile(SimpleID sheet, int index) {
+	_hasTile = true;
+
+	if (_cursor != nullptr) {
+		SimpleEngine::Instance()->GetScene()->RemoveEntity(_cursor);
+		delete _cursor;
+	}
+
+	auto c = new SimpleSpriteSheetRenderer();
+	c->SetSpriteSheet(sheet);
+	c->SetIndex(index);
+	c->SetSize({ 1, 1 });
+	c->SnapToGrid(true);
+	c->SetSnapGridSize({ 1, 1 });
+	_cursor = c;
+	SimpleEngine::Instance()->GetScene()->AddEntity(_cursor, "UI");
+
 }
 
 void TileEditorApp::Advance(float dt)

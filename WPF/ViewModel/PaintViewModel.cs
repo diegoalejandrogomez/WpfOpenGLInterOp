@@ -220,16 +220,20 @@ namespace WPF.ViewModel
 
         public void OnClick(Object sender, EventArgs e)
         {
-
-            if (Selected != null)
-                Drag = false;
-            int x = ((System.Windows.Forms.MouseEventArgs)e).X;
-            int y = ((System.Windows.Forms.MouseEventArgs)e).Y;
-            Selected = null;
-            Selected = ((SimpleEngineViewerControl)OpenGLRenderControl).SetItem(x, y);
-            if (Selected == null)
-                Selected = _tileMap;
-
+            if (false) //We should filter based on selecte tool (brush, move tile, etc)
+            {
+                if (Selected != null)
+                    Drag = false;
+                int x = ((System.Windows.Forms.MouseEventArgs)e).X;
+                int y = ((System.Windows.Forms.MouseEventArgs)e).Y;
+                Selected = null;
+                Selected = ((SimpleEngineViewerControl)OpenGLRenderControl).SetItem(x, y);
+                if (Selected == null)
+                    Selected = _tileMap;
+            }else
+            {
+                ((SimpleEngineViewerControl)OpenGLRenderControl).Place();
+            }
             PropertyChanged(this, new PropertyChangedEventArgs("Layers"));
         }
         #endregion

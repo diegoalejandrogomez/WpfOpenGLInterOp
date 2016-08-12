@@ -31,13 +31,15 @@ public:
 	void AddEntity(SimpleObject* sObj, int nLayer);
 	void AddEntity(SimpleObject* sObj, std::string layerName);
 
+	void RemoveEntity(SimpleObject* sObj, SimpleID sLayer);
 	void RemoveEntity(SimpleObject* sObj, SimpleLayer* sLayer);
+	void RemoveEntity(SimpleObject* sObj);
 
 	void AddLayer(SimpleLayer* sLayer);
 	void RemoveLayer(SimpleLayer* sLayer);
 
 	SimpleLayer* GetLayer(int nLayer);
-	SimpleLayer* GetLayer(std::string layerName);
+	SimpleLayer* GetLayer(SimpleID layerName);
 	inline std::vector<SimpleLayer*>& GetLayers(std::string layerName) { return _layers; }
 	
 

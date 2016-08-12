@@ -8,12 +8,16 @@ public:
 	SimpleLayer();
 	~SimpleLayer();
 	const std::vector<SimpleObject*>& GetEntities();
+	
 	void AddEntity(SimpleObject* sObj);
-	void RemoveEntity(SimpleObject* sObj);
+	bool RemoveEntity(SimpleObject* sObj);
+	
 	void SetZ(float Z);
 	float GetZ();
+	
 	inline const SimpleID& GetName()const { return _layerName; }
 	inline void  SetName(SimpleID name) {_layerName = name; }
+
 	inline void SetQueryable(bool value) { _queryable = value; };
 	inline bool IsQueryable() { return _queryable; };
 private:

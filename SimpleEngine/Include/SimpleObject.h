@@ -16,8 +16,8 @@ public:
 	inline const glm::vec2& GetSize()const { return _aabb.size; };
 	inline const float& GetOrientation()const { return _orientation; };
 	inline const SimpleID& GetName() { return _name; };
-	inline void SetPosition(glm::vec3&& pos) { _aabb.position = pos; };
-	inline void SetPosition(glm::vec3& pos) { _aabb.position = pos; };
+	inline void SetPosition(const glm::vec3&& pos) { _aabb.position = pos; };
+	inline void SetPosition(const glm::vec3& pos) { _aabb.position = pos; };
 	inline void SetSize(glm::vec2&& size) { _aabb.size = size; };
 	inline void SetSize(glm::vec2& size) { _aabb.size = size; };
 	inline void SetOrientation(float&& orientation) { _orientation = orientation; };

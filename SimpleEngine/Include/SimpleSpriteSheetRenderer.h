@@ -19,9 +19,11 @@ public:
 	virtual void Advance(float dt);
 	virtual void Render(float dt);
 
-	void SetSpriteSheet(std::string sheetName);
+	void SetSpriteSheet(SimpleID sheetName);
 	void SetSpriteSheet(SimpleSpriteSheet* sheet);
+	SimpleSpriteSheet* GetSpriteSheet() { return _spriteSheet; }
 	void SetIndex(int pos);
+	int GetIndex() { return _pos; }
 
 protected:
 		

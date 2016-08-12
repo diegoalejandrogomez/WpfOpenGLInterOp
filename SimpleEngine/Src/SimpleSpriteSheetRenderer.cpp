@@ -16,7 +16,7 @@ SimpleSpriteSheetRenderer::~SimpleSpriteSheetRenderer() {
 
 }
 
-void SimpleSpriteSheetRenderer::SetSpriteSheet(std::string sheetName){
+void SimpleSpriteSheetRenderer::SetSpriteSheet(SimpleID sheetName){
 
 	_spriteSheet = SimpleEngine::Instance()->GetRenderer()->GetSpriteSheet(sheetName);
 
