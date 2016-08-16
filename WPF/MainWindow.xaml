@@ -85,7 +85,7 @@
 
                             </Button>
                             <DataGrid  ItemsSource="{Binding Layers}" AutoGenerateColumns="False" SelectedItem="{Binding Row, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                       ScrollViewer.CanContentScroll="true" ScrollViewer.VerticalScrollBarVisibility="Visible" Height="150">
+                                       ScrollViewer.CanContentScroll="true" ScrollViewer.VerticalScrollBarVisibility="Visible" Height="150" SelectionChanged="DataGrid_SelectionChanged">
                                 <DataGrid.Columns>
                                     <DataGridTemplateColumn Header="Name" Width="SizeToCells">
                                         <DataGridTemplateColumn.CellTemplate>
