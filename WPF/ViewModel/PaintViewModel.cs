@@ -44,13 +44,13 @@ namespace WPF.ViewModel
 
         private void Resize(object sender, EventArgs e)
         {
-            PropertyChanged(this, new PropertyChangedEventArgs("MaxZoomLevel"));
+            ZoomLevel = _zoomLevel;
         }
 
         private void OnMouseWheel(object sender, System.Windows.Forms.MouseEventArgs e)
         {
             SimpleEngineViewerControl view = openGLRenderControl as SimpleEngineViewerControl;      
-            ZoomLevel = (Int32) ((e.Delta * _zoomSpeed * 10.0f  + view.GetZoom()) );//conversion to zoom level;
+            ZoomLevel = (Int32) ((e.Delta * _zoomSpeed * 10.0f  + view.GetZoom()) / (float)MaxZoomLevel  * 100.0f);//conversion to zoom level;
       
         }
 
@@ -112,10 +112,10 @@ namespace WPF.ViewModel
                 return _zoomLevel;
             }
             set {
-                SimpleEngineViewerControl view = openGLRenderControl as SimpleEngineViewerControl;              
-               _zoomLevel = value;
-                _zoomLevel = Math.Max(Math.Min(MaxZoomLevel, (int)_zoomLevel), 0);
-                view.SetZoom(_zoomLevel);
+                SimpleEngineViewerControl view = openGLRenderControl as SimpleEngineViewerControl;
+                _zoomLevel = value;
+                _zoomLevel = Math.Max(Math.Min(100, (int)_zoomLevel), 0);    
+                view.SetZoom(_zoomLevel / 100.0f*MaxZoomLevel);
                 PropertyChanged(this, new PropertyChangedEventArgs("ZoomLevel"));
             }
         }
@@ -125,7 +125,6 @@ namespace WPF.ViewModel
         {
             get {
                 SimpleEngineViewerControl view = openGLRenderControl as SimpleEngineViewerControl;
-
                 return view.MaxZoom;
             }
             
