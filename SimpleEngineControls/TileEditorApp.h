@@ -23,7 +23,10 @@ public:
 	void SetCursorPosition(float x, float y);
 	void SetCursorIdle();
 	void SetCursorTile(SimpleID sheet, int index);
+
+	void SetCursorErase();
 	void Paint();
+	
 
 	inline int  GetMapWidth()const { return _tileMapSize.x; }
 	inline int  GetMapHeight()const { return _tileMapSize.y; }
@@ -32,6 +35,9 @@ private:
 
 	void _CreateGrid();
 	void _ResizeGrid();
+	void _LoadCursor(SimpleID sheet, int index, SimpleID layer);
+	void _Erase();
+	void _Draw();
 
 	//We should have a SimpleObject for the whole tileset... but let's do this for now...
 	SimpleLayer*				_gridLayer	= nullptr;
@@ -42,6 +48,7 @@ private:
 	glm::ivec2					_tileMapSize = glm::ivec2(0);
 	SimpleSpriteRenderer**		_tiles = nullptr;
 	bool						_hasTile = false;
+	bool						_erasing = false;
 
 	
 };

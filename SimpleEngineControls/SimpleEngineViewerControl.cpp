@@ -62,10 +62,11 @@ void SimpleEngineViewerControl::OnPaint(PaintEventArgs^ e)  {
 
 }
 
-void SimpleEngineViewerControl::Place() {
+void SimpleEngineViewerControl::Paint() {
 	if(_appLogic!= nullptr)
 		_appLogic->Paint();
 }
+
 ManagedSimpleObject^ SimpleEngineViewerControl::SetItem(float x, float y)
 {
 	glm::vec2 worldPos = SimpleEngine::Instance()->GetScene()->GetCamera()->ScreenToWorld({ x, y });

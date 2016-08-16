@@ -20,7 +20,8 @@ namespace SimpleEngineControls {
 		void OnPaintBackground(PaintEventArgs^ e) override;
 		void OnPaint(PaintEventArgs^ e) override;
 		ManagedSimpleObject^ SetItem(float x, float y);
-		void Place();
+		void Paint();
+		
 
 		void Initialize();
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "TileEditorApp.h"
+using namespace System;
 
 namespace SimpleEngineControls {
 	public ref class TileMapControl
@@ -10,6 +11,9 @@ namespace SimpleEngineControls {
 		
 		TileMapControl();
 		~TileMapControl();
+		void SetBrush(String^ path, Int32 idx);
+		void IdleBrush();
+		void EraseBrush();
 
 		//Properties
 

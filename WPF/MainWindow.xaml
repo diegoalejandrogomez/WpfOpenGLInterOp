@@ -45,16 +45,24 @@
                         <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition Height="Auto"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <Button Grid.Row="0" Grid.Column="0" Command="{Binding Path=SetDrawLineCommand}">
-                        <Image Name="line" Source="./Resources/Icons/line.png"  Style="{StaticResource ToolIcon}"></Image>
-                    </Button>
-                    <Button Grid.Row="0" Grid.Column="1" Command="{Binding Path=SetDrawSquareCommand}">
-                        <Image Name="square" Source="./Resources/Icons/square.png" Style="{StaticResource ToolIcon}"></Image>
-                    </Button>
+                    
                     <xctk:ColorPicker Name="Picker" Grid.Row="1" Grid.Column="0"  Style="{StaticResource ToolIcon}" SelectedColor="{Binding Color}"></xctk:ColorPicker>
+
+                    <Button Grid.Row="0" Grid.Column="0" Command="{Binding Path=SetPaintCommand}">
+                        <Image Name="paint" Source="./Resources/Icons/add.png"  Style="{StaticResource ToolIcon}"></Image>
+                    </Button>
+                    <Button Grid.Row="0" Grid.Column="1" Command="{Binding Path=SetEraseCommand}">
+                        <Image Name="erase" Source="./Resources/Icons/delete.png"  Style="{StaticResource ToolIcon}"></Image>
+                    </Button>
+                    <Button Grid.Row="1" Grid.Column="0" Command="{Binding Path=SetPickCommand}">
+                        <Image Name="pick" Source="./Resources/Icons/edit.png"  Style="{StaticResource ToolIcon}"></Image>
+                    </Button>
+                    
+                    
                     <Button Grid.Row="1" Grid.Column="1" Command="{Binding Path=SetDragCommand}">
                         <Image Name="drag" Source="./Resources/Icons/drag.png" Style="{StaticResource ToolIcon}"></Image>
                     </Button>
+                    
                 </Grid>
                 <Grid x:Name="drawingArea" Grid.Column="1">
                     <Grid.ColumnDefinitions>

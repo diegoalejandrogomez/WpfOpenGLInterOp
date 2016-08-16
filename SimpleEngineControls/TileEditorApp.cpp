@@ -26,6 +26,10 @@ void TileEditorApp::Init()
 	engine->GetRenderer()->CreateSpriteSheet("media/grid.png");
 	SimpleSpriteSheet *spriteSheet = engine->GetRenderer()->GetSpriteSheet("media/grid.png");
 	spriteSheet->AddSpriteFrame({ 0,0 }, { spriteSheet->GetWidth(), spriteSheet->GetHeight() });
+
+	engine->GetRenderer()->CreateSpriteSheet("media/delete.png");
+	spriteSheet = engine->GetRenderer()->GetSpriteSheet("media/delete.png");
+	spriteSheet->AddSpriteFrame({ 0,0 }, { spriteSheet->GetWidth(), spriteSheet->GetHeight() });
 	
 	SetCursorIdle();
 
@@ -37,6 +41,15 @@ void TileEditorApp::SetCursorPosition(float x, float y) {
 }
 
 void TileEditorApp::Paint() {
+
+	if (_hasTile)
+		_Draw();
+
+	if (_erasing)
+		_Erase();
+}
+
+void TileEditorApp::_Draw() {
 	
 	//We SHOULD implement copy constructor/assignation operator
 	if (_hasTile) {
@@ -54,20 +67,40 @@ void TileEditorApp::Paint() {
 	}
 }
 
-void TileEditorApp::SetCursorIdle() {
-	_hasTile = false;
-	auto c = new SimpleSpriteSheetRenderer();
-	c->SetSpriteSheet("media/grid.png");
-	c->SetIndex(0);
-	c->SetSize({ 1.0f, 1.0f });
-	c->SnapToGrid(true);
-	c->SetSnapGridSize({ 1.0f, 1.0f });
-	_cursor = c;
-	SimpleEngine::Instance()->GetScene()->AddEntity(_cursor, "UI");
-	
+
+void TileEditorApp::_Erase() {
+
+	glm::vec3 pos = _cursor->GetPosition();
+	int idx = _tileMapSize.x * int(pos.y) + (int)pos.x;
+	if (_tiles[idx] != nullptr) {
+		SimpleEngine::Instance()->GetScene()->RemoveEntity(_tiles[idx], "MainTileMap");
+		delete _tiles[idx];
+		_tiles[idx] = nullptr;
+	}
+
 }
+
+void TileEditorApp::SetCursorIdle() {
+	
+	_LoadCursor("media/grid.png", 0, "UI");
+	_hasTile = false;
+	_erasing = false;
+}
+
+void TileEditorApp::SetCursorErase() {
+
+	_LoadCursor("media/delete.png", 0,"UI");
+	_hasTile = false;
+	_erasing = true;
+}
+
 void TileEditorApp::SetCursorTile(SimpleID sheet, int index) {
+	_LoadCursor(sheet, index, "MainTileMap");
 	_hasTile = true;
+	_erasing = false;
+}
+
+void TileEditorApp::_LoadCursor(SimpleID sheet, int index, SimpleID layer) {
 
 	if (_cursor != nullptr) {
 		SimpleEngine::Instance()->GetScene()->RemoveEntity(_cursor);
@@ -81,7 +114,7 @@ void TileEditorApp::SetCursorTile(SimpleID sheet, int index) {
 	c->SnapToGrid(true);
 	c->SetSnapGridSize({ 1, 1 });
 	_cursor = c;
-	SimpleEngine::Instance()->GetScene()->AddEntity(_cursor, "UI");
+	SimpleEngine::Instance()->GetScene()->AddEntity(_cursor, layer);
 
 }
 

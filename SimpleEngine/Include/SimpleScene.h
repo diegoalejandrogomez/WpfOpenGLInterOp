@@ -29,7 +29,7 @@ public:
 	
 	void AddEntity(SimpleObject* sObj, SimpleLayer* sLayer);
 	void AddEntity(SimpleObject* sObj, int nLayer);
-	void AddEntity(SimpleObject* sObj, std::string layerName);
+	void AddEntity(SimpleObject* sObj, SimpleID layerName);
 
 	void RemoveEntity(SimpleObject* sObj, SimpleID sLayer);
 	void RemoveEntity(SimpleObject* sObj, SimpleLayer* sLayer);

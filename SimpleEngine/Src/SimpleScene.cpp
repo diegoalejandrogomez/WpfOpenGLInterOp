@@ -55,7 +55,7 @@ void SimpleScene::AddEntity(SimpleObject* sObj, int nLayer) {
 		layer->AddEntity(sObj);
 }
 
-void SimpleScene::AddEntity(SimpleObject* sObj, std::string layerName) {
+void SimpleScene::AddEntity(SimpleObject* sObj, SimpleID layerName) {
 	
 	SimpleLayer* layer = GetLayer(layerName);
 	if (layer != nullptr)

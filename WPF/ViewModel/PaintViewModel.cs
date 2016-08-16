@@ -210,6 +210,12 @@ namespace WPF.ViewModel
 
         public bool Drag;
 
+        public bool Paint;
+
+        public bool Erase;
+
+        public bool Pick;
+
         public string filePath;
 
         public string FilePath
@@ -247,11 +253,15 @@ namespace WPF.ViewModel
             this.DrawSquare = false;
             this.DrawLine = false;
             this.Drag = false;
+            this.Paint = false;
+            this.Erase = false;
+            this.Pick = false;        
+            
         }
 
         public void OnClick(Object sender, EventArgs e)
         {
-            if (false) //We should filter based on selected tool (brush, move tile, etc)
+            if (Pick) //We should filter based on selected tool (brush, move tile, etc)
             {
                 if (Selected != null)
                     Drag = false;
@@ -263,7 +273,8 @@ namespace WPF.ViewModel
                     Selected = _tileMap;
             }else
             {
-                ((SimpleEngineViewerControl)OpenGLRenderControl).Place();
+                ((SimpleEngineViewerControl)OpenGLRenderControl).Paint();               
+                
             }
             PropertyChanged(this, new PropertyChangedEventArgs("Layers"));
             PropertyChanged(this, new PropertyChangedEventArgs("MaxZoomLevel"));
@@ -280,6 +291,12 @@ namespace WPF.ViewModel
         private ICommand addSelectedTile;
 
         private ICommand setDragCommand;
+
+        private ICommand setPaintCommand;
+
+        private ICommand setEraseCommand;
+
+        private ICommand setPickCommand;
 
         private ICommand splitSelectedImage;
 
@@ -561,11 +578,7 @@ namespace WPF.ViewModel
                             newTile.y = 0;
                             newTile.width = (int)newTile.Image.Width;
                             newTile.heigth = (int)newTile.Image.Height;
-                            newTile.SpriteControl = new SpriteSheetControl();
-                            //newTile.SpriteControl.positionX = 0;
-                            //newTile.SpriteControl.positionY = 0;
-                            //newTile.SpriteControl.width = (int)newTile.Image.Width;
-                            //newTile.SpriteControl.heigth = (int)newTile.Image.Height;
+                            newTile.SpriteControl = new SpriteSheetControl();                         
                             if (Tiles == null)
                                 Tiles = new ObservableCollection<Tile>();
                             this.Tiles.Add(newTile);
@@ -601,7 +614,70 @@ namespace WPF.ViewModel
 
             set { }
         }
-        
+
+
+        public ICommand SetPaintCommand
+        {
+            get
+            {
+                if (setPaintCommand == null)
+                {
+
+                    setPaintCommand = new Command((vm) =>
+                    {
+                        var originalpaint = Paint;
+                        ClearParameters();
+                        Paint = !originalpaint;
+                        _tileMap.IdleBrush();                        
+                    });
+                }
+
+                return setPaintCommand;
+            }
+            set { }
+        }
+
+        public ICommand SetEraseCommand
+        {
+            get
+            {
+                if (setEraseCommand == null)
+                {
+
+                    setEraseCommand = new Command((vm) =>
+                    {
+                        var originalerase = Erase;
+                        ClearParameters();
+                        Erase = !originalerase;
+                        _tileMap.EraseBrush();
+                    });
+                }
+
+                return setEraseCommand;
+            }
+            set { }
+        }
+        public ICommand SetPickCommand
+        {
+            get
+            {
+                if (setPickCommand == null)
+                {
+
+                    setPickCommand = new Command((vm) =>
+                    {
+                        var originalpick = Pick;
+                        ClearParameters();
+                        Pick= !originalpick;
+                        _tileMap.IdleBrush();
+                    });
+                }
+
+                return setPickCommand;
+            }
+            set { }
+        }
+
         #endregion
     }
 }
