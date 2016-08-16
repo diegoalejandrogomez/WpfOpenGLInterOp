@@ -111,8 +111,8 @@ void TileEditorApp::SetMapSize(int width, int height) {
 	memset(_tiles, 0, tileAmount * sizeof(SimpleSpriteRenderer*));
 
 	_CreateGrid();
+	SimpleEngine::Instance()->GetScene()->GetCamera()->SetMaxVisibleArea(SimpleAABB({ 0.0f,0.0f }, _tileMapSize));
 
-	//SimpleEngine::Instance()->GetScene()->GetCamera()->ZoomToArea(SimpleAABB({ 0.0f,0.0f }, _tileMapSize));
 }
 
 
@@ -123,7 +123,9 @@ void TileEditorApp::SetMapWidth(int width) {
 	_ResizeGrid();
 	_CreateGrid();
 
-	//SimpleEngine::Instance()->GetScene()->GetCamera()->ZoomToArea(SimpleAABB({ 0.0f,0.0f }, _tileMapSize));
+	//Set camera working area
+	SimpleEngine::Instance()->GetScene()->GetCamera()->SetMaxVisibleArea(SimpleAABB({ 0.0f,0.0f }, _tileMapSize));
+	
 }
 
 
@@ -133,8 +135,8 @@ void TileEditorApp::SetMapHeight(int height) {
 	_tileMapSize.y = height;
 	_ResizeGrid();
 	_CreateGrid();
-
-	//SimpleEngine::Instance()->GetScene()->GetCamera()->ZoomToArea(SimpleAABB({ 0.0f,0.0f }, _tileMapSize));
+	SimpleEngine::Instance()->GetScene()->GetCamera()->SetMaxVisibleArea(SimpleAABB({ 0.0f,0.0f }, _tileMapSize));
+	
 }
 
 void TileEditorApp::_CreateGrid() {

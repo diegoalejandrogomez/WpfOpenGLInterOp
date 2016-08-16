@@ -137,7 +137,14 @@
                     <local:OpenGLRender x:Name="openGlRender" Grid.Column="1"></local:OpenGLRender>
                 </Grid>
             </Grid>
-            <Label Content="{Binding MousePosition}" Grid.Row="2"></Label>
+            <DockPanel Grid.Row="2">
+                <Label Content="{Binding MousePosition}" DockPanel.Dock="Left" ></Label>
+                <DockPanel DockPanel.Dock="Right" LastChildFill="True">
+                    <Label Content="Zoom" DockPanel.Dock="Left"></Label>
+                    <TextBox Text="{Binding ElementName=zoomSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Right" TextAlignment="Right" Width="40" />
+                    <Slider Value="{Binding ZoomLevel}"  Minimum="0" Maximum="{Binding MaxZoomLevel}" TickPlacement="BottomRight" TickFrequency="5" IsSnapToTickEnabled="False" Name="zoomSlider"/>
+                </DockPanel>
+            </DockPanel>
         </Grid>
     </Grid>
 </Window>

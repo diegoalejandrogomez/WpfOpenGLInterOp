@@ -36,21 +36,28 @@ namespace WPF.ViewModel
                 (openGLRenderControl as SimpleEngineViewerControl).OnEngineInitialized += OnGameLogicCreated;
                 openGLRenderControl.MouseWheel += OnMouseWheel;
                 PropertyChanged(this, new PropertyChangedEventArgs("Layers"));
-               
+                openGLRenderControl.Resize += Resize;
+                               
                 
             }
         }
 
+        private void Resize(object sender, EventArgs e)
+        {
+            PropertyChanged(this, new PropertyChangedEventArgs("MaxZoomLevel"));
+        }
+
         private void OnMouseWheel(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            SimpleEngineViewerControl view = openGLRenderControl as SimpleEngineViewerControl;
-            view.DeltaZoom(e.Delta * _zoomSpeed);
+            SimpleEngineViewerControl view = openGLRenderControl as SimpleEngineViewerControl;      
+            ZoomLevel = (Int32) ((e.Delta * _zoomSpeed * 10.0f  + view.GetZoom()) );//conversion to zoom level;
       
         }
 
         private void OnGameLogicCreated(object sender, EventArgs e)
         {
             _tileMap = new TileMapControl();
+            PropertyChanged(this, new PropertyChangedEventArgs("MaxZoomLevel"));
         }
 
         public void OnDrag(object sender, System.Windows.Forms.MouseEventArgs e)
@@ -96,8 +103,33 @@ namespace WPF.ViewModel
                 PropertyChanged(this, new PropertyChangedEventArgs("MousePosition"));
             }
         }
-            
 
+        private Int32 _zoomLevel;
+
+        public Int32 ZoomLevel {
+
+            get {
+                return _zoomLevel;
+            }
+            set {
+                SimpleEngineViewerControl view = openGLRenderControl as SimpleEngineViewerControl;              
+               _zoomLevel = value;
+                _zoomLevel = Math.Max(Math.Min(MaxZoomLevel, (int)_zoomLevel), 0);
+                view.SetZoom(_zoomLevel);
+                PropertyChanged(this, new PropertyChangedEventArgs("ZoomLevel"));
+            }
+        }
+
+        
+        public Int32 MaxZoomLevel
+        {
+            get {
+                SimpleEngineViewerControl view = openGLRenderControl as SimpleEngineViewerControl;
+
+                return view.MaxZoom;
+            }
+            
+        }
         public Object selected;
         public Object Selected
         {
@@ -220,7 +252,7 @@ namespace WPF.ViewModel
 
         public void OnClick(Object sender, EventArgs e)
         {
-            if (false) //We should filter based on selecte tool (brush, move tile, etc)
+            if (false) //We should filter based on selected tool (brush, move tile, etc)
             {
                 if (Selected != null)
                     Drag = false;
@@ -235,6 +267,7 @@ namespace WPF.ViewModel
                 ((SimpleEngineViewerControl)OpenGLRenderControl).Place();
             }
             PropertyChanged(this, new PropertyChangedEventArgs("Layers"));
+            PropertyChanged(this, new PropertyChangedEventArgs("MaxZoomLevel"));
         }
         #endregion
 

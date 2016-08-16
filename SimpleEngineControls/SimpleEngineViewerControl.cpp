@@ -35,8 +35,9 @@ void SimpleEngineViewerControl::OnSizeChanged(System::Object ^sender, System::Ev
 	
 	SimpleEngine* eng = SimpleEngine::Instance();
 	SimpleRenderer* render = eng->GetRenderer();
-	if (render != nullptr)
+	if (render != nullptr) {
 		render->ResizeWindow(Width, Height);
+	}
 
 	//System::Diagnostics::Debug::WriteLine("OnSizeChanged");
 }
@@ -93,3 +94,13 @@ void SimpleEngineViewerControl::DeltaZoom(float dz){
 
 	SimpleEngine::Instance()->GetScene()->GetCamera()->DeltaZoom(dz);
 }
+
+float SimpleEngineViewerControl::GetZoom() {
+	return SimpleEngine::Instance()->GetScene()->GetCamera()->GetZoom();
+}
+
+void SimpleEngineViewerControl::SetZoom(float z) {
+	SimpleEngine::Instance()->GetScene()->GetCamera()->SetZoom(z);
+}
+
+

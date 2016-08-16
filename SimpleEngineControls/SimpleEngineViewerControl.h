@@ -26,11 +26,22 @@ namespace SimpleEngineControls {
 
 		void MoveCamera(float dx, float dy);
 		void DeltaZoom(float dz);
+		float GetZoom();
+		void SetZoom(float z);
 		void SetMousePosition(float x, float y);
 
 		//Custom events
 		event EventHandler^ OnEngineInitialized;
-			
+		
+		property int MaxZoom {
+			int get() {		
+				SimpleScene* scene = SimpleEngine::Instance()->GetScene();
+				if (scene != nullptr)
+					return scene->GetCamera()->GetMaxZoom();			
+				return 100;
+			}
+		}
+
 		property System::Collections::Generic::List<ManagedSimpleLayer^>^ ManagedSimpleLayers
 		{
 			System::Collections::Generic::List<ManagedSimpleLayer^>^ get() {

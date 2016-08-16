@@ -12,8 +12,10 @@ SimpleCamera2D::SimpleCamera2D() {
 	_viewProjection = glm::mat4(1.0);
 	_position = glm::vec3(0.0f);
 	_size = { render->GetWidth(), render->GetHeight() };
-	_zoom = 1.0f;
-	
+	_zoom = 0.0f;
+	_restrictedArea.position = { 0.0f ,0.0f,0.0f };
+	_restrictedArea.size = _size;
+
 	SimpleDispatcher::Instance()->AddListener(WindowResizeEvent::descriptor, {
 		this,
 		[this](const SimpleEvent& evt) {
@@ -32,17 +34,74 @@ SimpleCamera2D::~SimpleCamera2D() {
 
 }
 
+
 void SimpleCamera2D::_UpdateTransform() {
 	
-	_view = glm::translate(glm::mat4(1.0f), -_position);
+	
 
 	_zoom = std::max(1e-3f, _zoom);
 
-	float halfWidth	= _size.x *0.5f / _zoom;
-	float halfHeight= _size.y * 0.5f / _zoom;
+	//Compute zoom offset due to desired visible size
+	float _offsetX = _size.x / _restrictedArea.size.x;
+	float _offsetY = _size.y / _restrictedArea.size.y;
+	float _zoomOffset = std::min(_offsetX, _offsetY);
+	//This value should be >= 1 
+	float finalZoom = std::max(1.01f,_zoomOffset + _zoom);
+
+	float halfWidth	= _size.x *0.5f / finalZoom;
+	float halfHeight= _size.y * 0.5f / finalZoom;
 	
+	float restrictedLeft = (_restrictedArea.position.x - _restrictedArea.size.x * 0.5f);
+	float restrictedRight = (_restrictedArea.position.x + _restrictedArea.size.x *0.5f);
+
+		//Clamp position to match restrictions taking into account the aspect ratio
+	float leftOverlap;
+	float rightOverlap;
+	float sign = 1.0f;
+	if (halfWidth <= _restrictedArea.size.x * 0.5f) {
+		leftOverlap = (_position.x - halfWidth) - restrictedLeft;
+		rightOverlap = restrictedRight - (_position.x + halfWidth);
+		sign = 1.0f;
+		
+	}
+	else {
+		leftOverlap = restrictedLeft - (_position.x - halfWidth);
+		rightOverlap = (_position.x + halfWidth) - restrictedRight;
+		sign = -1.0f;
+	}
+
+	
+	if (leftOverlap < 0.0f)
+		_position.x -= sign * leftOverlap;
+	if (rightOverlap < 0.0f)
+		_position.x += sign * rightOverlap;
+
+
+	float restrictedTop = (_restrictedArea.position.y - _restrictedArea.size.y * 0.5f);
+	float restrictedBottom = (_restrictedArea.position.y + _restrictedArea.size.y * 0.5f);
+
+	float topOverlap;
+	float bottomOverlap;
+	if (halfHeight <= _restrictedArea.size.y * 0.5f) {
+		topOverlap = (_position.y - halfHeight) - restrictedTop;
+		bottomOverlap = restrictedBottom - (_position.y + halfHeight);
+		sign = 1.0f;
+		
+	}
+	else {
+		topOverlap = restrictedTop - (_position.y - halfHeight);
+		bottomOverlap = (_position.y + halfHeight) - restrictedBottom;
+		sign = -1.0f;
+	}
+	
+	if (topOverlap < 0.0f)
+		_position.y -= sign * topOverlap;
+	if (bottomOverlap < 0.0f)
+		_position.y += sign * bottomOverlap;
+	
+	
+	_view = glm::translate(glm::mat4(1.0f), -_position);
 	_projection = glm::ortho(-halfWidth, halfWidth, -halfHeight, halfHeight, 0.0f, 1.0f);
-	
 	_viewProjection = _projection * _view;
 
 }
@@ -56,6 +115,8 @@ void SimpleCamera2D::SetZoom(float zoom) {
 	_zoom = zoom;
 	_UpdateTransform();
 }
+
+
 void SimpleCamera2D::DeltaZoom(float dz) {
 	_zoom += dz;
 	_UpdateTransform();
@@ -76,6 +137,12 @@ void SimpleCamera2D::SetViewportSize(float w, float h) {
 	_size.x = w;
 	_size.y = h;
 		
+	_UpdateTransform();
+}
+
+
+void SimpleCamera2D::SetMaxVisibleArea(SimpleAABB area){
+	_restrictedArea = area;
 	_UpdateTransform();
 }
 
