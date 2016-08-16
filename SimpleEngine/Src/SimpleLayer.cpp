@@ -34,6 +34,13 @@ bool SimpleLayer::RemoveEntity(SimpleObject* sObj) {
 	return false;
 }
 
+void SimpleLayer::Clear(bool deleteEntities) {
+	if (deleteEntities)
+		for (auto e : _entities)
+			delete e;
+	_entities.clear();
+}
+
 void SimpleLayer::SetZ(float Z) {
 	this->Z = Z;
 }

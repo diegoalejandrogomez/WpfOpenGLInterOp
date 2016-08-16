@@ -11,7 +11,8 @@ public:
 	
 	void AddEntity(SimpleObject* sObj);
 	bool RemoveEntity(SimpleObject* sObj);
-	
+	void Clear(bool deleteEntities = false);
+
 	void SetZ(float Z);
 	float GetZ();
 	

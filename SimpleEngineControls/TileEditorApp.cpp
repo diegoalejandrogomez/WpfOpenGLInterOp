@@ -197,8 +197,11 @@ void TileEditorApp::_CreateGrid() {
 }
 
 
+//We could keep the added elements in the future... 
 void TileEditorApp::_ResizeGrid() {
 
+	//Remove all the tiles from the layer
+	SimpleEngine::Instance()->GetScene()->GetLayer("MainTileMap")->Clear(true);
 	if (_tiles != nullptr)
 		delete[] _tiles;
 	int tileAmount = _tileMapSize.x * _tileMapSize.y;
