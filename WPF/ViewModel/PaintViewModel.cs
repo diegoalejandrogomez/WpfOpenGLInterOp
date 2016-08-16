@@ -10,10 +10,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using WPF.Infrastructure;
 using WPF.Model;
+using System.Collections;
 
 namespace WPF.ViewModel
 {
@@ -451,6 +453,8 @@ namespace WPF.ViewModel
             }
         }
 
+
+
         public ICommand EditSelectedLayer
         {
             get
@@ -601,7 +605,9 @@ namespace WPF.ViewModel
 
             set { }
         }
-        
+
+        public ManagedSimpleLayer SelectedLayer { get; set; }
+
         #endregion
     }
 }

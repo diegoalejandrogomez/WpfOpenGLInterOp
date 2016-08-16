@@ -30,5 +30,16 @@ namespace WPF
             paintViewModel.OpenGLRenderControl = openGlRender.OpenGLControl;
             DataContext = paintViewModel;
         }
+
+        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // ... Get SelectedItems from DataGrid.
+            var grid = sender as DataGrid;
+            if(grid.SelectedItems != null && grid.SelectedItems.Count > 0)
+            {
+                var selected = grid.SelectedItems[0] as ManagedSimpleLayer;
+                ((PaintViewModel)DataContext).SelectedLayer = selected;
+            }
+        }
     }
 }
