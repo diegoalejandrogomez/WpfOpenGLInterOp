@@ -201,11 +201,34 @@ void TileEditorApp::_CreateGrid() {
 void TileEditorApp::_ResizeGrid() {
 
 	//Remove all the tiles from the layer
-	SimpleEngine::Instance()->GetScene()->GetLayer("MainTileMap")->Clear(true);
+	//SimpleEngine::Instance()->GetScene()->GetLayer("MainTileMap")->Clear(true);
+
 	if (_tiles != nullptr)
 		delete[] _tiles;
 	int tileAmount = _tileMapSize.x * _tileMapSize.y;
 	_tiles = new SimpleSpriteRenderer*[tileAmount];
 	memset(_tiles, 0, tileAmount * sizeof(SimpleSpriteRenderer*));
+
+	//Reinsert the entities that still fit in the grid
+	std::vector<SimpleSpriteRenderer*> _toErase;
+
+	SimpleLayer* _tileLayer = SimpleEngine::Instance()->GetScene()->GetLayer("MainTileMap");
+	for (auto e : _tileLayer->GetEntities()) {
+		//Compute position
+		glm::ivec3 iPos = e->GetPosition();
+		if (iPos.x >= _tileMapSize.x || iPos.x < 0 || iPos.y >= _tileMapSize.y || iPos.y < 0)
+			_toErase.push_back(static_cast<SimpleSpriteRenderer*>(e));
+		else {
+			int idx = _tileMapSize.x * iPos.y + iPos.x;
+			_tiles[idx] = static_cast<SimpleSpriteRenderer*>(e);
+		}
+
+	}
+
+	for (auto e : _toErase) {
+		_tileLayer->RemoveEntity(e);
+		delete e;
+	}
+
 
 }
