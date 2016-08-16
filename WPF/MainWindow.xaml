@@ -68,11 +68,57 @@
                         </Grid.RowDefinitions>
                         <xctk:PropertyGrid x:Name="propertyGrid" Grid.Row="0" AutoGenerateProperties="true" SelectedObject="{Binding Selected}"></xctk:PropertyGrid>
                         
-                        <StackPanel Grid.Row="1">
+                        <StackPanel Grid.Row="1" >
                             <Label Content="Layers"></Label>
-                            <DataGrid  ItemsSource="{Binding Layers}" AutoGenerateColumns="True">
+                            <Button  
+                                                    Command="{Binding AddLayer}">
+                               
+                                <Image Name="addLayer" Source="./Resources/Icons/add.png"  Style="{StaticResource ToolIcon}" />
 
+                            </Button>
+                            <DataGrid  ItemsSource="{Binding Layers}" AutoGenerateColumns="False" SelectedItem="{Binding Row, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                       ScrollViewer.CanContentScroll="true" ScrollViewer.VerticalScrollBarVisibility="Visible" Height="150">
+                                <DataGrid.Columns>
+                                    <DataGridTemplateColumn Header="Name" Width="SizeToCells">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBox Text="{Binding Name}"></TextBox>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn Header="Z" Width="SizeToCells">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBox Text="{Binding Z}"></TextBox>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn Header="Operations" Width="SizeToCells">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <StackPanel>
+                                                    <Button  
+                                                            Command="{Binding DataContext.DeleteSelectedLayer, 
+                                                            RelativeSource={RelativeSource Mode=FindAncestor,  AncestorType={x:Type local:MainWindow}}}"
+                                                            CommandParameter="{Binding }" >
+                                                        <Image Name="delete" Source="./Resources/Icons/delete.png"  Style="{StaticResource ToolIcon}" />
+
+                                                    </Button>
+                                                    <Button  
+                                                            Command="{Binding DataContext.EditSelectedLayer, 
+                                                            RelativeSource={RelativeSource Mode=FindAncestor,  AncestorType={x:Type local:MainWindow}}}"
+                                                            CommandParameter="{Binding }" >
+                                                        <Image Name="change" Source="./Resources/Icons/edit.png"  Style="{StaticResource ToolIcon}" />
+
+                                                    </Button>
+                                                </StackPanel>
+
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                </DataGrid.Columns>
                             </DataGrid>
+
                             <Label Content="Images"></Label>
                            
                                 <Label Content="Column Quantity" ></Label>

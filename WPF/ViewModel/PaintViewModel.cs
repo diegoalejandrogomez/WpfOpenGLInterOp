@@ -253,6 +253,12 @@ namespace WPF.ViewModel
 
         private ICommand deleteSelectedTile;
 
+        private ICommand deleteSelectedLayer;
+
+        private ICommand editSelectedLayer;
+
+        private ICommand addLayer;
+
         public event PropertyChangedEventHandler PropertyChanged = delegate(object sender, PropertyChangedEventArgs e)
         {
             var paintViewModel = sender as PaintViewModel;
@@ -327,6 +333,12 @@ namespace WPF.ViewModel
                         int heigth = (int)((BitmapImage)image).Height;
                         int x = 0;
                         int y = 0;
+
+                        if (QuantityX == 0)
+                            QuantityX = 1;
+                        if (QuantityY == 0)
+                            QuantityY = 1;
+
                         int proportionalWidth = width / QuantityX ;
                         int proportionalHeigth = heigth / QuantityY;
 
@@ -384,6 +396,78 @@ namespace WPF.ViewModel
                 return deleteSelectedTile;
             }
         }
+
+        public ICommand DeleteSelectedLayer
+        {
+            get
+            {
+                if (deleteSelectedLayer == null)
+                {
+                    deleteSelectedLayer = new Command((layer) =>
+                    {
+                        var layerObject = layer as ManagedSimpleLayer;
+                        if (layerObject != null)
+                        {
+                            layerObject.Remove();
+                            Layers.Remove(layerObject);
+                            PropertyChanged(this, new PropertyChangedEventArgs("Layers"));
+                        }
+                    });
+                }
+
+                return deleteSelectedLayer;
+            }
+        }
+
+        public ICommand EditSelectedLayer
+        {
+            get
+            {
+                if (editSelectedLayer == null)
+                {
+                    editSelectedLayer = new Command((layer) =>
+                    {
+                        Window window = new Window
+                        {
+                            Title = "My User Control Dialog",
+                            Content = new LayerEditor()
+                        };
+
+                        ((System.Windows.Controls.UserControl)window.Content).DataContext = layer;
+                        window.Width = 300;
+                        window.Height = 600;
+                        window.Closed += Window_Closed;
+                        window.ShowDialog();
+                        
+                    });
+                }
+
+                return editSelectedLayer;
+            }
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            PropertyChanged(this, new PropertyChangedEventArgs("Layers"));
+        }
+
+        public ICommand AddLayer
+        {
+            get
+            {
+                if (addLayer == null)
+                {
+                    addLayer = new Command((layer) =>
+                    {
+                        var layerObject = new ManagedSimpleLayer();
+                        PropertyChanged(this, new PropertyChangedEventArgs("Layers"));
+                    });
+                }
+
+                return addLayer;
+            }
+        }
+
         public ICommand SetDrawLineCommand
         {
             get

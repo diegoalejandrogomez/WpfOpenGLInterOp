@@ -12,6 +12,16 @@ ManagedSimpleLayer::ManagedSimpleLayer(SimpleLayer *simpleLayer) {
 	}
 };
 
+ManagedSimpleLayer::ManagedSimpleLayer() {
+	simpleLayer = new SimpleLayer();
+	SimpleEngine::Instance()->GetScene()->AddLayer(simpleLayer);
+};
+
 ManagedSimpleLayer::~ManagedSimpleLayer()
 {
 };
+
+void ManagedSimpleLayer::Remove()
+{
+	SimpleEngine::Instance()->GetScene()->RemoveLayer(this->simpleLayer);
+}
