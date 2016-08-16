@@ -130,8 +130,15 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Infrastructure\Command.cs" />
+    <Compile Include="LayerEditor.xaml.cs">
+      <DependentUpon>LayerEditor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Model\Tile.cs" />
     <Compile Include="ViewModel\PaintViewModel.cs" />
+    <Page Include="LayerEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -203,6 +210,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Icons\delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\confirm.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\edit.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

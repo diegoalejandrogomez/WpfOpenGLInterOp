@@ -21,5 +21,9 @@
             <Setter Property="Image.Height" Value="75"></Setter>
             <Setter Property="Image.Margin" Value="2,2,2,2"></Setter>
         </Style>
+        <Style x:Key="Title" TargetType="{x:Type Label}">
+            <Setter Property="FontFamily" Value="Constantia"/>
+            <Setter Property="FontSize" Value="24"/>
+        </Style>
     </Application.Resources>
 </Application>

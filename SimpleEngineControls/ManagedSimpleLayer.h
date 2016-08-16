@@ -6,9 +6,13 @@ using namespace System::Runtime::InteropServices;
 
 public ref class ManagedSimpleLayer {
 public:
+	ManagedSimpleLayer();
+
 	ManagedSimpleLayer(SimpleLayer *simpleLayer);
 
 	~ManagedSimpleLayer();
+
+	void Remove();
 
 	property float Z
 	{
