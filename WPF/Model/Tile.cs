@@ -5,11 +5,6 @@ namespace WPF.Model
 {
     public class Tile
     {
-        public Tile()
-        {
-            Properties = new List<ResourceProperty>();
-        }
-
-        public List<ResourceProperty> Properties { get; set; }
+        public ResourceProperty Properties { get; set; }
     }
 }

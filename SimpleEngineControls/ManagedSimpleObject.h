@@ -1,6 +1,8 @@
 #pragma once
 #include "SimpleObject.h"
 #include "SimpleEngine.h"
+using namespace System::Runtime::InteropServices;
+
 public ref class ManagedSimpleObject {
 public:
 	ManagedSimpleObject();
@@ -96,6 +98,23 @@ public:
 		void set(float orientation)
 		{
 			return simpleObject->SetOrientation(orientation);
+		}
+	};
+
+	property System::String^ Name
+	{
+		System::String^ get() {
+			if (this->simpleObject == nullptr)
+				return "";
+
+			return gcnew System::String(simpleObject->GetName().GetString().c_str());
+		}
+
+		void set(System::String^ name)
+		{
+			const char* chars =
+				(const char*)(Marshal::StringToHGlobalAnsi(name)).ToPointer();
+			simpleObject->SetName(chars);
 		}
 	};
 

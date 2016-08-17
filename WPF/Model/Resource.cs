@@ -8,15 +8,10 @@ namespace WPF.Model
 {
     public class Resource
     {
-        public Resource()
-        {
-            this.Properties = new List<ResourceProperty>();
-        }
-
         public byte[] Data { get; set; }
 
         public String Name { get; set; }
 
-        public List<ResourceProperty> Properties { get; set; }
+        public ResourceProperty Properties { get; set; }
     }
 }

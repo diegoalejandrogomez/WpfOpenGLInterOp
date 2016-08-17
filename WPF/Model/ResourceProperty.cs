@@ -15,5 +15,13 @@ namespace WPF.Model
         public int X { get; set; }
 
         public int Y { get; set; }
+
+        public int Z { get; set; }
+
+        public int Orientation { get; set; }
+
+        public bool Splited { get; set; }
+
+        public string Name { get; set; }
     }
 }

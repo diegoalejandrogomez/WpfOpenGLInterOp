@@ -26,5 +26,7 @@ namespace WPF.ViewModel
         public int heigth { get; set; }
 
         public bool Splited { get; set; }
+
+        public int Idx { get; set; }
     }
 }
