@@ -21,7 +21,10 @@ public:
 
 	inline void SetQueryable(bool value) { _queryable = value; };
 	inline bool IsQueryable() { return _queryable; };
-private:
+
+	virtual json Serialize();
+
+protected:
 	std::vector<SimpleObject*> _entities;
 	float Z;
 	SimpleID _layerName;

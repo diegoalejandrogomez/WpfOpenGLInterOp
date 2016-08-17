@@ -37,12 +37,12 @@ public:
 
 	void AddLayer(SimpleLayer* sLayer);
 	void RemoveLayer(SimpleLayer* sLayer);
-
 	SimpleLayer* GetLayer(int nLayer);
 	SimpleLayer* GetLayer(SimpleID layerName);
 	inline std::vector<SimpleLayer*>& GetLayers(std::string layerName) { return _layers; }
-	
 
+	virtual bool Serialize(std::string path);
+	
 	float GetLowerZIndex();
 
 	float GetFPS(); 

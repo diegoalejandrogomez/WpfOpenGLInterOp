@@ -6,6 +6,7 @@
 #include "LowerzIndex.h"
 #include "SimpleEngine.h"
 #include <algorithm>
+#include <fstream>
 
 SimpleScene::SimpleScene() {
 	
@@ -113,6 +114,30 @@ void SimpleScene::RemoveLayer(SimpleLayer* sLayer) {
 	if (it != _layers.end())
 		_layers.erase(it);
 }
+
+
+bool SimpleScene::Serialize(std::string path) {
+	
+	json scene;
+	scene["camera"] = nullptr; //no camera serialization for now
+	json elements = json::array();
+
+	for (auto layer : _layers) {
+		elements.push_back(layer->Serialize());
+	}
+	scene["layers"] = elements;
+
+	std::ofstream file(path);
+	if (file.is_open()) {
+		file << std::setw(4) << scene;
+		file.close();
+		return true;
+	}
+
+
+	return false;
+}
+
 
 float SimpleScene::GetLowerZIndex() {
 	std::vector<SimpleLayer*> layers = GetLayers();

@@ -49,6 +49,9 @@ void DebugGameLogic::Init()
 	SimpleEngine::Instance()->GetScene()->AddEntity(walkingGuybrush, layer);*/
 
 
+	SimpleEngine::Instance()->GetScene()->Serialize("DebugScene.smpl");
+
+
 	//Configure input system we are going to use
 	SimpleEngine::Instance()->GetInput()->CreateKeyboard();
 	SimpleEngine::Instance()->GetInput()->CreateMouse();

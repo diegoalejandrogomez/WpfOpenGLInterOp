@@ -137,6 +137,7 @@ copy /Y "$(ProjectDir)\External\devil\lib\ILU.dll" "$(TargetDir)"</Command>
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Include\json.hpp" />
     <ClInclude Include="Include\SimpleAABB.h" />
     <ClInclude Include="Include\SimpleAnimatedSpriteRenderer.h" />
     <ClInclude Include="Include\SimpleID.h" />

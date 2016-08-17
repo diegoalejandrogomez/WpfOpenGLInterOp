@@ -3,6 +3,8 @@
 #include <glm\glm.hpp>
 #include "SimpleAABB.h"
 #include "SimpleID.h"
+#include "json.hpp"
+using json = nlohmann::json;
 
 class SimpleObject {
 
@@ -27,6 +29,8 @@ public:
 	inline const SimpleAABB& GetAABB()const { return _aabb; };
 	//Not efficient... we could do a lot better
 	const glm::mat4 GetTransform() const;
+	
+	virtual json Serialize();
 	
 
 protected:

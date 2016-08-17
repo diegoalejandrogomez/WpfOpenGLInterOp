@@ -48,3 +48,22 @@ void SimpleLayer::SetZ(float Z) {
 float SimpleLayer::GetZ() {
 	return this->Z;
 }
+
+
+json SimpleLayer::Serialize() {
+
+	json layer;
+	layer["name"] = static_cast<SimpleID::Type>(_layerName);
+	layer["z"] = Z;
+	layer["queryable"] = _queryable;
+	
+	json elements = json::array();
+	for (auto entity : _entities) {
+		json e  = entity->Serialize();
+		elements.push_back(e);
+	}
+	layer["entities"] = elements;
+	
+	return layer;
+
+}
