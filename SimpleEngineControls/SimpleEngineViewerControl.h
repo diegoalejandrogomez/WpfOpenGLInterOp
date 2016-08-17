@@ -30,6 +30,7 @@ namespace SimpleEngineControls {
 		float GetZoom();
 		void SetZoom(float z);
 		void SetMousePosition(float x, float y);
+		System::Collections::Generic::List<ManagedSimpleObject^>^ GetAllTiles();
 
 		//Custom events
 		event EventHandler^ OnEngineInitialized;

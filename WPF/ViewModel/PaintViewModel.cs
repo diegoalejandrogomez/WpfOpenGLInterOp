@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using WPF.Infrastructure;
 using WPF.Model;
 using System.Collections;
+using System.Runtime.Serialization.Json;
 
 namespace WPF.ViewModel
 {
@@ -239,7 +240,7 @@ namespace WPF.ViewModel
 
         }
 
-        public ObservableCollection<Tile> Tiles { get; set; }
+        public ObservableCollection<TileViewModel> Tiles { get; set; }
 
         TileMapControl _tileMap;
         float _panSpeed = 1.0f;
@@ -289,6 +290,8 @@ namespace WPF.ViewModel
         private ICommand setDrawSquareCommand;
 
         private ICommand openFileCommand;
+
+        private ICommand saveCommand;
 
         private ICommand addSelectedTile;
 
@@ -352,6 +355,21 @@ namespace WPF.ViewModel
             }
         }
 
+
+        public static byte[] ConvertToBytes(BitmapImage bitmapImage)
+        {
+            byte[] data;
+            JpegBitmapEncoder encoder = new JpegBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create(bitmapImage));
+            using (MemoryStream ms = new MemoryStream())
+            {
+                encoder.Save(ms);
+                data = ms.ToArray();
+            }
+
+            return data;
+        }
+
         public ICommand AddSelectedTile
         {
             get
@@ -360,7 +378,7 @@ namespace WPF.ViewModel
                 {
                     addSelectedTile = new Command((tile) =>
                     {
-                        var tileObject = (Tile)tile;
+                        var tileObject = (TileViewModel)tile;
                         tileObject.SpriteControl.AddControl(tileObject.Path, tileObject.x, tileObject.y, tileObject.width, tileObject.heigth);
                     });
                 }
@@ -378,7 +396,7 @@ namespace WPF.ViewModel
 
                     splitSelectedImage = new Command((tile) =>
                     {
-                        var tileObject = (Tile)tile;
+                        var tileObject = (TileViewModel)tile;
                         var image = tileObject.Image;
                         int width = (int)((BitmapImage)image).Width;
                         int heigth = (int)((BitmapImage)image).Height;
@@ -400,7 +418,7 @@ namespace WPF.ViewModel
                             {
                                 var asd = BitmapImage2Bitmap((BitmapImage)image).Clone(new Rectangle(x, y, proportionalWidth, proportionalHeigth), System.Drawing.Imaging.PixelFormat.DontCare);
                                 BitmapImage newImage = BitmapToImageSource(asd);
-                                var newTile = new Tile();
+                                var newTile = new TileViewModel();
                                 newTile.Image = newImage;
                                 newTile.Path = tileObject.Path;
                                 newTile.x = x;
@@ -408,11 +426,7 @@ namespace WPF.ViewModel
                                 newTile.width = proportionalWidth;
                                 newTile.heigth = proportionalHeigth;                              
                                 newTile.SpriteControl = new SpriteSheetControl();
-                                //Setting this changes the sprite size in the world, not the texture coordinates of it
-                                //newTile.SpriteControl.positionX = x;
-                                //newTile.SpriteControl.positionY = y;
-                                //newTile.SpriteControl.width = proportionalWidth;
-                                //newTile.SpriteControl.heigth = proportionalHeigth;
+                                newTile.Splited = true;
                                 Tiles.Add(newTile);
                                 PropertyChanged(this, new PropertyChangedEventArgs("Tiles"));
                                 x += proportionalWidth;
@@ -438,7 +452,7 @@ namespace WPF.ViewModel
                 {
                     deleteSelectedTile = new Command((tile) =>
                     {
-                        var tileObject = tile as Tile;
+                        var tileObject = tile as TileViewModel;
                         if(tileObject != null)
                             Tiles.Remove(tileObject);
                     });
@@ -563,6 +577,61 @@ namespace WPF.ViewModel
             set { }
         }
 
+        public ICommand SaveCommand
+        {
+            get
+            {
+                if (saveCommand == null)
+                {
+                    saveCommand = new Command((vm) =>
+                    {
+                        SaveFileDialog dialog = new SaveFileDialog();
+                        if (dialog.ShowDialog() == true)
+                        {
+                            var project = new Project();
+                            var scene = new Scene();
+                            foreach(var tile in Tiles)
+                            {
+                                var resource = new Resource();
+                                resource.Name = tile.Path;
+                                resource.Data = ConvertToBytes(tile.Image);
+                                var property = new ResourceProperty();
+                                property.Heigth = tile.heigth;
+                                property.Width = tile.width;
+                                property.X = tile.x;
+                                property.Y = tile.y;
+                                resource.Properties.Add(property);
+                                project.Resources.Add(resource);   
+                            }
+                            /*
+                            if (tile.Splited)
+                            {
+                                
+                            }
+                            else*/
+                            foreach(var tile in ((SimpleEngineViewerControl)OpenGLRenderControl).GetAllTiles())
+                            {
+                                var tileScene = new Tile();
+                                var property = new ResourceProperty();
+                                property.Heigth = (int) tile.sizeH;
+                                property.Width = (int)tile.sizeW;
+                                property.X = (int)tile.positionX;
+                                property.Y = (int)tile.positionY;
+                                tileScene.Properties.Add(property);
+                                scene.Tiles.Add(tileScene);
+                            }
+
+                            project.Scenes.Add(scene);
+
+                            var json = Newtonsoft.Json.JsonConvert.SerializeObject(project);
+                        }
+                    });
+                }
+
+                return saveCommand;
+            }
+        }
+
         public ICommand OpenFileCommand
         {
             get
@@ -575,7 +644,7 @@ namespace WPF.ViewModel
                         if (dialog.ShowDialog() == true)
                         {
                             this.FilePath = dialog.FileName;
-                            var newTile = new Tile();
+                            var newTile = new TileViewModel();
                             newTile.Image = new BitmapImage(new Uri(this.FilePath));
                             newTile.Path = this.FilePath;
                             newTile.x = 0;
@@ -584,7 +653,7 @@ namespace WPF.ViewModel
                             newTile.heigth = (int)newTile.Image.Height;
                             newTile.SpriteControl = new SpriteSheetControl();                         
                             if (Tiles == null)
-                                Tiles = new ObservableCollection<Tile>();
+                                Tiles = new ObservableCollection<TileViewModel>();
                             this.Tiles.Add(newTile);
 
                             PropertyChanged(this, new PropertyChangedEventArgs("Tiles"));

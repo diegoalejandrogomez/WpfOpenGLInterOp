@@ -82,6 +82,20 @@ ManagedSimpleObject^ SimpleEngineViewerControl::SetItem(float x, float y)
 	return nullptr;
 }
 
+System::Collections::Generic::List<ManagedSimpleObject^>^ SimpleEngineViewerControl::GetAllTiles()
+{
+	System::Collections::Generic::List<ManagedSimpleObject^>^ managedSimpleObjects = gcnew System::Collections::Generic::List<ManagedSimpleObject^>();
+	for (SimpleLayer* layer : SimpleEngine::Instance()->GetScene()->GetLayers()) {
+		for (SimpleObject* obj : layer->GetEntities()) {
+			auto simpleObject = gcnew ManagedSimpleObject();
+			simpleObject->SetSimpleObject(obj);
+			managedSimpleObjects->Add(simpleObject);
+		}
+	}
+
+	return managedSimpleObjects;
+}
+
 //Move deltas in screen space... This methods translates 'em to world space
 void SimpleEngineViewerControl::MoveCamera(float dx, float dy) {
 	
