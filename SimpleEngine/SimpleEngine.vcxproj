@@ -140,6 +140,7 @@ copy /Y "$(ProjectDir)\External\devil\lib\ILU.dll" "$(TargetDir)"</Command>
     <ClInclude Include="Include\json.hpp" />
     <ClInclude Include="Include\SimpleAABB.h" />
     <ClInclude Include="Include\SimpleAnimatedSpriteRenderer.h" />
+    <ClInclude Include="Include\SimpleFactory.h" />
     <ClInclude Include="Include\SimpleID.h" />
     <ClInclude Include="Include\SimpleInput.h" />
     <ClInclude Include="Include\SimpleLayer.h" />
@@ -175,6 +176,7 @@ copy /Y "$(ProjectDir)\External\devil\lib\ILU.dll" "$(TargetDir)"</Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="External\glew\glew.cpp" />
+    <ClCompile Include="Include\SimpleFactory.cpp" />
     <ClCompile Include="Src\SimpleAABB.cpp" />
     <ClCompile Include="Src\SimpleAnimatedSpriteRenderer.cpp" />
     <ClCompile Include="Src\SimpleID.cpp" />

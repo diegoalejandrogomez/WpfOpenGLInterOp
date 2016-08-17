@@ -38,7 +38,7 @@ namespace SimpleEngineControls {
 			int get() {		
 				SimpleScene* scene = SimpleEngine::Instance()->GetScene();
 				if (scene != nullptr)
-					return scene->GetCamera()->GetMaxZoom();			
+					return (int)scene->GetCamera()->GetMaxZoom();			
 				return 100;
 			}
 		}

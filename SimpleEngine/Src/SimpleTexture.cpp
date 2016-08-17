@@ -100,5 +100,7 @@ void SimpleTexture::LoadTexture(const char* path)
 	}
 	
 	_UploadData();
+
+	_path = path;
 }
 

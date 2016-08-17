@@ -23,6 +23,11 @@ public:
 	SimpleID(const SimpleID & id) {
 		_id = id._id;
 	}
+
+	SimpleID(const SimpleID::Type id) {
+		_id = id;
+	}
+
 	bool operator==(const SimpleID& other) const {
 		return _id == other._id;
 	};
@@ -31,6 +36,11 @@ public:
 	};
 
 	operator Type() const { return _id; }
+
+	SimpleID& operator=(const Type id) {
+		_id = id;
+		return *this;
+	}
 
 #ifdef HASH_DB
 	const std::string& GetString()const { return _hashDB[_id]; }

@@ -139,6 +139,37 @@ bool SimpleScene::Serialize(std::string path) {
 }
 
 
+bool SimpleScene::Deserialize(std::string path) {
+
+	
+	json scene;
+
+	std::ifstream file(path);
+	if (file.is_open())
+	{
+		file >> scene;
+		file.close();
+
+		//No camera deserialization for now
+		if (scene.find("layers") == scene.end()) {
+			SIMPLE_LOG("Couldn't deserialize layers");
+			return false;
+		}
+
+		for (auto l : scene["layers"]) {
+			SimpleLayer* layer = new SimpleLayer();
+			if (!layer->Deserialize(l))
+				return false;
+			AddLayer(layer);
+		}
+
+		return true;
+	}
+
+	return false;
+}
+
+
 float SimpleScene::GetLowerZIndex() {
 	std::vector<SimpleLayer*> layers = GetLayers();
 	float min = 10000;

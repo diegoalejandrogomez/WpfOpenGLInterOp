@@ -10,6 +10,7 @@
 #include "SimpleSpriteSheet.h"
 
 class SimpleShaderProgram;
+FACTORY_REGISTER(SimpleObject, SimpleSpriteSheetRenderer)
 
 class SimpleSpriteSheetRenderer : public SimpleSpriteRenderer {
 public:
@@ -24,11 +25,15 @@ public:
 	SimpleSpriteSheet* GetSpriteSheet() { return _spriteSheet; }
 	void SetIndex(int pos);
 	int GetIndex() { return _pos; }
-
+	
+	virtual SimpleID GetType() { return "SimpleSpriteSheetRenderer"; }
 protected:
 		
 	int _pos;
 	SimpleSpriteSheet* _spriteSheet = nullptr;
 	
+	//Register to parent factory
+	static SimpleObject::DerivedRegister<SimpleSpriteSheetRenderer> _regEntry;
+	
 };
-
+	

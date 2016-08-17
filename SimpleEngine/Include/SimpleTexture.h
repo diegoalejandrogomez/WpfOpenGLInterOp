@@ -26,10 +26,13 @@ public:
 	//No mipmaps for now...
 	void SetSmooth();
 	void SetPixelated();
+
+	std::string GetPath() { return _path; }
 private:
 	//CPU data
 	Texture texture;
-	
+	std::string _path;
+
 	//GPU
 	GLuint _tex;
 
@@ -37,6 +40,7 @@ private:
 	glm::ivec2 _potSize;
 	//ratio from real size to pot size
 	glm::vec2 _sizeRatio;
+
 
 	void _UploadData();
 };

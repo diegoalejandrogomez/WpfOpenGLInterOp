@@ -3,6 +3,7 @@
 #include "SimpleSpriteSheetRenderer.h"
 #include "SimpleSpriteAnimation.H"
 
+FACTORY_REGISTER(SimpleObject, SimpleAnimatedSpriteRenderer);
 class SimpleAnimatedSpriteRenderer : public SimpleSpriteSheetRenderer {
 public:
 
@@ -17,6 +18,8 @@ public:
 	void PlayOnce();
 	void Stop();
 	void Pause();
+
+	virtual SimpleID GetType() { return "SimpleAnimatedSpriteRenderer"; }
 	
 protected:
 	SimpleSpriteAnimation* _anim;
@@ -24,6 +27,5 @@ protected:
 	float _elapsedTime;
 	bool _playing;
 	bool _loop;
-
 };
 

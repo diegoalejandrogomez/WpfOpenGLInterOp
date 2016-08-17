@@ -10,32 +10,32 @@
 void DebugGameLogic::Init()
 {
 
-	SimpleLayer* layer = new SimpleLayer();
-	layer->SetZ(SimpleEngine::Instance()->GetScene()->GetLowerZIndex() - 1);
-	SimpleEngine::Instance()->GetScene()->AddLayer(layer);
-	
-	layer = new SimpleLayer();
-	layer->SetZ(SimpleEngine::Instance()->GetScene()->GetLowerZIndex() - 1);
-	SimpleEngine::Instance()->GetScene()->AddLayer(layer);
-	
-	/*SimpleSpriteRenderer* sprite = new SimpleSpriteRenderer();
-	sprite->SetAsTexture("./media/spriteFull.png");
-	sprite->SetOrientation(1.0f);*/
+	//SimpleLayer* layer = new SimpleLayer();
+	//layer->SetZ(SimpleEngine::Instance()->GetScene()->GetLowerZIndex() - 1);
+	//SimpleEngine::Instance()->GetScene()->AddLayer(layer);
+	//
+	//layer = new SimpleLayer();
+	//layer->SetZ(SimpleEngine::Instance()->GetScene()->GetLowerZIndex() - 1);
+	//SimpleEngine::Instance()->GetScene()->AddLayer(layer);
+	//
+	//SimpleSpriteRenderer* sprite = new SimpleSpriteRenderer();
+	//sprite->SetAsTexture("./media/spriteFull.png");
+	//sprite->SetOrientation(1.0f);
 	//SimpleEngine::Instance()->GetScene()->AddEntity(sprite, layer);
-	
-	SimpleEngine::Instance()->GetRenderer()->CreateSpriteSheet("media/spriteSheet.png", { 104,149 }, { 6,3 });
+	//
+	//SimpleEngine::Instance()->GetRenderer()->CreateSpriteSheet("media/spriteSheet.png", { 104,149 }, { 6,3 });
 	//SimpleEngine::Instance()->GetRenderer()->CreateSpriteSheet("media/spriteSheet.png");
 	
-	SimpleSpriteSheet* _spriteSheet = SimpleEngine::Instance()->GetRenderer()->GetSpriteSheet("media/spriteSheet.png");
+	//SimpleSpriteSheet* _spriteSheet = SimpleEngine::Instance()->GetRenderer()->GetSpriteSheet("media/spriteSheet.png");
 	//_spriteSheet->AddSpriteFrame({ 0,0 }, { 104,149 });
 	//_spriteSheet->AddSpriteFrame({ 105,150 }, { 104,149 });
 
 	
 	
-	SimpleSpriteSheetRenderer* guybrush = new SimpleSpriteSheetRenderer();
+	/*SimpleSpriteSheetRenderer* guybrush = new SimpleSpriteSheetRenderer();
 	guybrush->SetSpriteSheet("media/spriteSheet.png");
 	guybrush->SetIndex(0);
-	SimpleEngine::Instance()->GetScene()->AddEntity(guybrush, layer);
+	SimpleEngine::Instance()->GetScene()->AddEntity(guybrush, layer);*/
 	
 	//Guybrush animation
 	/*SimpleEngine::Instance()->GetRenderer()->CreateSpriteAnimation(	"walking","media/spriteSheet.png",
@@ -48,8 +48,8 @@ void DebugGameLogic::Init()
 	walkingGuybrush->Play();
 	SimpleEngine::Instance()->GetScene()->AddEntity(walkingGuybrush, layer);*/
 
-
-	SimpleEngine::Instance()->GetScene()->Serialize("DebugScene.smpl");
+	//SimpleEngine::Instance()->GetScene()->Serialize("DebugScene.smpl");
+	//SimpleEngine::Instance()->GetScene()->Deserialize("DebugScene.smpl");
 
 
 	//Configure input system we are going to use

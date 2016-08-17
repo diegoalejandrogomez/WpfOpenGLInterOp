@@ -4,6 +4,8 @@
 #include <algorithm>
 #include <glm\gtx\transform.hpp>
 
+
+
 SimpleSpriteRenderer::SimpleSpriteRenderer() {
 
 	SimpleRenderer* render = SimpleEngine::Instance()->GetRenderer();
@@ -59,6 +61,10 @@ void SimpleSpriteRenderer::SetAsTexture(SimpleTexture* t) {
 void SimpleSpriteRenderer::SetAsTextureRect(std::string && name, glm::vec2 offset, glm::vec2 size) {
 	SimpleRenderer* render = SimpleEngine::Instance()->GetRenderer();
 	_tex = render->GetTexture(name);
+	if (_tex == nullptr) {
+		render->LoadTexture(name);
+		_tex = render->GetTexture(name);
+	}
 	SetRect(offset, size);
 }
 
@@ -122,7 +128,54 @@ void SimpleSpriteRenderer::Render(float dt) {
 	_mesh->Draw();
 	_mesh->Unbind();
 
-
 }
 
+
+json SimpleSpriteRenderer::Serialize() {
+
+	json so = SimpleObject::Serialize();
+	json ret{
+		{"texture", _tex->GetPath()},
+		{"uvOffset", {_rectOffset.x, _rectOffset.y} },
+		{"uvSize", {_rectSize.x, _rectSize.y}},
+		{"snapToGrid",_snapToGrid},
+		{"snapSize", {_snapSize.x, _snapSize.y}}		
+	};
+
+	so["SimpleSpriteRenderer"] = ret;
+	
+	return so;
+
+
+}
+void SimpleSpriteRenderer::Deserialize(json &node) {
+	
+	SimpleObject::Deserialize(node);
+
+	json& local = node["SimpleSpriteRenderer"];
+
+	SIMPLE_ASSERT(local.find("texture") != local.end());
+	std::string path = local["texture"];
+
+	SIMPLE_ASSERT(local.find("uvOffset") != local.end());
+	SIMPLE_ASSERT(local["uvOffset"].is_array());
+	_rectOffset.x = local["uvOffset"][0];
+	_rectOffset.y = local["uvOffset"][1];
+
+	SIMPLE_ASSERT(local.find("uvSize") != local.end());
+	SIMPLE_ASSERT(local["uvSize"].is_array());
+	_rectSize.x = local["uvSize"][0];
+	_rectSize.y = local["uvSize"][1];
+
+	SIMPLE_ASSERT(local.find("snapToGrid") != local.end());
+	_snapToGrid = local["snapToGrid"];
+
+	SIMPLE_ASSERT(local.find("snapSize") != local.end());
+	SIMPLE_ASSERT(local["snapSize"].is_array());
+	_snapSize.x = local["snapSize"][0];
+	_snapSize.y = local["snapSize"][1];
+
+	SetAsTextureRect(std::move(path), _rectOffset, _rectSize);
+
+}
 

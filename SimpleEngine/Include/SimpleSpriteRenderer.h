@@ -8,6 +8,10 @@
 
 class SimpleShaderProgram;
 
+
+//Register entry as simpleID for factory
+FACTORY_REGISTER(SimpleObject, SimpleSpriteRenderer)
+
 class SimpleSpriteRenderer : public SimpleObject {
 public:
 
@@ -25,6 +29,9 @@ public:
 	
 
 	inline SimpleTexture* GetTexture() { return _tex; };
+
+	virtual json Serialize();
+	virtual void Deserialize(json &node);
 
 protected:
 	unsigned int _vertexCount;
@@ -46,6 +53,11 @@ protected:
 	//Snapping utilities
 	bool _snapToGrid;
 	glm::vec2 _snapSize;
+
+	virtual SimpleID GetType() { return "SimpleSpriteRenderer"; }
+
+private:
+		
 	
 };
 

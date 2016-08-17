@@ -149,6 +149,9 @@
     <ClInclude Include="Include\json.hpp">
       <Filter>Engine\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Include\SimpleFactory.h">
+      <Filter>Engine\Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\SimpleObjectsRenderPass.cpp">
@@ -224,6 +227,9 @@
       <Filter>Engine\Graphics\Sprites</Filter>
     </ClCompile>
     <ClCompile Include="Src\SimpleID.cpp">
+      <Filter>Engine\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\SimpleFactory.cpp">
       <Filter>Engine\Utils</Filter>
     </ClCompile>
   </ItemGroup>

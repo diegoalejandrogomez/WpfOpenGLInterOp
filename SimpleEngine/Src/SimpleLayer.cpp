@@ -67,3 +67,44 @@ json SimpleLayer::Serialize() {
 	return layer;
 
 }
+
+
+bool SimpleLayer::Deserialize(json layer) {
+
+	
+	if (layer.find("name") == layer.end()) {
+		SIMPLE_LOG("Couldn't find name field in layer");
+		return false;
+	}
+	
+	_layerName =  static_cast<SimpleID::Type>(layer["name"]);
+	 
+	if (layer.find("z") == layer.end()) {
+		SIMPLE_LOG("Couldn't find z field in layer");
+		return false;
+	}
+	Z = layer["z"];
+
+	if (layer.find("queryable") == layer.end()) {
+		SIMPLE_LOG("Couldn't find queryable field in layer");
+		return false;
+	}
+	_queryable = layer["queryable"];
+
+	if (layer.find("entities") == layer.end()) {
+		SIMPLE_LOG("Couldn't find entities field in layer");
+		return false;
+	}
+	
+	//// range-based for
+	for (auto& e : layer["entities"]) {
+
+		if (e.find("type") == e.end())
+			return false;
+		SimpleObject* obj = SimpleObject::BaseFactory::CreateInstance((SimpleID::Type)e["type"]);
+		obj->Deserialize(e);
+		AddEntity(obj);
+	}
+
+	return true;
+}

@@ -23,6 +23,7 @@ public:
 	inline bool IsQueryable() { return _queryable; };
 
 	virtual json Serialize();
+	virtual bool Deserialize(json layer);
 
 protected:
 	std::vector<SimpleObject*> _entities;

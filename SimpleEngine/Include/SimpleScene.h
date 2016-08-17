@@ -42,6 +42,7 @@ public:
 	inline std::vector<SimpleLayer*>& GetLayers(std::string layerName) { return _layers; }
 
 	virtual bool Serialize(std::string path);
+	virtual bool Deserialize(std::string path);
 	
 	float GetLowerZIndex();
 

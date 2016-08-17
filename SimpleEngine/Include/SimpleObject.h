@@ -4,9 +4,11 @@
 #include "SimpleAABB.h"
 #include "SimpleID.h"
 #include "json.hpp"
+#include "SimpleFactory.h"
+
 using json = nlohmann::json;
 
-class SimpleObject {
+class SimpleObject : public SimpleFactory<SimpleObject>{
 
 public:
 
@@ -29,8 +31,9 @@ public:
 	inline const SimpleAABB& GetAABB()const { return _aabb; };
 	//Not efficient... we could do a lot better
 	const glm::mat4 GetTransform() const;
-	
+	virtual SimpleID GetType() { return "SimpleObject"; }
 	virtual json Serialize();
+	virtual void Deserialize(json& node);
 	
 
 protected:
