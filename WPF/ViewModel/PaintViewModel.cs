@@ -291,6 +291,8 @@ namespace WPF.ViewModel
 
         private ICommand openFileCommand;
 
+        private ICommand importImageCommand;
+
         private ICommand saveCommand;
 
         private ICommand addSelectedTile;
@@ -359,7 +361,7 @@ namespace WPF.ViewModel
         public static byte[] ConvertToBytes(BitmapImage bitmapImage)
         {
             byte[] data;
-            JpegBitmapEncoder encoder = new JpegBitmapEncoder();
+            var encoder = new PngBitmapEncoder();
             encoder.Frames.Add(BitmapFrame.Create(bitmapImage));
             using (MemoryStream ms = new MemoryStream())
             {
@@ -416,8 +418,8 @@ namespace WPF.ViewModel
                         {
                             while (x + proportionalWidth <= width)
                             {
-                                var asd = BitmapImage2Bitmap((BitmapImage)image).Clone(new Rectangle(x, y, proportionalWidth, proportionalHeigth), System.Drawing.Imaging.PixelFormat.DontCare);
-                                BitmapImage newImage = BitmapToImageSource(asd);
+                                var imageSplited = BitmapImage2Bitmap((BitmapImage)image).Clone(new Rectangle(x, y, proportionalWidth, proportionalHeigth), System.Drawing.Imaging.PixelFormat.DontCare);
+                                BitmapImage newImage = BitmapToImageSource(imageSplited);
                                 var newTile = new TileViewModel();
                                 newTile.Image = newImage;
                                 newTile.Path = tileObject.Path;
@@ -586,6 +588,7 @@ namespace WPF.ViewModel
                     saveCommand = new Command((vm) =>
                     {
                         SaveFileDialog dialog = new SaveFileDialog();
+                        dialog.DefaultExt = ".poc";
                         if (dialog.ShowDialog() == true)
                         {
                             var project = new Project();
@@ -624,6 +627,8 @@ namespace WPF.ViewModel
                             project.Scenes.Add(scene);
 
                             var json = Newtonsoft.Json.JsonConvert.SerializeObject(project);
+                            System.IO.File.WriteAllText(dialog.FileName, json);
+
                         }
                     });
                 }
@@ -631,7 +636,6 @@ namespace WPF.ViewModel
                 return saveCommand;
             }
         }
-
         public ICommand OpenFileCommand
         {
             get
@@ -639,6 +643,92 @@ namespace WPF.ViewModel
                 if (openFileCommand == null)
                 {
                     openFileCommand = new Command((vm) =>
+                    {
+                        OpenFileDialog dialog = new OpenFileDialog();
+                        if (dialog.ShowDialog() == true)
+                        {
+                            BitmapImage bitmapImage = null;
+                            var json = System.IO.File.ReadAllText(dialog.FileName);
+                            var project = Newtonsoft.Json.JsonConvert.DeserializeObject<Project>(json);
+                            int i = 1;
+                            string path = string.Empty;
+                            foreach (var item in project.Resources)
+                            {
+                                byte[] image = item.Data;
+                                MemoryStream ms = new MemoryStream(image);
+                                System.Drawing.Image img = System.Drawing.Image.FromStream(ms);
+                                
+
+                                if (i == 1)
+                                {
+                                    path = AppDomain.CurrentDomain.BaseDirectory + @"/temp/image" + i + ".png";
+                                    Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + @"/temp");
+
+                                    img.Save(path);
+                                }
+
+                                i++;
+                                var newTile = new TileViewModel();
+                                
+                                newTile.Path = path;
+                                if(item.Properties.Any())
+                                {
+                                    newTile.x = item.Properties.FirstOrDefault().X;
+                                    newTile.y = item.Properties.FirstOrDefault().Y;
+                                    newTile.width = (int)item.Properties.FirstOrDefault().Width;
+                                    newTile.heigth = (int)item.Properties.FirstOrDefault().Heigth;
+                                }
+
+                                if (i > 2)
+                                {
+                                    if(bitmapImage != null)
+                                    {
+                                        var imageSplited = BitmapImage2Bitmap((BitmapImage)bitmapImage).Clone(new Rectangle(newTile.x, newTile.y, newTile.width, newTile.heigth), System.Drawing.Imaging.PixelFormat.DontCare);
+                                        newTile.Image = BitmapToImageSource(imageSplited);
+                                        newTile.Splited = true;
+                                    }
+                                }
+                                else
+                                {
+                                    newTile.Image = new BitmapImage(new Uri(path));
+                                    bitmapImage = newTile.Image;
+                                }
+
+                                newTile.SpriteControl = new SpriteSheetControl();
+                                if (Tiles == null)
+                                    Tiles = new ObservableCollection<TileViewModel>();
+                                this.Tiles.Add(newTile);
+                            }
+
+                            PropertyChanged(this, new PropertyChangedEventArgs("Tiles"));
+
+                            foreach (var scene in project.Scenes)
+                            {
+                                foreach(var tile in scene.Tiles)
+                                {
+                                   /* var x = tile.Properties.FirstOrDefault().X;
+                                    var y = tile.Properties.FirstOrDefault().Y;
+                                    var tileObject = this.Tiles[5];
+                                    tileObject.SpriteControl.AddControl(tileObject.Path, tileObject.x, tileObject.y, tileObject.width, tileObject.heigth);*/
+                                }
+
+                            }
+                        }
+                    });
+                }
+
+                return openFileCommand;
+            }
+        }
+        
+
+        public ICommand ImportImageCommand
+        {
+            get
+            {
+                if (importImageCommand == null)
+                {
+                    importImageCommand = new Command((vm) =>
                     {
                         OpenFileDialog dialog = new OpenFileDialog();
                         if (dialog.ShowDialog() == true)
@@ -661,7 +751,7 @@ namespace WPF.ViewModel
                     });
                 }
 
-                return openFileCommand;
+                return importImageCommand;
         }
 
             set { }
