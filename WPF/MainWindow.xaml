@@ -22,7 +22,8 @@
                     <MenuItem Header="_File">
                         <MenuItem Header="_New" />
                         <MenuItem Header="_Open" Command="{Binding Path=OpenFileCommand}"/>
-                        <MenuItem Header="_Save" />
+                        <MenuItem Header="_Import" Command="{Binding Path=ImportImageCommand}"/>
+                        <MenuItem Header="_Save"  Command="{Binding Path=SaveCommand}" />
                         <Separator />
                         <MenuItem Header="_Exit" />
                     </MenuItem>

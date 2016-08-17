@@ -17,7 +17,7 @@ SpriteSheetControl::~SpriteSheetControl() {
 	delete _simpleSpriteSheetRenderer;
 }
 
-void SpriteSheetControl::AddControl(System::String^ path, int x, int y, int w, int h)
+int SpriteSheetControl::AddControl(System::String^ path, int x, int y, int w, int h)
 {
 	const char* chars =
 		(const char*)(Marshal::StringToHGlobalAnsi(path)).ToPointer();
@@ -36,14 +36,7 @@ void SpriteSheetControl::AddControl(System::String^ path, int x, int y, int w, i
 	//Set the brush instead of putting the tile in the world
 	TileEditorApp* app = dynamic_cast<TileEditorApp*>(SimpleEngine::Instance()->GetGameLogic());
 	app->SetCursorTile(chars, idx);
-	/*_simpleSpriteSheetRenderer->SetSpriteSheet(chars);
-	_simpleSpriteSheetRenderer->SetIndex(idx);
-	_simpleSpriteSheetRenderer->SetSize({ 1, 1 });
-	_simpleSpriteSheetRenderer->SnapToGrid(true);
-	_simpleSpriteSheetRenderer->SetSnapGridSize({ 1, 1 });
-	_simpleSpriteSheetRenderer->SetPosition({ 0.0f,0.0f,0.0f });
-	
-	SimpleEngine::Instance()->GetScene()->AddEntity(_simpleSpriteSheetRenderer, "MainTileMap");*/
+	return idx;
 }
 
 ManagedSimpleObject^ SpriteSheetControl::GetManagedSimpleObject() {

@@ -13,7 +13,7 @@ namespace SimpleEngineControls {
 		ManagedSimpleObject^ GetManagedSimpleObject();
 		SpriteSheetControl();
 		~SpriteSheetControl();
-		void AddControl(System::String^ path, int x, int y, int w, int h);
+		int AddControl(System::String^ path, int x, int y, int w, int h);
 
 		property float positionX
 		{
