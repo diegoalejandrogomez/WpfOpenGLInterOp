@@ -99,7 +99,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /E /Y "$(ProjectDir)media" "$(TargetDir)media\"</Command>
+      <Command>xcopy /E /Y "$(ProjectDir)media" "$(TargetDir)editorResources\media\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

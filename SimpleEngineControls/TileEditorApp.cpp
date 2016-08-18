@@ -7,7 +7,7 @@ void TileEditorApp::Init()
 {
 
 	SimpleEngine* engine = SimpleEngine::Instance();
-
+	engine->SetResourcesBaseDir("./editorResources/");
 	SetMapSize(10, 10);
 
 	_tileMapLayer = new SimpleLayer();

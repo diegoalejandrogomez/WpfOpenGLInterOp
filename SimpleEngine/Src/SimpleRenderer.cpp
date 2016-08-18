@@ -6,6 +6,7 @@
 #include <IL/ilu.h>
 #include <filesystem>
 #include <fstream>
+#include "SimpleEngine.h"
 
 //C++ 14/17 ... but why not XD
 using namespace std::tr2::sys;
@@ -284,7 +285,6 @@ bool SimpleRenderer::LoadTexture(std::string texturePath) {
 	
 	if (_textures.find(texturePath) != _textures.end())
 		return true; //Already loaded
-
 	SimpleTexture* _tex = new SimpleTexture();
 	_tex->LoadTexture(texturePath.c_str());
 	_textures[texturePath] = _tex;
@@ -307,7 +307,7 @@ bool SimpleRenderer::CreateSpriteSheet(std::string texturePath, glm::ivec2 frame
 	auto sheet = _spriteSheets.find(texturePath);
 	if (sheet == _spriteSheets.end()) {
 		//Try to load the texture
-		SimpleSpriteSheet* spriteSheet = new SimpleSpriteSheet();
+		SimpleSpriteSheet* spriteSheet = new SimpleSpriteSheet();	
 		spriteSheet->LoadTexture(texturePath.c_str());
 		spriteSheet->CreateUniformFrames(frameSize, frameCount);
 		_spriteSheets[texturePath] = spriteSheet;
@@ -322,7 +322,7 @@ bool SimpleRenderer::CreateSpriteSheet(std::string texturePath) {
 
 	auto sheet = _spriteSheets.find(texturePath);
 	if (sheet == _spriteSheets.end()) {
-		//Try to load the texture
+		//Try to load the texture	
 		SimpleSpriteSheet* spriteSheet = new SimpleSpriteSheet();
 		spriteSheet->LoadTexture(texturePath.c_str());
 		_spriteSheets[texturePath] = spriteSheet;
@@ -386,6 +386,7 @@ bool SimpleRenderer::SerializeResources(std::string dir) {
 	//Programs and textures aren't serialized
 	json spriteSheets = json::array();
 	path p = dir + +"/spriteSheets/";
+	remove_all(p);
 	create_directory(p);
 
 	for (auto &sheet : _spriteSheets) {
@@ -406,6 +407,7 @@ bool SimpleRenderer::SerializeResources(std::string dir) {
 	}
 
 	p = dir + "/animations/";
+	remove_all(p);
 	create_directory(p);
 
 	for (auto &anim: _spriteAnimations) {
