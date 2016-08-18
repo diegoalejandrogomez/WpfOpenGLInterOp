@@ -72,3 +72,41 @@ void SimpleLineRenderer::ClearLines() {
 }
 
 
+json SimpleLineRenderer::Serialize() {
+	json so = SimpleObject::Serialize();
+
+	json lines = json::array();
+	for (auto &v : _vertices) {
+		json vertex{
+			{ "position",{ v.pos[0], v.pos[1] } },
+			{ "color",{ v.color[0], v.color[1], v.color[2] } }
+		};
+		lines.push_back(vertex);
+	}
+	so["SimpleLineRenderer"] = lines;
+	
+	return so;
+}
+void SimpleLineRenderer::Deserialize(json &node) {
+	SimpleObject::Deserialize(node);
+
+	SIMPLE_ASSERT(node.find("SimpleLineRenderer") != node.end());
+
+	json& local = node["SimpleLineRenderer"];
+	_vertices.clear();
+
+	for (auto v : local) {
+		VertexColorFormat2D vertex;
+		vertex.pos[0] = v["position"][0];
+		vertex.pos[1] = v["position"][1];
+
+		vertex.color[0] = v["color"][0];
+		vertex.color[1] = v["color"][1];
+		vertex.color[2] = v["color"][1];
+		_vertices.push_back( vertex);
+	}
+	
+
+
+}
+

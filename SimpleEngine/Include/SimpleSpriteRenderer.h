@@ -30,8 +30,10 @@ public:
 
 	inline SimpleTexture* GetTexture() { return _tex; };
 
+	virtual SimpleID GetType() { return "SimpleSpriteRenderer"; }
 	virtual json Serialize();
 	virtual void Deserialize(json &node);
+	
 
 protected:
 	unsigned int _vertexCount;
@@ -54,7 +56,7 @@ protected:
 	bool _snapToGrid;
 	glm::vec2 _snapSize;
 
-	virtual SimpleID GetType() { return "SimpleSpriteRenderer"; }
+	
 
 private:
 		

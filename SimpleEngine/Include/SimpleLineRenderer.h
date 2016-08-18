@@ -4,6 +4,8 @@
 #include "SimpleSpriteRenderer.h"
 #include "SimpleEngine.h"
 
+FACTORY_REGISTER(SimpleObject, SimpleLineRenderer);
+
 class SimpleLineRenderer : public SimpleObject {
 public:
 
@@ -16,6 +18,10 @@ public:
 	void AddLine(glm::vec2 from, glm::vec2 to, glm::vec3 color);
 	void Flush();
 	void ClearLines();
+
+	virtual SimpleID GetType() { return "SimpleLineRenderer"; }
+	virtual json Serialize();
+	virtual void Deserialize(json &node);
 
 private:
 

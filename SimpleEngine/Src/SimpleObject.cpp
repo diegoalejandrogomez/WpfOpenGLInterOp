@@ -13,7 +13,7 @@ const glm::mat4 SimpleObject::GetTransform()const {
 json SimpleObject::Serialize() {
 
 	json ret{
-			{"type", static_cast<SimpleID::Type>(GetType()) },
+			{"type", static_cast<SimpleID::Type>(this->GetType()) },
 			{"name", static_cast<SimpleID::Type>(_name)},
 			{"aabb",{
 					{"position", {_aabb.position.x, _aabb.position.y, _aabb.position.z}},
