@@ -4,6 +4,11 @@
 #include "SimpleDispatcher.h"
 #include <IL/il.h>
 #include <IL/ilu.h>
+#include <filesystem>
+#include <fstream>
+
+//C++ 14/17 ... but why not XD
+using namespace std::tr2::sys;
 
 SimpleRenderer::SimpleRenderer() {
 	_deviceContext = nullptr;
@@ -370,5 +375,108 @@ bool SimpleRenderer::_LoadDefaultShaders() {
 		return false;
 
 	return true;
+
+}
+
+
+
+//Serializes the currently loaded resources
+bool SimpleRenderer::SerializeResources(std::string dir) {
+
+	//Programs and textures aren't serialized
+	json spriteSheets = json::array();
+	path p = dir + +"/spriteSheets/";
+	create_directory(p);
+
+	for (auto &sheet : _spriteSheets) {
+		
+		std::string  filename=   sheet.second->GetPath();
+		std::replace(filename.begin(), filename.end(), '/', '_');
+		filename = p.generic_string() +  filename + ".sheet";
+		
+		std::ofstream out(filename);
+		
+		if (!out.is_open()) {
+			SIMPLE_LOG("Couldn't serialize spritesheets");
+			return false;
+		}	
+		json sprSheet = sheet.second->Serialize();
+		out << std::setw(4) << sprSheet;
+		out.close();
+	}
+
+	p = dir + "/animations/";
+	create_directory(p);
+
+	for (auto &anim: _spriteAnimations) {
+		
+		std::string  filename = anim.second->GetAnimationName();
+		std::replace(filename.begin(), filename.end(), '/', '_');
+		filename = p.generic_string() + filename + ".anim";
+
+		std::ofstream out(filename);
+
+		if (!out.is_open()) {
+			SIMPLE_LOG("Couldn't serialize animations");
+			return false;
+		}
+		json sprAnim = anim.second->Serialize();
+		out << std::setw(4) << sprAnim;
+		out.close();
+	}
+
+	return true;
+}
+
+
+
+bool SimpleRenderer::DeserializeResources(std::string dir) {
+
+	//Load spriteSheets
+	path p = dir + "/spriteSheets/";
+	for (const auto& entry : directory_iterator{ p })
+	{
+		if (is_regular_file(entry.status()))
+		{
+			std::ifstream in(entry.path().generic_string());
+			if (!in.is_open())
+				return false;
+			
+			json sprSheet;
+			in >> sprSheet;
+			SimpleSpriteSheet* sheet = new SimpleSpriteSheet();
+			sheet->Deserialize(sprSheet);
+			_spriteSheets[sheet->GetPath()] = sheet;
+			in.close();
+		}
+		else if (is_directory(entry.status()))
+		{
+			SIMPLE_LOG("Skipping directory %s",entry.path());
+		}
+	}
+
+
+	p = dir + "/animations/";
+
+	for (const auto& entry : directory_iterator{ p })
+	{
+		if (is_regular_file(entry.status()))
+		{
+			std::ifstream in(entry.path().generic_string());
+			if (!in.is_open())
+				return false;
+
+			json sprAnim;
+			in >> sprAnim;
+			SimpleSpriteAnimation* anim = new SimpleSpriteAnimation();
+			anim->Deserialize(sprAnim);
+			_spriteAnimations[anim->GetAnimationName()] = anim;
+			in.close();
+		}
+		else if (is_directory(entry.status()))
+		{
+			SIMPLE_LOG("Skipping directory %s", entry.path());
+		}
+	}
 
 }

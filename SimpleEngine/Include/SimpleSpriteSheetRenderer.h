@@ -27,8 +27,13 @@ public:
 	int GetIndex() { return _pos; }
 	
 	virtual SimpleID GetType() { return "SimpleSpriteSheetRenderer"; }
+	
+	virtual json Serialize();
+	virtual void Deserialize(json &node);
 protected:
 		
+	void _UpdateFrame();
+
 	int _pos;
 	SimpleSpriteSheet* _spriteSheet = nullptr;
 	

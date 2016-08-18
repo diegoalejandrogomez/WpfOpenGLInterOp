@@ -3,6 +3,8 @@
 #include "SimpleAABB.h"
 #include <stdlib.h>
 #include <vector>
+#include "json.hpp"
+using json = nlohmann::json;
 
 class SimpleSpriteSheet : public SimpleTexture{
 
@@ -16,6 +18,9 @@ public:
 	int GetFrameIndex(glm::ivec2 position, glm::ivec2 size);
 	void ClearFrames() { _frames.clear(); }
 	glm::ivec4 GetCoordsForIndex(int idx);
+
+	json Serialize();
+	bool Deserialize(json &node);
 private:
 
 	//XY contains origin, ZW contains size

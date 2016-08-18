@@ -20,6 +20,9 @@ public:
 	void Pause();
 
 	virtual SimpleID GetType() { return "SimpleAnimatedSpriteRenderer"; }
+
+	virtual json Serialize();
+	virtual void Deserialize(json &node);
 	
 protected:
 	SimpleSpriteAnimation* _anim;

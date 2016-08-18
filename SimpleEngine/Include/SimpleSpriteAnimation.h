@@ -22,6 +22,9 @@ public:
 	inline SimpleSpriteSheet* GetSpriteSheet() { return _sheet; };
 	std::string GetAnimationName() { return _name;}
 
+	json Serialize();
+	bool Deserialize(json &node);
+
 private:
 
 	std::string _name;

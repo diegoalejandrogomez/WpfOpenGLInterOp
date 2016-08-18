@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "SimpleAnimatedSpriteRenderer.h"
+#include "SimpleEngine.h"
 
 SimpleAnimatedSpriteRenderer::SimpleAnimatedSpriteRenderer() {
 	_playing = false;
@@ -74,3 +75,44 @@ void SimpleAnimatedSpriteRenderer::Render(float dt){
 }
 
 
+
+json SimpleAnimatedSpriteRenderer::Serialize() {
+
+	json so = SimpleSpriteSheetRenderer::Serialize();
+	json ret{
+		{ "animation", _anim->GetAnimationName() },
+		{ "currentFrame",_currentFrame},
+		{ "elapsedTime",_elapsedTime },
+		{ "playing", _playing },
+		{ "loop",_loop }
+	};
+	so["SimpleAnimatedSpriteRenderer"] = ret;
+
+	return so;
+
+
+}
+void SimpleAnimatedSpriteRenderer::Deserialize(json &node) {
+
+	SimpleSpriteSheetRenderer::Deserialize(node);
+
+	json& local = node["SimpleAnimatedSpriteRenderer"];
+
+	SIMPLE_ASSERT(local.find("animation") != local.end());
+	std::string animName = local["animation"];
+	_anim = SimpleEngine::Instance()->GetRenderer()->GetSpriteAnimation(animName);
+	SIMPLE_ASSERT(_anim != nullptr);
+
+	SIMPLE_ASSERT(local.find("currentFrame") != local.end());
+	_currentFrame = local["currentFrame"];
+
+	SIMPLE_ASSERT(local.find("elapsedTime") != local.end());
+	_elapsedTime = local["elapsedTime"];
+
+	SIMPLE_ASSERT(local.find("playing") != local.end());
+	_playing = local["playing"];
+
+	SIMPLE_ASSERT(local.find("loop") != local.end());
+	_loop = local["loop"];
+
+}

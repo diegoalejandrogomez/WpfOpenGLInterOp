@@ -4,6 +4,9 @@
 #include "SimpleObjectsRenderPass.h"
 #include "SimpleDispatcher.h"
 #include "DebugGameLogic.h"
+#include <filesystem>
+//C++ 14/17 ... but why not XD
+using namespace std::tr2::sys;
 using namespace std::chrono;
 
 void SimpleEngine::InitRenderer(HWND hWnd, uint32_t width, uint32_t height) {
@@ -106,5 +109,23 @@ void SimpleEngine::Initialize() {
 }
 void SimpleEngine::Shutdown() {
 
+
+}
+
+
+void SimpleEngine::SerializeResources(std::string dir) {
+
+	//Create the dir for the resources
+	path p = dir + "/resources/";
+	remove_all(p);
+	create_directory(p);
+
+	//Serialize graphical resources
+	_renderer->SerializeResources(p.generic_string());
+
+}
+void SimpleEngine::DeserializeResources(std::string dir) {
+	path p = dir + "/resources/";
+	_renderer->DeserializeResources(p.generic_string());
 
 }

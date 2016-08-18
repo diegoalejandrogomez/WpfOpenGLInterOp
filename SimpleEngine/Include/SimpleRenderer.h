@@ -44,6 +44,10 @@ public:
 
 	inline SimpleMesh<VertexTextureFormat2D>* GetUnitaryQuad() { return _texturedQuad; };
 	inline HWND GetWindowHandle() { return _hWnd; };
+
+	bool SerializeResources(std::string dir);
+	bool DeserializeResources(std::string dir);
+	
 private:
 
 	bool _InitializeExtensions();

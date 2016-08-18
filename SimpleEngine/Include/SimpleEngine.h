@@ -45,6 +45,8 @@ public:
 	//TODO
 	void Run() {};
 
+	void SerializeResources(std::string dir);
+	void DeserializeResources(std::string dir);
 protected:
 	SimpleEngine() {};
 	~SimpleEngine() {};

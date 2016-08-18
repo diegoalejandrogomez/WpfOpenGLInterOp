@@ -15,7 +15,7 @@ SimpleSpriteRenderer::SimpleSpriteRenderer() {
 	_cam = SimpleEngine::Instance()->GetScene()->GetCamera();
 
 	_rectOffset = glm::vec2(0.0f);
-	_rectSize = glm::vec2(0.0f);
+	_rectSize = glm::vec2(1.0f);
 
 	_snapToGrid = false;
 	_snapSize = glm::vec2(1.0);
