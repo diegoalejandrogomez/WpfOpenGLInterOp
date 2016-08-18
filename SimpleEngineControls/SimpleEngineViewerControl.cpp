@@ -118,4 +118,15 @@ void SimpleEngineViewerControl::SetZoom(float z) {
 	SimpleEngine::Instance()->GetScene()->GetCamera()->SetZoom(z);
 }
 
+System::String^ SimpleEngineViewerControl::TakeSnapshot() {
+	std::string state = SimpleEngine::Instance()->GetScene()->GetSerializedState();
+	return gcnew System::String(state.c_str());
+}
 
+void SimpleEngineViewerControl::RestoreSnapshot(System::String^ state)
+{
+	const char* chars =
+		(const char*)(Marshal::StringToHGlobalAnsi(state)).ToPointer();
+	auto scene = SimpleEngine::Instance()->GetScene();
+	scene->SetStateFromSerialization(chars);
+}

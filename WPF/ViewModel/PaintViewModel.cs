@@ -198,21 +198,23 @@ namespace WPF.ViewModel
         #region Methods
         private void GetTilesRendered(Scene scene)
         {
-            //Get all tiles on drawing area
-            foreach (var tile in ((SimpleEngineViewerControl)OpenGLRenderControl).GetAllTiles())
-            {
-                var tileScene = new Tile();
-                var property = new ResourceProperty();
-                property.Heigth = (int)tile.sizeH;
-                property.Width = (int)tile.sizeW;
-                property.X = (int)tile.positionX;
-                property.Y = (int)tile.positionY;
-                property.Z = (int)tile.positionZ;
-                property.Orientation = (int)tile.Orientation;
-                property.Name = tile.Name;
-                tileScene.Properties = property;
-                scene.Tiles.Add(tileScene);
-            }
+            ////Get all tiles on drawing area
+            //SimpleEngineViewerControl view = openGLRenderControl as SimpleEngineViewerControl;
+            //view.TakeSnapshot();
+            //foreach (var tile in ((SimpleEngineViewerControl)OpenGLRenderControl).GetAllTiles())
+            //{
+            //    var tileScene = new Tile();
+            //    var property = new ResourceProperty();
+            //    property.Heigth = (int)tile.sizeH;
+            //    property.Width = (int)tile.sizeW;
+            //    property.X = (int)tile.positionX;
+            //    property.Y = (int)tile.positionY;
+            //    property.Z = (int)tile.positionZ;
+            //    property.Orientation = (int)tile.Orientation;
+            //    property.Name = tile.Name;
+            //    tileScene.Properties = property;
+            //    scene.Tiles.Add(tileScene);
+            //}
         }
 
         private void GetAvailableTiles(Project project)
@@ -698,8 +700,8 @@ namespace WPF.ViewModel
                                 var project = new Project();
                                 var scene = new Scene();
                                 GetAvailableTiles(project);
-                                GetTilesRendered(scene);
-                                project.Scenes.Add(scene);
+                                SimpleEngineViewerControl view = openGLRenderControl as SimpleEngineViewerControl;
+                                project.Scenes.Add(view.TakeSnapshot());
                                 var json = Newtonsoft.Json.JsonConvert.SerializeObject(project);
                                 System.IO.File.WriteAllText(dialog.FileName, json);
                             }
@@ -734,14 +736,9 @@ namespace WPF.ViewModel
 
                             foreach (var scene in project.Scenes)
                             {
-                                foreach (var tile in scene.Tiles)
-                                {
-                                    /* var x = tile.Properties.FirstOrDefault().X;
-                                     var y = tile.Properties.FirstOrDefault().Y;
-                                     var tileObject = this.Tiles[5];
-                                     tileObject.SpriteControl.AddControl(tileObject.Path, tileObject.x, tileObject.y, tileObject.width, tileObject.heigth);*/
-                                }
 
+                                SimpleEngineViewerControl view = openGLRenderControl as SimpleEngineViewerControl;
+                                view.RestoreSnapshot(scene);
                             }
                         }
                     });
