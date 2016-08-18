@@ -4,6 +4,7 @@
 #include <IL/ilu.h>
 #include <IL/ilut.h>
 #include "SimpleUtils.h"
+#include "SimpleEngine.h"
 
 SimpleTexture::SimpleTexture() {
 
@@ -69,11 +70,12 @@ void SimpleTexture::_UploadData() {
 void SimpleTexture::LoadTexture(const char* path)
 {
 
+	std::string resPath = SimpleEngine::Instance()->GetResourcesBaseDir() + path;
 	ILuint ImgId = 0;
 	IL_CHECK(ilGenImages(1, &ImgId));
 	this->texture.id = ImgId;
 	IL_CHECK(ilBindImage(ImgId));
-	IL_CHECK(ilLoadImage(path));
+	IL_CHECK(ilLoadImage(resPath.c_str()));
 
 	this->texture.width = ilGetInteger(IL_IMAGE_WIDTH);
 	this->texture.height = ilGetInteger(IL_IMAGE_HEIGHT);

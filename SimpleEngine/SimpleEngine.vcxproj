@@ -87,7 +87,7 @@
     </Lib>
     <PostBuildEvent>
       <Command>xcopy /E /Y "$(ProjectDir)Src\shaders" "$(TargetDir)shaders\"
-xcopy /E /Y "$(ProjectDir)media" "$(TargetDir)media\"
+xcopy /E /Y "$(ProjectDir)media" "$(TargetDir)debugResources\media\"
 copy /Y "$(ProjectDir)\External\devil\lib\DevIL.dll" "$(TargetDir)"
 copy /Y "$(ProjectDir)\External\devil\lib\ILU.dll" "$(TargetDir)"</Command>
     </PostBuildEvent>

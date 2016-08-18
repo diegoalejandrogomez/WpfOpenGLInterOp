@@ -97,6 +97,7 @@ void SimpleEngine::Initialize() {
 	SIMPLE_ASSERT(_renderer != nullptr);
 	SIMPLE_ASSERT(_input != nullptr);
 	
+	_resBaseDir = "./resources/";
 
 	//Loads a default scene
 	CreateScene();
@@ -116,8 +117,8 @@ void SimpleEngine::Shutdown() {
 void SimpleEngine::SerializeResources(std::string dir) {
 
 	//Create the dir for the resources
-	path p = dir + "/resources/";
-	remove_all(p);
+	path p = dir + _resBaseDir;
+	
 	create_directory(p);
 
 	//Serialize graphical resources
@@ -125,7 +126,12 @@ void SimpleEngine::SerializeResources(std::string dir) {
 
 }
 void SimpleEngine::DeserializeResources(std::string dir) {
-	path p = dir + "/resources/";
+	path p = dir + _resBaseDir;
 	_renderer->DeserializeResources(p.generic_string());
 
+}
+
+
+void SimpleEngine::SetResourcesBaseDir(std::string baseDir) {
+	_resBaseDir = baseDir;
 }

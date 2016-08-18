@@ -22,7 +22,10 @@ public:
 
 	void Initialize();
 	void Shutdown();
-	
+
+	void SetResourcesBaseDir(std::string baseDir);
+	std::string GetResourcesBaseDir() { return _resBaseDir; };
+		
 	void InitRenderer(HWND hWnd, uint32_t width, uint32_t height);
 	void InitInput(HWND hWnd, bool exclusive);
 	void SetGameLogic(SimpleGameLogic* _newGameMode);
@@ -60,6 +63,8 @@ protected:
 	 //Instant frame time for logic and render update
 	std::chrono::nanoseconds _renderTime;
 	std::chrono::nanoseconds _logicTime;
+	
+	std::string _resBaseDir;
 
 	void _SwitchGameLogic();
 };
