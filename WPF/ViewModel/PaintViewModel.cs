@@ -39,53 +39,6 @@ namespace WPF.ViewModel
             }
         }
 
-        private void Resize(object sender, EventArgs e)
-        {
-            ZoomLevel = _zoomLevel;
-        }
-
-        private void OnMouseWheel(object sender, System.Windows.Forms.MouseEventArgs e)
-        {
-            SimpleEngineViewerControl view = openGLRenderControl as SimpleEngineViewerControl;      
-            ZoomLevel = (Int32) ((e.Delta * _zoomSpeed * 10.0f  + view.GetZoom()) / (float)MaxZoomLevel  * 100.0f);//conversion to zoom level;
-      
-        }
-
-        private void OnGameLogicCreated(object sender, EventArgs e)
-        {
-            _tileMap = new TileMapControl();
-            PropertyChanged(this, new PropertyChangedEventArgs("MaxZoomLevel"));
-        }
-
-        public void OnDrag(object sender, System.Windows.Forms.MouseEventArgs e)
-        {
-            SimpleEngineViewerControl view = openGLRenderControl as SimpleEngineViewerControl;
-
-            //Panning
-            if (e.Button == System.Windows.Forms.MouseButtons.Right)               
-                view.MoveCamera(-(e.X - _prevX) * _panSpeed, (e.Y - _prevY) * _panSpeed );               
-            
-
-            MousePosition = e.Location.X + ":" + e.Location.Y;
-            if (this.Drag && Selected != null)
-            {
-                //Check if can be dragged ie ManagedSimpleObject
-                ManagedSimpleObject sel = Selected as ManagedSimpleObject;
-                if(sel != null) { 
-                    sel.positionX = e.Location.X;
-                    sel.positionY = e.Location.Y;
-                }
-                //Selected = null;
-                //Selected = ((SimpleEngineViewerControl)OpenGLRenderControl).SetItem(e.Location.X, e.Location.Y);
-            }
-
-            _prevX = e.X;
-            _prevY = e.Y;
-
-            //Update cursor position
-            view.SetMousePosition(e.X, e.Y);
-        }
-
         private String mousePosition;
 
         public String MousePosition
@@ -116,7 +69,6 @@ namespace WPF.ViewModel
                 PropertyChanged(this, new PropertyChangedEventArgs("ZoomLevel"));
             }
         }
-
         
         public Int32 MaxZoomLevel
         {
@@ -126,7 +78,9 @@ namespace WPF.ViewModel
             }
             
         }
+
         public Object selected;
+
         public Object Selected
         {
             get
@@ -140,8 +94,6 @@ namespace WPF.ViewModel
             }
         }
 
-        
-
         public bool drawLine;
 
         public bool DrawLine
@@ -153,7 +105,6 @@ namespace WPF.ViewModel
                 PropertyChanged(this, new PropertyChangedEventArgs("DrawLine"));
             }
         }
-
 
         private int quantityX;
 
@@ -241,7 +192,6 @@ namespace WPF.ViewModel
         float _zoomSpeed = 0.005f;
         float _prevX, _prevY;
 
-
         #endregion
 
         #region Methods
@@ -314,49 +264,6 @@ namespace WPF.ViewModel
             PropertyChanged(this, new PropertyChangedEventArgs("Layers"));
             PropertyChanged(this, new PropertyChangedEventArgs("MaxZoomLevel"));
         }
-        #endregion
-
-        #region Commands
-        private ICommand setDrawLineCommand;
-
-        private ICommand setDrawSquareCommand;
-
-        private ICommand openFileCommand;
-
-        private ICommand importImageCommand;
-
-        private ICommand saveCommand;
-
-        private ICommand addSelectedTile;
-
-        private ICommand setDragCommand;
-
-        private ICommand setPaintCommand;
-
-        private ICommand setEraseCommand;
-
-        private ICommand setPickCommand;
-
-        private ICommand splitSelectedImage;
-
-        private ICommand deleteSelectedTile;
-
-        private ICommand deleteSelectedLayer;
-
-        private ICommand editSelectedLayer;
-
-        private ICommand addLayer;
-
-        public event PropertyChangedEventHandler PropertyChanged = delegate(object sender, PropertyChangedEventArgs e)
-        {
-            var paintViewModel = sender as PaintViewModel;
-
-            if (paintViewModel.OpenGLRenderControl != null)
-            {
-                //todo get this info using something better than reflection
-                //paintViewModel.OpenGLRenderControl.SetProperty(e.PropertyName, true);
-            }
-        };
 
         BitmapImage BitmapToImageSource(Bitmap bitmap)
         {
@@ -403,6 +310,160 @@ namespace WPF.ViewModel
 
             return data;
         }
+
+        private BitmapImage GetSelectableTiles(BitmapImage bitmapImage, Project project)
+        {
+            int i = 1;
+            string path = string.Empty;
+            foreach (var item in project.Resources)
+            {
+                byte[] image = item.Data;
+                MemoryStream ms = new MemoryStream(image);
+                System.Drawing.Image img = System.Drawing.Image.FromStream(ms);
+
+                if (item.Properties != null && !item.Properties.Splited)
+                {
+                    path = AppDomain.CurrentDomain.BaseDirectory + @"/temp/image" + i + ".png";
+                    Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + @"/temp");
+
+                    img.Save(path);
+                    i++;
+                }
+
+                var newTile = new TileViewModel();
+                newTile.Path = path;
+                if (item.Properties != null)
+                {
+                    newTile.x = item.Properties.X;
+                    newTile.y = item.Properties.Y;
+                    newTile.width = (int)item.Properties.Width;
+                    newTile.heigth = (int)item.Properties.Heigth;
+                }
+
+                if (item.Properties != null && item.Properties.Splited)
+                {
+                    if (bitmapImage != null)
+                    {
+                        var imageSplited = BitmapImage2Bitmap((BitmapImage)bitmapImage).Clone(new Rectangle(newTile.x, newTile.y, newTile.width, newTile.heigth), System.Drawing.Imaging.PixelFormat.DontCare);
+                        newTile.Image = BitmapToImageSource(imageSplited);
+                        newTile.Splited = true;
+                    }
+                }
+                else
+                {
+                    newTile.Image = new BitmapImage(new Uri(path));
+                    bitmapImage = newTile.Image;
+                }
+
+                newTile.SpriteControl = new SpriteSheetControl();
+                if (Tiles == null)
+                    Tiles = new ObservableCollection<TileViewModel>();
+                this.Tiles.Add(newTile);
+            }
+
+            PropertyChanged(this, new PropertyChangedEventArgs("Tiles"));
+
+            return bitmapImage;
+        }
+
+        #endregion
+
+        #region Events
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            PropertyChanged(this, new PropertyChangedEventArgs("Layers"));
+        }
+
+        private void Resize(object sender, EventArgs e)
+        {
+            ZoomLevel = _zoomLevel;
+        }
+
+        private void OnMouseWheel(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            SimpleEngineViewerControl view = openGLRenderControl as SimpleEngineViewerControl;
+            ZoomLevel = (Int32)((e.Delta * _zoomSpeed * 10.0f + view.GetZoom()) / (float)MaxZoomLevel * 100.0f);//conversion to zoom level;
+
+        }
+
+        private void OnGameLogicCreated(object sender, EventArgs e)
+        {
+            _tileMap = new TileMapControl();
+            PropertyChanged(this, new PropertyChangedEventArgs("MaxZoomLevel"));
+        }
+
+        public void OnDrag(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            SimpleEngineViewerControl view = openGLRenderControl as SimpleEngineViewerControl;
+
+            //Panning
+            if (e.Button == System.Windows.Forms.MouseButtons.Right)
+                view.MoveCamera(-(e.X - _prevX) * _panSpeed, (e.Y - _prevY) * _panSpeed);
+
+
+            MousePosition = e.Location.X + ":" + e.Location.Y;
+            if (this.Drag && Selected != null)
+            {
+                //Check if can be dragged ie ManagedSimpleObject
+                ManagedSimpleObject sel = Selected as ManagedSimpleObject;
+                if (sel != null)
+                {
+                    sel.positionX = e.Location.X;
+                    sel.positionY = e.Location.Y;
+                }
+                //Selected = null;
+                //Selected = ((SimpleEngineViewerControl)OpenGLRenderControl).SetItem(e.Location.X, e.Location.Y);
+            }
+
+            _prevX = e.X;
+            _prevY = e.Y;
+
+            //Update cursor position
+            view.SetMousePosition(e.X, e.Y);
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged = delegate (object sender, PropertyChangedEventArgs e)
+        {
+            var paintViewModel = sender as PaintViewModel;
+
+            if (paintViewModel.OpenGLRenderControl != null)
+            {
+                //todo get this info using something better than reflection
+                //paintViewModel.OpenGLRenderControl.SetProperty(e.PropertyName, true);
+            }
+        };
+        #endregion
+
+        #region Commands
+        private ICommand setDrawLineCommand;
+
+        private ICommand setDrawSquareCommand;
+
+        private ICommand openFileCommand;
+
+        private ICommand importImageCommand;
+
+        private ICommand saveCommand;
+
+        private ICommand addSelectedTile;
+
+        private ICommand setDragCommand;
+
+        private ICommand setPaintCommand;
+
+        private ICommand setEraseCommand;
+
+        private ICommand setPickCommand;
+
+        private ICommand splitSelectedImage;
+
+        private ICommand deleteSelectedTile;
+
+        private ICommand deleteSelectedLayer;
+
+        private ICommand editSelectedLayer;
+
+        private ICommand addLayer;
 
         public ICommand AddSelectedTile
         {
@@ -518,8 +579,6 @@ namespace WPF.ViewModel
             }
         }
 
-
-
         public ICommand EditSelectedLayer
         {
             get
@@ -545,11 +604,6 @@ namespace WPF.ViewModel
 
                 return editSelectedLayer;
             }
-        }
-
-        private void Window_Closed(object sender, EventArgs e)
-        {
-            PropertyChanged(this, new PropertyChangedEventArgs("Layers"));
         }
 
         public ICommand AddLayer
@@ -679,61 +733,6 @@ namespace WPF.ViewModel
 
                 return openFileCommand;
             }
-        }
-
-        private BitmapImage GetSelectableTiles(BitmapImage bitmapImage, Project project)
-        {
-            int i = 1;
-            string path = string.Empty;
-            foreach (var item in project.Resources)
-            {
-                byte[] image = item.Data;
-                MemoryStream ms = new MemoryStream(image);
-                System.Drawing.Image img = System.Drawing.Image.FromStream(ms);
-
-                if (item.Properties != null && !item.Properties.Splited)
-                {
-                    path = AppDomain.CurrentDomain.BaseDirectory + @"/temp/image" + i + ".png";
-                    Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + @"/temp");
-
-                    img.Save(path);
-                    i++;
-                }
-
-                var newTile = new TileViewModel();
-                newTile.Path = path;
-                if (item.Properties != null)
-                {
-                    newTile.x = item.Properties.X;
-                    newTile.y = item.Properties.Y;
-                    newTile.width = (int)item.Properties.Width;
-                    newTile.heigth = (int)item.Properties.Heigth;
-                }
-
-                if (item.Properties != null && item.Properties.Splited)
-                {
-                    if (bitmapImage != null)
-                    {
-                        var imageSplited = BitmapImage2Bitmap((BitmapImage)bitmapImage).Clone(new Rectangle(newTile.x, newTile.y, newTile.width, newTile.heigth), System.Drawing.Imaging.PixelFormat.DontCare);
-                        newTile.Image = BitmapToImageSource(imageSplited);
-                        newTile.Splited = true;
-                    }
-                }
-                else
-                {
-                    newTile.Image = new BitmapImage(new Uri(path));
-                    bitmapImage = newTile.Image;
-                }
-
-                newTile.SpriteControl = new SpriteSheetControl();
-                if (Tiles == null)
-                    Tiles = new ObservableCollection<TileViewModel>();
-                this.Tiles.Add(newTile);
-            }
-
-            PropertyChanged(this, new PropertyChangedEventArgs("Tiles"));
-
-            return bitmapImage;
         }
 
         public ICommand ImportImageCommand
