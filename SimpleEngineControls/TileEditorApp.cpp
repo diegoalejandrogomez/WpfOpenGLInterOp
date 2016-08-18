@@ -26,7 +26,7 @@ void TileEditorApp::Init()
 	engine->GetScene()->AddLayer(_uiLayer);
 
 	//Copy resources to temp folder
-	copy("./editorResources/media", "./temp/media/");
+	copy("./editorResources/media", "./temp/media/", copy_options::overwrite_existing);
 
 	//Load cursor spritesheet
 	engine->GetRenderer()->CreateSpriteSheet("media/grid.png");
