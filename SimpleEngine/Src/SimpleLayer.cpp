@@ -54,6 +54,9 @@ json SimpleLayer::Serialize() {
 
 	json layer;
 	layer["name"] = static_cast<SimpleID::Type>(_layerName);
+	if(_layerName.HasString())
+		layer["nameVerbose"] = static_cast<std::string>(_layerName.GetString());
+
 	layer["z"] = Z;
 	layer["queryable"] = _queryable;
 	
@@ -70,14 +73,16 @@ json SimpleLayer::Serialize() {
 
 
 bool SimpleLayer::Deserialize(json layer) {
-
 	
 	if (layer.find("name") == layer.end()) {
 		SIMPLE_LOG("Couldn't find name field in layer");
 		return false;
 	}
 	
-	_layerName =  static_cast<SimpleID::Type>(layer["name"]);
+	if (layer.find("nameVerbose") != layer.end())
+		_layerName = layer["nameVerbose"].get<std::string>();	
+	else
+		_layerName =  static_cast<SimpleID::Type>(layer["name"]);
 	 
 	if (layer.find("z") == layer.end()) {
 		SIMPLE_LOG("Couldn't find z field in layer");

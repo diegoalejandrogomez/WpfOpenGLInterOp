@@ -6,6 +6,7 @@
 #include "SimpleSpriteRenderer.h"
 #include "SimpleSpriteSheetRenderer.h"
 #include "SimpleAnimatedSpriteRenderer.h"
+#include <fstream>
 
 void DebugGameLogic::Init()
 {
@@ -48,10 +49,17 @@ void DebugGameLogic::Init()
 	walkingGuybrush->SetSize({ 100,500 });
 	SimpleEngine::Instance()->GetScene()->AddEntity(walkingGuybrush, layer);*/
 	
-	SimpleEngine::Instance()->DeserializeResources();
+	//SimpleEngine::Instance()->DeserializeResources();
 	//SimpleEngine::Instance()->SerializeResources();
 	//SimpleEngine::Instance()->GetScene()->Serialize("DebugScene.smpl");
-	SimpleEngine::Instance()->GetScene()->Deserialize("DebugScene.smpl");
+	//std::string state = SimpleEngine::Instance()->GetScene()->GetSerializedState();
+	//std::ifstream in("./debugResources/DebugScene.smpl");
+	//json sc;
+	//in >> sc;
+	//std::string dump = sc.dump();
+	//SimpleEngine::Instance()->GetScene()->SetStateFromSerialization(dump);
+	//OutputDebugString(dump.c_str());
+	//SimpleEngine::Instance()->GetScene()->Deserialize("DebugScene.smpl");
 
 
 	//Configure input system we are going to use

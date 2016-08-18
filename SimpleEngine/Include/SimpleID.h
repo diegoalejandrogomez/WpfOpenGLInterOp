@@ -44,6 +44,9 @@ public:
 
 #ifdef HASH_DB
 	const std::string& GetString()const { return _hashDB[_id]; }
+	const bool HasString() { return true; };
+#else
+	const bool HasString() { return false; };
 #endif //HASH_DB
 private:
 
