@@ -15,6 +15,8 @@ class SimpleScene {
 	const int _maxQueryResults = 10;
 	std::vector<SimpleObject*> _queryResults;
 
+	json _Serialize();
+	bool _Deserialize(json &node);
 public:
 
 	SimpleScene();
@@ -43,7 +45,9 @@ public:
 
 	virtual bool Serialize(std::string path);
 	virtual bool Deserialize(std::string path);
-	
+	virtual std::string GetSerializedState();
+	virtual bool SetStateFromSerialization(std::string state);
+
 	float GetLowerZIndex();
 
 	float GetFPS(); 
