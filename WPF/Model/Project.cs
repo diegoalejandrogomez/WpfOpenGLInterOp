@@ -11,11 +11,11 @@ namespace WPF.Model
         public Project()
         {
             Resources = new List<Resource>();
-            Scenes = new List<Scene>();
+            Scenes = new List<String>();
         }
 
         public List<Resource> Resources { get; set; }
 
-        public List<Scene> Scenes { get; set; }
+        public List<String> Scenes { get; set; }
     }
 }
