@@ -2,12 +2,15 @@
 #include "TileEditorApp.h"
 #include "SimpleEngine.h"
 #include "SimpleSpriteSheetRenderer.h"
+#include <filesystem>
+//C++ 14/17 ... but why not XD
+using namespace std::tr2::sys;
 
 void TileEditorApp::Init()
 {
 
 	SimpleEngine* engine = SimpleEngine::Instance();
-	engine->SetResourcesBaseDir("./editorResources/");
+	engine->SetResourcesBaseDir("./temp/");
 	SetMapSize(10, 10);
 
 	_tileMapLayer = new SimpleLayer();
@@ -21,6 +24,9 @@ void TileEditorApp::Init()
 	_uiLayer->SetQueryable(false);
 
 	engine->GetScene()->AddLayer(_uiLayer);
+
+	//Copy resources to temp folder
+	copy("./editorResources/media", "./temp/media/");
 
 	//Load cursor spritesheet
 	engine->GetRenderer()->CreateSpriteSheet("media/grid.png");

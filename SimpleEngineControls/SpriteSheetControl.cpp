@@ -19,8 +19,14 @@ SpriteSheetControl::~SpriteSheetControl() {
 
 int SpriteSheetControl::AddControl(System::String^ path, int x, int y, int w, int h)
 {
-	const char* chars =
+	
+	std::string chars =
 		(const char*)(Marshal::StringToHGlobalAnsi(path)).ToPointer();
+
+	//Patch ... should be fixed
+	 size_t from = chars.find("/temp/");
+	 chars.erase(0, from + 6);
+
 
 	SimpleSpriteSheet* sheet = SimpleEngine::Instance()->GetRenderer()->GetSpriteSheet(chars);
 	if (sheet == nullptr) {
