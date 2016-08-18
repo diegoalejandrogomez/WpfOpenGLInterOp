@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
@@ -220,7 +221,15 @@ namespace WPF.ViewModel
             foreach (var tile in Tiles)
             {
                 var resource = new Resource();
-                resource.Name = tile.Path;
+                if(tile.Path.Contains(AppDomain.CurrentDomain.BaseDirectory))
+                {
+                    resource.Name = tile.Path.Substring(AppDomain.CurrentDomain.BaseDirectory.Length, tile.Path.Length - AppDomain.CurrentDomain.BaseDirectory.Length);
+                }
+                else
+                {
+                    resource.Name = tile.Path;
+                }
+                
                 resource.Data = ConvertToBytes(tile.Image);
                 var property = new ResourceProperty();
                 property.Heigth = tile.heigth;
@@ -323,10 +332,7 @@ namespace WPF.ViewModel
 
                 if (item.Properties != null && !item.Properties.Splited)
                 {
-                    path = AppDomain.CurrentDomain.BaseDirectory + @"/temp/image" + i + ".png";
-                    Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + @"/temp");
-
-                    img.Save(path);
+                    path = ImportImageToTempFolder(i, img);
                     i++;
                 }
 
@@ -364,6 +370,16 @@ namespace WPF.ViewModel
             PropertyChanged(this, new PropertyChangedEventArgs("Tiles"));
 
             return bitmapImage;
+        }
+
+        private static string ImportImageToTempFolder(int i, Image img)
+        {
+            string relativePath = @"/temp/image" + i + ".png";
+            string path = AppDomain.CurrentDomain.BaseDirectory + relativePath;
+            Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + @"/temp");
+
+            img.Save(path);
+            return path;
         }
 
         #endregion
@@ -747,7 +763,10 @@ namespace WPF.ViewModel
                         if (dialog.ShowDialog() == true)
                         {
                             this.FilePath = dialog.FileName;
+                            var img = Image.FromFile(FilePath);
+                            var path = ImportImageToTempFolder(this.Tiles == null ? 1 : this.Tiles.Where(i=> i.Splited == false).Count() +1, img);
                             var newTile = new TileViewModel();
+                            this.FilePath = path;
                             newTile.Image = new BitmapImage(new Uri(this.FilePath));
                             newTile.Path = this.FilePath;
                             newTile.x = 0;
