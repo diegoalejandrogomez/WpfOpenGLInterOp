@@ -12,16 +12,16 @@ void DebugGameLogic::Init()
 
 	SimpleEngine::Instance()->SetResourcesBaseDir("./debugResources/");
 
-	/*SimpleLayer* layer = new SimpleLayer();
+	SimpleLayer* layer = new SimpleLayer();
 	layer->SetZ(100);
-	SimpleEngine::Instance()->GetScene()->AddLayer(layer);*/
+	SimpleEngine::Instance()->GetScene()->AddLayer(layer);
 	
 	/*SimpleSpriteRenderer* sprite = new SimpleSpriteRenderer();
 	sprite->SetAsTexture("./media/spriteFull.png");
 	sprite->SetOrientation(1.0f);
 	SimpleEngine::Instance()->GetScene()->AddEntity(sprite, 100);*/
 	
-	//SimpleEngine::Instance()->GetRenderer()->CreateSpriteSheet("media/spriteSheet.png", { 104,149 }, { 6,3 });
+	SimpleEngine::Instance()->GetRenderer()->CreateSpriteSheet("media/spriteSheet.png", { 104,149 }, { 6,3 });
 	
 	//SimpleEngine::Instance()->GetRenderer()->CreateSpriteSheet("media/spriteSheet.png");
 	//SimpleSpriteSheet* _spriteSheet = SimpleEngine::Instance()->GetRenderer()->GetSpriteSheet("media/spriteSheet.png");
@@ -30,11 +30,11 @@ void DebugGameLogic::Init()
 
 	
 	
-	/*SimpleSpriteSheetRenderer* guybrush = new SimpleSpriteSheetRenderer();
+	SimpleSpriteSheetRenderer* guybrush = new SimpleSpriteSheetRenderer();
 	guybrush->SetSpriteSheet("media/spriteSheet.png");
 	guybrush->SetIndex(0);
 	guybrush->SetSize({ 100, 500 });
-	SimpleEngine::Instance()->GetScene()->AddEntity(guybrush, 100)*/;
+	SimpleEngine::Instance()->GetScene()->AddEntity(guybrush, 100);
 	
 	//Guybrush animation
 	/*SimpleEngine::Instance()->GetRenderer()->CreateSpriteAnimation(	"walking","media/spriteSheet.png",
@@ -48,8 +48,8 @@ void DebugGameLogic::Init()
 	walkingGuybrush->SetSize({ 100,500 });
 	SimpleEngine::Instance()->GetScene()->AddEntity(walkingGuybrush, layer);*/
 	
-	SimpleEngine::Instance()->DeserializeResources("./");
-	//SimpleEngine::Instance()->SerializeResources("./");
+	SimpleEngine::Instance()->DeserializeResources();
+	//SimpleEngine::Instance()->SerializeResources();
 	//SimpleEngine::Instance()->GetScene()->Serialize("DebugScene.smpl");
 	SimpleEngine::Instance()->GetScene()->Deserialize("DebugScene.smpl");
 

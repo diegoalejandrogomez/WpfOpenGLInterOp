@@ -127,7 +127,7 @@ bool SimpleScene::Serialize(std::string path) {
 	}
 	scene["layers"] = elements;
 
-	std::ofstream file(path);
+	std::ofstream file(SimpleEngine::Instance()->GetResourcesBaseDir() + path);
 	if (file.is_open()) {
 		file << std::setw(4) << scene;
 		file.close();

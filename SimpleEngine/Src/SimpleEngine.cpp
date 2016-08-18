@@ -113,24 +113,19 @@ void SimpleEngine::Shutdown() {
 
 }
 
-
-void SimpleEngine::SerializeResources(std::string dir) {
+void SimpleEngine::SerializeResources() {
 
 	//Create the dir for the resources
-	path p = dir + _resBaseDir;
 	
-	create_directory(p);
+	create_directory(_resBaseDir);
 
 	//Serialize graphical resources
-	_renderer->SerializeResources(p.generic_string());
+	_renderer->SerializeResources(_resBaseDir);
 
 }
-void SimpleEngine::DeserializeResources(std::string dir) {
-	path p = dir + _resBaseDir;
-	_renderer->DeserializeResources(p.generic_string());
-
+void SimpleEngine::DeserializeResources() {
+	_renderer->DeserializeResources(_resBaseDir);
 }
-
 
 void SimpleEngine::SetResourcesBaseDir(std::string baseDir) {
 	_resBaseDir = baseDir;
