@@ -143,6 +143,12 @@
     <Compile Include="Model\ResourceProperty.cs" />
     <Compile Include="Model\Scene.cs" />
     <Compile Include="Model\Tile.cs" />
+    <Compile Include="PropertyWindowControl.xaml.cs">
+      <DependentUpon>PropertyWindowControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ToolBarControl.xaml.cs">
+      <DependentUpon>ToolBarControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\TileViewModel.cs" />
     <Compile Include="ViewModel\PaintViewModel.cs" />
     <Page Include="LayerEditor.xaml">
@@ -162,6 +168,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="OpenGLRender.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PropertyWindowControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ToolBarControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,5 +1,4 @@
-﻿using SimpleEngineControls;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,22 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using WPF.ViewModel;
 
 namespace WPF
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for ToolBarControl.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class ToolBarControl : UserControl
     {
-        public MainWindow()
+        public ToolBarControl()
         {
             InitializeComponent();
-            openGlRender.OpenGLControl = new SimpleEngineViewerControl();
-            var paintViewModel = new PaintViewModel();
-            paintViewModel.OpenGLRenderControl = openGlRender.OpenGLControl;
-            DataContext = paintViewModel;
         }
     }
 }

@@ -1,0 +1,86 @@
+﻿<UserControl 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:local="clr-namespace:WPF" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" 
+    x:Class="WPF.PropertyWindowControl"
+    mc:Ignorable="d" 
+    d:DesignHeight="300" 
+    d:DesignWidth="300">
+    <StackPanel>
+        <Label Content="Layers" />
+        <Button Command="{Binding AddLayer}">
+            <Image Name="addLayer" Source="./Resources/Icons/add.png" Style="{StaticResource ToolIcon}" />
+        </Button>
+        <DataGrid ItemsSource="{Binding Layers}" AutoGenerateColumns="False" SelectedItem="{Binding Row, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ScrollViewer.CanContentScroll="true" ScrollViewer.VerticalScrollBarVisibility="Visible" Height="150" SelectionChanged="DataGrid_SelectionChanged">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Name" Width="SizeToCells">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding Name}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Z" Width="SizeToCells">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding Z}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Operations" Width="SizeToCells">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <Button Command="{Binding DataContext.DeleteSelectedLayer,                                                              RelativeSource={RelativeSource Mode=FindAncestor,  AncestorType={x:Type local:MainWindow}}}" CommandParameter="{Binding }">
+                                    <Image Name="delete" Source="./Resources/Icons/delete.png" Style="{StaticResource ToolIcon}" />
+                                </Button>
+                                <Button Command="{Binding DataContext.EditSelectedLayer,                                                              RelativeSource={RelativeSource Mode=FindAncestor,  AncestorType={x:Type local:MainWindow}}}" CommandParameter="{Binding }">
+                                    <Image Name="change" Source="./Resources/Icons/edit.png" Style="{StaticResource ToolIcon}" />
+                                </Button>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Label Content="Images" />
+        <Label Content="Column Quantity" />
+        <TextBox Text="{Binding QuantityX}" />
+        <Label Content="Row Quantity" />
+        <TextBox Text="{Binding QuantityY}" />
+        <Label Content="Images" />
+        <ScrollViewer>
+            <DataGrid ItemsSource="{Binding Tiles}" AutoGenerateColumns="False" SelectedItem="{Binding Row, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ScrollViewer.CanContentScroll="true" ScrollViewer.VerticalScrollBarVisibility="Visible" Height="400">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Image" Width="SizeToCells">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image Source="{Binding Image}" Style="{StaticResource MidImage}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Split" Width="SizeToCells">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <Button Command="{Binding DataContext.SplitSelectedImage,                                                      RelativeSource={RelativeSource Mode=FindAncestor,  AncestorType={x:Type local:MainWindow}}}" CommandParameter="{Binding }">
+                                        <Image Name="split" Source="./Resources/Icons/split.png" Style="{StaticResource ToolIcon}" />
+                                    </Button>
+                                    <Button Command="{Binding DataContext.AddSelectedTile,                                                      RelativeSource={RelativeSource Mode=FindAncestor,  AncestorType={x:Type local:MainWindow}}}" CommandParameter="{Binding }">
+                                        <Image Name="add" Source="./Resources/Icons/add.png" Style="{StaticResource ToolIcon}" />
+                                    </Button>
+                                    <Button Command="{Binding DataContext.DeleteSelectedTile,                                                              RelativeSource={RelativeSource Mode=FindAncestor,  AncestorType={x:Type local:MainWindow}}}" CommandParameter="{Binding }">
+                                        <Image Name="delete" Source="./Resources/Icons/delete.png" Style="{StaticResource ToolIcon}" />
+                                    </Button>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </ScrollViewer>
+    </StackPanel>
+</UserControl>

@@ -1,29 +1,28 @@
-﻿<Window x:Class="WPF.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WPF"
-        mc:Ignorable="d"
-        xmlns:oglc="clr-namespace:WPFOpenGLLib;assembly=OpenGLManagedCpp"
-        xmlns:se ="clr-namespace:SimpleEngineControls;assembly=SimpleEngineControls"
-        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-        Title="WPF - OpenGl InterOp" >
-
+﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:local="clr-namespace:WPF" 
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:oglc="clr-namespace:WPFOpenGLLib;assembly=OpenGLManagedCpp" 
+        xmlns:se="clr-namespace:SimpleEngineControls;assembly=SimpleEngineControls" 
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" 
+        x:Class="WPF.MainWindow" 
+        mc:Ignorable="d" 
+        Title="WPF - OpenGl InterOp">
     <Grid>
         <Grid x:Name="window">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <DockPanel Grid.Row="0">
                 <Menu DockPanel.Dock="Top">
                     <MenuItem Header="_File">
                         <MenuItem Header="_New" />
-                        <MenuItem Header="_Open" Command="{Binding Path=OpenFileCommand}"/>
-                        <MenuItem Header="_Import" Command="{Binding Path=ImportImageCommand}"/>
-                        <MenuItem Header="_Save"  Command="{Binding Path=SaveCommand}" />
+                        <MenuItem Header="_Open" Command="{Binding Path=OpenFileCommand}" />
+                        <MenuItem Header="_Import" Command="{Binding Path=ImportImageCommand}" />
+                        <MenuItem Header="_Save" Command="{Binding Path=SaveCommand}" />
                         <Separator />
                         <MenuItem Header="_Exit" />
                     </MenuItem>
@@ -31,173 +30,32 @@
             </DockPanel>
             <Grid x:Name="panel" Style="{StaticResource Panel}" Grid.Row="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Grid x:Name="toolBar" Style="{StaticResource ToolBar}">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"></ColumnDefinition>
-                        <ColumnDefinition Width="Auto"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"></RowDefinition>
-                        <RowDefinition Height="Auto"></RowDefinition>
-                        <RowDefinition Height="Auto"></RowDefinition>
-                        <RowDefinition Height="Auto"></RowDefinition>
-                        <RowDefinition Height="Auto"></RowDefinition>
-                    </Grid.RowDefinitions>
-                    
-                    <xctk:ColorPicker Name="Picker" Grid.Row="1" Grid.Column="0"  Style="{StaticResource ToolIcon}" SelectedColor="{Binding Color}"></xctk:ColorPicker>
-
-                    <Button Grid.Row="0" Grid.Column="0" Command="{Binding Path=SetPaintCommand}">
-                        <Image Name="paint" Source="./Resources/Icons/add.png"  Style="{StaticResource ToolIcon}"></Image>
-                    </Button>
-                    <Button Grid.Row="0" Grid.Column="1" Command="{Binding Path=SetEraseCommand}">
-                        <Image Name="erase" Source="./Resources/Icons/delete.png"  Style="{StaticResource ToolIcon}"></Image>
-                    </Button>
-                    <Button Grid.Row="1" Grid.Column="0" Command="{Binding Path=SetPickCommand}">
-                        <Image Name="pick" Source="./Resources/Icons/edit.png"  Style="{StaticResource ToolIcon}"></Image>
-                    </Button>
-                    
-                    
-                    <Button Grid.Row="1" Grid.Column="1" Command="{Binding Path=SetDragCommand}">
-                        <Image Name="drag" Source="./Resources/Icons/drag.png" Style="{StaticResource ToolIcon}"></Image>
-                    </Button>
-                    
-                </Grid>
+                <local:ToolBarControl x:Name="toolbar" DataContext="{Binding}" />
                 <Grid x:Name="drawingArea" Grid.Column="1">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"></ColumnDefinition>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <xctk:PropertyGrid x:Name="propertyGrid" Grid.Row="0" AutoGenerateProperties="true" SelectedObject="{Binding Selected}"></xctk:PropertyGrid>
-                        
-                        <StackPanel Grid.Row="1" >
-                            <Label Content="Layers"></Label>
-                            <Button  
-                                                    Command="{Binding AddLayer}">
-                               
-                                <Image Name="addLayer" Source="./Resources/Icons/add.png"  Style="{StaticResource ToolIcon}" />
-
-                            </Button>
-                            <DataGrid  ItemsSource="{Binding Layers}" AutoGenerateColumns="False" SelectedItem="{Binding Row, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                       ScrollViewer.CanContentScroll="true" ScrollViewer.VerticalScrollBarVisibility="Visible" Height="150" SelectionChanged="DataGrid_SelectionChanged">
-                                <DataGrid.Columns>
-                                    <DataGridTemplateColumn Header="Name" Width="SizeToCells">
-                                        <DataGridTemplateColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <TextBox Text="{Binding Name}"></TextBox>
-                                            </DataTemplate>
-                                        </DataGridTemplateColumn.CellTemplate>
-                                    </DataGridTemplateColumn>
-                                    <DataGridTemplateColumn Header="Z" Width="SizeToCells">
-                                        <DataGridTemplateColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <TextBox Text="{Binding Z}"></TextBox>
-                                            </DataTemplate>
-                                        </DataGridTemplateColumn.CellTemplate>
-                                    </DataGridTemplateColumn>
-                                    <DataGridTemplateColumn Header="Operations" Width="SizeToCells">
-                                        <DataGridTemplateColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <StackPanel>
-                                                    <Button  
-                                                            Command="{Binding DataContext.DeleteSelectedLayer, 
-                                                            RelativeSource={RelativeSource Mode=FindAncestor,  AncestorType={x:Type local:MainWindow}}}"
-                                                            CommandParameter="{Binding }" >
-                                                        <Image Name="delete" Source="./Resources/Icons/delete.png"  Style="{StaticResource ToolIcon}" />
-
-                                                    </Button>
-                                                    <Button  
-                                                            Command="{Binding DataContext.EditSelectedLayer, 
-                                                            RelativeSource={RelativeSource Mode=FindAncestor,  AncestorType={x:Type local:MainWindow}}}"
-                                                            CommandParameter="{Binding }" >
-                                                        <Image Name="change" Source="./Resources/Icons/edit.png"  Style="{StaticResource ToolIcon}" />
-
-                                                    </Button>
-                                                </StackPanel>
-
-                                            </DataTemplate>
-                                        </DataGridTemplateColumn.CellTemplate>
-                                    </DataGridTemplateColumn>
-                                </DataGrid.Columns>
-                            </DataGrid>
-
-                            <Label Content="Images"></Label>
-                           
-                                <Label Content="Column Quantity" ></Label>
-                                <TextBox Text="{Binding QuantityX}" ></TextBox>
-                                <Label Content="Row Quantity" ></Label>
-                                <TextBox Text="{Binding QuantityY}" ></TextBox>
-                           
-                            
-                            <Label Content="Images"></Label>
-                            <ScrollViewer>
-                                <DataGrid  ItemsSource="{Binding Tiles}" AutoGenerateColumns="False" SelectedItem="{Binding Row, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                       ScrollViewer.CanContentScroll="true" ScrollViewer.VerticalScrollBarVisibility="Visible" Height="400">
-                                <DataGrid.Columns>
-                                    <DataGridTemplateColumn Header="Image" Width="SizeToCells">
-                                        <DataGridTemplateColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <Image Source="{Binding Image}"  Style="{StaticResource MidImage}"/>
-                                            </DataTemplate>
-                                        </DataGridTemplateColumn.CellTemplate>
-                                    </DataGridTemplateColumn>
-                                    <DataGridTemplateColumn Header="Split" Width="SizeToCells">
-                                        <DataGridTemplateColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <StackPanel>
-                                                    <Button  
-                                                    Command="{Binding DataContext.SplitSelectedImage, 
-                                                    RelativeSource={RelativeSource Mode=FindAncestor,  AncestorType={x:Type local:MainWindow}}}"
-                                                    CommandParameter="{Binding }" >
-                                                            <!-- CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}, Path=PlacementTarget.SelectedItem}" !-->
-
-                                                            <Image Name="split" Source="./Resources/Icons/split.png"  Style="{StaticResource ToolIcon}" />
-
-                                                        </Button>
-                                                    <Button  
-                                                    Command="{Binding DataContext.AddSelectedTile, 
-                                                    RelativeSource={RelativeSource Mode=FindAncestor,  AncestorType={x:Type local:MainWindow}}}"
-                                                    CommandParameter="{Binding }" >
-                                                            <!-- CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}, Path=PlacementTarget.SelectedItem}" !-->
-
-                                                            <Image Name="add" Source="./Resources/Icons/add.png"  Style="{StaticResource ToolIcon}" />
-
-                                                        </Button>
-                                                        <Button  
-                                                            Command="{Binding DataContext.DeleteSelectedTile, 
-                                                            RelativeSource={RelativeSource Mode=FindAncestor,  AncestorType={x:Type local:MainWindow}}}"
-                                                            CommandParameter="{Binding }" >
-                                                            <Image Name="delete" Source="./Resources/Icons/delete.png"  Style="{StaticResource ToolIcon}" />
-
-                                                        </Button>
-                                                    </StackPanel>
-                                                
-                                            </DataTemplate>
-                                        </DataGridTemplateColumn.CellTemplate>
-                                    </DataGridTemplateColumn>
-                                </DataGrid.Columns>
-                            </DataGrid>
-                            </ScrollViewer>
-                        </StackPanel>
-                        
+                        <xctk:PropertyGrid x:Name="propertyGrid" Grid.Row="0" AutoGenerateProperties="true" SelectedObject="{Binding Selected}" />
+                        <local:PropertyWindowControl Grid.Row="1" DataContext="{Binding}" />
                     </Grid>
-                    
-                    <local:OpenGLRender x:Name="openGlRender" Grid.Column="1"></local:OpenGLRender>
+                    <local:OpenGLRender x:Name="openGlRender" Grid.Column="1" />
                 </Grid>
             </Grid>
             <DockPanel Grid.Row="2">
-                <Label Content="{Binding MousePosition}" DockPanel.Dock="Left" ></Label>
+                <Label Content="{Binding MousePosition}" DockPanel.Dock="Left" />
                 <DockPanel DockPanel.Dock="Right" LastChildFill="True">
-                    <Label Content="Zoom" DockPanel.Dock="Left"></Label>
+                    <Label Content="Zoom" DockPanel.Dock="Left" />
                     <TextBox Text="{Binding ElementName=zoomSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Right" TextAlignment="Right" Width="40" />
-                    <Slider Value="{Binding ZoomLevel}"  Minimum="0" Maximum="100" TickPlacement="BottomRight" TickFrequency="5" IsSnapToTickEnabled="False" Name="zoomSlider"/>
+                    <Slider Value="{Binding ZoomLevel}" Minimum="0" Maximum="100" TickPlacement="BottomRight" TickFrequency="5" IsSnapToTickEnabled="False" Name="zoomSlider" />
                 </DockPanel>
             </DockPanel>
         </Grid>
