@@ -22,7 +22,7 @@ namespace SimpleEngineControls {
 		ManagedSimpleObject^ SetItem(float x, float y);
 		System::String^ TakeSnapshot();
 		void RestoreSnapshot(System::String^);
-
+		void Restart();
 		void Paint();
 		
 

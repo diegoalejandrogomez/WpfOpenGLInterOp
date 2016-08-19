@@ -130,3 +130,9 @@ void SimpleEngineViewerControl::RestoreSnapshot(System::String^ state)
 	auto scene = SimpleEngine::Instance()->GetScene();
 	scene->SetStateFromSerialization(chars);
 }
+
+void SimpleEngineViewerControl::Restart()
+{
+	SimpleEngine::Instance()->Shutdown();
+	this->Initialize();
+}

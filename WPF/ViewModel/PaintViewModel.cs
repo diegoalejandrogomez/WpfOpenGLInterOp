@@ -324,7 +324,7 @@ namespace WPF.ViewModel
 
         private BitmapImage GetSelectableTiles(BitmapImage bitmapImage, Project project)
         {
-            int i = 1;
+            int i = this.Tiles.Count + 1;
             string path = string.Empty;
             foreach (var item in project.Resources)
             {
@@ -367,6 +367,7 @@ namespace WPF.ViewModel
                 if (Tiles == null)
                     Tiles = new ObservableCollection<TileViewModel>();
                 this.Tiles.Add(newTile);
+                img.Dispose();
             }
 
             PropertyChanged(this, new PropertyChangedEventArgs("Tiles"));
@@ -717,6 +718,31 @@ namespace WPF.ViewModel
             }
         }
 
+        private void Clean()
+        {
+            ((SimpleEngineViewerControl)OpenGLRenderControl).Restart();
+            string relativePath = @"/temp/";
+            string path = AppDomain.CurrentDomain.BaseDirectory + relativePath;
+
+            System.IO.DirectoryInfo di = new DirectoryInfo(path);
+
+            if(di.Exists)
+            {
+                foreach (FileInfo file in di.GetFiles())
+                {
+                    file.Delete();
+                }
+                foreach (DirectoryInfo dir in di.GetDirectories())
+                {
+                    dir.Delete(true);
+                }
+
+                this.Tiles = new ObservableCollection<TileViewModel>();
+                this.Selected = null;
+            }
+            
+        }
+
         public ICommand OpenFileCommand
         {
             get
@@ -725,7 +751,9 @@ namespace WPF.ViewModel
                 {
                     openFileCommand = new Command((vm) =>
                     {
+                        this.Clean();
                         OpenFileDialog dialog = new OpenFileDialog();
+                        dialog.Filter = "POC Files|*.poc";
                         if (dialog.ShowDialog() == true)
                         {
                             BitmapImage bitmapImage = null;
@@ -757,6 +785,8 @@ namespace WPF.ViewModel
                     importImageCommand = new Command((vm) =>
                     {
                         OpenFileDialog dialog = new OpenFileDialog();
+                        dialog.Filter = "Images |*.png";
+
                         if (dialog.ShowDialog() == true)
                         {
                             this.FilePath = dialog.FileName;
@@ -774,7 +804,7 @@ namespace WPF.ViewModel
                             if (Tiles == null)
                                 Tiles = new ObservableCollection<TileViewModel>();
                             this.Tiles.Add(newTile);
-
+                            img.Dispose();
                             PropertyChanged(this, new PropertyChangedEventArgs("Tiles"));
                         }
                     });
