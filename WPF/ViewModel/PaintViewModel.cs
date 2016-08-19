@@ -368,6 +368,7 @@ namespace WPF.ViewModel
                     Tiles = new ObservableCollection<TileViewModel>();
                 this.Tiles.Add(newTile);
                 img.Dispose();
+                ms.Dispose();
             }
 
             PropertyChanged(this, new PropertyChangedEventArgs("Tiles"));
@@ -721,12 +722,17 @@ namespace WPF.ViewModel
         private void Clean()
         {
             ((SimpleEngineViewerControl)OpenGLRenderControl).Restart();
+
+            this.Tiles = new ObservableCollection<TileViewModel>();
+            this.Selected = null;
+
             string relativePath = @"/temp/";
             string path = AppDomain.CurrentDomain.BaseDirectory + relativePath;
 
             System.IO.DirectoryInfo di = new DirectoryInfo(path);
+            GC.Collect();
 
-            if(di.Exists)
+            if (di.Exists)
             {
                 foreach (FileInfo file in di.GetFiles())
                 {
@@ -736,9 +742,6 @@ namespace WPF.ViewModel
                 {
                     dir.Delete(true);
                 }
-
-                this.Tiles = new ObservableCollection<TileViewModel>();
-                this.Selected = null;
             }
             
         }

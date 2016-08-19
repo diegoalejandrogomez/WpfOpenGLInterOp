@@ -9,7 +9,7 @@ using System.Windows.Media.Imaging;
 
 namespace WPF.ViewModel
 {
-    public class TileViewModel
+    public class TileViewModel : IDisposable
     {
         public BitmapImage Image { get; set; }
 
@@ -28,5 +28,10 @@ namespace WPF.ViewModel
         public bool Splited { get; set; }
 
         public int Idx { get; set; }
+
+        public void Dispose()
+        {
+            Image = null;
+        }
     }
 }
