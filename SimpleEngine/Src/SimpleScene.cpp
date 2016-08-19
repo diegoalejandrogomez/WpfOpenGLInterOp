@@ -204,7 +204,7 @@ std::vector<SimpleObject*>& SimpleScene::PickAll(SimpleAABB rect) {
 		for (SimpleObject* obj : l->GetEntities()) {
 			SimpleAABB other = obj->GetAABB();
 			other.position = glm::vec3(0.0f);
-			if (rect.Overlaps(glm::translate(rect.position), other, obj->GetTransform()))d
+			if (rect.Overlaps(glm::translate(rect.position), other, obj->GetTransform()))
 				_queryResults.push_back(obj);
 			if (_queryResults.size() == _maxQueryResults)
 				return _queryResults;
