@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net.Cache;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
@@ -287,7 +288,7 @@ namespace WPF.ViewModel
                 bitmapimage.StreamSource = memory;
                 bitmapimage.CacheOption = BitmapCacheOption.OnLoad;
                 bitmapimage.EndInit();
-
+                bitmapimage.Freeze();
                 return bitmapimage;
             }
         }
@@ -353,25 +354,39 @@ namespace WPF.ViewModel
                     if (bitmapImage != null)
                     {
                         var bitmapImageConverted = new Bitmap(BitmapImage2Bitmap((BitmapImage)bitmapImage));
-                        var imageSplited = bitmapImageConverted.Clone(new Rectangle(newTile.x, newTile.y, newTile.width, newTile.heigth), System.Drawing.Imaging.PixelFormat.DontCare);
-                        newTile.Image = BitmapToImageSource(imageSplited);
-                        newTile.Splited = true;
+                        if(bitmapImageConverted.Height >= newTile.y + newTile.heigth && bitmapImageConverted.Width >= newTile.x + newTile.width)
+                        {
+                            var imageSplited = bitmapImageConverted.Clone(new Rectangle(newTile.x, newTile.y, newTile.width, newTile.heigth), System.Drawing.Imaging.PixelFormat.DontCare);
+                            newTile.Image = BitmapToImageSource(imageSplited);
+                            newTile.Splited = true;
+                        }
+                        else
+                        {
+                            var asd = 1;
+                        }
                     }
                 }
                 else
-                {
+                { 
                     newTile.Image = new BitmapImage();
                     newTile.Image.BeginInit();
+                    newTile.Image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
                     newTile.Image.CacheOption = BitmapCacheOption.OnLoad;
+                    newTile.Image.UriCachePolicy = new RequestCachePolicy(RequestCacheLevel.BypassCache);
                     newTile.Image.UriSource = new Uri(path);
                     newTile.Image.EndInit();
+                    newTile.Image.Freeze();
                     bitmapImage = newTile.Image;
                 }
 
-                newTile.SpriteControl = new SpriteSheetControl();
-                if (Tiles == null)
-                    Tiles = new ObservableCollection<TileViewModel>();
-                this.Tiles.Add(newTile);
+                if(newTile.Image != null)
+                {
+                    newTile.SpriteControl = new SpriteSheetControl();
+                    if (Tiles == null)
+                        Tiles = new ObservableCollection<TileViewModel>();
+                    this.Tiles.Add(newTile);
+                }
+
                 img.Dispose();
                 ms.Dispose();
             }
@@ -808,6 +823,7 @@ namespace WPF.ViewModel
                                 newTile.Image.CacheOption = BitmapCacheOption.OnLoad;
                                 newTile.Image.UriSource = new Uri(filePath);
                                 newTile.Image.EndInit();
+                                newTile.Image.Freeze();
                                 newTile.Path = this.FilePath;
                                 newTile.x = 0;
                                 newTile.y = 0;
