@@ -117,17 +117,17 @@ void TileEditorApp::_Erase() {
 	_pickArea.size = { 1.0f,1.0f };
 
 	
-	SimpleObject* obj = SimpleEngine::Instance()->GetScene()->PickFirst(_pickArea, _tileMapLayer);
+	/*SimpleObject* obj = SimpleEngine::Instance()->GetScene()->PickFirst(_pickArea, _tileMapLayer);
 	if (obj != nullptr) {
 		SimpleEngine::Instance()->GetScene()->RemoveEntity(obj, _tileMapLayer);
 		delete obj;
-	}
+	}*/
 
-	/*if (_tiles[idx] != nullptr) {
+	if (_tiles[idx] != nullptr) {
 		SimpleEngine::Instance()->GetScene()->RemoveEntity(_tiles[idx], "MainTileMap");
 		delete _tiles[idx];
 		_tiles[idx] = nullptr;
-	}*/
+	}
 
 }
 
@@ -304,6 +304,22 @@ bool TileEditorApp::Deserialize(json &node) {
 	
 	SetMapSize(node["_tileMapSize"][0], node["_tileMapSize"][1]);
 	_CreateSceneStructure();
+
+	//Try to rebuild internal grid structure
+	SimpleAABB _pickArea;
+	_pickArea.size = { 1.0f,1.0f };
+	for (int i = 0; i < _tileMapSize.y; ++i) {
+		for (int j = 0; j < _tileMapSize.x; ++j) {
+			int idx = _tileMapSize.x * int(i) + (int)j;		
+			_pickArea.position = { j + 0.5f, i + 0.5f, 0 };
+	
+			SimpleObject* obj = SimpleEngine::Instance()->GetScene()->PickFirst(_pickArea, _tileMapLayer);
+			if (obj != nullptr) {
+				_tiles[idx] = dynamic_cast<SimpleSpriteSheetRenderer*>(obj);
+			}
+		}
+	}
+
 	SetCursorIdle();	
 	return true;
 }
