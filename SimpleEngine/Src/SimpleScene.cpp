@@ -116,48 +116,22 @@ void SimpleScene::RemoveLayer(SimpleLayer* sLayer) {
 }
 
 
-json SimpleScene::_Serialize() {
-
+json SimpleScene::Serialize() {
+	
 	json scene;
 	scene["camera"] = nullptr; //no camera serialization for now
 	json elements = json::array();
 
 	for (auto layer : _layers) {
-		if(layer->IsSerializable())
+		if (layer->IsSerializable())
 			elements.push_back(layer->Serialize());
 	}
 	scene["layers"] = elements;
 
 	return scene;
 }
+bool SimpleScene::Deserialize(json &node) {
 
-std::string SimpleScene::GetSerializedState() {
-	
-	json scene = _Serialize();
-	return scene.dump();
-}
-
-
-bool SimpleScene::SetStateFromSerialization(std::string state) {
-	json scene = json::parse(state);
-	return _Deserialize(scene);
-}
-
-bool SimpleScene::Serialize(std::string path) {
-	
-	json scene = _Serialize();
-	std::ofstream file(SimpleEngine::Instance()->GetResourcesBaseDir() + path);
-	if (file.is_open()) {
-		file << std::setw(4) << scene;
-		file.close();
-		return true;
-	}
-
-
-	return false;
-}
-
-bool SimpleScene::_Deserialize(json &node) {
 	//No camera deserialization for now
 	if (node.find("layers") == node.end()) {
 		SIMPLE_LOG("Couldn't deserialize layers");
@@ -171,22 +145,7 @@ bool SimpleScene::_Deserialize(json &node) {
 		AddLayer(layer);
 	}
 	return true;
-}
-
-bool SimpleScene::Deserialize(std::string path) {
-
 	
-	json scene;
-
-	std::ifstream file(SimpleEngine::Instance()->GetResourcesBaseDir() + path);
-	if (file.is_open())
-	{
-		file >> scene;
-		file.close();
-		return _Deserialize(scene);	
-	}
-
-	return false;
 }
 
 

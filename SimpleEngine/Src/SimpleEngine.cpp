@@ -5,6 +5,7 @@
 #include "SimpleDispatcher.h"
 #include "DebugGameLogic.h"
 #include <filesystem>
+#include <fstream>
 //C++ 14/17 ... but why not XD
 using namespace std::tr2::sys;
 using namespace std::chrono;
@@ -154,4 +155,130 @@ void SimpleEngine::DeserializeResources() {
 
 void SimpleEngine::SetResourcesBaseDir(std::string baseDir) {
 	_resBaseDir = baseDir;
+}
+
+bool SimpleEngine::SerializeGameLogic(std::string path) {
+	json logic = _gameLogic->Serialize();
+	std::ofstream file(SimpleEngine::Instance()->GetResourcesBaseDir() + path);
+	if (file.is_open()) {
+		file << std::setw(4) << logic;
+		file.close();
+		return true;
+	}
+	return false;
+
+}
+bool SimpleEngine::DeserializeGameLogic(std::string path) {
+	
+	json logic;
+
+	std::ifstream file(SimpleEngine::Instance()->GetResourcesBaseDir() + path);
+	if (file.is_open())
+	{
+		file >> logic;
+		file.close();
+		return _gameLogic->Deserialize(logic);
+	}
+	return false;
+	
+}
+
+std::string SimpleEngine::GetGameLogicState() {
+	json logic = _gameLogic->Serialize();
+	return logic.dump(4);
+}
+void SimpleEngine::SetGameLogicState(std::string state) {
+	json logic = json::parse(state);
+	_gameLogic->Deserialize(logic);
+}
+
+bool SimpleEngine::SerializeScene(std::string path) {
+
+	json scene = _scene->Serialize();
+	std::ofstream file(SimpleEngine::Instance()->GetResourcesBaseDir() + path);
+	if (file.is_open()) {
+		file << std::setw(4) << scene;
+		file.close();
+		return true;
+	}
+	return false;
+
+}
+bool SimpleEngine::DeserializeScene(std::string path) {
+
+	json scene;
+
+	std::ifstream file(SimpleEngine::Instance()->GetResourcesBaseDir() + path);
+	if (file.is_open())
+	{
+		file >> scene;
+		file.close();
+		return _scene->Deserialize(scene);
+	}
+	return false;
+
+}
+
+std::string SimpleEngine::GetSceneState() {
+	json scene = _scene->Serialize();
+	return scene.dump(4);
+}
+bool SimpleEngine::SetSceneState(std::string state) {
+	json scene = json::parse(state);
+	_scene->Deserialize(scene);
+	return true;
+}
+
+bool SimpleEngine::SerializeGameState(std::string path) {
+
+	json logic = _gameLogic->Serialize();
+	json scene = _scene->Serialize();
+	json gameState = {
+		{"gameLogic", logic},
+		{"scene", scene}
+	};
+	
+	std::ofstream file(SimpleEngine::Instance()->GetResourcesBaseDir() + path);
+	if (file.is_open()) {
+		file << std::setw(4) << gameState;
+		file.close();
+		return true;
+	}
+	return false;
+
+}
+bool SimpleEngine::DeserializeGameState(std::string path) {
+	
+	json gameState;
+	std::ifstream file(SimpleEngine::Instance()->GetResourcesBaseDir() + path);
+	if (file.is_open())
+	{
+		file >> gameState;
+		file.close();
+		_scene->Deserialize(gameState["scene"]);
+		_gameLogic->Deserialize(gameState["gameLogic"]);
+		return true;
+	}
+	return false;
+
+}
+
+
+std::string SimpleEngine::GetGameState() {
+	json logic = _gameLogic->Serialize();
+	json scene = _scene->Serialize();
+	json gameState = {
+		{ "gameLogic", logic },
+		{ "scene", scene }
+	};
+	return gameState.dump(4);
+}
+bool SimpleEngine::SetGameState(std::string state) {
+	json gameState = json::parse(state);
+
+	_scene->Deserialize(gameState["sceen"]);
+	_gameLogic->Deserialize(gameState["gameLogic"]);
+	
+	return true;
+
 }

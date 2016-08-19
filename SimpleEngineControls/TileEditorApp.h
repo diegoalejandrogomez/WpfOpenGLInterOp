@@ -5,6 +5,8 @@
 #include "SimpleSpriteRenderer.h"
 #include "SimpleLineRenderer.h"
 #include "SimpleSpriteSheetRenderer.h"
+#include "json.hpp"
+using json = nlohmann::json;
 
 class TileEditorApp : public SimpleGameLogic{
 	
@@ -31,6 +33,8 @@ public:
 	inline int  GetMapWidth()const { return _tileMapSize.x; }
 	inline int  GetMapHeight()const { return _tileMapSize.y; }
 
+	json Serialize() override;
+	bool Deserialize(json &node) override;
 private:
 
 	void _CreateGrid();

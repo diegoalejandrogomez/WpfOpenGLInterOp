@@ -75,7 +75,7 @@ void TileEditorApp::_Draw() {
 
 
 void TileEditorApp::_Erase() {
-
+	
 	glm::vec3 pos = _cursor->GetPosition();
 	int idx = _tileMapSize.x * int(pos.y) + (int)pos.x;
 	if (_tiles[idx] != nullptr) {
@@ -239,4 +239,12 @@ void TileEditorApp::_ResizeGrid() {
 	}
 
 
+}
+
+json TileEditorApp::Serialize() {
+
+	return json{};
+}
+bool TileEditorApp::Deserialize(json &node) {
+	return true;
 }
