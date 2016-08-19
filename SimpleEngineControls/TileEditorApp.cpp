@@ -22,7 +22,7 @@ void TileEditorApp::Init()
 	_uiLayer->SetZ(1000.0f);
 	_uiLayer->SetName("UI");
 	_uiLayer->SetQueryable(false);
-
+	_uiLayer->SetSerializable(false);
 	engine->GetScene()->AddLayer(_uiLayer);
 
 	//Copy resources to temp folder
@@ -119,6 +119,7 @@ void TileEditorApp::_LoadCursor(SimpleID sheet, int index, SimpleID layer) {
 	c->SetSize({ 1, 1 });
 	c->SnapToGrid(true);
 	c->SetSnapGridSize({ 1, 1 });
+	c->SetSerializable(false);
 	_cursor = c;
 	SimpleEngine::Instance()->GetScene()->AddEntity(_cursor, layer);
 
@@ -191,6 +192,7 @@ void TileEditorApp::_CreateGrid() {
 	_gridLayer->SetZ(-1000.0f);
 	_gridLayer->AddEntity(_grid);
 	_gridLayer->SetName("Grid");
+	_gridLayer->SetSerializable(false);
 	SimpleEngine::Instance()->GetScene()->AddLayer(_gridLayer);
 	
 	//Unitary tiles

@@ -63,8 +63,10 @@ json SimpleLayer::Serialize() {
 	
 	json elements = json::array();
 	for (auto entity : _entities) {
-		json e  = entity->Serialize();
-		elements.push_back(e);
+		if(entity->IsSerializable()){
+			json e = entity->Serialize();
+			elements.push_back(e);
+		}
 	}
 	layer["entities"] = elements;
 	
