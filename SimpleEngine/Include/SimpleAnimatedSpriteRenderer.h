@@ -21,8 +21,8 @@ public:
 
 	virtual SimpleID GetType() { return "SimpleAnimatedSpriteRenderer"; }
 
-	virtual json Serialize();
-	virtual void Deserialize(json &node);
+	virtual json Serialize() override;
+	virtual bool Deserialize(json &node) override;
 	
 protected:
 	SimpleSpriteAnimation* _anim;

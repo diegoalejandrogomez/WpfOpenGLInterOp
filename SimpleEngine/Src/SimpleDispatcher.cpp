@@ -16,6 +16,7 @@ void SimpleDispatcher::RemoveListener(const SimpleEvent::DescriptorType& descrip
 			listeners.erase(it);
 			return;
 		}
+		++it;
 	}
 
 }

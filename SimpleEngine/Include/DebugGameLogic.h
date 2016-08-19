@@ -13,5 +13,10 @@ class DebugGameLogic : public SimpleGameLogic {
 
 	virtual bool IsRunning() override;
 
+private:
+
+	void _CreateTestScene();
+	
+
 };
 

@@ -123,7 +123,8 @@ json SimpleScene::_Serialize() {
 	json elements = json::array();
 
 	for (auto layer : _layers) {
-		elements.push_back(layer->Serialize());
+		if(layer->IsSerializable())
+			elements.push_back(layer->Serialize());
 	}
 	scene["layers"] = elements;
 
@@ -177,7 +178,7 @@ bool SimpleScene::Deserialize(std::string path) {
 	
 	json scene;
 
-	std::ifstream file(path);
+	std::ifstream file(SimpleEngine::Instance()->GetResourcesBaseDir() + path);
 	if (file.is_open())
 	{
 		file >> scene;

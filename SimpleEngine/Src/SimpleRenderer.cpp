@@ -7,7 +7,7 @@
 #include <filesystem>
 #include <fstream>
 #include "SimpleEngine.h"
-
+#include "SimpleObjectsRenderPass.h"
 //C++ 14/17 ... but why not XD
 using namespace std::tr2::sys;
 
@@ -20,6 +20,7 @@ SimpleRenderer::SimpleRenderer() {
 
 SimpleRenderer::~SimpleRenderer() {
 
+	Shutdown();
 	// Release the rendering context.
 	if (_renderingContext)
 	{
@@ -29,6 +30,40 @@ SimpleRenderer::~SimpleRenderer() {
 	}
 };
 
+void SimpleRenderer::Initialize() {
+	_LoadDefaultShaders();
+	//_renderer->AddPass(new DebugRenderPass());
+	AddPass(new SimpleObjectsRenderPass());
+}
+void SimpleRenderer::Shutdown() {
+	ClearResources();
+	ClearPasses();
+}
+
+void SimpleRenderer::ClearPasses() {
+	for (auto &pass : _passes)
+		delete pass;
+	_passes.clear();
+}
+void SimpleRenderer::ClearResources() {
+
+	for (auto &shader : _programs)
+		delete shader.second;
+	_programs.clear();
+
+	for (auto &tex : _textures)
+		delete tex.second;
+	_textures.clear();
+
+	for (auto &sheet : _spriteSheets)
+		delete sheet.second;
+	_spriteSheets.clear();
+
+	for (auto &animation : _spriteAnimations)
+		delete animation.second;
+	_spriteAnimations.clear();
+
+}
 
 void SimpleRenderer::Render(float dt, SimpleScene* scene ) {
 
@@ -105,8 +140,6 @@ bool SimpleRenderer::InitializeOpenGL(HWND hWnd, int width , int height) {
 
 	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_defaultRenderBuffer);
 
-	_LoadDefaultShaders();
-	
 	//Simple textured quad
 	_texturedQuad = new SimpleMesh<VertexTextureFormat2D>();
 	_texturedQuad->LoadQuad();
@@ -481,4 +514,5 @@ bool SimpleRenderer::DeserializeResources(std::string dir) {
 		}
 	}
 
+	return true;
 }

@@ -68,7 +68,7 @@ json SimpleSpriteSheetRenderer::Serialize() {
 	return so;
 
 }
-void SimpleSpriteSheetRenderer::Deserialize(json &node) {
+bool SimpleSpriteSheetRenderer::Deserialize(json &node) {
 
 	SimpleSpriteRenderer::Deserialize(node);
 
@@ -81,4 +81,6 @@ void SimpleSpriteSheetRenderer::Deserialize(json &node) {
 	std::string sprPath = local["spriteSheet"];
 	_spriteSheet = SimpleEngine::Instance()->GetRenderer()->GetSpriteSheet(sprPath);
 	SIMPLE_ASSERT(_spriteSheet != nullptr);
+
+	return true;
 }

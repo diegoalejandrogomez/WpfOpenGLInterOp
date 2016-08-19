@@ -4,9 +4,11 @@
 #include <stdlib.h>
 #include <vector>
 #include "json.hpp"
+#include "SimpleSerializable.h"
+
 using json = nlohmann::json;
 
-class SimpleSpriteSheet : public SimpleTexture{
+class SimpleSpriteSheet : public SimpleTexture, SimpleSerializable{
 
 public:
 
@@ -19,8 +21,8 @@ public:
 	void ClearFrames() { _frames.clear(); }
 	glm::ivec4 GetCoordsForIndex(int idx);
 
-	json Serialize();
-	bool Deserialize(json &node);
+	json Serialize() override;
+	bool Deserialize(json &node) override;
 private:
 
 	//XY contains origin, ZW contains size

@@ -1,7 +1,8 @@
 #pragma once
 #include "SimpleSpriteSheet.h"
+#include "SimpleSerializable.h"
 
-class SimpleSpriteAnimation {
+class SimpleSpriteAnimation: public SimpleSerializable {
 
 	
 
@@ -22,8 +23,8 @@ public:
 	inline SimpleSpriteSheet* GetSpriteSheet() { return _sheet; };
 	std::string GetAnimationName() { return _name;}
 
-	json Serialize();
-	bool Deserialize(json &node);
+	json Serialize() override;
+	bool Deserialize(json &node) override;
 
 private:
 

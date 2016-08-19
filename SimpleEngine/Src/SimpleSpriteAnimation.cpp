@@ -64,4 +64,5 @@ bool SimpleSpriteAnimation::Deserialize(json &node) {
 	}
 	_frameTime = node["frameTime"];
 
+	return true;
 }

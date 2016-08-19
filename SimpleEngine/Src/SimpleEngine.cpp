@@ -13,9 +13,8 @@ void SimpleEngine::InitRenderer(HWND hWnd, uint32_t width, uint32_t height) {
 	
 	_renderer = new SimpleRenderer();
 	_renderer->InitializeOpenGL(hWnd, width, height);
-
-	//_renderer->AddPass(new DebugRenderPass());
-	_renderer->AddPass(new SimpleObjectsRenderPass());
+	
+	
 }
 
 
@@ -39,9 +38,10 @@ void SimpleEngine::CreateScene() {
 }
 void SimpleEngine::_SwitchGameLogic() {
 
-	if (_gameLogic != nullptr)
+	if (_gameLogic != nullptr) {
 		_gameLogic->Shutdown();
-
+		delete _gameLogic;
+	}
 	_gameLogic = _nextGameLogic;
 	if (_gameLogic != nullptr) { //Could be switching to nullptr
 		_gameLogic->Init();
@@ -61,7 +61,8 @@ void SimpleEngine::Render(float dt) {
 	_renderTime = duration_cast<nanoseconds>(current - prev);
 	prev = current;
 	
-	_renderer->Render(dt, _scene);
+	if(_scene != nullptr)
+		_renderer->Render(dt, _scene);
 }
 
 void SimpleEngine::Advance(float dt) {
@@ -97,6 +98,9 @@ void SimpleEngine::Initialize() {
 	SIMPLE_ASSERT(_renderer != nullptr);
 	SIMPLE_ASSERT(_input != nullptr);
 	
+	//Init render passes
+	_renderer->Initialize();
+	
 	_resBaseDir = "./resources/";
 
 	//Loads a default scene
@@ -110,6 +114,27 @@ void SimpleEngine::Initialize() {
 }
 void SimpleEngine::Shutdown() {
 
+	//Destroy GameLogic
+	if (_gameLogic != nullptr) {
+		_gameLogic->Shutdown();
+		delete _gameLogic;
+		_gameLogic = nullptr;
+	}
+
+	if (_nextGameLogic != nullptr) {
+		//Was never initialized
+		delete _nextGameLogic;
+		_nextGameLogic = nullptr;
+	}
+	
+	//Destroy scene
+	if (_scene != nullptr) {
+		delete _scene;
+		_scene = nullptr;
+	}
+
+	//Destroy resources
+	_renderer->Shutdown();
 
 }
 

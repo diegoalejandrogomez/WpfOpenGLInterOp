@@ -1,8 +1,9 @@
 #include "stdafx.h"
 #include "SimpleLayer.h"
 
-SimpleLayer::SimpleLayer():_layerName ("") {
-	_queryable = true;
+SimpleLayer::SimpleLayer() : 
+	_layerName(""), _queryable(true){
+		
 }
 
 
@@ -62,8 +63,10 @@ json SimpleLayer::Serialize() {
 	
 	json elements = json::array();
 	for (auto entity : _entities) {
-		json e  = entity->Serialize();
-		elements.push_back(e);
+		if(entity->IsSerializable()){
+			json e = entity->Serialize();
+			elements.push_back(e);
+		}
 	}
 	layer["entities"] = elements;
 	
@@ -72,7 +75,7 @@ json SimpleLayer::Serialize() {
 }
 
 
-bool SimpleLayer::Deserialize(json layer) {
+bool SimpleLayer::Deserialize(json& layer) {
 	
 	if (layer.find("name") == layer.end()) {
 		SIMPLE_LOG("Couldn't find name field in layer");

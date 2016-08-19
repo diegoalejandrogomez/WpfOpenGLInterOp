@@ -217,6 +217,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			case 'E':
 				engine->GetScene()->GetCamera()->DeltaZoom(-0.1f);
 				break;
+			case 'R':
+				engine->Shutdown();
+				engine->Initialize();
+				break;
+
 		}
 		break;
 
