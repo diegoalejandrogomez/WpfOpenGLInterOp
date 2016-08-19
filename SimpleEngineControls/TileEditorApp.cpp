@@ -40,10 +40,12 @@ void TileEditorApp::_CreateSceneStructure() {
 
 	SimpleEngine* engine = SimpleEngine::Instance();
 
-	_tileMapLayer = new SimpleLayer();
-	_tileMapLayer->SetZ(-1.0f);
-	_tileMapLayer->SetName("MainTileMap");
-	engine->GetScene()->AddLayer(_tileMapLayer);
+	if (engine->GetScene()->GetLayer("MainTileMap") == nullptr) {
+		_tileMapLayer = new SimpleLayer();
+		_tileMapLayer->SetZ(-1.0f);
+		_tileMapLayer->SetName("MainTileMap");
+		engine->GetScene()->AddLayer(_tileMapLayer);
+	}
 
 	_uiLayer = new SimpleLayer();
 	_uiLayer->SetZ(1000.0f);
@@ -280,7 +282,14 @@ json TileEditorApp::Serialize() {
 bool TileEditorApp::Deserialize(json &node) {
 	
 	SimpleEngine* engine = SimpleEngine::Instance();
-	engine->CreateScene();
+	
+	_gridLayer = nullptr;
+	_grid = nullptr;
+	_uiLayer = nullptr;
+	_cursor = nullptr;
+	_tileMapLayer = nullptr;
+	
+	SetMapSize(node["_tileMapSize"][0], node["_tileMapSize"][1]);
 	_CreateSceneStructure();
 	SetCursorIdle();	
 	return true;

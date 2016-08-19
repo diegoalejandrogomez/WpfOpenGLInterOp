@@ -207,6 +207,8 @@ bool SimpleEngine::SerializeScene(std::string path) {
 bool SimpleEngine::DeserializeScene(std::string path) {
 
 	json scene;
+	CreateScene();
+	_scene->RemoveLayer(_scene->GetLayer(0));
 
 	std::ifstream file(SimpleEngine::Instance()->GetResourcesBaseDir() + path);
 	if (file.is_open())
@@ -275,8 +277,12 @@ std::string SimpleEngine::GetGameState() {
 }
 bool SimpleEngine::SetGameState(std::string state) {
 	json gameState = json::parse(state);
+	
+	//Create a new scene with no layers
+	CreateScene();
+	_scene->RemoveLayer(_scene->GetLayer(0));
 
-	_scene->Deserialize(gameState["sceen"]);
+	_scene->Deserialize(gameState["scene"]);
 	_gameLogic->Deserialize(gameState["gameLogic"]);
 	
 	return true;

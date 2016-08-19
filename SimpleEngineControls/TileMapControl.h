@@ -14,7 +14,7 @@ namespace SimpleEngineControls {
 		void SetBrush(String^ path, Int32 idx);
 		void IdleBrush();
 		void EraseBrush();
-
+		
 		//Properties
 
 		property int MapWidth

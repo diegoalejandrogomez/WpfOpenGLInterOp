@@ -120,14 +120,20 @@ void SimpleEngineViewerControl::SetZoom(float z) {
 
 System::String^ SimpleEngineViewerControl::TakeSnapshot() {
 	std::string state = SimpleEngine::Instance()->GetSceneState();
-	return gcnew System::String(state.c_str());
+	auto editor = dynamic_cast<TileEditorApp*>(SimpleEngine::Instance()->GetGameLogic());
+	
+	return gcnew System::String(editor->GetState().c_str());
+	
+	//return gcnew System::String(state.c_str());
 }
 
 void SimpleEngineViewerControl::RestoreSnapshot(System::String^ state)
 {
 	const char* chars =
 		(const char*)(Marshal::StringToHGlobalAnsi(state)).ToPointer();
-	auto scene = SimpleEngine::Instance()->SetSceneState(chars);
+	auto editor = dynamic_cast<TileEditorApp*>(SimpleEngine::Instance()->GetGameLogic());
+	editor->LoadState(chars);
+	//auto scene = SimpleEngine::Instance()->SetSceneState(chars);
 
 }
 
@@ -135,4 +141,5 @@ void SimpleEngineViewerControl::Restart()
 {
 	SimpleEngine::Instance()->Shutdown();
 	this->Initialize();
+
 }
