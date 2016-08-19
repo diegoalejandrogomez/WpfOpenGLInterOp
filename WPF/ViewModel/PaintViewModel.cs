@@ -303,7 +303,7 @@ namespace WPF.ViewModel
                 enc.Save(outStream);
                 System.Drawing.Bitmap bitmap = new System.Drawing.Bitmap(outStream);
 
-                return new Bitmap(bitmap);
+                return bitmap;
             }
         }
 
@@ -352,14 +352,19 @@ namespace WPF.ViewModel
                 {
                     if (bitmapImage != null)
                     {
-                        var imageSplited = BitmapImage2Bitmap((BitmapImage)bitmapImage).Clone(new Rectangle(newTile.x, newTile.y, newTile.width, newTile.heigth), System.Drawing.Imaging.PixelFormat.DontCare);
+                        var bitmapImageConverted = new Bitmap(BitmapImage2Bitmap((BitmapImage)bitmapImage));
+                        var imageSplited = bitmapImageConverted.Clone(new Rectangle(newTile.x, newTile.y, newTile.width, newTile.heigth), System.Drawing.Imaging.PixelFormat.DontCare);
                         newTile.Image = BitmapToImageSource(imageSplited);
                         newTile.Splited = true;
                     }
                 }
                 else
                 {
-                    newTile.Image = new BitmapImage(new Uri(path));
+                    newTile.Image = new BitmapImage();
+                    newTile.Image.BeginInit();
+                    newTile.Image.CacheOption = BitmapCacheOption.OnLoad;
+                    newTile.Image.UriSource = new Uri(path);
+                    newTile.Image.EndInit();
                     bitmapImage = newTile.Image;
                 }
 
@@ -531,7 +536,8 @@ namespace WPF.ViewModel
                         {
                             while (x + proportionalWidth <= width)
                             {
-                                var imageSplited = BitmapImage2Bitmap((BitmapImage)image).Clone(new Rectangle(x, y, proportionalWidth, proportionalHeigth), System.Drawing.Imaging.PixelFormat.DontCare);
+                                var bitmapImage = new Bitmap(BitmapImage2Bitmap((BitmapImage)image));
+                                var imageSplited = bitmapImage.Clone(new Rectangle(x, y, proportionalWidth, proportionalHeigth), System.Drawing.Imaging.PixelFormat.DontCare);
                                 BitmapImage newImage = BitmapToImageSource(imageSplited);
                                 var newTile = new TileViewModel();
                                 newTile.Image = newImage;
@@ -722,16 +728,15 @@ namespace WPF.ViewModel
         private void Clean()
         {
             ((SimpleEngineViewerControl)OpenGLRenderControl).Restart();
-
             this.Tiles = new ObservableCollection<TileViewModel>();
+            PropertyChanged(this, new PropertyChangedEventArgs("Tiles"));
             this.Selected = null;
 
             string relativePath = @"/temp/";
             string path = AppDomain.CurrentDomain.BaseDirectory + relativePath;
 
             System.IO.DirectoryInfo di = new DirectoryInfo(path);
-            GC.Collect();
-
+            
             if (di.Exists)
             {
                 foreach (FileInfo file in di.GetFiles())
@@ -793,22 +798,27 @@ namespace WPF.ViewModel
                         if (dialog.ShowDialog() == true)
                         {
                             this.FilePath = dialog.FileName;
-                            var img = Image.FromFile(FilePath);
-                            var path = ImportImageToTempFolder(this.Tiles == null ? 1 : this.Tiles.Where(i=> i.Splited == false).Count() +1, img);
-                            var newTile = new TileViewModel();
-                            this.FilePath = path;
-                            newTile.Image = new BitmapImage(new Uri(this.FilePath));
-                            newTile.Path = this.FilePath;
-                            newTile.x = 0;
-                            newTile.y = 0;
-                            newTile.width = (int)newTile.Image.Width;
-                            newTile.heigth = (int)newTile.Image.Height;
-                            newTile.SpriteControl = new SpriteSheetControl();                         
-                            if (Tiles == null)
-                                Tiles = new ObservableCollection<TileViewModel>();
-                            this.Tiles.Add(newTile);
-                            img.Dispose();
-                            PropertyChanged(this, new PropertyChangedEventArgs("Tiles"));
+                            using (var img = Image.FromFile(FilePath))
+                            {
+                                var path = ImportImageToTempFolder(this.Tiles == null ? 1 : this.Tiles.Where(i => i.Splited == false).Count() + 1, img);
+                                var newTile = new TileViewModel();
+                                this.FilePath = path;
+                                newTile.Image = new BitmapImage();
+                                newTile.Image.BeginInit();
+                                newTile.Image.CacheOption = BitmapCacheOption.OnLoad;
+                                newTile.Image.UriSource = new Uri(filePath);
+                                newTile.Image.EndInit();
+                                newTile.Path = this.FilePath;
+                                newTile.x = 0;
+                                newTile.y = 0;
+                                newTile.width = (int)newTile.Image.Width;
+                                newTile.heigth = (int)newTile.Image.Height;
+                                newTile.SpriteControl = new SpriteSheetControl();
+                                if (Tiles == null)
+                                    Tiles = new ObservableCollection<TileViewModel>();
+                                this.Tiles.Add(newTile);
+                                PropertyChanged(this, new PropertyChangedEventArgs("Tiles"));
+                            }
                         }
                     });
                 }
