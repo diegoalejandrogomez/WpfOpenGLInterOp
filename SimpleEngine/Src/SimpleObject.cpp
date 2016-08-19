@@ -30,7 +30,7 @@ json SimpleObject::Serialize() {
 }
 
 
-void SimpleObject::Deserialize(json &node) {
+bool SimpleObject::Deserialize(json &node) {
 	
 	SIMPLE_ASSERT(node.find("name") != node.end());
 	
@@ -52,5 +52,6 @@ void SimpleObject::Deserialize(json &node) {
 
 	_orientation = node["orientation"];
 
+	return true;
 	
 }

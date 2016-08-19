@@ -481,4 +481,5 @@ bool SimpleRenderer::DeserializeResources(std::string dir) {
 		}
 	}
 
+	return true;
 }

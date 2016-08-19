@@ -10,62 +10,66 @@
 
 void DebugGameLogic::Init()
 {
-
+	bool save = false;
 	SimpleEngine::Instance()->SetResourcesBaseDir("./debugResources/");
 
-	SimpleLayer* layer = new SimpleLayer();
-	layer->SetZ(100);
-	SimpleEngine::Instance()->GetScene()->AddLayer(layer);
-	
-	/*SimpleSpriteRenderer* sprite = new SimpleSpriteRenderer();
-	sprite->SetAsTexture("./media/spriteFull.png");
-	sprite->SetOrientation(1.0f);
-	SimpleEngine::Instance()->GetScene()->AddEntity(sprite, 100);*/
-	
-	SimpleEngine::Instance()->GetRenderer()->CreateSpriteSheet("media/spriteSheet.png", { 104,149 }, { 6,3 });
-	
-	//SimpleEngine::Instance()->GetRenderer()->CreateSpriteSheet("media/spriteSheet.png");
-	//SimpleSpriteSheet* _spriteSheet = SimpleEngine::Instance()->GetRenderer()->GetSpriteSheet("media/spriteSheet.png");
-	//_spriteSheet->AddSpriteFrame({ 0,0 }, { 104,149 });
-	//_spriteSheet->AddSpriteFrame({ 105,150 }, { 104,149 });
-
-	
-	
-	SimpleSpriteSheetRenderer* guybrush = new SimpleSpriteSheetRenderer();
-	guybrush->SetSpriteSheet("media/spriteSheet.png");
-	guybrush->SetIndex(0);
-	guybrush->SetSize({ 100, 500 });
-	SimpleEngine::Instance()->GetScene()->AddEntity(guybrush, 100);
-	
-	//Guybrush animation
-	/*SimpleEngine::Instance()->GetRenderer()->CreateSpriteAnimation(	"walking","media/spriteSheet.png",
-		std::vector<int>{ 0,1,2,3,4,5}, 0.15f);
-		
-	SimpleSpriteAnimation *walkingAnim = SimpleEngine::Instance()->GetRenderer()->GetSpriteAnimation("walking");
-	
-	SimpleAnimatedSpriteRenderer* walkingGuybrush = new SimpleAnimatedSpriteRenderer();
-	walkingGuybrush->SetAnimation(walkingAnim);
-	walkingGuybrush->Play();
-	walkingGuybrush->SetSize({ 100,500 });
-	SimpleEngine::Instance()->GetScene()->AddEntity(walkingGuybrush, layer);*/
-	
-	//SimpleEngine::Instance()->DeserializeResources();
-	//SimpleEngine::Instance()->SerializeResources();
-	//SimpleEngine::Instance()->GetScene()->Serialize("DebugScene.smpl");
-	//std::string state = SimpleEngine::Instance()->GetScene()->GetSerializedState();
-	//std::ifstream in("./debugResources/DebugScene.smpl");
-	//json sc;
-	//in >> sc;
-	//std::string dump = sc.dump();
-	//SimpleEngine::Instance()->GetScene()->SetStateFromSerialization(dump);
-	//OutputDebugString(dump.c_str());
-	//SimpleEngine::Instance()->GetScene()->Deserialize("DebugScene.smpl");
-
+	if (save) {
+		_CreateTestScene();
+		SimpleEngine::Instance()->SerializeResources();
+		SimpleEngine::Instance()->GetScene()->Serialize("DebugScene.smpl");
+	}
+	else {
+		SimpleEngine::Instance()->DeserializeResources();
+		SimpleEngine::Instance()->GetScene()->Deserialize("DebugScene.smpl");
+	}
 
 	//Configure input system we are going to use
 	SimpleEngine::Instance()->GetInput()->CreateKeyboard();
 	SimpleEngine::Instance()->GetInput()->CreateMouse();
 	
+}
+
+void DebugGameLogic::_CreateTestScene() {
+
+	//Wont be serialized this layer
+	SimpleLayer* layer = new SimpleLayer();
+	layer->SetZ(100);
+	SimpleEngine::Instance()->GetScene()->AddLayer(layer);
+	layer->SetSerializable(false);
+
+	SimpleSpriteRenderer* sprite = new SimpleSpriteRenderer();
+	sprite->SetAsTexture("./media/spriteFull.png");
+	sprite->SetOrientation(1.0f);
+	SimpleEngine::Instance()->GetScene()->AddEntity(sprite, 100);
+
+
+	SimpleEngine::Instance()->GetRenderer()->CreateSpriteSheet("media/spriteSheet.png", { 104,149 }, { 6,3 });
+
+	//SimpleEngine::Instance()->GetRenderer()->CreateSpriteSheet("media/spriteSheet.png");
+	//SimpleSpriteSheet* _spriteSheet = SimpleEngine::Instance()->GetRenderer()->GetSpriteSheet("media/spriteSheet.png");
+	//_spriteSheet->AddSpriteFrame({ 0,0 }, { 104,149 });
+	//_spriteSheet->AddSpriteFrame({ 105,150 }, { 104,149 });
+
+
+
+	SimpleSpriteSheetRenderer* guybrush = new SimpleSpriteSheetRenderer();
+	guybrush->SetSpriteSheet("media/spriteSheet.png");
+	guybrush->SetIndex(0);
+	guybrush->SetSize({ 100, 500 });
+	SimpleEngine::Instance()->GetScene()->AddEntity(guybrush, 0);
+
+	//Guybrush animation
+	/*SimpleEngine::Instance()->GetRenderer()->CreateSpriteAnimation(	"walking","media/spriteSheet.png",
+	std::vector<int>{ 0,1,2,3,4,5}, 0.15f);
+
+	SimpleSpriteAnimation *walkingAnim = SimpleEngine::Instance()->GetRenderer()->GetSpriteAnimation("walking");
+
+	SimpleAnimatedSpriteRenderer* walkingGuybrush = new SimpleAnimatedSpriteRenderer();
+	walkingGuybrush->SetAnimation(walkingAnim);
+	walkingGuybrush->Play();
+	walkingGuybrush->SetSize({ 100,500 });
+	SimpleEngine::Instance()->GetScene()->AddEntity(walkingGuybrush, layer);*/
+
 }
 
 void DebugGameLogic::Advance(float dt)

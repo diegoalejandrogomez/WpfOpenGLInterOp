@@ -2,8 +2,9 @@
 #include <stdlib.h>
 #include <vector>
 #include "SimpleObject.h"
+#include "SimpleSerializable.h"
 
-class SimpleLayer {
+class SimpleLayer : public SimpleSerializable{
 public:
 	SimpleLayer();
 	~SimpleLayer();
@@ -21,13 +22,14 @@ public:
 
 	inline void SetQueryable(bool value) { _queryable = value; };
 	inline bool IsQueryable() { return _queryable; };
-
-	virtual json Serialize();
-	virtual bool Deserialize(json layer);
+	
+	virtual json Serialize() override;
+	virtual bool Deserialize(json& layer) override;
 
 protected:
 	std::vector<SimpleObject*> _entities;
 	float Z;
 	SimpleID _layerName;
 	bool _queryable;
+	
 };

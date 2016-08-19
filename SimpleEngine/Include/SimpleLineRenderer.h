@@ -20,8 +20,8 @@ public:
 	void ClearLines();
 
 	virtual SimpleID GetType() { return "SimpleLineRenderer"; }
-	virtual json Serialize();
-	virtual void Deserialize(json &node);
+	virtual json Serialize() override;
+	virtual bool Deserialize(json &node) override;
 
 private:
 

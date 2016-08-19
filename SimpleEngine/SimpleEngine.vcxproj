@@ -146,6 +146,7 @@ copy /Y "$(ProjectDir)\External\devil\lib\ILU.dll" "$(TargetDir)"</Command>
     <ClInclude Include="Include\SimpleLayer.h" />
     <ClInclude Include="Include\LowerZIndex.h" />
     <ClInclude Include="Include\SimpleLineRenderer.h" />
+    <ClInclude Include="Include\SimpleSerializable.h" />
     <ClInclude Include="Include\SimpleSpriteAnimation.h" />
     <ClInclude Include="Include\SimpleSpriteRenderer.h" />
     <ClInclude Include="Include\DebugGameLogic.h" />

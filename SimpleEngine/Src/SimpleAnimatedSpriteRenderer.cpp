@@ -92,7 +92,7 @@ json SimpleAnimatedSpriteRenderer::Serialize() {
 
 
 }
-void SimpleAnimatedSpriteRenderer::Deserialize(json &node) {
+bool SimpleAnimatedSpriteRenderer::Deserialize(json &node) {
 
 	SimpleSpriteSheetRenderer::Deserialize(node);
 
@@ -115,4 +115,5 @@ void SimpleAnimatedSpriteRenderer::Deserialize(json &node) {
 	SIMPLE_ASSERT(local.find("loop") != local.end());
 	_loop = local["loop"];
 
+	return true;
 }

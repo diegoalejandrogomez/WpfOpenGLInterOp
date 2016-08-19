@@ -87,7 +87,7 @@ json SimpleLineRenderer::Serialize() {
 	
 	return so;
 }
-void SimpleLineRenderer::Deserialize(json &node) {
+bool SimpleLineRenderer::Deserialize(json &node) {
 	SimpleObject::Deserialize(node);
 
 	SIMPLE_ASSERT(node.find("SimpleLineRenderer") != node.end());
@@ -106,7 +106,7 @@ void SimpleLineRenderer::Deserialize(json &node) {
 		_vertices.push_back( vertex);
 	}
 	
-
+	return true;
 
 }
 

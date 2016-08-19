@@ -5,10 +5,12 @@
 #include "SimpleID.h"
 #include "json.hpp"
 #include "SimpleFactory.h"
+#include "SimpleSerializable.h"
 
 using json = nlohmann::json;
 
-class SimpleObject : public SimpleFactory<SimpleObject>{
+class SimpleObject :public SimpleFactory<SimpleObject>, 
+					public SimpleSerializable{
 
 public:
 
@@ -32,12 +34,14 @@ public:
 	//Not efficient... we could do a lot better
 	const glm::mat4 GetTransform() const;
 	virtual SimpleID GetType() { return "SimpleObject"; }
-	virtual json Serialize();
-	virtual void Deserialize(json& node);
+	
+	virtual json Serialize() override;
+	virtual bool Deserialize(json& node) override;
 	
 
 protected:
 	SimpleAABB _aabb;
 	float _orientation	= 0.0f;
 	SimpleID _name;
+
 };

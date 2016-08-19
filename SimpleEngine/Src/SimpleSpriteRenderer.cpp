@@ -148,7 +148,7 @@ json SimpleSpriteRenderer::Serialize() {
 
 
 }
-void SimpleSpriteRenderer::Deserialize(json &node) {
+bool SimpleSpriteRenderer::Deserialize(json &node) {
 	
 	SimpleObject::Deserialize(node);
 
@@ -177,5 +177,6 @@ void SimpleSpriteRenderer::Deserialize(json &node) {
 
 	SetAsTextureRect(std::move(path), _rectOffset, _rectSize);
 
+	return true;
 }
 

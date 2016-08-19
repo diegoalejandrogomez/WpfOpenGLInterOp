@@ -1,8 +1,9 @@
 #include "stdafx.h"
 #include "SimpleLayer.h"
 
-SimpleLayer::SimpleLayer():_layerName ("") {
-	_queryable = true;
+SimpleLayer::SimpleLayer() : 
+	_layerName(""), _queryable(true){
+		
 }
 
 
@@ -72,7 +73,7 @@ json SimpleLayer::Serialize() {
 }
 
 
-bool SimpleLayer::Deserialize(json layer) {
+bool SimpleLayer::Deserialize(json& layer) {
 	
 	if (layer.find("name") == layer.end()) {
 		SIMPLE_LOG("Couldn't find name field in layer");
