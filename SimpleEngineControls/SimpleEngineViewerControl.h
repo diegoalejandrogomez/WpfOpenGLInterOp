@@ -19,11 +19,9 @@ namespace SimpleEngineControls {
 		void OnSizeChanged(System::Object ^sender, System::EventArgs ^e);
 		void OnPaintBackground(PaintEventArgs^ e) override;
 		void OnPaint(PaintEventArgs^ e) override;
-		ManagedSimpleObject^ SetItem(float x, float y);
-		System::String^ TakeSnapshot();
-		void RestoreSnapshot(System::String^);
+		ManagedSimpleObject^ SetItem(float x, float y);	
 		void Restart();
-		void Paint();
+		
 		
 
 		void Initialize();

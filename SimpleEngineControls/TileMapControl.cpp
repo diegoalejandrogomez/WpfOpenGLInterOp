@@ -2,6 +2,7 @@
 #include "TileMapControl.h"
 #include "SimpleEngine.h"
 #include <msclr/marshal_cppstd.h>
+using namespace System::Runtime::InteropServices;
 
 using namespace SimpleEngineControls;
 
@@ -23,4 +24,28 @@ void TileMapControl::IdleBrush() {
 
 void TileMapControl::EraseBrush() {
 	_app->SetCursorErase();
+}
+
+void TileMapControl::Paint() {
+	if (_app != nullptr)
+		_app->Paint();
+}
+
+System::String^ TileMapControl::TakeSnapshot() {
+	std::string state = SimpleEngine::Instance()->GetSceneState();
+	auto editor = dynamic_cast<TileEditorApp*>(SimpleEngine::Instance()->GetGameLogic());
+
+	return gcnew System::String(editor->GetState().c_str());
+
+	//return gcnew System::String(state.c_str());
+}
+
+void TileMapControl::RestoreSnapshot(System::String^ state)
+{
+	const char* chars =
+		(const char*)(Marshal::StringToHGlobalAnsi(state)).ToPointer();
+	auto editor = dynamic_cast<TileEditorApp*>(SimpleEngine::Instance()->GetGameLogic());
+	editor->LoadState(chars);
+	//auto scene = SimpleEngine::Instance()->SetSceneState(chars);
+
 }

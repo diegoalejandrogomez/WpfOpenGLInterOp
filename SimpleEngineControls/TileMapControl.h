@@ -14,6 +14,9 @@ namespace SimpleEngineControls {
 		void SetBrush(String^ path, Int32 idx);
 		void IdleBrush();
 		void EraseBrush();
+		void Paint();
+		System::String^ TakeSnapshot();
+		void RestoreSnapshot(System::String^);
 		
 		//Properties
 

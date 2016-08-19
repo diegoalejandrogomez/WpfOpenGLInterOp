@@ -62,10 +62,7 @@ void SimpleEngineViewerControl::OnPaint(PaintEventArgs^ e)  {
 
 }
 
-void SimpleEngineViewerControl::Paint() {
-	if(_appLogic!= nullptr)
-		_appLogic->Paint();
-}
+
 
 ManagedSimpleObject^ SimpleEngineViewerControl::SetItem(float x, float y)
 {
@@ -116,25 +113,6 @@ float SimpleEngineViewerControl::GetZoom() {
 
 void SimpleEngineViewerControl::SetZoom(float z) {
 	SimpleEngine::Instance()->GetScene()->GetCamera()->SetZoom(z);
-}
-
-System::String^ SimpleEngineViewerControl::TakeSnapshot() {
-	std::string state = SimpleEngine::Instance()->GetSceneState();
-	auto editor = dynamic_cast<TileEditorApp*>(SimpleEngine::Instance()->GetGameLogic());
-	
-	return gcnew System::String(editor->GetState().c_str());
-	
-	//return gcnew System::String(state.c_str());
-}
-
-void SimpleEngineViewerControl::RestoreSnapshot(System::String^ state)
-{
-	const char* chars =
-		(const char*)(Marshal::StringToHGlobalAnsi(state)).ToPointer();
-	auto editor = dynamic_cast<TileEditorApp*>(SimpleEngine::Instance()->GetGameLogic());
-	editor->LoadState(chars);
-	//auto scene = SimpleEngine::Instance()->SetSceneState(chars);
-
 }
 
 void SimpleEngineViewerControl::Restart()

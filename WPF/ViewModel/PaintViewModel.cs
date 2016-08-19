@@ -270,7 +270,7 @@ namespace WPF.ViewModel
                     Selected = _tileMap;
             }else
             {
-                ((SimpleEngineViewerControl)OpenGLRenderControl).Paint();               
+                _tileMap.Paint();               
                 
             }
             PropertyChanged(this, new PropertyChangedEventArgs("Layers"));
@@ -722,9 +722,8 @@ namespace WPF.ViewModel
                             {
                                 var project = new Project();
                                 var scene = new Scene();
-                                GetAvailableTiles(project);
-                                SimpleEngineViewerControl view = openGLRenderControl as SimpleEngineViewerControl;
-                                project.Scenes.Add(view.TakeSnapshot());
+                                GetAvailableTiles(project);                              
+                                project.Scenes.Add(_tileMap.TakeSnapshot());
                                 var json = Newtonsoft.Json.JsonConvert.SerializeObject(project);
                                 System.IO.File.WriteAllText(dialog.FileName, json);
                             }
@@ -787,9 +786,7 @@ namespace WPF.ViewModel
 
                             foreach (var scene in project.Scenes)
                             {
-
-                                SimpleEngineViewerControl view = openGLRenderControl as SimpleEngineViewerControl;
-                                view.RestoreSnapshot(scene);
+                                _tileMap.RestoreSnapshot(scene);
                             }
                         }
                     });
