@@ -10,8 +10,35 @@ void TileEditorApp::Init()
 {
 
 	SimpleEngine* engine = SimpleEngine::Instance();
+	
 	engine->SetResourcesBaseDir("./temp/");
 	SetMapSize(10, 10);
+
+	_CreateSceneStructure();
+
+	//Load cursor spritesheet
+	engine->GetRenderer()->CreateSpriteSheet("media/grid.png");
+	SimpleSpriteSheet *spriteSheet = engine->GetRenderer()->GetSpriteSheet("media/grid.png");
+	spriteSheet->AddSpriteFrame({ 0,0 }, { spriteSheet->GetWidth(), spriteSheet->GetHeight() });
+
+	engine->GetRenderer()->CreateSpriteSheet("media/delete.png");
+	spriteSheet = engine->GetRenderer()->GetSpriteSheet("media/delete.png");
+	spriteSheet->AddSpriteFrame({ 0,0 }, { spriteSheet->GetWidth(), spriteSheet->GetHeight() });
+	
+	SetCursorIdle();
+
+}
+
+void TileEditorApp::NewMap() {
+	
+	SetMapSize(10, 10);
+	SimpleEngine::Instance()->CreateScene();
+	_CreateSceneStructure();
+	SetCursorIdle();
+}
+void TileEditorApp::_CreateSceneStructure() {
+
+	SimpleEngine* engine = SimpleEngine::Instance();
 
 	_tileMapLayer = new SimpleLayer();
 	_tileMapLayer->SetZ(-1.0f);
@@ -25,20 +52,23 @@ void TileEditorApp::Init()
 	_uiLayer->SetSerializable(false);
 	engine->GetScene()->AddLayer(_uiLayer);
 
+
 	//Copy resources to temp folder
-	copy("./editorResources/media", "./temp/media/", copy_options::overwrite_existing);
+	remove_all("./temp/media/");
 
-	//Load cursor spritesheet
-	engine->GetRenderer()->CreateSpriteSheet("media/grid.png");
-	SimpleSpriteSheet *spriteSheet = engine->GetRenderer()->GetSpriteSheet("media/grid.png");
-	spriteSheet->AddSpriteFrame({ 0,0 }, { spriteSheet->GetWidth(), spriteSheet->GetHeight() });
+	create_directory("./temp/");
+	create_directory("./temp/media");
+	copy("./editorResources/media", "./temp/media");
 
-	engine->GetRenderer()->CreateSpriteSheet("media/delete.png");
-	spriteSheet = engine->GetRenderer()->GetSpriteSheet("media/delete.png");
-	spriteSheet->AddSpriteFrame({ 0,0 }, { spriteSheet->GetWidth(), spriteSheet->GetHeight() });
-	
-	SetCursorIdle();
 
+}
+
+
+void TileEditorApp::LoadState(std::string gameState) {
+	SimpleEngine::Instance()->SetGameState(gameState);
+}
+std::string TileEditorApp::GetState() {
+	return SimpleEngine::Instance()->GetGameState();
 }
 
 void TileEditorApp::SetCursorPosition(float x, float y) {
@@ -243,8 +273,15 @@ void TileEditorApp::_ResizeGrid() {
 
 json TileEditorApp::Serialize() {
 
-	return json{};
+	return json{
+		{"_tileMapSize", {_tileMapSize.x, _tileMapSize.y}}
+	};
 }
 bool TileEditorApp::Deserialize(json &node) {
+	
+	SimpleEngine* engine = SimpleEngine::Instance();
+	engine->CreateScene();
+	_CreateSceneStructure();
+	SetCursorIdle();	
 	return true;
 }

@@ -18,6 +18,10 @@ public:
 	virtual bool IsRunning() override;
 
 	//Tile editor methods
+	void NewMap();
+	void LoadState(std::string gameState);
+	std::string GetState();
+
 	void SetMapSize(int width, int height);	
 	void SetMapWidth(int width);
 	void SetMapHeight(int height);
@@ -42,6 +46,7 @@ private:
 	void _LoadCursor(SimpleID sheet, int index, SimpleID layer);
 	void _Erase();
 	void _Draw();
+	void _CreateSceneStructure();
 
 	//We should have a SimpleObject for the whole tileset... but let's do this for now...
 	SimpleLayer*				_gridLayer	= nullptr;
