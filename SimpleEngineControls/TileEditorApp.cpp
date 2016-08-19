@@ -39,8 +39,8 @@ void TileEditorApp::NewMap() {
 void TileEditorApp::_CreateSceneStructure() {
 
 	SimpleEngine* engine = SimpleEngine::Instance();
-
-	if (engine->GetScene()->GetLayer("MainTileMap") == nullptr) {
+	_tileMapLayer = engine->GetScene()->GetLayer("MainTileMap");
+	if ( _tileMapLayer == nullptr) {
 		_tileMapLayer = new SimpleLayer();
 		_tileMapLayer->SetZ(-1.0f);
 		_tileMapLayer->SetName("MainTileMap");
@@ -110,11 +110,24 @@ void TileEditorApp::_Erase() {
 	
 	glm::vec3 pos = _cursor->GetPosition();
 	int idx = _tileMapSize.x * int(pos.y) + (int)pos.x;
-	if (_tiles[idx] != nullptr) {
+	
+	//Scene picking... we aren't serializing the grid
+	SimpleAABB _pickArea;
+	_pickArea.position = { pos.x, pos.y, 0 };
+	_pickArea.size = { 1.0f,1.0f };
+
+	
+	SimpleObject* obj = SimpleEngine::Instance()->GetScene()->PickFirst(_pickArea, _tileMapLayer);
+	if (obj != nullptr) {
+		SimpleEngine::Instance()->GetScene()->RemoveEntity(obj, _tileMapLayer);
+		delete obj;
+	}
+
+	/*if (_tiles[idx] != nullptr) {
 		SimpleEngine::Instance()->GetScene()->RemoveEntity(_tiles[idx], "MainTileMap");
 		delete _tiles[idx];
 		_tiles[idx] = nullptr;
-	}
+	}*/
 
 }
 

@@ -7,7 +7,7 @@
 #include "SimpleEngine.h"
 #include <algorithm>
 #include <fstream>
-
+#include <glm/gtx/transform.hpp>
 SimpleScene::SimpleScene() {
 	
 	_camera = new SimpleCamera2D();
@@ -202,7 +202,9 @@ std::vector<SimpleObject*>& SimpleScene::PickAll(SimpleAABB rect) {
 		if (!l->IsQueryable())
 			continue;
 		for (SimpleObject* obj : l->GetEntities()) {
-			if(rect.Overlaps(glm::mat4(1.0f), obj->GetAABB(), obj->GetTransform()))
+			SimpleAABB other = obj->GetAABB();
+			other.position = glm::vec3(0.0f);
+			if (rect.Overlaps(glm::translate(rect.position), other, obj->GetTransform()))d
 				_queryResults.push_back(obj);
 			if (_queryResults.size() == _maxQueryResults)
 				return _queryResults;
@@ -217,7 +219,9 @@ std::vector<SimpleObject*>& SimpleScene::PickAll(SimpleAABB rect, SimpleLayer* l
 	if (!l->IsQueryable())
 		return _queryResults;
 	for (SimpleObject* obj : l->GetEntities()) {
-		if (rect.Overlaps(glm::mat4(1.0f), obj->GetAABB(), obj->GetTransform()))
+		SimpleAABB other = obj->GetAABB();
+		other.position = glm::vec3(0.0f);
+		if (rect.Overlaps(glm::translate(rect.position), other, obj->GetTransform()))
 			_queryResults.push_back(obj);
 		if (_queryResults.size() == _maxQueryResults)
 			return _queryResults;
@@ -257,7 +261,9 @@ SimpleObject* SimpleScene::PickFirst(SimpleAABB rect) {
 		if (!l->IsQueryable())
 			continue;
 		for (SimpleObject* obj : l->GetEntities()) {
-			if (rect.Overlaps(glm::mat4(1.0f), obj->GetAABB(), obj->GetTransform()))
+			SimpleAABB other = obj->GetAABB();
+			other.position = glm::vec3(0.0f);
+			if (rect.Overlaps(glm::translate(rect.position), other, obj->GetTransform()))
 				return obj;	
 		}
 	}
@@ -270,7 +276,9 @@ SimpleObject* SimpleScene::PickFirst(SimpleAABB rect, SimpleLayer* l) {
 		return nullptr;
 
 	for (SimpleObject* obj : l->GetEntities()) {
-		if (rect.Overlaps(glm::mat4(1.0f), obj->GetAABB(), obj->GetTransform()))
+		SimpleAABB other = obj->GetAABB();
+		other.position = glm::vec3(0.0f);
+		if (rect.Overlaps(glm::translate(rect.position) , other, obj->GetTransform()))
 			return obj;
 	}
 	

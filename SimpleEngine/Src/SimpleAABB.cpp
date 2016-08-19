@@ -32,8 +32,8 @@ bool SimpleAABB::Overlaps(const glm::mat4& transform, const SimpleAABB &other, c
 													other.position.y + other.size.y * 0.5f, 0.0f, 1.0f };
 	glm::vec2 halfSize = size * 0.5f;
 	//Should project
-	return !(	(std::min(lowerLeft.x, upperRight.x) < -halfSize.x) && (std::max(lowerLeft.x, upperRight.x) > halfSize.x) &&
-				(std::min(lowerLeft.y, upperRight.y) < -halfSize.y) && (std::max(lowerLeft.y, upperRight.y) > halfSize.y)
+	return !(	(std::min(lowerLeft.x, upperRight.x) < -halfSize.x) || (std::max(lowerLeft.x, upperRight.x) > halfSize.x) ||
+				(std::min(lowerLeft.y, upperRight.y) < -halfSize.y) || (std::max(lowerLeft.y, upperRight.y) > halfSize.y)
 			);
 	
 
