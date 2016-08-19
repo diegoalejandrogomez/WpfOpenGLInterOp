@@ -22,6 +22,8 @@ public:
 	
 	bool InitializeOpenGL(HWND hWnd, int width, int height);
 	void AddPass(RenderPass *p) { _passes.push_back(p); }
+	void Initialize();
+	void Shutdown();
 	void Render(float dt, SimpleScene* scene);
 	void ResizeWindow(int width, int height);
 
@@ -48,6 +50,8 @@ public:
 	bool SerializeResources(std::string dir);
 	bool DeserializeResources(std::string dir);
 	
+	void ClearResources();
+	void ClearPasses();
 private:
 
 	bool _InitializeExtensions();

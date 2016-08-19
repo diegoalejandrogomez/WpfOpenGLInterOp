@@ -106,6 +106,7 @@ void DebugGameLogic::Advance(float dt)
 void DebugGameLogic::Shutdown()
 {
 	SimpleEngine::Instance()->GetInput()->DestroyKeyboard();
+	SimpleEngine::Instance()->GetInput()->DestroyMouse();
 }
 
 bool DebugGameLogic::IsRunning()
