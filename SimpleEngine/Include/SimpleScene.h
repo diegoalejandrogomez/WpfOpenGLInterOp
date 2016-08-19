@@ -4,8 +4,9 @@
 #include "SimpleCamera2D.h"
 #include "SimpleLayer.h"
 #include "SimpleAABB.h"
+#include "SimpleSerializable.h"
 
-class SimpleScene {
+class SimpleScene : public SimpleSerializable {
 	//Only 1 camera per scene
 	SimpleCamera2D* _camera;
 	std::vector<SimpleLayer*> _layers;
@@ -15,8 +16,6 @@ class SimpleScene {
 	const int _maxQueryResults = 10;
 	std::vector<SimpleObject*> _queryResults;
 
-	json _Serialize();
-	bool _Deserialize(json &node);
 public:
 
 	SimpleScene();
@@ -43,11 +42,9 @@ public:
 	SimpleLayer* GetLayer(SimpleID layerName);
 	inline std::vector<SimpleLayer*>& GetLayers(std::string layerName) { return _layers; }
 
-	virtual bool Serialize(std::string path);
-	virtual bool Deserialize(std::string path);
-	virtual std::string GetSerializedState();
-	virtual bool SetStateFromSerialization(std::string state);
-
+	virtual json Serialize() override;
+	virtual bool Deserialize(json &node) override;
+	
 	float GetLowerZIndex();
 
 	float GetFPS(); 

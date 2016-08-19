@@ -1,6 +1,7 @@
 #pragma once
 #include "SimpleGameLogic.h"
-
+#include "json.hpp"
+using json = nlohmann::json;
 
 class DebugGameLogic : public SimpleGameLogic {
 	
@@ -12,6 +13,10 @@ class DebugGameLogic : public SimpleGameLogic {
 	virtual void Shutdown() override;
 
 	virtual bool IsRunning() override;
+
+	virtual json Serialize() override;
+
+	virtual bool Deserialize(json &node) override;
 
 private:
 

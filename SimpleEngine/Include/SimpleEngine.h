@@ -50,6 +50,24 @@ public:
 
 	void SerializeResources();
 	void DeserializeResources();
+
+	//We don't store type info into game logic, so it assumes that the 
+	//user loads an appropiate file matching the loaded logic
+	bool SerializeGameLogic(std::string path);
+	bool DeserializeGameLogic(std::string path);
+	std::string GetGameLogicState();
+	void SetGameLogicState(std::string state);
+
+	bool SerializeScene(std::string path);
+	bool DeserializeScene(std::string path);
+	std::string GetSceneState();
+	bool SetSceneState(std::string state);
+
+	bool SerializeGameState(std::string path);
+	bool DeserializeGameState(std::string path);
+	std::string GetGameState();
+	bool SetGameState(std::string state);
+
 protected:
 	SimpleEngine() {};
 	~SimpleEngine() {};

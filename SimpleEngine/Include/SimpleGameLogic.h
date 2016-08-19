@@ -1,6 +1,6 @@
 #pragma once
-
-class SimpleGameLogic {
+#include "SimpleSerializable.h"
+class SimpleGameLogic : public SimpleSerializable {
 public:
 
 	virtual void Init() = 0;

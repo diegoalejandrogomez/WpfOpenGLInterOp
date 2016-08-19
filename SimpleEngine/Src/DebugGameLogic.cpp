@@ -8,6 +8,21 @@
 #include "SimpleAnimatedSpriteRenderer.h"
 #include <fstream>
 
+json DebugGameLogic::Serialize() {
+	
+	json ret{
+		{"Debug", true},
+		{"Ducks" , 42}
+	};
+	return ret;
+}
+
+bool DebugGameLogic::Deserialize(json &node) {
+	
+	SIMPLE_LOG("Debug: %i, Amount:%i ", node["Debug"].get<bool>(), node["Ducks"].get<int>());
+	return true;
+}
+
 void DebugGameLogic::Init()
 {
 	bool save = false;
@@ -16,11 +31,15 @@ void DebugGameLogic::Init()
 	if (save) {
 		_CreateTestScene();
 		SimpleEngine::Instance()->SerializeResources();
-		SimpleEngine::Instance()->GetScene()->Serialize("DebugScene.smpl");
+		//SimpleEngine::Instance()->SerializeScene("DebugScene.scene");
+		//SimpleEngine::Instance()->SerializeGameLogic("DebugState.state");
+		SimpleEngine::Instance()->SerializeGameState("DebugGameState.save");
 	}
 	else {
 		SimpleEngine::Instance()->DeserializeResources();
-		SimpleEngine::Instance()->GetScene()->Deserialize("DebugScene.smpl");
+		/*SimpleEngine::Instance()->DeserializeScene("DebugScene.scene");
+		SimpleEngine::Instance()->DeserializeGameLogic("DebugState.state");*/
+		SimpleEngine::Instance()->DeserializeGameState("DebugGameState.save");
 	}
 
 	//Configure input system we are going to use
