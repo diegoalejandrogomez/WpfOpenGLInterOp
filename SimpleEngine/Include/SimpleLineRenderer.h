@@ -3,10 +3,11 @@
 #include "SimpleObject.h"
 #include "SimpleSpriteRenderer.h"
 #include "SimpleEngine.h"
+#include "SimpleConfiguration.h"
 
-FACTORY_REGISTER(SimpleObject, SimpleLineRenderer);
 
-class SimpleLineRenderer : public SimpleObject {
+
+class SIMPLE_API SimpleLineRenderer : public SimpleObject {
 public:
 
 	SimpleLineRenderer();

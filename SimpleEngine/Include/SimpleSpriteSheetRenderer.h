@@ -8,11 +8,12 @@
 #include "SimpleSpriteRenderer.h"
 #include "SimpleSpriteSheetRenderer.h"
 #include "SimpleSpriteSheet.h"
+#include "SimpleConfiguration.h"
 
 class SimpleShaderProgram;
-FACTORY_REGISTER(SimpleObject, SimpleSpriteSheetRenderer)
 
-class SimpleSpriteSheetRenderer : public SimpleSpriteRenderer {
+
+class SIMPLE_API SimpleSpriteSheetRenderer : public SimpleSpriteRenderer {
 public:
 
 	SimpleSpriteSheetRenderer();

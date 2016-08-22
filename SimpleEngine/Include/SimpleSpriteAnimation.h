@@ -1,8 +1,9 @@
 #pragma once
 #include "SimpleSpriteSheet.h"
 #include "SimpleSerializable.h"
+#include "SimpleConfiguration.h"
 
-class SimpleSpriteAnimation: public SimpleSerializable {
+class SIMPLE_API SimpleSpriteAnimation: public SimpleSerializable {
 
 	
 

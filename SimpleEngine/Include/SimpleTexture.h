@@ -3,8 +3,9 @@
 #include "Texture.h"
 #include <glm\glm.hpp>
 #include <stdlib.h>
+#include "SimpleConfiguration.h"
 
-class SimpleTexture {
+class SIMPLE_API SimpleTexture {
 public:
 	SimpleTexture();
 	SimpleTexture(const char* path);

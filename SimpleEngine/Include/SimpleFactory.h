@@ -1,12 +1,13 @@
 #pragma once
 #include "SimpleID.h"
+#include "SimpleConfiguration.h"
 
 #define FACTORY_REGISTER(base, child) \
 class child;	\
-static base::DerivedRegister<child> _reg ##child (#child);
+extern SIMPLE_API base::DerivedRegister<child> _reg ##child (#child);
 
 template <class Base>
-class SimpleFactory {
+class SIMPLE_API SimpleFactory {
 	
 	template<typename T> 
 	static Base * Create() { return new T(); }

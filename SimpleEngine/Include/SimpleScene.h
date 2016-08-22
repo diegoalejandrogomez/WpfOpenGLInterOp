@@ -5,8 +5,9 @@
 #include "SimpleLayer.h"
 #include "SimpleAABB.h"
 #include "SimpleSerializable.h"
+#include "SimpleConfiguration.h"
 
-class SimpleScene : public SimpleSerializable {
+class SIMPLE_API SimpleScene : public SimpleSerializable {
 	//Only 1 camera per scene
 	SimpleCamera2D* _camera;
 	std::vector<SimpleLayer*> _layers;

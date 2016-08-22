@@ -5,7 +5,7 @@
 #include <unordered_map>
 #include <queue>
 
-class SimpleDispatcher
+class SIMPLE_API SimpleDispatcher
 {
 public:
 

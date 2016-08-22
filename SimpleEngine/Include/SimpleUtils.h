@@ -1,6 +1,7 @@
 #pragma once
+#include "SimpleConfiguration.h"
 
-class SimpleUtils {
+class SIMPLE_API SimpleUtils {
 
 public:
 

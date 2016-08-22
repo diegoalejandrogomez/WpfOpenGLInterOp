@@ -4,7 +4,8 @@
 #include <algorithm>
 #include <glm\gtx\transform.hpp>
 
-
+//Register entry as simpleID for factory
+FACTORY_REGISTER(SimpleObject, SimpleSpriteRenderer)
 
 SimpleSpriteRenderer::SimpleSpriteRenderer() {
 

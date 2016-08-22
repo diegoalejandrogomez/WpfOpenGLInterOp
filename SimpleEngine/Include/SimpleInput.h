@@ -4,9 +4,9 @@
 #include "OISKeyboard.h"
 #include "OISJoyStick.h"
 #include "OISInputManager.h"
+#include "SimpleConfiguration.h"
 
-
-class SimpleInput : public OIS::KeyListener, public OIS::MouseListener, public OIS::JoyStickListener {
+class SIMPLE_API SimpleInput : public OIS::KeyListener, public OIS::MouseListener, public OIS::JoyStickListener {
 public:
 	
 	SimpleInput();

@@ -7,6 +7,8 @@
 #include "SimpleRenderer.h"
 #include "SimpleTexture.h"
 
+FACTORY_REGISTER(SimpleObject, SimpleSpriteSheetRenderer)
+
 SimpleSpriteSheetRenderer::SimpleSpriteSheetRenderer() {
 	_pos = 0;
 }

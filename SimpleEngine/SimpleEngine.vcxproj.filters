@@ -39,6 +39,9 @@
     <Filter Include="Engine\Graphics\Sprites">
       <UniqueIdentifier>{f1dfaaea-cda2-49a8-b67c-d8c526ea8d4f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Config">
+      <UniqueIdentifier>{34988c63-e51e-43cb-b8fa-0490f0897b88}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -154,6 +157,9 @@
     </ClInclude>
     <ClInclude Include="Include\SimpleSerializable.h">
       <Filter>Engine\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\SimpleConfiguration.h">
+      <Filter>Engine\Config</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

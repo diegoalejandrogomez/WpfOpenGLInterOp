@@ -2,9 +2,10 @@
 #include "stdafx.h"
 #include "SimpleSpriteSheetRenderer.h"
 #include "SimpleSpriteAnimation.H"
+#include "SimpleConfiguration.h"
 
-FACTORY_REGISTER(SimpleObject, SimpleAnimatedSpriteRenderer);
-class SimpleAnimatedSpriteRenderer : public SimpleSpriteSheetRenderer {
+
+class SIMPLE_API SimpleAnimatedSpriteRenderer : public SimpleSpriteSheetRenderer {
 public:
 
 	SimpleAnimatedSpriteRenderer();

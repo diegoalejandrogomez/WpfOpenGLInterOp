@@ -1,9 +1,12 @@
 #pragma once
 #include <string>
 #include <map>
+#include "SimpleConfiguration.h"
+
 //This configures if the hash has hash->string functionality
+
 #define HASH_DB
-class SimpleID {
+class SIMPLE_API SimpleID {
 
 public:
 	
@@ -43,7 +46,7 @@ public:
 	}
 
 #ifdef HASH_DB
-	const std::string& GetString()const { return _hashDB[_id]; }
+	const std::string& GetString()const { return GetHashDB()[_id]; }
 	const bool HasString() { return true; };
 #else
 	const bool HasString() { return false; };
@@ -53,18 +56,22 @@ private:
 	inline void _getHash(const std::string &&name) {
 		_id = std::hash<std::string>{}(name);
 #ifdef HASH_DB //Check if no collition happens in debug mode
-		auto it = _hashDB.find(_id);
-		if(it != _hashDB.end()) //check the hashes match
+		auto it = GetHashDB().find(_id);
+		if(it != GetHashDB().end()) //check the hashes match
 			assert(it->second == name);
 		else
-			_hashDB[_id] = name;
+			GetHashDB()[_id] = name;
 #endif // HASH_DB	
 	};
 
 	uint32_t _id;
 
 #ifdef HASH_DB
-	static std::map<uint32_t, std::string> _hashDB;
+	static std::map<uint32_t, std::string>& GetHashDB() {
+		static std::map<uint32_t, std::string> hashDB;
+		return hashDB;
+	}
+	
 #endif // HASH_DB
 
 };

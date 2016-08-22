@@ -1,6 +1,7 @@
 #pragma once
+#include "SimpleConfiguration.h"
 
-class SimpleEvent
+class SIMPLE_API SimpleEvent
 {
 public:
 	typedef  const char* DescriptorType;

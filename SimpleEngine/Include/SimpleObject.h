@@ -6,10 +6,11 @@
 #include "json.hpp"
 #include "SimpleFactory.h"
 #include "SimpleSerializable.h"
+#include "SimpleConfiguration.h"
 
 using json = nlohmann::json;
 
-class SimpleObject :public SimpleFactory<SimpleObject>, 
+class SIMPLE_API SimpleObject :public SimpleFactory<SimpleObject>,
 					public SimpleSerializable{
 
 public:

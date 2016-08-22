@@ -5,10 +5,11 @@
 #include <vector>
 #include "json.hpp"
 #include "SimpleSerializable.h"
+#include "SimpleConfiguration.h"
 
 using json = nlohmann::json;
 
-class SimpleSpriteSheet : public SimpleTexture, SimpleSerializable{
+class SIMPLE_API SimpleSpriteSheet : public SimpleTexture, SimpleSerializable{
 
 public:
 

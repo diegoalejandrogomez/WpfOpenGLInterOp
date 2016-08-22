@@ -1,7 +1,8 @@
 #pragma once
+#include "SimpleConfiguration.h"
 class SimpleScene;
 
-class RenderPass {
+class SIMPLE_API RenderPass {
 
 public:
 	//We pass the dt just in case the rendering is animating something

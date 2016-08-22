@@ -250,3 +250,5 @@ paket-files/
 # JetBrains Rider
 .idea/
 *.sln.iml
+/SimpleEngine/Debug_DLL
+/SimpleEngineTest/Debug_FromDll

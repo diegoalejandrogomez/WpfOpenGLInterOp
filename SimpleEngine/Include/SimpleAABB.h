@@ -1,7 +1,11 @@
 #pragma once
+#include "SimpleConfiguration.h"
+
+
 
 //A 2D aabb living in a 3D world
-struct SimpleAABB {
+struct SIMPLE_API SimpleAABB {
+
 	glm::vec3 position = glm::vec3(0.0f);
 	glm::vec2 size = glm::vec2(0.0f);
 	

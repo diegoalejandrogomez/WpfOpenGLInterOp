@@ -4,19 +4,19 @@
 // that uses this DLL. This way any other project whose source files include this file see 
 // SIMPLEENGINENATIVETILEEDITOR_API functions as being imported from a DLL, whereas this DLL sees symbols
 // defined with this macro as being exported.
-#ifdef SIMPLEENGINENATIVETILEEDITOR_EXPORTS
-#define SIMPLEENGINENATIVETILEEDITOR_API __declspec(dllexport)
+#ifdef TILEEDITOR_EXPORTS
+#define TILEEDITOR_API __declspec(dllexport)
 #else
-#define SIMPLEENGINENATIVETILEEDITOR_API __declspec(dllimport)
+#define TILEEDITOR_API __declspec(dllimport)
 #endif
 
-// This class is exported from the SimpleEngineNativeTileEditor.dll
-class SIMPLEENGINENATIVETILEEDITOR_API CSimpleEngineNativeTileEditor {
-public:
-	CSimpleEngineNativeTileEditor(void);
-	// TODO: add your methods here.
-};
-
-extern SIMPLEENGINENATIVETILEEDITOR_API int nSimpleEngineNativeTileEditor;
-
-SIMPLEENGINENATIVETILEEDITOR_API int fnSimpleEngineNativeTileEditor(void);
+//// This class is exported from the SimpleEngineNativeTileEditor.dll
+//class SIMPLEENGINENATIVETILEEDITOR_API CSimpleEngineNativeTileEditor {
+//public:
+//	CSimpleEngineNativeTileEditor(void);
+//	// TODO: add your methods here.
+//};
+//
+//extern SIMPLEENGINENATIVETILEEDITOR_API int nSimpleEngineNativeTileEditor;
+//
+//SIMPLEENGINENATIVETILEEDITOR_API int fnSimpleEngineNativeTileEditor(void);

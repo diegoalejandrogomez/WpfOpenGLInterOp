@@ -5,14 +5,13 @@
 #include "SimpleCamera2D.h"
 #include "SimpleMesh.h"
 #include "SimpleTexture.h"
-
+#include "SimpleConfiguration.h"
 class SimpleShaderProgram;
 
 
-//Register entry as simpleID for factory
-FACTORY_REGISTER(SimpleObject, SimpleSpriteRenderer)
 
-class SimpleSpriteRenderer : public SimpleObject {
+
+class SIMPLE_API SimpleSpriteRenderer : public SimpleObject {
 public:
 
 	SimpleSpriteRenderer();

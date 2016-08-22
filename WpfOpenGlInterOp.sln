@@ -5,6 +5,7 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPF", "WPF\WPF.csproj", "{EF0A5809-3691-45E5-965E-1E015FAA029C}"
 	ProjectSection(ProjectDependencies) = postProject
+		{80F800AF-F3EE-4F86-887B-0FBA0DBDB7BF} = {80F800AF-F3EE-4F86-887B-0FBA0DBDB7BF}
 		{14ED99EC-7644-4963-8301-4D7B4BF4BA04} = {14ED99EC-7644-4963-8301-4D7B4BF4BA04}
 	EndProjectSection
 EndProject
@@ -21,8 +22,14 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SimpleEngineControls", "Sim
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleEngineTileEditor", "SimpleEngineTileEditor\SimpleEngineTileEditor.csproj", "{80F800AF-F3EE-4F86-887B-0FBA0DBDB7BF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2566309A-1485-4366-998C-0F64E87E0FD8} = {2566309A-1485-4366-998C-0F64E87E0FD8}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SimpleEngineNativeTileEditor", "SimpleEngineNativeTileEditor\SimpleEngineNativeTileEditor.vcxproj", "{2566309A-1485-4366-998C-0F64E87E0FD8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{37BC156B-0948-4591-A77B-6DD682BDBD21} = {37BC156B-0948-4591-A77B-6DD682BDBD21}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,8 +57,8 @@ Global
 		{37BC156B-0948-4591-A77B-6DD682BDBD21}.Debug|Any CPU.Build.0 = Debug|Win32
 		{37BC156B-0948-4591-A77B-6DD682BDBD21}.Debug|x64.ActiveCfg = Debug|x64
 		{37BC156B-0948-4591-A77B-6DD682BDBD21}.Debug|x64.Build.0 = Debug|x64
-		{37BC156B-0948-4591-A77B-6DD682BDBD21}.Debug|x86.ActiveCfg = Debug|Win32
-		{37BC156B-0948-4591-A77B-6DD682BDBD21}.Debug|x86.Build.0 = Debug|Win32
+		{37BC156B-0948-4591-A77B-6DD682BDBD21}.Debug|x86.ActiveCfg = Debug_DLL|Win32
+		{37BC156B-0948-4591-A77B-6DD682BDBD21}.Debug|x86.Build.0 = Debug_DLL|Win32
 		{37BC156B-0948-4591-A77B-6DD682BDBD21}.Release|Any CPU.ActiveCfg = Release|Win32
 		{37BC156B-0948-4591-A77B-6DD682BDBD21}.Release|x64.ActiveCfg = Release|x64
 		{37BC156B-0948-4591-A77B-6DD682BDBD21}.Release|x64.Build.0 = Release|x64
@@ -61,8 +68,8 @@ Global
 		{FB9F708F-2837-4644-B0E1-F6F6F8E4274B}.Debug|Any CPU.Build.0 = Debug|Win32
 		{FB9F708F-2837-4644-B0E1-F6F6F8E4274B}.Debug|x64.ActiveCfg = Debug|x64
 		{FB9F708F-2837-4644-B0E1-F6F6F8E4274B}.Debug|x64.Build.0 = Debug|x64
-		{FB9F708F-2837-4644-B0E1-F6F6F8E4274B}.Debug|x86.ActiveCfg = Debug|Win32
-		{FB9F708F-2837-4644-B0E1-F6F6F8E4274B}.Debug|x86.Build.0 = Debug|Win32
+		{FB9F708F-2837-4644-B0E1-F6F6F8E4274B}.Debug|x86.ActiveCfg = Debug_FromDll|Win32
+		{FB9F708F-2837-4644-B0E1-F6F6F8E4274B}.Debug|x86.Build.0 = Debug_FromDll|Win32
 		{FB9F708F-2837-4644-B0E1-F6F6F8E4274B}.Release|Any CPU.ActiveCfg = Release|Win32
 		{FB9F708F-2837-4644-B0E1-F6F6F8E4274B}.Release|x64.ActiveCfg = Release|x64
 		{FB9F708F-2837-4644-B0E1-F6F6F8E4274B}.Release|x64.Build.0 = Release|x64

@@ -2,7 +2,7 @@
 #include "stdafx.h"
 #include "RenderPass.h"
 
-class SimpleObjectsRenderPass : public RenderPass {
+class SIMPLE_API SimpleObjectsRenderPass : public RenderPass {
 
 public:
 

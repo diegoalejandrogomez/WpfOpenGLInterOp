@@ -129,7 +129,7 @@ void SimpleInput::CreateMouse(bool buffered) {
 			this,
 			[this](const SimpleEvent& evt) {
 			const WindowResizeEvent &res = static_cast<const WindowResizeEvent&>(evt);
-			SetWindowExtents(res.width,res.height);
+			SetWindowExtents((int)res.width,(int)res.height);
 		}
 		});
 

@@ -2,6 +2,8 @@
 #include "SimpleLineRenderer.h"
 #include <glm\gtx\transform.hpp>
 
+FACTORY_REGISTER(SimpleObject, SimpleLineRenderer);
+
 SimpleLineRenderer::SimpleLineRenderer() {
 
 	SimpleRenderer* render = SimpleEngine::Instance()->GetRenderer();

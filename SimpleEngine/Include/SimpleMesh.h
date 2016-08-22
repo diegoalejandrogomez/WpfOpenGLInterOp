@@ -1,8 +1,10 @@
 #pragma once
 #include "stdafx.h"
 #include <GL\GL.h>
+#include "SimpleConfiguration.h"
+
 template <class VERTEX_TYPE>
-class SimpleMesh {
+class SIMPLE_API SimpleMesh {
 
 public:
 

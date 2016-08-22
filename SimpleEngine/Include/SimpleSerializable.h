@@ -1,8 +1,10 @@
 #pragma once
 #include "json.hpp"
+#include "SimpleConfiguration.h"
+
 using json = nlohmann::json;
 
-class SimpleSerializable {
+class SIMPLE_API SimpleSerializable {
 
 public:
 

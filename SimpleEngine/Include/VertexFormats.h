@@ -1,6 +1,7 @@
 #pragma once
+#include "SimpleConfiguration.h"
 
-struct VertexColorFormat2D {
+struct SIMPLE_API VertexColorFormat2D {
 	float pos[2];	//xy
 	float color[3]; //rgb
 
@@ -14,7 +15,7 @@ struct VertexColorFormat2D {
 };
 
 
-struct VertexTextureFormat2D {
+struct SIMPLE_API VertexTextureFormat2D {
 	float pos[2];	//xy
 	float uv[2]; //uv 
 

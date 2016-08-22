@@ -2,6 +2,8 @@
 #include "SimpleAnimatedSpriteRenderer.h"
 #include "SimpleEngine.h"
 
+FACTORY_REGISTER(SimpleObject, SimpleAnimatedSpriteRenderer);
+
 SimpleAnimatedSpriteRenderer::SimpleAnimatedSpriteRenderer() {
 	_playing = false;
 	_loop = false;

@@ -11,10 +11,11 @@
 #include "SimpleSpriteSheet.h"
 #include "SimpleSpriteAnimation.h"
 #include "SimpleID.h"
+#include "SimpleConfiguration.h"
 
 class SimpleScene;
 
-class SimpleRenderer {
+class SIMPLE_API SimpleRenderer {
 
 public:
 	SimpleRenderer();

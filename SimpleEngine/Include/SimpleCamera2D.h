@@ -2,8 +2,10 @@
 #include <glm\glm.hpp>
 #include "SimpleAABB.h"
 #include <algorithm>
+#include "SimpleConfiguration.h"
 
-class SimpleCamera2D {
+
+class SIMPLE_API SimpleCamera2D {
 	
 public:
 

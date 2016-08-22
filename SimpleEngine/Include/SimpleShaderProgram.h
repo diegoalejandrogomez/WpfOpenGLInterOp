@@ -1,8 +1,9 @@
 #pragma once
 #include <GL\GL.h>
 #include <string>
+#include "SimpleConfiguration.h"
 
-class SimpleShaderProgram{
+class SIMPLE_API SimpleShaderProgram{
 public:
 	SimpleShaderProgram();
 

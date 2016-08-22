@@ -3,8 +3,9 @@
 #include <vector>
 #include "SimpleObject.h"
 #include "SimpleSerializable.h"
+#include "SimpleConfiguration.h"
 
-class SimpleLayer : public SimpleSerializable{
+class SIMPLE_API SimpleLayer : public SimpleSerializable{
 public:
 	SimpleLayer();
 	~SimpleLayer();

@@ -4,8 +4,9 @@
 #include "SimpleGameLogic.h"
 #include "SimpleInput.h"
 #include <chrono>
+#include "SimpleConfiguration.h"
 
-class SimpleEngine final{
+class SIMPLE_API SimpleEngine final{
 public:
 
 	static SimpleEngine*  Instance()
