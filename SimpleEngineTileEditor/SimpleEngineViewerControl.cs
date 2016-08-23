@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 
 namespace SimpleEngineTileEditor
 {
-    class SimpleEngineViewerControl : UserControl
+    public class SimpleEngineViewerControl : UserControl
 	{
         #region SimpleEngineImports
         [DllImport("SimpleEngine_dyn.dll")]
@@ -52,6 +52,52 @@ namespace SimpleEngineTileEditor
 
         [DllImport("SimpleEngineNativeTileEditor.dll")]
         static extern void TileEditorApp_SetCursorTile(String sheet, Int32 index);
+
+        [DllImport("SimpleEngineNativeTileEditor.dll")]
+        static extern void NewMap();
+
+        [DllImport("SimpleEngineNativeTileEditor.dll")]
+        static extern void LoadState(String gameState);
+
+        [DllImport("SimpleEngineNativeTileEditor.dll")]
+        static extern String GetState();
+
+        [DllImport("SimpleEngineNativeTileEditor.dll")]
+        static extern void SetMapSize(int width, int height);
+
+        [DllImport("SimpleEngineNativeTileEditor.dll")]
+        static extern void SetMapWidth(int width);
+
+        [DllImport("SimpleEngineNativeTileEditor.dll")]
+        static extern void SetMapHeight(int height);
+
+        [DllImport("SimpleEngineNativeTileEditor.dll")]
+        static extern void SetCursorPosition(float x, float y);
+
+        [DllImport("SimpleEngineNativeTileEditor.dll")]
+        static extern void SetCursorIdle();
+
+        [DllImport("SimpleEngineNativeTileEditor.dll")]
+        static extern void SetCursorTile(String sheet, int index);
+
+        [DllImport("SimpleEngineNativeTileEditor.dll")]
+        static extern void SetCursorErase();
+
+        [DllImport("SimpleEngineNativeTileEditor.dll")]
+        static extern void Paint();
+
+
+        [DllImport("SimpleEngineNativeTileEditor.dll")]
+        static extern int GetMapWidth();
+
+        [DllImport("SimpleEngineNativeTileEditor.dll")]
+        static extern int GetMapHeight();
+
+        [DllImport("SimpleEngineNativeTileEditor.dll")]
+        static extern String Serialize();
+
+        [DllImport("SimpleEngineNativeTileEditor.dll")]
+        static extern bool Deserialize(String node);
         #endregion
 
         public IntPtr WPFWindowHandle { get; set; }
