@@ -173,6 +173,12 @@
     <ClInclude Include="Interface\ISimpleCamera2D.h">
       <Filter>Interface</Filter>
     </ClInclude>
+    <ClInclude Include="Interface\ISimpleScene.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\ISimpleObject.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\SimpleObjectsRenderPass.cpp">
@@ -260,6 +266,12 @@
       <Filter>Interface</Filter>
     </ClCompile>
     <ClCompile Include="Interface\ISimpleCamera2D.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="Interface\ISimpleScene.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="Interface\ISimpleObject.cpp">
       <Filter>Interface</Filter>
     </ClCompile>
   </ItemGroup>

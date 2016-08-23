@@ -46,10 +46,11 @@ public:
 	}
 
 #ifdef HASH_DB
-	const std::string& GetString()const { return GetHashDB()[_id]; }
+	const std::string GetString()const { return GetHashDB()[_id]; }
 	const bool HasString() { return true; };
 #else
 	const bool HasString() { return false; };
+	const std::string GetString()const { "" }
 #endif //HASH_DB
 private:
 

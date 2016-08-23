@@ -31,6 +31,10 @@ namespace SimpleEngineTileEditor
 
         [DllImport("SimpleEngine_dyn.dll")]
         static extern void SimpleEngine_Advance(float dt);
+
+        [DllImport("SimpleEngine_dyn.dll")]
+        static extern IntPtr SimpleScene_PickFirstPoint(float x, float y);
+
         #endregion
 
         #region NativeEditorImports
@@ -98,6 +102,18 @@ namespace SimpleEngineTileEditor
         }
 
         ManagedSimpleObject SetItem(float x, float y) {
+
+            Int32 ix = (Int32)x;
+            Int32 iy = (Int32)y;
+
+            SimpleCamera2D_ScreenToWorld(ref ix, ref iy);
+            IntPtr res = SimpleScene_PickFirstPoint(x, y);
+
+            if (res != IntPtr.Zero) {
+                ManagedSimpleObject SelectedObject = new ManagedSimpleObject();
+                SelectedObject.SetSimpleObject(res);
+                return SelectedObject;
+            }      
 
             return null;
         }
