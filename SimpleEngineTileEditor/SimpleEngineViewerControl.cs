@@ -65,6 +65,9 @@ namespace SimpleEngineTileEditor
         [DllImport("SimpleEngine_dyn.dll")]
         static extern IntPtr SimpleScene_GetLayerWithIdx(Int32 nLayer);
 
+        #endregion
+
+        #region SimpleLayerImports
         [DllImport("SimpleEngine_dyn.dll")]
         static extern IntPtr SimpleLayer_EntitiesBegin(IntPtr layer);
 

@@ -239,6 +239,7 @@ copy /Y "$(ProjectDir)\External\devil\lib\ILU.dll" "$(TargetDir)"</Command>
     <ClInclude Include="Include\VertexFormats.h" />
     <ClInclude Include="Interface\ISimpleCamera2D.h" />
     <ClInclude Include="Interface\ISimpleEngine.h" />
+    <ClInclude Include="Interface\ISimpleLayer.h" />
     <ClInclude Include="Interface\ISimpleObject.h" />
     <ClInclude Include="Interface\ISimpleRenderer.h" />
     <ClInclude Include="Interface\ISimpleScene.h" />
@@ -252,6 +253,7 @@ copy /Y "$(ProjectDir)\External\devil\lib\ILU.dll" "$(TargetDir)"</Command>
     <ClCompile Include="Include\SimpleFactory.cpp" />
     <ClCompile Include="Interface\ISimpleCamera2D.cpp" />
     <ClCompile Include="Interface\ISimpleEngine.cpp" />
+    <ClCompile Include="Interface\ISimpleLayer.cpp" />
     <ClCompile Include="Interface\ISimpleObject.cpp" />
     <ClCompile Include="Interface\ISimpleRenderer.cpp" />
     <ClCompile Include="Interface\ISimpleScene.cpp" />
