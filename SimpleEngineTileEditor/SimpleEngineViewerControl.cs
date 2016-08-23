@@ -24,7 +24,13 @@ namespace SimpleEngineTileEditor
         static extern void SimpleEngine_SetGameLogic(IntPtr logic);
         [DllImport("SimpleEngine_dyn.dll")]
         static extern void SimpleRenderer_ResizeWindow(Int32 width, Int32 height);
+        [DllImport("SimpleEngine_dyn.dll")]
+        static extern void SimpleCamera2D_ScreenToWorld(ref Int32 x, ref Int32 y);
+        [DllImport("SimpleEngine_dyn.dll")]
+        static extern void SimpleEngine_Render(float dt);
 
+        [DllImport("SimpleEngine_dyn.dll")]
+        static extern void SimpleEngine_Advance(float dt);
         #endregion
 
         #region NativeEditorImports
@@ -75,7 +81,11 @@ namespace SimpleEngineTileEditor
 
         public void SetMousePosition(float x, float y)
         {
-            TileEditorApp_SetCursorPosition(x, y);
+            Int32 ix = (Int32)x;
+            Int32 iy = (Int32)y;
+
+            SimpleCamera2D_ScreenToWorld(ref ix, ref iy);               
+            TileEditorApp_SetCursorPosition(ix, iy);
         }
 
         override protected void OnPaintBackground(PaintEventArgs e) {
@@ -83,13 +93,17 @@ namespace SimpleEngineTileEditor
         }
 
         override protected void OnPaint(PaintEventArgs e) {
-
+            SimpleEngine_Advance(0.0f);
+            SimpleEngine_Render(0.0f);
         }
 
-        //ManagedSimpleObject^ SetItem(float x, float y);
+        ManagedSimpleObject SetItem(float x, float y) {
+
+            return null;
+        }
 
         public void Restart() {
-            
+                       
 
         }
 
@@ -111,6 +125,8 @@ namespace SimpleEngineTileEditor
 
         //Custom events
         event EventHandler OnEngineInitialized;
+
+                
 
     //    int MaxZoom
     //    {
