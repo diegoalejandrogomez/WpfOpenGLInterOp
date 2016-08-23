@@ -25,6 +25,7 @@ void TileEditorApp::Init()
 	spriteSheet = engine->GetRenderer()->GetSpriteSheet("media/delete.png");
 	spriteSheet->AddSpriteFrame({ 0,0 }, { spriteSheet->GetWidth(), spriteSheet->GetHeight() });
 	
+	
 	SetCursorIdle();
 
 }
@@ -101,6 +102,8 @@ void TileEditorApp::_Draw() {
 		glm::vec3 pos = _cursor->GetPosition();
 		int idx = _tileMapSize.x * int(pos.y) + (int)pos.x;
 		_tiles[idx] = tile;
+		SimpleAABB aabb;
+		aabb.position;
 		SimpleEngine::Instance()->GetScene()->AddEntity(tile, "MainTileMap");
 	}
 }

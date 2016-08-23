@@ -222,6 +222,10 @@
       <Project>{14ed99ec-7644-4963-8301-4d7b4bf4ba04}</Project>
       <Name>SimpleEngineControls</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SimpleEngineTileEditor\SimpleEngineTileEditor.csproj">
+      <Project>{80f800af-f3ee-4f86-887b-0fba0dbdb7bf}</Project>
+      <Name>SimpleEngineTileEditor</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Icons\drag.png" />

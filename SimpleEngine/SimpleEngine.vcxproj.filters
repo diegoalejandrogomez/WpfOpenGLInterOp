@@ -42,6 +42,9 @@
     <Filter Include="Engine\Config">
       <UniqueIdentifier>{34988c63-e51e-43cb-b8fa-0490f0897b88}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Interface">
+      <UniqueIdentifier>{9b3910bf-804a-48a1-87ae-023ece0fc22c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -161,6 +164,15 @@
     <ClInclude Include="Include\SimpleConfiguration.h">
       <Filter>Engine\Config</Filter>
     </ClInclude>
+    <ClInclude Include="Interface\ISimpleEngine.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\ISimpleRenderer.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\ISimpleCamera2D.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\SimpleObjectsRenderPass.cpp">
@@ -240,6 +252,15 @@
     </ClCompile>
     <ClCompile Include="Include\SimpleFactory.cpp">
       <Filter>Engine\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Interface\ISimpleEngine.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="Interface\ISimpleRenderer.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="Interface\ISimpleCamera2D.cpp">
+      <Filter>Interface</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

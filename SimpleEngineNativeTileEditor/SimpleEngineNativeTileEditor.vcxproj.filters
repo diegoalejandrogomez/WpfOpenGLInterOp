@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Interface">
+      <UniqueIdentifier>{a9887c31-e1ab-47a1-96d4-c4c3a78c8bb1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -26,6 +29,9 @@
     </ClInclude>
     <ClInclude Include="SimpleEngineNativeTileEditor.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Intreface\ITileEditorApp.h">
+      <Filter>Interface</Filter>
     </ClInclude>
     <ClInclude Include="..\SimpleEngineControls\TileEditorApp.h">
       <Filter>Header Files</Filter>
@@ -43,6 +49,9 @@
     </ClCompile>
     <ClCompile Include="..\SimpleEngineControls\TileEditorApp.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Intreface\ITileEditorApp.cpp">
+      <Filter>Interface</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
