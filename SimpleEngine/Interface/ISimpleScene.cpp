@@ -61,6 +61,14 @@ void SimpleScene_RemoveLayer(SimpleLayer* sLayer) {
 
 }
 
+uint32_t GetLayerCount() {
+	
+	SimpleScene *scene = SimpleEngine::Instance()->GetScene();
+	if (scene != nullptr)
+		return scene->GetLayers().size();
+	return 0;
+
+}
 SimpleLayer* SimpleScene_GetLayerWithIdx(int nLayer) {
 
 	SimpleScene *scene = SimpleEngine::Instance()->GetScene();

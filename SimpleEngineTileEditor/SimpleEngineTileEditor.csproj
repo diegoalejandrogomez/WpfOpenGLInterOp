@@ -57,6 +57,7 @@
     <Compile Include="SimpleEngineViewerControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="SpriteControl.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
