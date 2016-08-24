@@ -41,7 +41,7 @@ namespace SimpleEngineTileEditor
         #region SimpleCameraImports
         //Simple Camera Imports
         [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
-        static extern void SimpleCamera2D_ScreenToWorld(ref Int32 x, ref Int32 y);
+        static extern void SimpleCamera2D_ScreenToWorld(ref float x, ref float y);
         [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern void SimpleCamera2D_Move(float dx, float dy);
         [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
@@ -167,8 +167,8 @@ namespace SimpleEngineTileEditor
 
         public void SetMousePosition(float x, float y)
         {
-            Int32 ix = (Int32)x;
-            Int32 iy = (Int32)y;
+            float ix = x;
+            float iy = y;
 
             SimpleCamera2D_ScreenToWorld(ref ix, ref iy);
             TileEditorApp_SetCursorPosition(ix, iy);
@@ -188,8 +188,8 @@ namespace SimpleEngineTileEditor
         public ManagedSimpleObject SetItem(float x, float y)
         {
 
-            Int32 ix = (Int32)x;
-            Int32 iy = (Int32)y;
+            float ix = (Int32)x;
+            float iy = (Int32)y;
 
             SimpleCamera2D_ScreenToWorld(ref ix, ref iy);
             IntPtr res = SimpleScene_PickFirstPoint(x, y);
@@ -230,13 +230,13 @@ namespace SimpleEngineTileEditor
 
         public void MoveCamera(float dx, float dy)
         {
-            int wX = (int)dx; int wY = (int)dy;
+            float wX = dx; float wY = dy;
             SimpleCamera2D_ScreenToWorld(ref wX, ref wY);
-            int wOX = 0; int wOY = 0;
+            float wOX = 0; float wOY = 0;
             SimpleCamera2D_ScreenToWorld(ref wOX, ref wOY);
 
-            int deltaX = wX - wOX;
-            int deltaY = wY - wOY;
+            float deltaX = wX - wOX;
+            float deltaY = wY - wOY;
 
             SimpleCamera2D_Move(deltaX, -deltaY);
 

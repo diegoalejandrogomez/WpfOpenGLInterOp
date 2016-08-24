@@ -74,10 +74,10 @@ namespace SimpleEngineTileEditor
 
         //Camera imports
         [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
-        static extern void SimpleCamera2D_WorldToScreen(ref Int32 x, ref Int32 y);
+        static extern void SimpleCamera2D_WorldToScreen(ref float x, ref float y);
 
         [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
-        static extern void SimpleCamera2D_ScreenToWorld(ref Int32 x, ref Int32 y);
+        static extern void SimpleCamera2D_ScreenToWorld(ref float x, ref float y);
 
         #endregion
 
@@ -103,8 +103,8 @@ namespace SimpleEngineTileEditor
                 float y = 0.0f;
                 float z = 0.0f;
                 SimpleObject_GetPosition(_simpleObject, ref x, ref y, ref z);
-                int ix = (int)x;
-                int iy = (int)y;
+                float ix = x;
+                float iy = y;
                 SimpleCamera2D_WorldToScreen(ref ix, ref iy);
                 return ix;
             }
@@ -117,8 +117,8 @@ namespace SimpleEngineTileEditor
                 float z = 0.0f;
                 SimpleObject_GetPosition(_simpleObject, ref x, ref y, ref z);
 
-                int ix = (int)value;
-                int iy = (int)y;
+                float ix = value;
+                float iy = y;
                 SimpleCamera2D_ScreenToWorld(ref ix, ref iy);
                 SimpleObject_SetX(_simpleObject, ix);
             }
@@ -134,8 +134,8 @@ namespace SimpleEngineTileEditor
                 float y = 0.0f;
                 float z = 0.0f;
                 SimpleObject_GetPosition(_simpleObject, ref x, ref y, ref z);
-                int ix = (int)x;
-                int iy = (int)y;
+                float ix = x;
+                float iy = y;
                 SimpleCamera2D_WorldToScreen(ref ix, ref iy);
                 return iy;
             }
@@ -148,8 +148,8 @@ namespace SimpleEngineTileEditor
                 float z = 0.0f;
                 SimpleObject_GetPosition(_simpleObject, ref x, ref y, ref z);
 
-                int ix = (int)value;
-                int iy = (int)y;
+                float ix = value;
+                float iy = y;
                 SimpleCamera2D_ScreenToWorld(ref ix, ref iy);
                 SimpleObject_SetY(_simpleObject, iy);
 

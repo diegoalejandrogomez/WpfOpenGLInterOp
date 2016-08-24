@@ -64,33 +64,33 @@ extern "C"
 		return SimpleEngine::Instance()->GetScene()->GetCamera()->GetMaxZoom();
 	}
 
-	SIMPLE_API void SimpleCamera2D_ScreenToWorld(int& x, int& y) {
+	SIMPLE_API void SimpleCamera2D_ScreenToWorld(float& x, float& y) {
 
 		glm::vec2 ret = SimpleEngine::Instance()->GetScene()->GetCamera()->ScreenToWorld({ x,y });
-		x = (int)ret.x;
-		y = (int)ret.y;
+		x = ret.x;
+		y = ret.y;
 	}
 
-	SIMPLE_API void SimpleCamera2D_ViewportToWorld(int& x, int& y) {
+	SIMPLE_API void SimpleCamera2D_ViewportToWorld(float& x, float& y) {
 
 		glm::vec2 ret = SimpleEngine::Instance()->GetScene()->GetCamera()->ViewportToWorld({ x,y });
-		x = (int)ret.x;
-		y = (int)ret.y;
+		x = ret.x;
+		y = ret.y;
 	}
 
-	SIMPLE_API void SimpleCamera2D_WorldToScreen(int& x, int& y) {
+	SIMPLE_API void SimpleCamera2D_WorldToScreen(float& x, float& y) {
 
 		glm::vec2 ret = SimpleEngine::Instance()->GetScene()->GetCamera()->WorldToScreen({ x,y });
-		x = (int)ret.x;
-		y = (int)ret.y;
+		x = ret.x;
+		y = ret.y;
 
 	}
 
-	SIMPLE_API void SimpleCamera2D_WorldToViewport(int& x, int& y) {
+	SIMPLE_API void SimpleCamera2D_WorldToViewport(float& x, float& y) {
 
 		glm::vec2 ret = SimpleEngine::Instance()->GetScene()->GetCamera()->WorldToViewport({ x,y });
-		x = (int)ret.x;
-		y = (int)ret.y;
+		x = ret.x;
+		y = ret.y;
 
 	}
 }

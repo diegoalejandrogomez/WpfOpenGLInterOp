@@ -25,11 +25,11 @@ extern "C" {
 	
 	SIMPLE_API float SimpleCamera2D_GetMaxZoom();
 
-	SIMPLE_API void SimpleCamera2D_ScreenToWorld(int& x, int& y);
+	SIMPLE_API void SimpleCamera2D_ScreenToWorld(float& x, float& y);
 	
-	SIMPLE_API void SimpleCamera2D_ViewportToWorld(int& x, int& y);
+	SIMPLE_API void SimpleCamera2D_ViewportToWorld(float& x, float& y);
 
-	SIMPLE_API void SimpleCamera2D_WorldToScreen(int& x, int& y);
+	SIMPLE_API void SimpleCamera2D_WorldToScreen(float& x, float& y);
 	
-	SIMPLE_API void SimpleCamera2D_WorldToViewport(int& x, int& y);
+	SIMPLE_API void SimpleCamera2D_WorldToViewport(float& x, float& y);
 }
