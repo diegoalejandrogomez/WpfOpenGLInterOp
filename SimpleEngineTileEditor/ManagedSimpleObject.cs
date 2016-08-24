@@ -12,71 +12,71 @@ namespace SimpleEngineTileEditor
 
         #region DllImports
         //Managed simple object imports
-        [DllImport("SimpleEngine_dyn.dll")]
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern void SimpleObject_GetPosition(IntPtr sObj, ref float x, ref float y, ref float z);
 
-        [DllImport("SimpleEngine_dyn.dll")]
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern void SimpleObject_Getx(IntPtr sObj, ref float x);
 
-        [DllImport("SimpleEngine_dyn.dll")]
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern void SimpleObject_GetY(IntPtr sObj, ref float y);
 
-        [DllImport("SimpleEngine_dyn.dll")]
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern void SimpleObject_GetZ(IntPtr sObj, ref float z);
 
-        [DllImport("SimpleEngine_dyn.dll")]
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern void SimpleObject_GetSize(IntPtr sObj, ref float width, ref float height);
 
-        [DllImport("SimpleEngine_dyn.dll")]
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern void SimpleObject_GetWidth(IntPtr sObj, ref float width);
 
-        [DllImport("SimpleEngine_dyn.dll")]
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern void SimpleObject_GetHeight(IntPtr sObj, ref float height);
 
-        [DllImport("SimpleEngine_dyn.dll")]
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern void SimpleObject_GetOrientation(IntPtr sObj, ref float orientation);
 
-        [DllImport("SimpleEngine_dyn.dll")]
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern UInt32 SimpleObject_GetName(IntPtr sObj);
 
-        [DllImport("SimpleEngine_dyn.dll")]
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern String SimpleObject_GetStringName(IntPtr sObj);
 
-        [DllImport("SimpleEngine_dyn.dll")]
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern void SimpleObject_SetPosition(IntPtr sObj, float x, float y, float z);
 
-        [DllImport("SimpleEngine_dyn.dll")]
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern void SimpleObject_SetX(IntPtr sObj, float x);
 
-        [DllImport("SimpleEngine_dyn.dll")]
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern void SimpleObject_SetY(IntPtr sObj, float y);
 
-        [DllImport("SimpleEngine_dyn.dll")]
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern void SimpleObject_SetZ(IntPtr sObj, float z);
 
-        [DllImport("SimpleEngine_dyn.dll")]
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern void SimpleObject_SetSize(IntPtr sObj, float width, float height);
 
-        [DllImport("SimpleEngine_dyn.dll")]
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern void SimpleObject_SetWidth(IntPtr sObj, float width);
 
-        [DllImport("SimpleEngine_dyn.dll")]
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern void SimpleObject_SetHeight(IntPtr sObj, float height);
 
-        [DllImport("SimpleEngine_dyn.dll")]
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern void SimpleObject_SetOrientation(IntPtr sObj, float orientation);
 
-        [DllImport("SimpleEngine_dyn.dll")]
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern void SimpleObject_SetName(IntPtr sObj, String name);
 
-        [DllImport("SimpleEngine_dyn.dll")]
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern UInt32 SimpleObject_GetType(IntPtr sObj);
 
         //Camera imports
-        [DllImport("SimpleEngine_dyn.dll")]
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern void SimpleCamera2D_WorldToScreen(ref Int32 x, ref Int32 y);
 
-        [DllImport("SimpleEngine_dyn.dll")]
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern void SimpleCamera2D_ScreenToWorld(ref Int32 x, ref Int32 y);
 
         #endregion

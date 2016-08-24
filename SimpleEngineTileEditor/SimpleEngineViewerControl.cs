@@ -11,125 +11,125 @@ namespace SimpleEngineTileEditor
     public class SimpleEngineViewerControl : UserControl
     {
         #region SimpleEngineImports
-        [DllImport("SimpleEngine_dyn.dll")]
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern IntPtr SimpleEngine_Instance();
 
-        [DllImport("SimpleEngine_dyn.dll")]
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern void SimpleEngine_Initialize();
-        [DllImport("SimpleEngine_dyn.dll")]
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern void SimpleEngine_Shutdown();
-        [DllImport("SimpleEngine_dyn.dll")]
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern void SimpleEngine_InitRenderer(IntPtr hWnd, UInt32 width, UInt32 height);
-        [DllImport("SimpleEngine_dyn.dll")]
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern void SimpleEngine_InitInput(IntPtr hWnd, bool exclusive);
-        [DllImport("SimpleEngine_dyn.dll")]
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern void SimpleEngine_SetGameLogic(IntPtr logic);
-        [DllImport("SimpleEngine_dyn.dll")]
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern void SimpleEngine_Render(float dt);
-        [DllImport("SimpleEngine_dyn.dll")]
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern void SimpleEngine_Advance(float dt);
-        [DllImport("SimpleEngine_dyn.dll")]
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern IntPtr SimpleEngine_GetScene();
         #endregion
 
         #region SimpleRendererImports
         //Simple Renderer Imports
-        [DllImport("SimpleEngine_dyn.dll")]
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern void SimpleRenderer_ResizeWindow(Int32 width, Int32 height);
         #endregion
 
         #region SimpleCameraImports
         //Simple Camera Imports
-        [DllImport("SimpleEngine_dyn.dll")]
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern void SimpleCamera2D_ScreenToWorld(ref Int32 x, ref Int32 y);
-        [DllImport("SimpleEngine_dyn.dll")]
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern void SimpleCamera2D_Move(float dx, float dy);
-        [DllImport("SimpleEngine_dyn.dll")]
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern void SimpleCamera2D_DeltaZoom(float dz);
-        [DllImport("SimpleEngine_dyn.dll")]
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern float SimpleCamera2D_GetZoom();
-        [DllImport("SimpleEngine_dyn.dll")]
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern float SimpleCamera2D_GetMaxZoom();
-        [DllImport("SimpleEngine_dyn.dll")]
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern void SimpleCamera2D_SetZoom(float zoom);
         #endregion
 
         #region SimpleSceneImports
         //Simple Scene Imports
-        [DllImport("SimpleEngine_dyn.dll")]
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern IntPtr SimpleScene_PickFirstPoint(float x, float y);
 
-        [DllImport("SimpleEngine_dyn.dll")]
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern UInt32 SimpleScene_GetLayerCount();
 
-        [DllImport("SimpleEngine_dyn.dll")]
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern IntPtr SimpleScene_GetLayerWithIdx(Int32 nLayer);
 
         #endregion
 
         #region SimpleLayerImports
-        [DllImport("SimpleEngine_dyn.dll")]
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern IntPtr SimpleLayer_EntitiesBegin(IntPtr layer);
 
-        [DllImport("SimpleEngine_dyn.dll")]
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern IntPtr SimpleLayer_EntitiesNext(IntPtr layer);
 
-        [DllImport("SimpleEngine_dyn.dll")]
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern IntPtr SimpleLayer_EntitiesEnd(IntPtr layer);
 
         #endregion
 
         #region NativeEditorImports
-        [DllImport("SimpleEngineNativeTileEditor.dll")]
+        [DllImport("SimpleEngineNativeTileEditor.dll", CallingConvention = CallingConvention.Cdecl)]
         static extern IntPtr TileEditorApp_Create();
 
-        [DllImport("SimpleEngineNativeTileEditor.dll")]
+        [DllImport("SimpleEngineNativeTileEditor.dll", CallingConvention = CallingConvention.Cdecl)]
         static extern void TileEditorApp_Destroy(IntPtr app);
 
-        [DllImport("SimpleEngineNativeTileEditor.dll")]
+        [DllImport("SimpleEngineNativeTileEditor.dll", CallingConvention = CallingConvention.Cdecl)]
         static extern void TileEditorApp_SetCursorPosition(float x, float y);
 
-        [DllImport("SimpleEngineNativeTileEditor.dll")]
+        [DllImport("SimpleEngineNativeTileEditor.dll", CallingConvention = CallingConvention.Cdecl)]
         static extern void TileEditorApp_SetCursorIdle();
 
-        [DllImport("SimpleEngineNativeTileEditor.dll")]
+        [DllImport("SimpleEngineNativeTileEditor.dll", CallingConvention = CallingConvention.Cdecl)]
         static extern void TileEditorApp_SetCursorTile(String sheet, Int32 index);
 
-        [DllImport("SimpleEngineNativeTileEditor.dll")]
+        [DllImport("SimpleEngineNativeTileEditor.dll", CallingConvention = CallingConvention.Cdecl)]
         static extern void TileEditorApp_NewMap();
 
-        [DllImport("SimpleEngineNativeTileEditor.dll")]
+        [DllImport("SimpleEngineNativeTileEditor.dll", CallingConvention = CallingConvention.Cdecl)]
         static extern void TileEditorApp_LoadState(String gameState);
 
-        [DllImport("SimpleEngineNativeTileEditor.dll")]
+        [DllImport("SimpleEngineNativeTileEditor.dll", CallingConvention = CallingConvention.Cdecl)]
         static extern String TileEditorApp_GetState();
 
-        [DllImport("SimpleEngineNativeTileEditor.dll")]
+        [DllImport("SimpleEngineNativeTileEditor.dll", CallingConvention = CallingConvention.Cdecl)]
         static extern void TileEditorApp_SetMapSize(int width, int height);
 
-        [DllImport("SimpleEngineNativeTileEditor.dll")]
+        [DllImport("SimpleEngineNativeTileEditor.dll", CallingConvention = CallingConvention.Cdecl)]
         static extern void TileEditorApp_SetMapWidth(int width);
 
-        [DllImport("SimpleEngineNativeTileEditor.dll")]
+        [DllImport("SimpleEngineNativeTileEditor.dll", CallingConvention = CallingConvention.Cdecl)]
         static extern void TileEditorApp_SetMapHeight(int height);      
 
-        [DllImport("SimpleEngineNativeTileEditor.dll")]
+        [DllImport("SimpleEngineNativeTileEditor.dll", CallingConvention = CallingConvention.Cdecl)]
         static extern void TileEditorApp_SetCursorErase();
 
-        [DllImport("SimpleEngineNativeTileEditor.dll")]
+        [DllImport("SimpleEngineNativeTileEditor.dll", CallingConvention = CallingConvention.Cdecl)]
         static extern void TileEditorApp_Paint();
 
 
-        [DllImport("SimpleEngineNativeTileEditor.dll")]
+        [DllImport("SimpleEngineNativeTileEditor.dll", CallingConvention = CallingConvention.Cdecl)]
         static extern int TileEditorApp_GetMapWidth();
 
-        [DllImport("SimpleEngineNativeTileEditor.dll")]
+        [DllImport("SimpleEngineNativeTileEditor.dll", CallingConvention = CallingConvention.Cdecl)]
         static extern int TileEditorApp_GetMapHeight();
 
-        [DllImport("SimpleEngineNativeTileEditor.dll")]
+        [DllImport("SimpleEngineNativeTileEditor.dll", CallingConvention = CallingConvention.Cdecl)]
         static extern String TileEditorApp_Serialize();
 
-        [DllImport("SimpleEngineNativeTileEditor.dll")]
+        [DllImport("SimpleEngineNativeTileEditor.dll", CallingConvention = CallingConvention.Cdecl)]
         static extern bool TileEditorApp_Deserialize(String node);
         #endregion
 

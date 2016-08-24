@@ -11,13 +11,13 @@ namespace SimpleEngineTileEditor
     {
 
         #region SimpleSpriteRendererImports
-        [DllImport("SimpleEngine_dyn.dll")]
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern IntPtr SimpleSpriteRenderer_Create();
-        [DllImport("SimpleEngine_dyn.dll")]
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern void SimpleSpriteRenderer_Destroy(IntPtr sprite);
-        [DllImport("SimpleEngine_dyn.dll")]
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern void SimpleSpriteRenderer_SetAsTexture(IntPtr sprite, String name);
-        [DllImport("SimpleEngine_dyn.dll")]
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern void SimpleScene_AddEntityWithIdx(IntPtr sObj, int nLayer);
 
         #endregion

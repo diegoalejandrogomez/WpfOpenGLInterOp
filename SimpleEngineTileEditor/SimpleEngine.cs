@@ -11,7 +11,7 @@ namespace SimpleEngineTileEditor
     {
 
         #region DllImports
-        [DllImport("SimpleEngine_dyn.dll")]
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern IntPtr SimpleEngine_Instance();
 
         #endregion
