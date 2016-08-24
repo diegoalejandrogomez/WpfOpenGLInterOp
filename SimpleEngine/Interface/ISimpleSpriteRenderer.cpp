@@ -1,40 +1,42 @@
 #include "stdafx.h"
 #include "ISimpleSpriteRenderer.h"
 
-SimpleSpriteRenderer* SimpleSpriteRenderer_Create() {
-	
-	return new SimpleSpriteRenderer();
+extern "C" {
+	SIMPLE_API SimpleSpriteRenderer* SimpleSpriteRenderer_Create() {
 
-}
-void SimpleSpriteRenderer_Destroy(SimpleSpriteRenderer* sprite) {
-	delete sprite;
-}
+		return new SimpleSpriteRenderer();
 
-void SimpleSpriteRenderer_SetAsTexture(SimpleSpriteRenderer* sprite, const char* name) {
-	sprite->SetAsTexture(name);
-}
-void SimpleSpriteRenderer_SetAsTextureRect(SimpleSpriteRenderer* sprite, const char* name, float offsetX, float offsetY,
-	float width, float height) {
+	}
+	SIMPLE_API void SimpleSpriteRenderer_Destroy(SimpleSpriteRenderer* sprite) {
+		delete sprite;
+	}
 
-	sprite->SetAsTextureRect(name, { offsetX, offsetY }, { width, height });
+	SIMPLE_API void SimpleSpriteRenderer_SetAsTexture(SimpleSpriteRenderer* sprite, const char* name) {
+		sprite->SetAsTexture(name);
+	}
+	SIMPLE_API void SimpleSpriteRenderer_SetAsTextureRect(SimpleSpriteRenderer* sprite, const char* name, float offsetX, float offsetY,
+		float width, float height) {
 
-}
+		sprite->SetAsTextureRect(name, { offsetX, offsetY }, { width, height });
 
-void SimpleSpriteRenderer_SetRect(SimpleSpriteRenderer* sprite, float offsetX, float offsetY, float width, float height) {
+	}
 
-	sprite->SetRect({ offsetX, offsetY }, { width, height });
+	SIMPLE_API void SimpleSpriteRenderer_SetRect(SimpleSpriteRenderer* sprite, float offsetX, float offsetY, float width, float height) {
 
-}
-void SimpleSpriteRenderer_SnapToGrid(SimpleSpriteRenderer* sprite, bool snap) {
-	sprite->SnapToGrid(snap);
+		sprite->SetRect({ offsetX, offsetY }, { width, height });
 
-}
-void SimpleSpriteRenderer_SetSnapGridSize(SimpleSpriteRenderer* sprite, float gridWidth, float gridHeight) {
+	}
+	SIMPLE_API void SimpleSpriteRenderer_SnapToGrid(SimpleSpriteRenderer* sprite, bool snap) {
+		sprite->SnapToGrid(snap);
 
-	sprite->SetSnapGridSize({ gridWidth, gridHeight });
-}
+	}
+	SIMPLE_API void SimpleSpriteRenderer_SetSnapGridSize(SimpleSpriteRenderer* sprite, float gridWidth, float gridHeight) {
 
-SimpleTexture* SimpleSpriteRenderer_GetTexture(SimpleSpriteRenderer* sprite) {
+		sprite->SetSnapGridSize({ gridWidth, gridHeight });
+	}
 
-	return sprite->GetTexture();
+	SIMPLE_API SimpleTexture* SimpleSpriteRenderer_GetTexture(SimpleSpriteRenderer* sprite) {
+
+		return sprite->GetTexture();
+	}
 }

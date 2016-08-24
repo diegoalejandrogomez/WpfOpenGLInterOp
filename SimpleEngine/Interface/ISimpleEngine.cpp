@@ -2,122 +2,125 @@
 #include "SimpleEngine.h"
 #include "SimpleConfiguration.h"
 
-SimpleEngine* SimpleEngine_Instance() {
-	return SimpleEngine::Instance();
-}
+extern "C" {
 
-void SimpleEngine_InitRenderer(HWND hWnd, uint32_t width, uint32_t height) {
-	SimpleEngine::Instance()->InitRenderer(hWnd, width, height);
-}
+	SIMPLE_API SimpleEngine* SimpleEngine_Instance() {
+		return SimpleEngine::Instance();
+	}
 
-void SimpleEngine_InitInput(HWND hWnd, bool exclusive) {
-	SimpleEngine::Instance()->InitInput(hWnd, exclusive);
-}
+	SIMPLE_API void SimpleEngine_InitRenderer(HWND hWnd, uint32_t width, uint32_t height) {
+		SimpleEngine::Instance()->InitRenderer(hWnd, width, height);
+	}
 
-void SimpleEngine_Initialize() {
-	SimpleEngine::Instance()->Initialize();
-}
+	SIMPLE_API void SimpleEngine_InitInput(HWND hWnd, bool exclusive) {
+		SimpleEngine::Instance()->InitInput(hWnd, exclusive);
+	}
 
-void SimpleEngine_SetGameLogic(SimpleGameLogic* logic) {
-	SimpleEngine::Instance()->SetGameLogic(logic);
-}
+	SIMPLE_API void SimpleEngine_Initialize() {
+		SimpleEngine::Instance()->Initialize();
+	}
 
-SimpleRenderer* SimpleEngine_GetRenderer() {
-	SimpleEngine* eng = SimpleEngine::Instance();
-	return eng->GetRenderer();
-}
+	SIMPLE_API void SimpleEngine_SetGameLogic(SimpleGameLogic* logic) {
+		SimpleEngine::Instance()->SetGameLogic(logic);
+	}
 
-	
-void  SimpleEngine_Shutdown() {
-	SimpleEngine::Instance()->Shutdown();
-}
-
-void SimpleEngine_SetResourcesBaseDir(const char* baseDir) {
-	SimpleEngine::Instance()->SetResourcesBaseDir(baseDir);
-}
-	
-const char* SimpleEngine_GetResourcesBaseDir() {
-	return SimpleEngine::Instance()->GetResourcesBaseDir().c_str(); 
-};
-	
-void SimpleEngine_CreateScene() {
-	SimpleEngine::Instance()->CreateScene();
-}
-
-SimpleScene* SimpleEngine_GetScene() { return SimpleEngine::Instance()->GetScene(); }
-
-SimpleGameLogic*  SimpleEngine_GetGameLogic() { 
-	return SimpleEngine::Instance()->GetGameLogic();
-};
-
-SimpleInput* SimpleEngine_GetInput() { return SimpleEngine::Instance()->GetInput(); }
-
-float SimpleEngine_GetRenderFPS() { return SimpleEngine::Instance()->GetRenderFPS(); }
-
-float SimpleEngine_GetLogicFPS() { return SimpleEngine::Instance()->GetLogicFPS(); }
-	
-void SimpleEngine_Render(float dt) {
-	SimpleEngine::Instance()->Render(dt);
-}
-
-void SimpleEngine_Advance(float dt) {
-	SimpleEngine::Instance()->Advance(dt);	
-}
-
-void SimpleEngine_SerializeResources() {
-	SimpleEngine::Instance()->SerializeResources();
-}
-
-void SimpleEngine_DeserializeResources() {
-	SimpleEngine::Instance()->DeserializeResources();
-}
-	
-bool SimpleEngine_SerializeGameLogic(const char* path) {
-	return SimpleEngine::Instance()->SerializeGameLogic(path);
-}
-
-bool SimpleEngine_DeserializeGameLogic(const char* path) {
-	return SimpleEngine::Instance()->DeserializeGameLogic(path);
-}
-
-const char* SimpleEngine_GetGameLogicState() {
-	return SimpleEngine::Instance()->GetGameLogicState().c_str();
-}
-void SimpleEngine_SetGameLogicState(const char* state) {
-	SimpleEngine::Instance()->SetGameLogicState(state);
-}
-
-bool SimpleEngine_SerializeScene(const char* path) {
-	return SimpleEngine::Instance()->SerializeScene(path);
-}
-
-bool SimpleEngine_DeserializeScene(const char* path) {
-	return SimpleEngine::Instance()->DeserializeScene(path);
-}
-
-const char* SimpleEngine_GetSceneState() {
-	return SimpleEngine::Instance()->GetSceneState().c_str();
-}
-	
-void SimpleEngine_SetSceneState(const char* state) {
-	SimpleEngine::Instance()->SetSceneState(state);
-}
+	SIMPLE_API SimpleRenderer* SimpleEngine_GetRenderer() {
+		SimpleEngine* eng = SimpleEngine::Instance();
+		return eng->GetRenderer();
+	}
 
 
-bool SimpleEngine_SerializeGameState(const char* path) {
-	return SimpleEngine::Instance()->SerializeGameState(path);
-}
+	SIMPLE_API void  SimpleEngine_Shutdown() {
+		SimpleEngine::Instance()->Shutdown();
+	}
 
-bool SimpleEngine_DeserializeGameState(const char* path) {
-	return SimpleEngine::Instance()->DeserializeGameState(path);
-}
-	
+	SIMPLE_API void SimpleEngine_SetResourcesBaseDir(const char* baseDir) {
+		SimpleEngine::Instance()->SetResourcesBaseDir(baseDir);
+	}
 
-const char* SimpleEngine_GetGameState() {
-	return SimpleEngine::Instance()->GetGameState().c_str();
-}
+	SIMPLE_API const char* SimpleEngine_GetResourcesBaseDir() {
+		return SimpleEngine::Instance()->GetResourcesBaseDir().c_str();
+	};
 
-void SimpleEngine_SetGameState(const char* state) {
-	SimpleEngine::Instance()->SetGameState(state);
+	SIMPLE_API void SimpleEngine_CreateScene() {
+		SimpleEngine::Instance()->CreateScene();
+	}
+
+	SIMPLE_API SimpleScene* SimpleEngine_GetScene() { return SimpleEngine::Instance()->GetScene(); }
+
+	SIMPLE_API SimpleGameLogic*  SimpleEngine_GetGameLogic() {
+		return SimpleEngine::Instance()->GetGameLogic();
+	};
+
+	SIMPLE_API SimpleInput* SimpleEngine_GetInput() { return SimpleEngine::Instance()->GetInput(); }
+
+	SIMPLE_API float SimpleEngine_GetRenderFPS() { return SimpleEngine::Instance()->GetRenderFPS(); }
+
+	SIMPLE_API float SimpleEngine_GetLogicFPS() { return SimpleEngine::Instance()->GetLogicFPS(); }
+
+	SIMPLE_API void SimpleEngine_Render(float dt) {
+		SimpleEngine::Instance()->Render(dt);
+	}
+
+	SIMPLE_API void SimpleEngine_Advance(float dt) {
+		SimpleEngine::Instance()->Advance(dt);
+	}
+
+	SIMPLE_API void SimpleEngine_SerializeResources() {
+		SimpleEngine::Instance()->SerializeResources();
+	}
+
+	SIMPLE_API void SimpleEngine_DeserializeResources() {
+		SimpleEngine::Instance()->DeserializeResources();
+	}
+
+	SIMPLE_API bool SimpleEngine_SerializeGameLogic(const char* path) {
+		return SimpleEngine::Instance()->SerializeGameLogic(path);
+	}
+
+	SIMPLE_API bool SimpleEngine_DeserializeGameLogic(const char* path) {
+		return SimpleEngine::Instance()->DeserializeGameLogic(path);
+	}
+
+	SIMPLE_API const char* SimpleEngine_GetGameLogicState() {
+		return SimpleEngine::Instance()->GetGameLogicState().c_str();
+	}
+	SIMPLE_API void SimpleEngine_SetGameLogicState(const char* state) {
+		SimpleEngine::Instance()->SetGameLogicState(state);
+	}
+
+	SIMPLE_API bool SimpleEngine_SerializeScene(const char* path) {
+		return SimpleEngine::Instance()->SerializeScene(path);
+	}
+
+	SIMPLE_API bool SimpleEngine_DeserializeScene(const char* path) {
+		return SimpleEngine::Instance()->DeserializeScene(path);
+	}
+
+	SIMPLE_API const char* SimpleEngine_GetSceneState() {
+		return SimpleEngine::Instance()->GetSceneState().c_str();
+	}
+
+	SIMPLE_API void SimpleEngine_SetSceneState(const char* state) {
+		SimpleEngine::Instance()->SetSceneState(state);
+	}
+
+
+	SIMPLE_API bool SimpleEngine_SerializeGameState(const char* path) {
+		return SimpleEngine::Instance()->SerializeGameState(path);
+	}
+
+	SIMPLE_API bool SimpleEngine_DeserializeGameState(const char* path) {
+		return SimpleEngine::Instance()->DeserializeGameState(path);
+	}
+
+
+	SIMPLE_API const char* SimpleEngine_GetGameState() {
+		return SimpleEngine::Instance()->GetGameState().c_str();
+	}
+
+	SIMPLE_API void SimpleEngine_SetGameState(const char* state) {
+		SimpleEngine::Instance()->SetGameState(state);
+	}
+
 }
-	

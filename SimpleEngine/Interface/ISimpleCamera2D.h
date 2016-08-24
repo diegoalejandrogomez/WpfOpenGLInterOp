@@ -7,13 +7,13 @@ extern "C" {
 
 	SIMPLE_API void SimpleCamera2D_SetZoom(float zoom);
 
-	SIMPLE_API void SimpleCamera2D_SetMaxVisibleArea(SimpleAABB area);
+	SIMPLE_API void SimpleCamera2D_SetMaxVisibleArea(float x, float y, float width, float height);
 
 	SIMPLE_API void SimpleCamera2D_Move(float dx, float dy);
 
 	SIMPLE_API void SimpleCamera2D_DeltaZoom(float dz);
 
-	SIMPLE_API void SimpleCamera2D_ZoomToArea(SimpleAABB area);
+	SIMPLE_API void SimpleCamera2D_ZoomToArea(float x, float y, float width, float height);
 
 	SIMPLE_API void SimpleCamera2D_SetViewportSize(float w, float h);
 

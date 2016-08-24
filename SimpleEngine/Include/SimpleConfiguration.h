@@ -3,7 +3,7 @@
 #include <map>
 
 #ifdef SIMPLEENGINE_EXPORTS
-#define SIMPLE_API __declspec(dllexport)
+#define SIMPLE_API  __declspec(dllexport)
 #define  SIMPLE_TMPL_IMPORT
 #else
 #define SIMPLE_API __declspec(dllimport)
