@@ -88,18 +88,28 @@ namespace SimpleEngineTileEditor
             }
         }
 
-        /*public List<ManagedSimpleObject> SimpleObjects
+        public List<ManagedSimpleObject> SimpleObjects
         {
             get
             {
-                return SimpleLayer_GetSimpleObjects(sLayer)
-            }
+                List<ManagedSimpleObject> managedSimpleObjects = new List<ManagedSimpleObject>();
+                SimpleLayer_EntitiesBegin(sLayer);
+                while(true)
+                {
+                    var entity = SimpleLayer_EntitiesNext(sLayer);
+                    if(entity == null)
+                    {
+                        break;
+                    }
 
-            set
-            {
-                SimpleLayer_SetSimpleObjects(sLayer, value);
+                    ManagedSimpleObject simpleObject = new ManagedSimpleObject();
+                    simpleObject.SetSimpleObject(entity);
+                    managedSimpleObjects.Add(simpleObject);
+                }
+
+                return managedSimpleObjects;
             }
-        }*/
+        }
     }
     
 }
