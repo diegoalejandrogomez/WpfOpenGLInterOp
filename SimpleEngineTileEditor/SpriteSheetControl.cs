@@ -63,7 +63,7 @@ namespace SimpleEngineTileEditor
         static extern UInt32 SimpleObject_GetName(IntPtr sObj);
 
         [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
-        static extern String SimpleObject_GetStringName(IntPtr sObj);
+        static extern IntPtr SimpleObject_GetStringName(IntPtr sObj);
 
         [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern void SimpleObject_SetPosition(IntPtr sObj, float x, float y, float z);
