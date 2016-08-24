@@ -15,7 +15,7 @@ SIMPLE_API SimpleObject* SimpleLayer_EntitiesBegin(SimpleLayer* layer) {
 SIMPLE_API SimpleObject* SimpleLayer_EntitiesNext(SimpleLayer* layer) {
 	auto entities = layer->GetEntities();
 
-	if (entIt >= entities.size() - 1)
+	if (entIt >= (int)entities.size() - 1)
 		return nullptr;
 	return entities[entIt++];
 

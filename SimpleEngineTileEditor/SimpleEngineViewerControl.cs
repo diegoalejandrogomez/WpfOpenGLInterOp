@@ -96,50 +96,41 @@ namespace SimpleEngineTileEditor
         static extern void TileEditorApp_SetCursorTile(String sheet, Int32 index);
 
         [DllImport("SimpleEngineNativeTileEditor.dll")]
-        static extern void NewMap();
+        static extern void TileEditorApp_NewMap();
 
         [DllImport("SimpleEngineNativeTileEditor.dll")]
-        static extern void LoadState(String gameState);
+        static extern void TileEditorApp_LoadState(String gameState);
 
         [DllImport("SimpleEngineNativeTileEditor.dll")]
-        static extern String GetState();
+        static extern String TileEditorApp_GetState();
 
         [DllImport("SimpleEngineNativeTileEditor.dll")]
-        static extern void SetMapSize(int width, int height);
+        static extern void TileEditorApp_SetMapSize(int width, int height);
 
         [DllImport("SimpleEngineNativeTileEditor.dll")]
-        static extern void SetMapWidth(int width);
+        static extern void TileEditorApp_SetMapWidth(int width);
 
         [DllImport("SimpleEngineNativeTileEditor.dll")]
-        static extern void SetMapHeight(int height);
+        static extern void TileEditorApp_SetMapHeight(int height);      
 
         [DllImport("SimpleEngineNativeTileEditor.dll")]
-        static extern void SetCursorPosition(float x, float y);
+        static extern void TileEditorApp_SetCursorErase();
 
         [DllImport("SimpleEngineNativeTileEditor.dll")]
-        static extern void SetCursorIdle();
-
-        [DllImport("SimpleEngineNativeTileEditor.dll")]
-        static extern void SetCursorTile(String sheet, int index);
-
-        [DllImport("SimpleEngineNativeTileEditor.dll")]
-        static extern void SetCursorErase();
-
-        [DllImport("SimpleEngineNativeTileEditor.dll")]
-        static extern void Paint();
+        static extern void TileEditorApp_Paint();
 
 
         [DllImport("SimpleEngineNativeTileEditor.dll")]
-        static extern int GetMapWidth();
+        static extern int TileEditorApp_GetMapWidth();
 
         [DllImport("SimpleEngineNativeTileEditor.dll")]
-        static extern int GetMapHeight();
+        static extern int TileEditorApp_GetMapHeight();
 
         [DllImport("SimpleEngineNativeTileEditor.dll")]
-        static extern String Serialize();
+        static extern String TileEditorApp_Serialize();
 
         [DllImport("SimpleEngineNativeTileEditor.dll")]
-        static extern bool Deserialize(String node);
+        static extern bool TileEditorApp_Deserialize(String node);
         #endregion
 
         public IntPtr WPFWindowHandle { get; set; }

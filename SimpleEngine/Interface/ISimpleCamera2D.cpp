@@ -64,29 +64,29 @@ float SimpleCamera2D_GetMaxZoom() {
 void SimpleCamera2D_ScreenToWorld(int& x, int& y) {
 	
 	glm::vec2 ret = SimpleEngine::Instance()->GetScene()->GetCamera()->ScreenToWorld({ x,y});
-	x = ret.x;
-	y = ret.y;
+	x = (int)ret.x;
+	y = (int)ret.y;
 }
 
 void SimpleCamera2D_ViewportToWorld(int& x, int& y) {
 
 	glm::vec2 ret = SimpleEngine::Instance()->GetScene()->GetCamera()->ViewportToWorld({ x,y });
-	x = ret.x;
-	y = ret.y;
+	x = (int)ret.x;
+	y = (int)ret.y;
 }
 
 void SimpleCamera2D_WorldToScreen(int& x, int& y) {
 
 	glm::vec2 ret = SimpleEngine::Instance()->GetScene()->GetCamera()->WorldToScreen({ x,y });
-	x = ret.x;
-	y = ret.y;
+	x = (int)ret.x;
+	y = (int)ret.y;
 
 }
 
 void SimpleCamera2D_WorldToViewport(int& x, int& y) {
 
 	glm::vec2 ret = SimpleEngine::Instance()->GetScene()->GetCamera()->WorldToViewport({ x,y });
-	x = ret.x;
-	y = ret.y;
+	x = (int)ret.x;
+	y = (int)ret.y;
 
 }

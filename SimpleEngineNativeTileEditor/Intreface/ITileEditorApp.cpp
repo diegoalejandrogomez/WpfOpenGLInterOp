@@ -11,44 +11,44 @@ void TileEditorApp_Destroy(TileEditorApp* app) {
 	delete app;
 }
 
-TILEEDITOR_API void NewMap()
+TILEEDITOR_API void TileEditorApp_NewMap()
 {
 	TileEditorApp* app = dynamic_cast<TileEditorApp*>(SimpleEngine::Instance()->GetGameLogic());
 	if (app != nullptr)
 		app->NewMap();
 }
 
-TILEEDITOR_API void LoadState(std::string gameState)
+TILEEDITOR_API void TileEditorApp_LoadState(std::string gameState)
 {
 	TileEditorApp* app = dynamic_cast<TileEditorApp*>(SimpleEngine::Instance()->GetGameLogic());
 	if (app != nullptr)
 		app->LoadState(gameState);
 }
 
-TILEEDITOR_API std::string GetState()
+TILEEDITOR_API const char* TileEditorApp_GetState()
 {
 	TileEditorApp* app = dynamic_cast<TileEditorApp*>(SimpleEngine::Instance()->GetGameLogic());
 	if (app != nullptr)
-		return app->GetState();
+		return app->GetState().c_str();
 
 	return nullptr;
 }
 
-TILEEDITOR_API void SetMapSize(int width, int height)
+TILEEDITOR_API void TileEditorApp_SetMapSize(int width, int height)
 {
 	TileEditorApp* app = dynamic_cast<TileEditorApp*>(SimpleEngine::Instance()->GetGameLogic());
 	if (app != nullptr)
 		return app->SetMapSize(width, height);
 }
 
-TILEEDITOR_API void SetMapWidth(int width)
+TILEEDITOR_API void TileEditorApp_SetMapWidth(int width)
 {
 	TileEditorApp* app = dynamic_cast<TileEditorApp*>(SimpleEngine::Instance()->GetGameLogic());
 	if (app != nullptr)
 		return app->SetMapWidth(width);
 }
 
-TILEEDITOR_API void SetMapHeight(int height)
+TILEEDITOR_API void TileEditorApp_SetMapHeight(int height)
 {
 	TileEditorApp* app = dynamic_cast<TileEditorApp*>(SimpleEngine::Instance()->GetGameLogic());
 	if (app != nullptr)
@@ -75,45 +75,47 @@ void TileEditorApp_SetCursorTile(const char* sheet, int index) {
 		app->SetCursorTile(sheet, index);
 }
 
-TILEEDITOR_API void SetCursorErase()
+TILEEDITOR_API void TileEditorApp_SetCursorErase()
 {
 	TileEditorApp* app = dynamic_cast<TileEditorApp*>(SimpleEngine::Instance()->GetGameLogic());
 	if (app != nullptr)
 		return app->SetCursorErase();
 }
 
-TILEEDITOR_API void Paint()
+TILEEDITOR_API void TileEditorApp_Paint()
 {
 	TileEditorApp* app = dynamic_cast<TileEditorApp*>(SimpleEngine::Instance()->GetGameLogic());
 	if (app != nullptr)
 		return app->Paint();
 }
 
-TILEEDITOR_API int GetMapWidth()
+TILEEDITOR_API int TileEditorApp_GetMapWidth()
 {
 	TileEditorApp* app = dynamic_cast<TileEditorApp*>(SimpleEngine::Instance()->GetGameLogic());
 	if (app != nullptr)
 		return app->GetMapWidth();
+	return 0;
 }
 
-TILEEDITOR_API int GetMapHeight()
+TILEEDITOR_API int TileEditorApp_GetMapHeight()
 {
 	TileEditorApp* app = dynamic_cast<TileEditorApp*>(SimpleEngine::Instance()->GetGameLogic());
 	if (app != nullptr)
 		return app->GetMapHeight();
+	return 0;
 }
 
-TILEEDITOR_API json Serialize()
-{
-	TileEditorApp* app = dynamic_cast<TileEditorApp*>(SimpleEngine::Instance()->GetGameLogic());
-	if (app != nullptr)
-		return app->Serialize();
-}
-
-TILEEDITOR_API bool Deserialize(json & node)
-{
-	TileEditorApp* app = dynamic_cast<TileEditorApp*>(SimpleEngine::Instance()->GetGameLogic());
-	if (app != nullptr)
-		return app->Deserialize(node);
-}
+//TILEEDITOR_API json TileEditorApp_Serialize()
+//{
+//	TileEditorApp* app = dynamic_cast<TileEditorApp*>(SimpleEngine::Instance()->GetGameLogic());
+//	if (app != nullptr)
+//		return app->Serialize();
+//}
+//
+//TILEEDITOR_API bool TileEditorApp_Deserialize(json & node)
+//{
+//	TileEditorApp* app = dynamic_cast<TileEditorApp*>(SimpleEngine::Instance()->GetGameLogic());
+//	if (app != nullptr)
+//		return app->Deserialize(node);
+//}
 

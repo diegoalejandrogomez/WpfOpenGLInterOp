@@ -15,8 +15,9 @@ extern "C" {
 	SIMPLE_API inline void SimpleLayer_SetQueryable(SimpleLayer* sLayer, bool value);
 	SIMPLE_API inline bool SimpleLayer_IsQueryable(SimpleLayer* sLayer);
 
-	SIMPLE_API json SimpleLayer_Serialize(SimpleLayer* sLayer);
-	SIMPLE_API bool SimpleLayer_Deserialize(SimpleLayer* sLayer, json& layer);
+	//json not available in C
+	//SIMPLE_API json SimpleLayer_Serialize(SimpleLayer* sLayer);
+	//SIMPLE_API bool SimpleLayer_Deserialize(SimpleLayer* sLayer, json& layer);
 	
 	SIMPLE_API SimpleObject* SimpleLayer_EntitiesBegin(SimpleLayer* layer);
 
