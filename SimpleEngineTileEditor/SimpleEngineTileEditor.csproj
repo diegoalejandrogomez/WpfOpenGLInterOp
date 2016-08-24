@@ -58,6 +58,7 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="SpriteControl.cs" />
+    <Compile Include="SpriteSheetControl.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

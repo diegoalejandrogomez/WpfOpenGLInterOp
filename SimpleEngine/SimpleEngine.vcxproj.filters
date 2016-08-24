@@ -185,6 +185,9 @@
     <ClInclude Include="Interface\ISimpleLayer.h">
       <Filter>Interface</Filter>
     </ClInclude>
+    <ClInclude Include="Interface\ISimpleSpriteSheetRenderer.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\SimpleObjectsRenderPass.cpp">
@@ -284,6 +287,9 @@
       <Filter>Interface</Filter>
     </ClCompile>
     <ClCompile Include="Interface\ISimpleLayer.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="Interface\ISimpleSpriteSheetRenderer.cpp">
       <Filter>Interface</Filter>
     </ClCompile>
   </ItemGroup>

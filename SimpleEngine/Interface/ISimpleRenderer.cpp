@@ -16,16 +16,16 @@ int SimpleRenderer_GetHeight(){
 	return SimpleEngine::Instance()->GetRenderer()->GetHeight();
 };
 		
-bool SimpleRenderer_CreateSpriteSheet(const char* texturePath, int* frameSize, int* frameCount) {
-	return SimpleEngine::Instance()->GetRenderer()->CreateSpriteSheet(	texturePath, { frameSize[0], frameSize[1] },
-																			{ frameCount[0], frameCount[1] });
+bool SimpleRenderer_CreateSpriteSheet(const char* texturePath, int frameSizeX, int frameSizeY, int frameCountX, int frameCountY) {
+	return SimpleEngine::Instance()->GetRenderer()->CreateSpriteSheet(	texturePath, { frameSizeX, frameSizeY },
+																			{ frameCountX, frameCountY });
 }
 
 bool SimpleRenderer_CreateSpriteSheetEmpty(const char* texturePath) {
 		return SimpleEngine::Instance()->GetRenderer()->CreateSpriteSheet(texturePath);
 }
 
-SimpleSpriteSheet* SimpleEngine_GetSpriteSheet(const char* texturePath) {
+SimpleSpriteSheet* SimpleRenderer_GetSpriteSheet(const char* texturePath) {
 		return SimpleEngine::Instance()->GetRenderer()->GetSpriteSheet(texturePath);
 }
 
