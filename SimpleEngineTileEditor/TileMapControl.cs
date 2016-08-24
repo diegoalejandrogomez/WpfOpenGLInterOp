@@ -109,7 +109,7 @@ namespace SimpleEngineTileEditor
 
         public String TakeSnapshot() {
             //TODO: Temporal fix, we should allocate dynamically this buffer
-            StringBuilder builder = new StringBuilder(10240);
+            StringBuilder builder = new StringBuilder(102400); 
             SimpleEngine_GetGameState(builder, builder.Capacity);
             return builder.ToString();
         }

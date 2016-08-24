@@ -2,6 +2,8 @@
 #include <glm\glm.hpp>
 #include <map>
 
+#ifdef SIMPLE_DLL
+
 #ifdef SIMPLEENGINE_EXPORTS
 #define SIMPLE_API  __declspec(dllexport)
 #define  SIMPLE_TMPL_IMPORT
@@ -10,6 +12,10 @@
 #define  SIMPLE_TMPL_IMPORT extern
 #endif
 
+#else
+#define SIMPLE_API  
+#define  SIMPLE_TMPL_IMPORT
+#endif
 
 //GLM exports
 SIMPLE_TMPL_IMPORT template struct SIMPLE_API glm::tvec2<float, glm::highp>;

@@ -88,7 +88,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;TILEEDITOR_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>SIMPLE_DLL;WIN32;_DEBUG;_WINDOWS;_USRDLL;TILEEDITOR_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4251;4275</DisableSpecificWarnings>
     </ClCompile>
     <Link>
