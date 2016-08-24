@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 namespace SimpleEngineTileEditor
 {
     public class SimpleEngineViewerControl : UserControl
-	{
+    {
         #region SimpleEngineImports
         [DllImport("SimpleEngine_dyn.dll")]
         static extern IntPtr SimpleEngine_Instance();
@@ -23,7 +23,7 @@ namespace SimpleEngineTileEditor
         [DllImport("SimpleEngine_dyn.dll")]
         static extern void SimpleEngine_InitInput(IntPtr hWnd, bool exclusive);
         [DllImport("SimpleEngine_dyn.dll")]
-        static extern void SimpleEngine_SetGameLogic(IntPtr logic);       
+        static extern void SimpleEngine_SetGameLogic(IntPtr logic);
         [DllImport("SimpleEngine_dyn.dll")]
         static extern void SimpleEngine_Render(float dt);
         [DllImport("SimpleEngine_dyn.dll")]
@@ -87,7 +87,7 @@ namespace SimpleEngineTileEditor
         static extern void TileEditorApp_Destroy(IntPtr app);
 
         [DllImport("SimpleEngineNativeTileEditor.dll")]
-        static extern void TileEditorApp_SetCursorPosition(float  x, float y);
+        static extern void TileEditorApp_SetCursorPosition(float x, float y);
 
         [DllImport("SimpleEngineNativeTileEditor.dll")]
         static extern void TileEditorApp_SetCursorIdle();
@@ -96,60 +96,53 @@ namespace SimpleEngineTileEditor
         static extern void TileEditorApp_SetCursorTile(String sheet, Int32 index);
 
         [DllImport("SimpleEngineNativeTileEditor.dll")]
-        static extern void NewMap();
+        static extern void TileEditorApp_NewMap();
 
         [DllImport("SimpleEngineNativeTileEditor.dll")]
-        static extern void LoadState(String gameState);
+        static extern void TileEditorApp_LoadState(String gameState);
 
         [DllImport("SimpleEngineNativeTileEditor.dll")]
-        static extern String GetState();
+        static extern String TileEditorApp_GetState();
 
         [DllImport("SimpleEngineNativeTileEditor.dll")]
-        static extern void SetMapSize(int width, int height);
+        static extern void TileEditorApp_SetMapSize(int width, int height);
 
         [DllImport("SimpleEngineNativeTileEditor.dll")]
-        static extern void SetMapWidth(int width);
+        static extern void TileEditorApp_SetMapWidth(int width);
 
         [DllImport("SimpleEngineNativeTileEditor.dll")]
-        static extern void SetMapHeight(int height);
+        static extern void TileEditorApp_SetMapHeight(int height);      
 
         [DllImport("SimpleEngineNativeTileEditor.dll")]
-        static extern void SetCursorPosition(float x, float y);
+        static extern void TileEditorApp_SetCursorErase();
 
         [DllImport("SimpleEngineNativeTileEditor.dll")]
-        static extern void SetCursorIdle();
-
-        [DllImport("SimpleEngineNativeTileEditor.dll")]
-        static extern void SetCursorTile(String sheet, int index);
-
-        [DllImport("SimpleEngineNativeTileEditor.dll")]
-        static extern void SetCursorErase();
-
-        [DllImport("SimpleEngineNativeTileEditor.dll")]
-        static extern void Paint();
+        static extern void TileEditorApp_Paint();
 
 
         [DllImport("SimpleEngineNativeTileEditor.dll")]
-        static extern int GetMapWidth();
+        static extern int TileEditorApp_GetMapWidth();
 
         [DllImport("SimpleEngineNativeTileEditor.dll")]
-        static extern int GetMapHeight();
+        static extern int TileEditorApp_GetMapHeight();
 
         [DllImport("SimpleEngineNativeTileEditor.dll")]
-        static extern String Serialize();
+        static extern String TileEditorApp_Serialize();
 
         [DllImport("SimpleEngineNativeTileEditor.dll")]
-        static extern bool Deserialize(String node);
+        static extern bool TileEditorApp_Deserialize(String node);
         #endregion
 
         public IntPtr WPFWindowHandle { get; set; }
 
-        SimpleEngineViewerControl() {
+        SimpleEngineViewerControl()
+        {
             this.Load += OnLoad;
             this.SizeChanged += OnSizeChanged;
         }
 
-        public void OnLoad(Object sender, EventArgs e) {
+        public void OnLoad(Object sender, EventArgs e)
+        {
 
         }
 
@@ -167,7 +160,8 @@ namespace SimpleEngineTileEditor
 
         }
 
-        public void OnSizeChanged(Object sender, EventArgs e) {
+        public void OnSizeChanged(Object sender, EventArgs e)
+        {
             SimpleRenderer_ResizeWindow(Width, Height);
         }
 
@@ -176,20 +170,23 @@ namespace SimpleEngineTileEditor
             Int32 ix = (Int32)x;
             Int32 iy = (Int32)y;
 
-            SimpleCamera2D_ScreenToWorld(ref ix, ref iy);               
+            SimpleCamera2D_ScreenToWorld(ref ix, ref iy);
             TileEditorApp_SetCursorPosition(ix, iy);
         }
 
-        override protected void OnPaintBackground(PaintEventArgs e) {
+        override protected void OnPaintBackground(PaintEventArgs e)
+        {
 
         }
 
-        override protected void OnPaint(PaintEventArgs e) {
+        override protected void OnPaint(PaintEventArgs e)
+        {
             SimpleEngine_Advance(0.0f);
             SimpleEngine_Render(0.0f);
         }
 
-        ManagedSimpleObject SetItem(float x, float y) {
+        ManagedSimpleObject SetItem(float x, float y)
+        {
 
             Int32 ix = (Int32)x;
             Int32 iy = (Int32)y;
@@ -197,11 +194,12 @@ namespace SimpleEngineTileEditor
             SimpleCamera2D_ScreenToWorld(ref ix, ref iy);
             IntPtr res = SimpleScene_PickFirstPoint(x, y);
 
-            if (res != IntPtr.Zero) {
+            if (res != IntPtr.Zero)
+            {
                 ManagedSimpleObject SelectedObject = new ManagedSimpleObject();
                 SelectedObject.SetSimpleObject(res);
                 return SelectedObject;
-            }      
+            }
 
             return null;
         }
@@ -214,7 +212,7 @@ namespace SimpleEngineTileEditor
             for (Int32 i = 0; i < layerCount; ++i)
             {
                 IntPtr layer = SimpleScene_GetLayerWithIdx(i);
-                
+
                 IntPtr entity = SimpleLayer_EntitiesBegin(layer);
                 IntPtr end = SimpleLayer_EntitiesEnd(layer);
 
@@ -232,7 +230,7 @@ namespace SimpleEngineTileEditor
 
         public void MoveCamera(float dx, float dy)
         {
-            int wX =(int) dx;    int wY = (int) dy;
+            int wX = (int)dx; int wY = (int)dy;
             SimpleCamera2D_ScreenToWorld(ref wX, ref wY);
             int wOX = 0; int wOY = 0;
             SimpleCamera2D_ScreenToWorld(ref wOX, ref wOY);
@@ -241,7 +239,7 @@ namespace SimpleEngineTileEditor
             int deltaY = wY - wOY;
 
             SimpleCamera2D_Move(deltaX, -deltaY);
-            
+
         }
 
 
@@ -260,7 +258,8 @@ namespace SimpleEngineTileEditor
             SimpleCamera2D_SetZoom(z);
         }
 
-        public void Restart() {
+        public void Restart()
+        {
             SimpleEngine_Shutdown();
             Initialize();
 
@@ -273,38 +272,41 @@ namespace SimpleEngineTileEditor
         {
             get
             {
-                if(SimpleEngine_GetScene() != IntPtr.Zero)
+                if (SimpleEngine_GetScene() != IntPtr.Zero)
                     return (int)SimpleCamera2D_GetMaxZoom();
                 return 100;
 
             }
         }
 
-            //property System::Collections::Generic::List<ManagedSimpleLayer^>^ ManagedSimpleLayers
-            //{
-            //    System::Collections::Generic::List < ManagedSimpleLayer ^>^ get() {
-            //        System::Collections::Generic::List < ManagedSimpleLayer ^>^ managedSimpleLayers =
-            //            gcnew System::Collections::Generic::List < ManagedSimpleLayer ^> ();
+        List<ManagedSimpleLayer> ManagedSimpleLayers
+        {
 
-            //        if (SimpleEngine::Instance()->GetScene() != nullptr)
-            //        {
-            //            std::vector<SimpleLayer*> simpleLayers = SimpleEngine::Instance()->GetScene()->GetLayers();
+            get
+            {
+                List<ManagedSimpleLayer> managedSimpleLayers = new List<ManagedSimpleLayer>();
 
+                IntPtr scene = SimpleEngine_GetScene();
+                if (scene != IntPtr.Zero)
+                {
 
-            //            if (simpleLayers.size() != 0)
-            //            {
-            //                for (auto* layer : simpleLayers)
-            //                {
-            //                    ManagedSimpleLayer ^ newManagedLayer = gcnew ManagedSimpleLayer(layer);
-            //                    managedSimpleLayers->Add(newManagedLayer);
-            //                }
+                    int layerCount = (int)SimpleScene_GetLayerCount();
+                    for (int i = 0; i < layerCount; ++i)
+                    {
+                        IntPtr nativeLayer = SimpleScene_GetLayerWithIdx(i);
+                        ManagedSimpleLayer layer = new ManagedSimpleLayer(nativeLayer);
+                        managedSimpleLayers.Add(layer);
+                    }
 
-            //            }
-            //        }
+                }
 
-            //        return managedSimpleLayers;
-            //    };
+                return managedSimpleLayers;
+            }
+
 
         }
-                
+
+
+    }
+
 }
