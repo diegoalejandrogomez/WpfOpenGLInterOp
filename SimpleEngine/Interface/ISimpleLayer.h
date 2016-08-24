@@ -9,7 +9,9 @@ extern "C" {
 	SIMPLE_API	void SimpleLayer_SetZ(SimpleLayer* sLayer, float Z);
 	SIMPLE_API float SimpleLayer_GetZ(SimpleLayer* sLayer);
 
-	SIMPLE_API inline const SimpleID& SimpleLayer_GetName(SimpleLayer* sLayer);
+	SIMPLE_API const char* SimpleLayer_GetStringName(SimpleLayer* sLayer);
+	SIMPLE_API const uint32_t SimpleLayer_GetName(SimpleLayer* sLayer);
+
 	SIMPLE_API inline void  SimpleLayer_SetName(SimpleLayer* sLayer, SimpleID name);
 
 	SIMPLE_API inline void SimpleLayer_SetQueryable(SimpleLayer* sLayer, bool value);

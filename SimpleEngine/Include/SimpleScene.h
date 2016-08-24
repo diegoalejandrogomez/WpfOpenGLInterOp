@@ -39,7 +39,7 @@ public:
 
 	void AddLayer(SimpleLayer* sLayer);
 	void RemoveLayer(SimpleLayer* sLayer);
-	SimpleLayer* GetLayer(int nLayer);
+	SimpleLayer* GetLayer(int nLayer); //Based on Z value
 	SimpleLayer* GetLayer(SimpleID layerName);
 	inline std::vector<SimpleLayer*>& GetLayers(std::string layerName) { return _layers; }
 

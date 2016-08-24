@@ -20,7 +20,7 @@ extern "C" {
 	SIMPLE_API SimpleLayer* SimpleScene_GetLayerWithIdx(int nLayer);
 	SIMPLE_API SimpleLayer* SimpleScene_GetLayerWithName(SimpleID layerName);
 	
-	SIMPLE_API uint32_t GetLayerCount();
+	SIMPLE_API uint32_t SimpleScene_GetLayerCount();
 		
 	SIMPLE_API float SimpleScene_GetLowerZIndex();
 	SIMPLE_API float SimpleScene_GetFPS();

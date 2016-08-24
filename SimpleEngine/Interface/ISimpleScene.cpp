@@ -64,7 +64,7 @@ extern "C"
 
 	}
 
-	SIMPLE_API uint32_t GetLayerCount() {
+	SIMPLE_API uint32_t SimpleScene_GetLayerCount() {
 
 		SimpleScene *scene = SimpleEngine::Instance()->GetScene();
 		if (scene != nullptr)
@@ -75,8 +75,9 @@ extern "C"
 	SIMPLE_API SimpleLayer* SimpleScene_GetLayerWithIdx(int nLayer) {
 
 		SimpleScene *scene = SimpleEngine::Instance()->GetScene();
+		auto layers = SimpleEngine::Instance()->GetScene()->GetLayers();
 		if (scene != nullptr)
-			return scene->GetLayer(nLayer);
+			return layers[nLayer];
 		return nullptr;
 
 	}

@@ -50,8 +50,13 @@ extern "C" {
 	{
 		return sLayer->GetZ();
 	}
+	
+	SIMPLE_API const char* SimpleLayer_GetStringName(SimpleLayer* sLayer)
+	{
+		return sLayer->GetName().GetString().c_str();
+	}
 
-	inline SIMPLE_API const SimpleID & SimpleLayer_GetName(SimpleLayer* sLayer)
+	SIMPLE_API const uint32_t SimpleLayer_GetName(SimpleLayer* sLayer)
 	{
 		return sLayer->GetName();
 	}

@@ -27,7 +27,9 @@ namespace SimpleEngineTileEditor
         static extern float SimpleLayer_GetZ(IntPtr sLayer);
 
         [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
-        static extern String SimpleLayer_GetName(IntPtr sLayer);
+        static extern UInt32 SimpleLayer_GetName(IntPtr sLayer);
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
+        static extern IntPtr SimpleLayer_GetStringName(IntPtr sLayer);
 
         [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern void SimpleLayer_SetName(IntPtr sLayer, String name);
@@ -85,7 +87,7 @@ namespace SimpleEngineTileEditor
         {
             get
             {
-                return SimpleLayer_GetName(sLayer);
+                return Marshal.PtrToStringAnsi(SimpleLayer_GetStringName(sLayer));             
             }
             set
             {
