@@ -46,7 +46,7 @@ extern "C" {
 
 	SIMPLE_API bool SimpleEngine_DeserializeGameLogic(const char* path);
 
-	SIMPLE_API const char* SimpleEngine_GetGameLogicState();
+	SIMPLE_API void SimpleEngine_GetGameLogicState(char* state, int maxSize);
 
 	SIMPLE_API void SimpleEngine_SetGameLogicState(const char* state);
 
@@ -54,7 +54,7 @@ extern "C" {
 
 	SIMPLE_API bool SimpleEngine_DeserializeScene(const char* path);
 
-	SIMPLE_API const char* SimpleEngine_GetSceneState();
+	SIMPLE_API void SimpleEngine_GetSceneState(char* state, int maxSize);
 
 	SIMPLE_API void SimpleEngine_SetSceneState(const char* state);
 
@@ -62,7 +62,7 @@ extern "C" {
 
 	SIMPLE_API bool SimpleEngine_DeserializeGameState(const char* path);
 
-	SIMPLE_API const char* SimpleEngine_GetGameState();
+	SIMPLE_API void SimpleEngine_GetGameState(char* state, int maxSize);
 
 	SIMPLE_API void SimpleEngine_SetGameState(const char* state);
 

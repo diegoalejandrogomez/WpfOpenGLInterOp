@@ -11,6 +11,12 @@ namespace SimpleEngineTileEditor
     {
         #region DllImports
         //Managed simple object imports
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
+        static extern IntPtr SimpleLayer_Create();
+
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
+        static extern void SimpleLayer_Destroy(IntPtr sLayer);
+
         [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern void SimpleLayer_AddEntity(IntPtr sLayer, IntPtr sObj);
 
@@ -54,6 +60,9 @@ namespace SimpleEngineTileEditor
 
         [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern IntPtr SimpleLayer_EntitiesEnd(IntPtr layer);
+
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
+        static extern IntPtr SimpleScene_AddLayer(IntPtr layer);
         #endregion
         IntPtr sLayer;
 
@@ -62,8 +71,10 @@ namespace SimpleEngineTileEditor
         }
 
         public ManagedSimpleLayer()
-        {
-            throw new NotImplementedException("Aca tendriamos que ver como instancio una layer de cpp");
+        {          
+            sLayer = SimpleLayer_Create();
+            //Add the layer to the current scene
+            SimpleScene_AddLayer(sLayer);
         }
 
         public ManagedSimpleLayer(IntPtr simpleLayer)

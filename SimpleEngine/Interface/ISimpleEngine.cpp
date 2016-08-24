@@ -82,8 +82,8 @@ extern "C" {
 		return SimpleEngine::Instance()->DeserializeGameLogic(path);
 	}
 
-	SIMPLE_API const char* SimpleEngine_GetGameLogicState() {
-		return SimpleEngine::Instance()->GetGameLogicState().c_str();
+	SIMPLE_API void SimpleEngine_GetGameLogicState(char* state, int maxSize) {
+		strcpy_s(state, maxSize, SimpleEngine::Instance()->GetGameLogicState().c_str());		
 	}
 	SIMPLE_API void SimpleEngine_SetGameLogicState(const char* state) {
 		SimpleEngine::Instance()->SetGameLogicState(state);
@@ -97,8 +97,9 @@ extern "C" {
 		return SimpleEngine::Instance()->DeserializeScene(path);
 	}
 
-	SIMPLE_API const char* SimpleEngine_GetSceneState() {
-		return SimpleEngine::Instance()->GetSceneState().c_str();
+	SIMPLE_API void SimpleEngine_GetSceneState(char* state, int maxSize) {
+		strcpy_s(state, maxSize, SimpleEngine::Instance()->GetSceneState().c_str());
+	
 	}
 
 	SIMPLE_API void SimpleEngine_SetSceneState(const char* state) {
@@ -115,8 +116,8 @@ extern "C" {
 	}
 
 
-	SIMPLE_API const char* SimpleEngine_GetGameState() {
-		return SimpleEngine::Instance()->GetGameState().c_str();
+	SIMPLE_API void SimpleEngine_GetGameState(char* state, int maxSize) {
+		strcpy_s(state, maxSize, SimpleEngine::Instance()->GetGameState().c_str());
 	}
 
 	SIMPLE_API void SimpleEngine_SetGameState(const char* state) {

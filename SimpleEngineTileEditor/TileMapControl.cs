@@ -13,13 +13,18 @@ namespace SimpleEngineTileEditor
         [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern IntPtr SimpleEngine_GetGameLogic();
         [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
-        static extern String SimpleEngine_GetSceneState();
+        static extern void SimpleEngine_GetSceneState(StringBuilder state, int maxSize);
         [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern void SimpleEngine_SetSceneState(String state);
         [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
-        static extern String SimpleEngine_GetGameLogicState();
+        static extern void SimpleEngine_GetGameLogicState(StringBuilder state, int maxSize);
         [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
         static extern void SimpleEngine_SetGameLogicState(String state);
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
+        static extern void SimpleEngine_GetGameState(StringBuilder state, int maxSize);
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
+        static extern void SimpleEngine_SetGameState(String state);
+
         #endregion
         #region NativeEditorImports
         [DllImport("SimpleEngineNativeTileEditor.dll", CallingConvention = CallingConvention.Cdecl)]
@@ -103,11 +108,14 @@ namespace SimpleEngineTileEditor
         }
 
         public String TakeSnapshot() {
-            return SimpleEngine_GetGameLogicState();
+            //TODO: Temporal fix, we should allocate dynamically this buffer
+            StringBuilder builder = new StringBuilder(10240);
+            SimpleEngine_GetGameState(builder, builder.Capacity);
+            return builder.ToString();
         }
 
         public void RestoreSnapshot(String state) {
-            SimpleEngine_SetGameLogicState(state);
+            SimpleEngine_SetGameState(state);
         }
 
         //Properties

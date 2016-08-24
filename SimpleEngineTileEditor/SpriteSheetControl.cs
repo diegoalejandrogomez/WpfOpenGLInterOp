@@ -124,7 +124,7 @@ namespace SimpleEngineTileEditor
 
             //remove temp
             int from = path.IndexOf("/temp/");
-            path.Remove(0, from + 6);
+            path = path.Remove(0, from + 6);
 
             //Try to find spritesheet to use
             IntPtr spriteSheet = SimpleRenderer_GetSpriteSheet(path);

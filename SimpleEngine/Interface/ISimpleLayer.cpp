@@ -3,6 +3,14 @@
 
 extern "C" {
 
+
+	SIMPLE_API SimpleLayer* SimpleLayer_Create() {
+		return new SimpleLayer();
+	}
+	SIMPLE_API void SimpleLayer_Destroy(SimpleLayer* sLayer) {
+		delete sLayer;
+	}
+
 	SIMPLE_API SimpleObject* SimpleLayer_EntitiesBegin(SimpleLayer* layer) {
 
 		auto entities = layer->GetEntities();

@@ -2,6 +2,11 @@
 #include "SimpleLayer.h"
 
 extern "C" {
+
+	SIMPLE_API SimpleLayer* SimpleLayer_Create();
+	SIMPLE_API void SimpleLayer_Destroy(SimpleLayer* sLayer);
+
+
 	SIMPLE_API void SimpleLayer_AddEntity(SimpleLayer* sLayer, SimpleObject* sObj);
 	SIMPLE_API bool SimpleLayer_Remove(SimpleLayer* sLayer, SimpleObject* sObj);
 	SIMPLE_API void SimpleLayer_Clear(SimpleLayer* sLayer, bool deleteEntities = false);
