@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SimpleEngineTileEditor
 {
-    class ManagedSimpleLayer
+    public class ManagedSimpleLayer
     {
         #region DllImports
         //Managed simple object imports
@@ -57,6 +57,11 @@ namespace SimpleEngineTileEditor
 
         public void Remove()
         {
+        }
+
+        public ManagedSimpleLayer()
+        {
+            throw new NotImplementedException("Aca tendriamos que ver como instancio una layer de cpp");
         }
 
         public ManagedSimpleLayer(IntPtr simpleLayer)

@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 
 namespace SimpleEngineTileEditor
 {
-    class TileMapControl
+    public class TileMapControl
     {
         #region SimpleEngineImports
         [DllImport("SimpleEngine_dyn.dll")]
@@ -79,36 +79,40 @@ namespace SimpleEngineTileEditor
         public TileMapControl() {
         
         }
+
         ~TileMapControl() {
             
         }
-        void SetBrush(String path, Int32 idx) {
+
+        public void SetBrush(String path, Int32 idx) {
             TileEditorApp_SetCursorTile(path, idx);
         }
-        void IdleBrush() {
+
+        public void IdleBrush() {
             TileEditorApp_SetCursorIdle();
         }
-        void EraseBrush() {
+
+        public void EraseBrush() {
             TileEditorApp_SetCursorErase();
 
         }
-        void Paint() {
 
+        public void Paint() {
             if (SimpleEngine_GetGameLogic() != IntPtr.Zero)
                 TileEditorApp_Paint();
-
         }
-        String TakeSnapshot() {
+
+        public String TakeSnapshot() {
             return SimpleEngine_GetGameLogicState();
-
         }
-        void RestoreSnapshot(String state) {
+
+        public void RestoreSnapshot(String state) {
             SimpleEngine_SetGameLogicState(state);
         }
 
         //Properties
 
-        int MapWidth
+        public int MapWidth
         {
             get
             {
@@ -125,7 +129,7 @@ namespace SimpleEngineTileEditor
             }
         }
 
-        int MapHeight
+        public int MapHeight
         {
             get
             {
@@ -141,6 +145,5 @@ namespace SimpleEngineTileEditor
                     TileEditorApp_SetMapHeight(value);
             }
         }
-
     }
 }

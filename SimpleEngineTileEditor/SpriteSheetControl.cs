@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 
 namespace SimpleEngineTileEditor
 {
-    class SpriteSheetControl
+    public class SpriteSheetControl
     {
         #region SimpleSpriteSheetRendererImports
         [DllImport("SimpleEngine_dyn.dll")]
@@ -114,12 +114,13 @@ namespace SimpleEngineTileEditor
         public SpriteSheetControl() {
             _managedSimpleObject = new ManagedSimpleObject();
             _simpleSpriteSheetRenderer = SimpleSpriteSheetRenderer_Create();
-
         }
+
         ~SpriteSheetControl() {
             SimpleSpriteSheetRenderer_Destroy(_simpleSpriteSheetRenderer);
         }
-        int AddControl(String path, int x, int y, int w, int h){
+
+        public int AddControl(String path, int x, int y, int w, int h){
 
             //remove temp
             int from = path.IndexOf("/temp/");
@@ -143,8 +144,7 @@ namespace SimpleEngineTileEditor
              return idx;
         }
 
-
-        float positionX
+        public float positionX
         {
             get
             {
@@ -172,13 +172,10 @@ namespace SimpleEngineTileEditor
                 int iy = (int)y;
                 SimpleCamera2D_ScreenToWorld(ref ix, ref iy);
                 SimpleObject_SetX(_simpleSpriteSheetRenderer, ix);
-
-
-
             }
         }
 
-        float positionY
+        public float positionY
         {
             get
             {
@@ -210,7 +207,7 @@ namespace SimpleEngineTileEditor
             }
         }
 
-        float positionZ
+        public float positionZ
         {
             get
             {
@@ -227,7 +224,7 @@ namespace SimpleEngineTileEditor
             }
         }
 
-        float width
+        public float width
         {
             get
             {
@@ -242,7 +239,7 @@ namespace SimpleEngineTileEditor
             }
         }
 
-        float height
+        public float height
         {
             get
             {
@@ -256,7 +253,5 @@ namespace SimpleEngineTileEditor
                 SimpleObject_SetHeight(_simpleSpriteSheetRenderer, value);
             }
         }
-
-
     }
 }

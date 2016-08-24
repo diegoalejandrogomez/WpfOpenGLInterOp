@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 
 namespace SimpleEngineTileEditor
 {
-    class ManagedSimpleObject
+    public class ManagedSimpleObject
     {
 
         #region DllImports
@@ -93,7 +93,7 @@ namespace SimpleEngineTileEditor
             _simpleObject = simpleObject;
         }
 
-        float positionX
+        public float positionX
         {
             get
             {
@@ -121,13 +121,10 @@ namespace SimpleEngineTileEditor
                 int iy = (int)y;
                 SimpleCamera2D_ScreenToWorld(ref ix, ref iy);
                 SimpleObject_SetX(_simpleObject, ix);
-
-
-
             }
         }
 
-        float positionY
+        public float positionY
         {
             get
             {
@@ -159,7 +156,7 @@ namespace SimpleEngineTileEditor
             }
         }
 
-        float positionZ
+        public float positionZ
         {
             get
             {
@@ -176,7 +173,7 @@ namespace SimpleEngineTileEditor
             }
         }
 
-        float sizeW
+        public float sizeW
         {
             get
             {
@@ -191,7 +188,7 @@ namespace SimpleEngineTileEditor
             }
         }
 
-        float sizeH
+        public float sizeH
         {
             get
             {
@@ -206,7 +203,7 @@ namespace SimpleEngineTileEditor
             }
         }
 
-        float Orientation
+        public float Orientation
         {
             get
             {
@@ -222,7 +219,7 @@ namespace SimpleEngineTileEditor
             }
         }
 
-        String Name
+        public String Name
         {
             get
             {
@@ -233,6 +230,5 @@ namespace SimpleEngineTileEditor
                 SimpleObject_SetName(_simpleObject, value);
             }
         }
-
     }
 }

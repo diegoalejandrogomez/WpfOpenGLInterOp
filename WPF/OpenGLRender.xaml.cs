@@ -13,11 +13,11 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WPFOpenGLLib;
-using SimpleEngineControls;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Forms;
 using System.Windows.Interop;
+using SimpleEngineTileEditor;
 
 namespace WPF
 {

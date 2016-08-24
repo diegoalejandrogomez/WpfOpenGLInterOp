@@ -135,7 +135,7 @@ namespace SimpleEngineTileEditor
 
         public IntPtr WPFWindowHandle { get; set; }
 
-        SimpleEngineViewerControl()
+        public SimpleEngineViewerControl()
         {
             this.Load += OnLoad;
             this.SizeChanged += OnSizeChanged;
@@ -179,13 +179,13 @@ namespace SimpleEngineTileEditor
 
         }
 
-        override protected void OnPaint(PaintEventArgs e)
+        protected override void OnPaint(PaintEventArgs e)
         {
             SimpleEngine_Advance(0.0f);
             SimpleEngine_Render(0.0f);
         }
 
-        ManagedSimpleObject SetItem(float x, float y)
+        public ManagedSimpleObject SetItem(float x, float y)
         {
 
             Int32 ix = (Int32)x;
@@ -204,7 +204,7 @@ namespace SimpleEngineTileEditor
             return null;
         }
 
-        List<ManagedSimpleObject> GetAllTiles()
+        public List<ManagedSimpleObject> GetAllTiles()
         {
             List<ManagedSimpleObject> managedSimpleObjects = new List<ManagedSimpleObject>();
             Int32 layerCount = (Int32)SimpleScene_GetLayerCount();
@@ -266,9 +266,9 @@ namespace SimpleEngineTileEditor
         }
 
         //Custom events
-        event EventHandler OnEngineInitialized;
+        public event EventHandler OnEngineInitialized;
 
-        int MaxZoom
+        public int MaxZoom
         {
             get
             {
@@ -279,7 +279,7 @@ namespace SimpleEngineTileEditor
             }
         }
 
-        List<ManagedSimpleLayer> ManagedSimpleLayers
+        public List<ManagedSimpleLayer> ManagedSimpleLayers
         {
 
             get
@@ -302,11 +302,7 @@ namespace SimpleEngineTileEditor
 
                 return managedSimpleLayers;
             }
-
-
         }
-
-
     }
 
 }

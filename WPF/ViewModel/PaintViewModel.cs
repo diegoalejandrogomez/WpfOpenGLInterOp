@@ -1,5 +1,5 @@
 ﻿using Microsoft.Win32;
-using SimpleEngineControls;
+using SimpleEngineTileEditor;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
