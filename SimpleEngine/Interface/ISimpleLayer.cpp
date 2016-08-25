@@ -19,7 +19,7 @@ extern "C" {
 			return nullptr;
 
 		entIt = 0;
-		return entities[entIt++];
+		return entities[entIt];
 	}
 
 	SIMPLE_API SimpleObject* SimpleLayer_EntitiesNext(SimpleLayer* layer) {

@@ -116,18 +116,13 @@ namespace SimpleEngineTileEditor
             get
             {
                 List<ManagedSimpleObject> managedSimpleObjects = new List<ManagedSimpleObject>();
-                SimpleLayer_EntitiesBegin(sLayer);
-                while(true)
+                var entity = SimpleLayer_EntitiesBegin(sLayer);
+                while(entity != SimpleLayer_EntitiesEnd(sLayer))
                 {
-                    var entity = SimpleLayer_EntitiesNext(sLayer);
-                    if(entity == SimpleLayer_EntitiesEnd(sLayer))
-                    {
-                        break;
-                    }
-
                     ManagedSimpleObject simpleObject = new ManagedSimpleObject();
                     simpleObject.SetSimpleObject(entity);
                     managedSimpleObjects.Add(simpleObject);
+                    entity = SimpleLayer_EntitiesNext(sLayer);
                 }
 
                 return managedSimpleObjects;
