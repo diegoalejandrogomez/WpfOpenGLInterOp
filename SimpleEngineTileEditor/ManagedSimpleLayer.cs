@@ -63,11 +63,16 @@ namespace SimpleEngineTileEditor
 
         [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
         static extern IntPtr SimpleScene_AddLayer(IntPtr layer);
+
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
+        static extern IntPtr SimpleScene_RemoveLayer(IntPtr layer);
+        
         #endregion
         IntPtr sLayer;
 
         public void Remove()
         {
+            SimpleScene_RemoveLayer(sLayer);
         }
 
         public ManagedSimpleLayer()
@@ -115,7 +120,7 @@ namespace SimpleEngineTileEditor
                 while(true)
                 {
                     var entity = SimpleLayer_EntitiesNext(sLayer);
-                    if(entity == null)
+                    if(entity == SimpleLayer_EntitiesEnd(sLayer))
                     {
                         break;
                     }
