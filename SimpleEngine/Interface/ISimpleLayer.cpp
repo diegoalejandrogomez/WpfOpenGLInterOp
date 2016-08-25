@@ -27,7 +27,9 @@ extern "C" {
 
 		if (entIt >= (int)entities.size() - 1)
 			return nullptr;
-		return entities[entIt++];
+
+		entIt = entIt + 1;
+		return entities[entIt];
 
 	}
 	SIMPLE_API SimpleObject* SimpleLayer_EntitiesEnd(SimpleLayer* layer) {
@@ -69,7 +71,7 @@ extern "C" {
 		return sLayer->GetName();
 	}
 
-	SIMPLE_API void SimpleLayer_SetName(SimpleLayer* sLayer, SimpleID name)
+	SIMPLE_API void SimpleLayer_SetName(SimpleLayer* sLayer, const char* name)
 	{
 		sLayer->SetName(name);
 	}
