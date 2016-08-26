@@ -33,12 +33,12 @@
                 <DataGridTemplateColumn Header="Operations" Width="SizeToCells">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <StackPanel>
+                            <StackPanel Orientation="Horizontal">
                                 <Button Command="{Binding DataContext.DeleteSelectedLayer,                                                              RelativeSource={RelativeSource Mode=FindAncestor,  AncestorType={x:Type local:MainWindow}}}" CommandParameter="{Binding }">
-                                    <Image Name="delete" Source="./Resources/Icons/delete.png" Style="{StaticResource ToolIcon}" />
+                                    <Image Name="delete" Source="./Resources/Icons/delete.png" Style="{StaticResource ToolIcon}" Width="15" Height="15"/>
                                 </Button>
                                 <Button Command="{Binding DataContext.EditSelectedLayer,                                                              RelativeSource={RelativeSource Mode=FindAncestor,  AncestorType={x:Type local:MainWindow}}}" CommandParameter="{Binding }">
-                                    <Image Name="change" Source="./Resources/Icons/edit.png" Style="{StaticResource ToolIcon}" />
+                                    <Image Name="change" Source="./Resources/Icons/edit.png" Style="{StaticResource ToolIcon}" Width="15" Height="15" />
                                 </Button>
                             </StackPanel>
                         </DataTemplate>
@@ -46,11 +46,7 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Label Content="Images" />
-        <Label Content="Column Quantity" />
-        <TextBox Text="{Binding QuantityX}" />
-        <Label Content="Row Quantity" />
-        <TextBox Text="{Binding QuantityY}" />
+        <Separator Margin="0,20,0,20"/>
         <Label Content="Images" />
         <ScrollViewer>
             <DataGrid ItemsSource="{Binding Tiles}" AutoGenerateColumns="False" SelectedItem="{Binding Row, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ScrollViewer.CanContentScroll="true" ScrollViewer.VerticalScrollBarVisibility="Visible" Height="400">

@@ -531,6 +531,14 @@ namespace WPF.ViewModel
 
                     splitSelectedImage = new Command((tile) =>
                     {
+
+
+                        SegmentationWindow segmentWindow = new SegmentationWindow();
+                        if(segmentWindow.ShowDialog() == false)
+                            return;
+                        QuantityX = segmentWindow.QuantityX;
+                        QuantityY = segmentWindow.QuantityY;
+
                         var tileObject = (TileViewModel)tile;
                         var image = tileObject.Image;
                         int width = (int)((BitmapImage)image).Width;

@@ -38,16 +38,18 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <xctk:PropertyGrid x:Name="propertyGrid" Grid.Row="0" AutoGenerateProperties="true" SelectedObject="{Binding Selected}" />
+
                         <local:PropertyWindowControl Grid.Row="1" DataContext="{Binding}" />
                     </Grid>
                     <local:OpenGLRender x:Name="openGlRender" Grid.Column="1" />
+                    <xctk:PropertyGrid x:Name="propertyGrid" Grid.Column="2" AutoGenerateProperties="true" SelectedObject="{Binding Selected}" />
                 </Grid>
             </Grid>
             <DockPanel Grid.Row="2">

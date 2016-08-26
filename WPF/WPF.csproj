@@ -146,6 +146,9 @@
     <Compile Include="PropertyWindowControl.xaml.cs">
       <DependentUpon>PropertyWindowControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SegmentationWindow.xaml.cs">
+      <DependentUpon>SegmentationWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ToolBarControl.xaml.cs">
       <DependentUpon>ToolBarControl.xaml</DependentUpon>
     </Compile>
@@ -172,6 +175,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="PropertyWindowControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SegmentationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
