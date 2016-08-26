@@ -513,6 +513,7 @@ namespace WPF.ViewModel
                 {
                     addSelectedTile = new Command((tile) =>
                     {
+                        
                         var tileObject = (TileViewModel)tile;
                         tileObject.Idx = tileObject.SpriteControl.AddControl(tileObject.Path, tileObject.x, tileObject.y, tileObject.width, tileObject.heigth);
                     });
