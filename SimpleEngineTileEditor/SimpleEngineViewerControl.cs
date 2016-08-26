@@ -188,11 +188,11 @@ namespace SimpleEngineTileEditor
         public ManagedSimpleObject SetItem(float x, float y)
         {
 
-            float ix = (Int32)x;
-            float iy = (Int32)y;
+            float ix = x;
+            float iy = y;
 
             SimpleCamera2D_ScreenToWorld(ref ix, ref iy);
-            IntPtr res = SimpleScene_PickFirstPoint(x, y);
+            IntPtr res = SimpleScene_PickFirstPoint(ix, iy);
 
             if (res != IntPtr.Zero)
             {

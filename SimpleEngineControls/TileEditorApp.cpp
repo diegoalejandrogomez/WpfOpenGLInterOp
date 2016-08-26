@@ -92,6 +92,13 @@ void TileEditorApp::_Draw() {
 	
 	//We SHOULD implement copy constructor/assignation operator
 	if (_hasTile) {
+		//Check if the coordinate is inside the board
+		glm::vec3 pos = _cursor->GetPosition();
+		
+		if (pos.x < 0.0f || pos.x > _tileMapSize.x || pos.y < 0.0f || pos.y > _tileMapSize.y)
+			return;
+	
+
 		SimpleSpriteSheetRenderer *tile = new SimpleSpriteSheetRenderer();
 		tile->SetSpriteSheet(_cursor->GetSpriteSheet());
 		tile->SetIndex(_cursor->GetIndex());
@@ -99,7 +106,7 @@ void TileEditorApp::_Draw() {
 		tile->SnapToGrid(true);
 		tile->SetSnapGridSize({ 1.0f,1.0f });
 		tile->SetPosition(_cursor->GetPosition());
-		glm::vec3 pos = _cursor->GetPosition();
+		
 		int idx = _tileMapSize.x * int(pos.y) + (int)pos.x;
 		_tiles[idx] = tile;
 		SimpleAABB aabb;
