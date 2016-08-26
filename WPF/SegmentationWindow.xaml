@@ -6,19 +6,25 @@
         xmlns:local="clr-namespace:WPF"
         mc:Ignorable="d"
         Title="SegmentationWindow" Height="415" Width="300" ResizeMode="NoResize">
-    <StackPanel VerticalAlignment="Stretch">
-        <Label Content="Column Quantity" />
-        <TextBox Text="{Binding QuantityX}" />
-        <Label Content="Row Quantity" />
-        <TextBox Text="{Binding QuantityY}" />
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10,10,10,10">
-            <Button Width="60" Height="25" IsDefault="True" Click="Ok_Click" >Ok</Button>
-            <Button Width="60" Height="25" IsCancel="True">Cancel</Button>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel VerticalAlignment="Stretch" Grid.Row="0">
+            <Label Content="Column Quantity" />
+            <TextBox Text="{Binding QuantityX}" />
+            <Label Content="Row Quantity" />
+            <TextBox Text="{Binding QuantityY}" />
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10,10,10,10">
+                <Button Width="60" Height="25" IsDefault="True" Click="Ok_Click" >Ok</Button>
+                <Button Width="60" Height="25" IsCancel="True">Cancel</Button>
+            </StackPanel>
         </StackPanel>
-        <Canvas Name="previewImage" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="249">
+        <Canvas Name="previewImage" HorizontalAlignment="Center" Width="300" VerticalAlignment="Center" Height="250" Grid.Row="1" >
             <Canvas.Background>
                 <ImageBrush ImageSource="{Binding ImageSource}"></ImageBrush>
             </Canvas.Background>
         </Canvas>
-    </StackPanel>
+    </Grid>
 </Window>

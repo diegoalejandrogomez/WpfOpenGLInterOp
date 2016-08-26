@@ -30,7 +30,7 @@ namespace WPF
             get {
                 return _quantityX;
             }
-            set { _quantityX = value; DrawGrid(); }
+            set { _quantityX = value; _DrawGrid(); }
         }
 
         private Int32 _quantityY;
@@ -40,24 +40,49 @@ namespace WPF
             {
                 return _quantityY;
             }
-            set { _quantityY = value; DrawGrid(); }
+            set { _quantityY = value; _DrawGrid(); }
         }
 
-        public BitmapImage ImageSource { set; get; }
+        private BitmapImage _imageSource;
+        public BitmapImage ImageSource {
+            set { _imageSource = value; _AdjustCanvasSize(); _DrawGrid(); }
+            get { return _imageSource; }
+        }
 
-        private void DrawGrid() {
+        private void _AdjustCanvasSize() {
+
+            float aspect = _imageSource.PixelHeight / (float)_imageSource.PixelWidth;
+
+            if (_imageSource.Width > _imageSource.Height)
+                previewImage.Height *= aspect;
+                           
+            if (_imageSource.Width < _imageSource.Height)
+                previewImage.Width *= aspect;        
+        }
+        private void _DrawGrid() {
 
             previewImage.Children.Clear();
 
-            for (UInt32 i = 0; i < QuantityY-1; ++i) {
+            Rectangle box = new Rectangle();
+            box.BeginInit();
+            box.Width = previewImage.Width;
+            box.Height = previewImage.Height;
+            box.Stroke = Brushes.Black;
+            box.StrokeThickness = 1;
+            box.EndInit();
+            previewImage.Children.Add(box);
+
+            for (UInt32 i = 0; i < QuantityY - 1; ++i) {
                 Line l = new Line();
                 l.BeginInit();
                 l.X1 = 0;
                 l.X2 = previewImage.ActualWidth;
-                l.Y1 = (i + 1) * (previewImage.ActualHeight/ QuantityY);
+                l.Y1 = (i + 1) * (previewImage.ActualHeight / QuantityY);
                 l.Y2 = l.Y1;
                 l.Stroke = Brushes.Black;
-                l.StrokeThickness = 2;              
+                l.StrokeThickness = 1;
+                l.StrokeDashArray.Add(4);
+                l.StrokeDashArray.Add(4);
                 l.EndInit();
                 previewImage.Children.Add(l);
               }
@@ -71,7 +96,9 @@ namespace WPF
                 l.Y1 = 0;
                 l.Y2 = previewImage.ActualHeight;
                 l.Stroke = Brushes.Black;
-                l.StrokeThickness = 2;
+                l.StrokeThickness = 1;
+                l.StrokeDashArray.Add(4);
+                l.StrokeDashArray.Add(4);
                 l.EndInit();
                 previewImage.Children.Add(l);
             }
