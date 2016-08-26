@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF"
         mc:Ignorable="d"
-        Title="SegmentationWindow" Height="170" Width="300" ResizeMode="NoResize">
-    <StackPanel Height="Auto">
+        Title="SegmentationWindow" Height="415" Width="300" ResizeMode="NoResize">
+    <StackPanel VerticalAlignment="Stretch">
         <Label Content="Column Quantity" />
         <TextBox Text="{Binding QuantityX}" />
         <Label Content="Row Quantity" />
@@ -15,5 +15,10 @@
             <Button Width="60" Height="25" IsDefault="True" Click="Ok_Click" >Ok</Button>
             <Button Width="60" Height="25" IsCancel="True">Cancel</Button>
         </StackPanel>
+        <Canvas Name="previewImage" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="249">
+            <Canvas.Background>
+                <ImageBrush ImageSource="{Binding ImageSource}"></ImageBrush>
+            </Canvas.Background>
+        </Canvas>
     </StackPanel>
 </Window>
