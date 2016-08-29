@@ -24,18 +24,18 @@ json SimpleObject::Serialize() {
 	};
 
 	if (_name.HasString())
-		ret["nameVerbose"] = static_cast<std::string>(_name.GetString());
+		ret["nameVerbose"] = _name.GetString();
 	
 	return ret;	
 }
 
 
-bool SimpleObject::Deserialize(json &node) {
+bool SimpleObject::Deserialize(const json &node) {
 	
 	SIMPLE_ASSERT(node.find("name") != node.end());
 	
 	if (node.find("nameVerbose") != node.end())
-		_name = static_cast<std::string>(_name.GetString());
+		_name = _name.GetString();
 	else
 		_name = (SimpleID::Type)node["name"];
 

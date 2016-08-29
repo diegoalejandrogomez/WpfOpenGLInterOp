@@ -16,7 +16,7 @@ class DebugGameLogic : public SimpleGameLogic {
 
 	virtual json Serialize() override;
 
-	virtual bool Deserialize(json &node) override;
+	virtual bool Deserialize(const json &node) override;
 
 private:
 

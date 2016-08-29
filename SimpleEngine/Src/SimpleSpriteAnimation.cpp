@@ -28,7 +28,7 @@ json SimpleSpriteAnimation::Serialize() {
 	return ret;
 
 }
-bool SimpleSpriteAnimation::Deserialize(json &node) {
+bool SimpleSpriteAnimation::Deserialize(const json &node) {
 
 	if (node.find("name") == node.end()) {
 		SIMPLE_LOG("Couldn't deserialize animation");

@@ -28,13 +28,16 @@ namespace WPF.ViewModel
 
         private void OnTimedEvent(object source, ElapsedEventArgs e)
         {
-            index++;
-            if(index >= Tiles.Count)
+            if (Tiles != null)
             {
-                index = 0;
-            }
+                index++;
+                if (index >= Tiles.Count)
+                {
+                    index = 0;
+                }
 
-            this.CurrentTile = Tiles.ElementAt(index);
+                this.CurrentTile = Tiles.ElementAt(index);
+            }
         }
 
         public List<TileViewModel> Tiles;

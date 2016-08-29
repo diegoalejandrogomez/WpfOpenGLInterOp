@@ -102,11 +102,11 @@ json SimpleAnimatedSpriteRenderer::Serialize() {
 
 
 }
-bool SimpleAnimatedSpriteRenderer::Deserialize(json &node) {
+bool SimpleAnimatedSpriteRenderer::Deserialize(const json &node) {
 
 	SimpleSpriteSheetRenderer::Deserialize(node);
 
-	json& local = node["SimpleAnimatedSpriteRenderer"];
+	const json& local = node["SimpleAnimatedSpriteRenderer"];
 
 	SIMPLE_ASSERT(local.find("animation") != local.end());
 	std::string animName = local["animation"];

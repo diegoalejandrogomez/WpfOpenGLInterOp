@@ -130,7 +130,8 @@ json SimpleScene::Serialize() {
 
 	return scene;
 }
-bool SimpleScene::Deserialize(json &node) {
+
+bool SimpleScene::Deserialize(const json &node) {
 
 	//No camera deserialization for now
 	if (node.find("layers") == node.end()) {

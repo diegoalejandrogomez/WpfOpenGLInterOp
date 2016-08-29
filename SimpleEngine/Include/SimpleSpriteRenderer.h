@@ -31,7 +31,7 @@ public:
 
 	virtual SimpleID GetType() { return "SimpleSpriteRenderer"; }
 	virtual json Serialize();
-	virtual bool Deserialize(json &node);
+	virtual bool Deserialize(const json &node);
 	
 
 protected:

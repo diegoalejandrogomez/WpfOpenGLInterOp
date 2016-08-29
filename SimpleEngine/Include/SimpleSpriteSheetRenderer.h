@@ -29,8 +29,8 @@ public:
 	
 	virtual SimpleID GetType() { return "SimpleSpriteSheetRenderer"; }
 	
-	virtual json Serialize() override;
-	virtual bool Deserialize(json &node) override;
+	json Serialize() override;
+	bool Deserialize(const json &node) override;
 protected:
 		
 	void _UpdateFrame();

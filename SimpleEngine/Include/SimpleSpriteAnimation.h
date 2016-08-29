@@ -20,14 +20,14 @@ public:
 	void ClearFrames() { _frames.clear(); };
 	void SetFrameTime(float frameTime) { _frameTime = frameTime; }
 
-	inline const float GetFrameTime() { return _frameTime; };
-	inline const int GetFrameCount() { return _frames.size(); };
-	inline const int GetFrame(int n) { return _frames[n]; }
+	inline const float GetFrameTime() const { return _frameTime; };
+	inline const int GetFrameCount() const { return _frames.size(); };
+	inline const int GetFrame(int n) const { return _frames[n]; }
 	inline SimpleSpriteSheet* GetSpriteSheet() { return _sheet; };
-	std::string GetAnimationName() { return _name;}
+	std::string GetAnimationName() const { return _name;}
 
 	json Serialize() override;
-	bool Deserialize(json &node) override;
+	bool Deserialize(const json &node) override;
 
 private:
 

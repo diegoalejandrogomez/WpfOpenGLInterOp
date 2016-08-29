@@ -149,11 +149,11 @@ json SimpleSpriteRenderer::Serialize() {
 
 
 }
-bool SimpleSpriteRenderer::Deserialize(json &node) {
+bool SimpleSpriteRenderer::Deserialize(const json &node) {
 	
 	SimpleObject::Deserialize(node);
 
-	json& local = node["SimpleSpriteRenderer"];
+	const json& local = node["SimpleSpriteRenderer"];
 
 	SIMPLE_ASSERT(local.find("texture") != local.end());
 	std::string path = local["texture"];
