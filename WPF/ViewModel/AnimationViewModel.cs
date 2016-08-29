@@ -11,6 +11,7 @@ namespace WPF.ViewModel
 {
     public class AnimationViewModel : INotifyPropertyChanged
     {
+        
         System.Timers.Timer aTimer;
         int index;
 
@@ -23,6 +24,7 @@ namespace WPF.ViewModel
             aTimer.Enabled = true;
             index = 0;
             this.Frequency = 100;
+            this.AnimatedControl = new SimpleAnimatedSpriteControl();
         }
 
         private void OnTimedEvent(object source, ElapsedEventArgs e)

@@ -974,23 +974,13 @@ namespace WPF.ViewModel
                             Content = new AnimationEditor()
                         };
 
-                        AnimationViewModel animationViewModel = new AnimationViewModel();
+                        animationViewModel = new AnimationViewModel();
                         animationViewModel.Tiles = this.SelectedTiles;
                         ((System.Windows.Controls.UserControl)window.Content).DataContext = animationViewModel;
                         window.Width = 300;
                         window.Height = 600;
                         window.Closed += SaveAnimation;
                         window.ShowDialog();
-
-
-                        //Should be moved to the proper place
-                        animationViewModel.AnimatedControl.SetAnimation(animationViewModel.Name,(float) (1.0 / animationViewModel.Frequency));
-                        foreach(TileViewModel t in animationViewModel.Tiles) {
-                            animationViewModel.AnimatedControl.AddFrame(t.Path, t.x, t.y, t.width, t.heigth);
-                        }
-
-                        animationViewModel.AnimatedControl.AddControl(animationViewModel.Name);
-                        
                     });
                 }
 
@@ -999,9 +989,18 @@ namespace WPF.ViewModel
             set { }
         }
 
+        AnimationViewModel animationViewModel { get; set; }
+
         private void SaveAnimation(object sender, EventArgs e)
         {
-            //Implement interop
+            //Should be moved to the proper place
+            animationViewModel.AnimatedControl.SetAnimation(animationViewModel.Name, (float)(1.0 / animationViewModel.Frequency));
+            foreach (TileViewModel t in animationViewModel.Tiles)
+            {
+                animationViewModel.AnimatedControl.AddFrame(t.Path, t.x, t.y, t.width, t.heigth);
+            }
+
+            animationViewModel.AnimatedControl.AddControl(animationViewModel.Name);
         }
         #endregion
     }
