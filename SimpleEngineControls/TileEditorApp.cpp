@@ -126,6 +126,7 @@ void TileEditorApp::_Draw() {
 			anim->SnapToGrid(true);
 			anim->SetSnapGridSize({ 1.0f,1.0f });
 			anim->SetPosition(c->GetPosition());
+			anim->Play();
 
 			int idx = _tileMapSize.x * int(pos.y) + (int)pos.x;
 			_tiles[idx] = anim;
