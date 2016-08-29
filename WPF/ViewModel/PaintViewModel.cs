@@ -262,20 +262,34 @@ namespace WPF.ViewModel
 
         public void OnClick(Object sender, EventArgs e)
         {
-            if (Pick) //We should filter based on selected tool (brush, move tile, etc)
+            if (Drag)
             {
                 if (Selected != null)
                     Drag = false;
-                int x = ((System.Windows.Forms.MouseEventArgs)e).X;
-                int y = ((System.Windows.Forms.MouseEventArgs)e).Y;
+                float x = ((System.Windows.Forms.MouseEventArgs)e).X;
+                float y = ((System.Windows.Forms.MouseEventArgs)e).Y;
+                                 
                 Selected = null;
-                Selected = ((SimpleEngineViewerControl)OpenGLRenderControl).SetItem(x, y);
-                if (Selected == null)
-                    Selected = _tileMap;
-            }else
+            }
+            else
             {
-                _tileMap.Paint();               
-                
+
+                if (Pick) //We should filter based on selected tool (brush, move tile, etc)
+                {
+                    if (Selected != null)
+                        Drag = false;
+                    int x = ((System.Windows.Forms.MouseEventArgs)e).X;
+                    int y = ((System.Windows.Forms.MouseEventArgs)e).Y;
+                    Selected = null;
+                    Selected = ((SimpleEngineViewerControl)OpenGLRenderControl).SetItem(x, y);
+                    if (Selected == null)
+                        Selected = _tileMap;
+                }
+                else
+                {
+                    _tileMap.Paint();
+
+                }
             }
             PropertyChanged(this, new PropertyChangedEventArgs("Layers"));
             PropertyChanged(this, new PropertyChangedEventArgs("MaxZoomLevel"));

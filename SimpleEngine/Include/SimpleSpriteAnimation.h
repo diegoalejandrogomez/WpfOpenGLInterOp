@@ -16,6 +16,8 @@ public:
 	void SetSpriteSheet(SimpleSpriteSheet* sheet);
 	void SetSpriteSheet(const std::string  sheetName);
 	void SetFrames(const std::vector<int> &frames) { _frames = frames; }
+	void AddFrame(int idx) { _frames.push_back(idx);}
+	void ClearFrames() { _frames.clear(); };
 	void SetFrameTime(float frameTime) { _frameTime = frameTime; }
 
 	inline const float GetFrameTime() { return _frameTime; };
