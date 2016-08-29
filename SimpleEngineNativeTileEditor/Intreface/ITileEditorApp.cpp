@@ -105,17 +105,8 @@ TILEEDITOR_API int TileEditorApp_GetMapHeight()
 	return 0;
 }
 
-//TILEEDITOR_API json TileEditorApp_Serialize()
-//{
-//	TileEditorApp* app = dynamic_cast<TileEditorApp*>(SimpleEngine::Instance()->GetGameLogic());
-//	if (app != nullptr)
-//		return app->Serialize();
-//}
-//
-//TILEEDITOR_API bool TileEditorApp_Deserialize(json & node)
-//{
-//	TileEditorApp* app = dynamic_cast<TileEditorApp*>(SimpleEngine::Instance()->GetGameLogic());
-//	if (app != nullptr)
-//		return app->Deserialize(node);
-//}
-
+TILEEDITOR_API void SetCursorAnimated(const char* animationName) {
+	TileEditorApp* app = dynamic_cast<TileEditorApp*>(SimpleEngine::Instance()->GetGameLogic());
+	if (app != nullptr)
+		app->SetCursorAnimated(animationName);
+}

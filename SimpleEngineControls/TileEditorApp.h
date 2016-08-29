@@ -29,7 +29,7 @@ public:
 	void SetCursorPosition(float x, float y);
 	void SetCursorIdle();
 	void SetCursorTile(SimpleID sheet, int index);
-
+	void SetCursorAnimated(SimpleID animationName);
 	void SetCursorErase();
 	void Paint();
 	

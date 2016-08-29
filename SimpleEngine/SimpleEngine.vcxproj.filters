@@ -194,6 +194,9 @@
     <ClInclude Include="Interface\ISimpleSpriteAnimation.h">
       <Filter>Interface</Filter>
     </ClInclude>
+    <ClInclude Include="interface\ISimpleAnimatedSpriteRenderer.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\SimpleObjectsRenderPass.cpp">
@@ -302,6 +305,9 @@
       <Filter>Interface</Filter>
     </ClCompile>
     <ClCompile Include="Interface\ISimpleSpriteAnimation.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="interface\ISimpleAnimatedSpriteRenderer.cpp">
       <Filter>Interface</Filter>
     </ClCompile>
   </ItemGroup>

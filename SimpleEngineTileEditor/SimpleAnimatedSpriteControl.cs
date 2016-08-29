@@ -7,38 +7,27 @@ using System.Runtime.InteropServices;
 
 namespace SimpleEngineTileEditor
 {
-    class SimpleSpriteAnimationControl
+    class SimpleAnimatedSpriteControl
     {
 
         #region SimpleSpriteAnimationImports
         [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
-        static extern IntPtr SimpleSpriteAnimation_Create();
+        static extern IntPtr SimpleAnimatedSpriteRenderer_Create();
         [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
-        static extern void SimpleSpriteAnimation_Destroy(IntPtr sprite);
+        static extern void SimpleAnimatedSpriteRenderer_Destroy(IntPtr sprite);
         [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
-        static extern void SimpleSpriteAnimation_SetAnimationName(IntPtr sprite, String name);
+        static extern void SimpleAnimatedSpriteRenderer_SetAnimation(IntPtr sprite, IntPtr anim);
         [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
-        static extern void SimpleSpriteAnimation_SetSpriteSheet(IntPtr sprite, IntPtr sheet);
+        static extern void SimpleAnimatedSpriteRenderer_SetAnimationWithName(IntPtr sprite, String anim);
         [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
-        static extern void SimpleSpriteAnimation_SetSpriteSheetWithName(IntPtr sprite, String sheetName);
+        static extern void SimpleAnimatedSpriteRenderer_Play(IntPtr sprite);
         [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
-        static extern void SetFrames(IntPtr sprite, IntPtr frames, int amount);
+        static extern void SimpleAnimatedSpriteRenderer_PlayOnce(IntPtr sprite);
         [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
-        static extern void SimpleSpriteAnimation_AddFrame(IntPtr sprite, int idx);
+        static extern void SimpleAnimatedSpriteRenderer_Stop(IntPtr sprite);
         [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
-        static extern void SimpleSpriteAnimation_ClearFrames(IntPtr sprite);
-        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
-        static extern void SimpleSpriteAnimation_SetFrameTime(IntPtr sprite, float frameTime);
-        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
-        static extern float SimpleSpriteAnimation_GetFrameTime(IntPtr sprite);
-        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
-        static extern int SimpleSpriteAnimation_GetFrameCount(IntPtr sprite);
-        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
-        static extern int SimpleSpriteAnimation_GetFrame(IntPtr sprite, int n);
-        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
-        static extern IntPtr SimpleSpriteAnimation_GetSpriteSheet(IntPtr sprite);
-        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
-        static extern IntPtr SimpleSpriteAnimation_GetAnimationName(IntPtr sprite);
+        static extern void SimpleAnimatedSpriteRenderer_Pause(IntPtr sprite);
+             
         #endregion
         #region SimpleObjectImports
         //Managed simple object imports
@@ -111,7 +100,14 @@ namespace SimpleEngineTileEditor
         static extern void SimpleCamera2D_ScreenToWorld(ref float x, ref float y);
 
         #endregion
-
+        #region SimpleRendererImports
+        [DllImport("SimpleEngineNativeTileEditor.dll", CallingConvention = CallingConvention.Cdecl)]
+        static extern IntPtr SimpleRenderer_GetSpriteAnimation(string name);
+        #endregion
+        #region NativeTileEditorAppImports
+        [DllImport("SimpleEngineNativeTileEditor.dll", CallingConvention = CallingConvention.Cdecl)]
+        static extern void TileEditorApp_SetCursorAnimated(String animationName);
+        #endregion
         IntPtr _simpleSpriteAnimation;
         ManagedSimpleObject _managedSimpleObject;
 
@@ -121,43 +117,29 @@ namespace SimpleEngineTileEditor
             return _managedSimpleObject;
 
         }
-        public SimpleSpriteAnimationControl()
+        public SimpleAnimatedSpriteControl()
         {
             _managedSimpleObject = new ManagedSimpleObject();
-            _simpleSpriteAnimation = SimpleSpriteAnimation_Create();
+            _simpleSpriteAnimation = SimpleAnimatedSpriteRenderer_Create();
         }
 
-        ~SimpleSpriteAnimationControl()
+        ~SimpleAnimatedSpriteControl()
         {
-            SimpleSpriteAnimation_Destroy(_simpleSpriteAnimation);
+            SimpleAnimatedSpriteRenderer_Destroy(_simpleSpriteAnimation);
         }
 
-        public int AddControl(String spriteSheet)
+        public void AddControl(String animationName)
         {
 
-            throw new NotImplementedException();
-            ////remove temp
-            //int from = path.IndexOf("/temp/");
-            //path = path.Remove(0, from + 6);
+            //Check if the animation exists... otherwise, we should assert
+            IntPtr anim = SimpleRenderer_GetSpriteAnimation(animationName);
 
-            ////Try to find spritesheet to use
-            //IntPtr spriteSheet = SimpleRenderer_GetSpriteSheet(path);
+            if (anim == IntPtr.Zero)
+                throw new Exception("Animation not found!");
 
-            //if (spriteSheet == IntPtr.Zero)
-            //{
+            TileEditorApp_SetCursorAnimated(animationName);
 
-            //    SimpleRenderer_CreateSpriteSheetEmpty(path);
-            //    spriteSheet = SimpleRenderer_GetSpriteSheet(path);
-            //}
 
-            //int idx = SimpleSpriteSheet_GetFrameIndex(spriteSheet, x, y, w, h);
-            //if (idx == -1)
-            //    idx = SimpleSpriteSheet_AddSpriteFrame(spriteSheet, x, y, w, h);
-
-            ////Configure brush
-            //TileEditorApp_SetCursorTile(path, idx);
-            //return idx;
-            return 0;
         }
 
         public float positionX

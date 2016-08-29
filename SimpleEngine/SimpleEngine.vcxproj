@@ -247,6 +247,7 @@ copy /Y "$(ProjectDir)\External\devil\lib\ILU.dll" "$(TargetDir)"</Command>
     <ClInclude Include="Interface\ISimpleSpriteRenderer.h" />
     <ClInclude Include="interface\ISimpleSpriteSheet.h" />
     <ClInclude Include="Interface\ISimpleSpriteSheetRenderer.h" />
+    <ClInclude Include="interface\ISimpleAnimatedSpriteRenderer.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -264,6 +265,7 @@ copy /Y "$(ProjectDir)\External\devil\lib\ILU.dll" "$(TargetDir)"</Command>
     <ClCompile Include="Interface\ISimpleSpriteRenderer.cpp" />
     <ClCompile Include="interface\ISimpleSpriteSheet.cpp" />
     <ClCompile Include="Interface\ISimpleSpriteSheetRenderer.cpp" />
+    <ClCompile Include="interface\ISimpleAnimatedSpriteRenderer.cpp" />
     <ClCompile Include="Src\SimpleAABB.cpp" />
     <ClCompile Include="Src\SimpleAnimatedSpriteRenderer.cpp" />
     <ClCompile Include="Src\SimpleID.cpp" />
