@@ -148,8 +148,8 @@ namespace SimpleEngineTileEditor
                 float z = 0.0f;
                 SimpleObject_GetPosition(_simpleObject, ref x, ref y, ref z);
 
-                float ix = value;
-                float iy = y;
+                float ix = x;
+                float iy = value;
                 SimpleCamera2D_ScreenToWorld(ref ix, ref iy);
                 SimpleObject_SetY(_simpleObject, iy);
 
