@@ -17,9 +17,9 @@ namespace WPF.ViewModel
         {
             aTimer = new System.Timers.Timer();
             aTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
-            aTimer.Interval = 100;
             aTimer.Enabled = true;
             index = 0;
+            this.Frequency = 100;
         }
 
         private void OnTimedEvent(object source, ElapsedEventArgs e)
@@ -51,6 +51,24 @@ namespace WPF.ViewModel
             set
             {
                 currentTile = value;
+                PropertyChanged(this, new PropertyChangedEventArgs("CurrentTile"));
+            }
+        }
+
+        private double frequency;
+        public double Frequency
+        {
+            get
+            {
+                return frequency;
+            }
+            set
+            {
+                frequency = value;
+                if (frequency == 0)
+                    frequency = 1;
+
+                aTimer.Interval = frequency;
                 PropertyChanged(this, new PropertyChangedEventArgs("CurrentTile"));
             }
         }

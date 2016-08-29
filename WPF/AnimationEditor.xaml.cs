@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WPF.ViewModel;
 
 namespace WPF
 {
@@ -23,6 +24,11 @@ namespace WPF
         public AnimationEditor()
         {
             InitializeComponent();
+        }
+
+        private void FrequencySlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            ((AnimationViewModel)this.DataContext).Frequency = e.NewValue;
         }
     }
 }

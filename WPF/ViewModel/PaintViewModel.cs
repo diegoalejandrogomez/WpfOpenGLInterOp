@@ -979,7 +979,7 @@ namespace WPF.ViewModel
                         ((System.Windows.Controls.UserControl)window.Content).DataContext = animationViewModel;
                         window.Width = 300;
                         window.Height = 600;
-                        window.Closed += Window_Closed;
+                        window.Closed += SaveAnimation;
                         window.ShowDialog();
                     });
                 }
@@ -987,6 +987,11 @@ namespace WPF.ViewModel
                 return animateCommand;
             }
             set { }
+        }
+
+        private void SaveAnimation(object sender, EventArgs e)
+        {
+            //Implement interop
         }
         #endregion
     }

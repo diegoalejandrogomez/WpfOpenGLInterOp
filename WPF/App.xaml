@@ -25,5 +25,10 @@
             <Setter Property="FontFamily" Value="Constantia"/>
             <Setter Property="FontSize" Value="24"/>
         </Style>
+        <Style x:Key="Button">
+            <Setter Property="Button.Width" Value="80"></Setter>
+            <Setter Property="Button.Height" Value="30"></Setter>
+            <Setter Property="Button.Margin" Value="2,2,2,2"></Setter>
+        </Style>
     </Application.Resources>
 </Application>
