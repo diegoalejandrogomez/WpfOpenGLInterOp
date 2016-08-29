@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WPF.Model;
 using WPF.ViewModel;
 
 namespace WPF
@@ -35,6 +36,21 @@ namespace WPF
             {
                 var selected = grid.SelectedItems[0] as ManagedSimpleLayer;
                 ((PaintViewModel)DataContext).SelectedLayer = selected;
+            }
+        }
+
+        private void TileGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // ... Get SelectedItems from DataGrid.
+            var grid = sender as DataGrid;
+            ((PaintViewModel)DataContext).SelectedTiles = new List<TileViewModel>();
+            if (grid.SelectedItems != null && grid.SelectedItems.Count > 0)
+            {
+                foreach (TileViewModel item in grid.SelectedItems)
+                {
+                    var selected = item;
+                    ((PaintViewModel)DataContext).SelectedTiles.Add(selected);
+                }
             }
         }
     }
