@@ -2,43 +2,34 @@
 #include "SimpleLayer.h"
 
 SimpleLayer::SimpleLayer() : 
-	_layerName(""), _queryable(true){
-		
+	_layerName(""), _queryable(true) {		
 }
 
 
-const std::vector<SimpleObject*>& SimpleLayer::GetEntities()
-{
+const SimpleLayer::SimpleObjectList &SimpleLayer::GetEntities() {
 	return this->_entities;
 }
 
 SimpleLayer::~SimpleLayer() {
-
-	for (auto& ent : _entities)
-		delete ent;
-
+	this->Clear(true);
 	_entities.clear();
 }
 
 void SimpleLayer::AddEntity(SimpleObject* sObj) {
-
 	_entities.push_back(sObj);
 }
 
 
-bool SimpleLayer::RemoveEntity(SimpleObject* sObj) {
-	auto it = find(_entities.begin(), _entities.end(), sObj);
-	if (it != _entities.end()) {
-		_entities.erase(it);
-		return true;
-	}
-	return false;
+bool SimpleLayer::RemoveEntity(const SimpleObject* sObj) {
+	const size_t size = _entities.size(); // caching the vector size
+	_entities.erase(std::remove(_entities.begin(), _entities.end(), sObj), _entities.end());
+	return _entities.size() < size;
 }
 
 void SimpleLayer::Clear(bool deleteEntities) {
-	if (deleteEntities)
-		for (auto e : _entities)
-			delete e;
+	if (deleteEntities) {
+		std::for_each(_entities.begin(), _entities.end(), std::default_delete<SimpleObject>());
+	}
 	_entities.clear();
 }
 
@@ -46,36 +37,33 @@ void SimpleLayer::SetZ(float Z) {
 	this->Z = Z;
 }
 
-float SimpleLayer::GetZ() {
+float SimpleLayer::GetZ() const {
 	return this->Z;
 }
 
 
 json SimpleLayer::Serialize() {
-
 	json layer;
 	layer["name"] = static_cast<SimpleID::Type>(_layerName);
 	if(_layerName.HasString())
-		layer["nameVerbose"] = static_cast<std::string>(_layerName.GetString());
+		layer["nameVerbose"] = _layerName.GetString();
 
 	layer["z"] = Z;
 	layer["queryable"] = _queryable;
 	
 	json elements = json::array();
-	for (auto entity : _entities) {
-		if(entity->IsSerializable()){
-			json e = entity->Serialize();
-			elements.push_back(e);
+	std::for_each(_entities.begin(), _entities.end(), [&elements](SimpleObject* entity) { if (entity->IsSerializable()) {
+			elements.push_back(entity->Serialize());
 		}
-	}
+	});
+
 	layer["entities"] = elements;
 	
 	return layer;
-
 }
 
 
-bool SimpleLayer::Deserialize(json& layer) {
+bool SimpleLayer::Deserialize(const json& layer) {
 	
 	if (layer.find("name") == layer.end()) {
 		SIMPLE_LOG("Couldn't find name field in layer");
@@ -106,12 +94,12 @@ bool SimpleLayer::Deserialize(json& layer) {
 	
 	//// range-based for
 	for (auto& e : layer["entities"]) {
-
 		if (e.find("type") == e.end())
 			return false;
+
 		SimpleObject* obj = SimpleObject::BaseFactory::CreateInstance((SimpleID::Type)e["type"]);
-		obj->Deserialize(e);
-		AddEntity(obj);
+		if (obj->Deserialize(e))
+			AddEntity(obj);
 	}
 
 	return true;
