@@ -69,6 +69,7 @@ public:
 	std::string GetGameState();
 	bool SetGameState(std::string state);
 
+	void UseInternalFrameTime(bool value) { _useInternalFrameTime = value; }
 protected:
 	SimpleEngine() {};
 	~SimpleEngine() {};
@@ -84,6 +85,8 @@ protected:
 	std::chrono::nanoseconds _logicTime;
 	
 	std::string _resBaseDir;
+
+	bool _useInternalFrameTime = true;
 
 	void _SwitchGameLogic();
 };

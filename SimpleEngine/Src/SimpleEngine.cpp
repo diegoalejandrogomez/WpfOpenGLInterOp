@@ -61,6 +61,9 @@ void SimpleEngine::Render(float dt) {
 	high_resolution_clock::time_point current = high_resolution_clock::now();
 	_renderTime = duration_cast<nanoseconds>(current - prev);
 	prev = current;
+
+	if (_useInternalFrameTime)
+		dt = _renderTime.count() * 1e-9 ;
 	
 	if(_scene != nullptr)
 		_renderer->Render(dt, _scene);
@@ -68,11 +71,15 @@ void SimpleEngine::Render(float dt) {
 
 void SimpleEngine::Advance(float dt) {
 	
+	
 	//Internal fps measuring
 	static high_resolution_clock::time_point prev = high_resolution_clock::now();
 	high_resolution_clock::time_point current = high_resolution_clock::now();
 	_logicTime = duration_cast<nanoseconds>(current - prev);
 	prev = current;
+
+	if (_useInternalFrameTime)
+		dt = _logicTime.count() * 1e-9;
 
 	////Check if we must switch the game mode
 	if (_nextGameLogic != nullptr)
