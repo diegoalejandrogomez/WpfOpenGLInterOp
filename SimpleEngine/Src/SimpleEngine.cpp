@@ -63,7 +63,7 @@ void SimpleEngine::Render(float dt) {
 	prev = current;
 
 	if (_useInternalFrameTime)
-		dt = _renderTime.count();
+		dt = _renderTime.count() * 1e-9 ;
 	
 	if(_scene != nullptr)
 		_renderer->Render(dt, _scene);
@@ -79,7 +79,7 @@ void SimpleEngine::Advance(float dt) {
 	prev = current;
 
 	if (_useInternalFrameTime)
-		dt = _logicTime.count();
+		dt = _logicTime.count() * 1e-9;
 
 	////Check if we must switch the game mode
 	if (_nextGameLogic != nullptr)
