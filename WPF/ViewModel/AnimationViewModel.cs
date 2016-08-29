@@ -72,5 +72,19 @@ namespace WPF.ViewModel
                 PropertyChanged(this, new PropertyChangedEventArgs("CurrentTile"));
             }
         }
+
+        private String name;
+        public String Name
+        {
+            get
+            {
+                return name;
+            }
+            set
+            {
+                name = value;
+                PropertyChanged(this, new PropertyChangedEventArgs("Name"));
+            }
+        }
     }
 }
