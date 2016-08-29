@@ -40,162 +40,235 @@ namespace SimpleEngineTileEditor
         [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
         static extern IntPtr SimpleSpriteAnimation_GetAnimationName(IntPtr sprite);
         #endregion
+        #region SimpleObjectImports
+        //Managed simple object imports
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
+        static extern void SimpleObject_GetPosition(IntPtr sObj, ref float x, ref float y, ref float z);
 
-    //    IntPtr _simpleSpriteAnimation;
-    //    ManagedSimpleObject _managedSimpleObject;
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
+        static extern void SimpleObject_Getx(IntPtr sObj, ref float x);
 
-    //    public ManagedSimpleObject GetManagedSimpleObject()
-    //    {
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
+        static extern void SimpleObject_GetY(IntPtr sObj, ref float y);
 
-    //        return _managedSimpleObject;
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
+        static extern void SimpleObject_GetZ(IntPtr sObj, ref float z);
 
-    //    }
-    //    public SimpleSpriteAnimationControl()
-    //    {
-    //        _managedSimpleObject = new ManagedSimpleObject();
-    //        _simpleSpriteAnimation = SimpleSpriteAnimation_Create();
-    //    }
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
+        static extern void SimpleObject_GetSize(IntPtr sObj, ref float width, ref float height);
 
-    //    ~SpriteSheetControl()
-    //    {
-    //        SimpleSpriteSheetRenderer_Destroy(_simpleSpriteSheetRenderer);
-    //    }
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
+        static extern void SimpleObject_GetWidth(IntPtr sObj, ref float width);
 
-    //    public int AddControl(String path, int x, int y, int w, int h)
-    //    {
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
+        static extern void SimpleObject_GetHeight(IntPtr sObj, ref float height);
 
-    //        //remove temp
-    //        int from = path.IndexOf("/temp/");
-    //        path = path.Remove(0, from + 6);
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
+        static extern void SimpleObject_GetOrientation(IntPtr sObj, ref float orientation);
 
-    //        //Try to find spritesheet to use
-    //        IntPtr spriteSheet = SimpleRenderer_GetSpriteSheet(path);
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
+        static extern UInt32 SimpleObject_GetName(IntPtr sObj);
 
-    //        if (spriteSheet == IntPtr.Zero)
-    //        {
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
+        static extern IntPtr SimpleObject_GetStringName(IntPtr sObj);
 
-    //            SimpleRenderer_CreateSpriteSheetEmpty(path);
-    //            spriteSheet = SimpleRenderer_GetSpriteSheet(path);
-    //        }
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
+        static extern void SimpleObject_SetPosition(IntPtr sObj, float x, float y, float z);
 
-    //        int idx = SimpleSpriteSheet_GetFrameIndex(spriteSheet, x, y, w, h);
-    //        if (idx == -1)
-    //            idx = SimpleSpriteSheet_AddSpriteFrame(spriteSheet, x, y, w, h);
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
+        static extern void SimpleObject_SetX(IntPtr sObj, float x);
 
-    //        //Configure brush
-    //        TileEditorApp_SetCursorTile(path, idx);
-    //        return idx;
-    //    }
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
+        static extern void SimpleObject_SetY(IntPtr sObj, float y);
 
-    //    public float positionX
-    //    {
-    //        get
-    //        {
-    //            if (_simpleSpriteSheetRenderer == IntPtr.Zero)
-    //                return 0.0f;
-    //            float x = 0.0f;
-    //            float y = 0.0f;
-    //            float z = 0.0f;
-    //            SimpleObject_GetPosition(_simpleSpriteSheetRenderer, ref x, ref y, ref z);
-    //            float ix = x;
-    //            float iy = y;
-    //            SimpleCamera2D_WorldToScreen(ref ix, ref iy);
-    //            return ix;
-    //        }
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
+        static extern void SimpleObject_SetZ(IntPtr sObj, float z);
 
-    //        set
-    //        {
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
+        static extern void SimpleObject_SetSize(IntPtr sObj, float width, float height);
 
-    //            float x = 0.0f;
-    //            float y = 0.0f;
-    //            float z = 0.0f;
-    //            SimpleObject_GetPosition(_simpleSpriteSheetRenderer, ref x, ref y, ref z);
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
+        static extern void SimpleObject_SetWidth(IntPtr sObj, float width);
 
-    //            float ix = value;
-    //            float iy = y;
-    //            SimpleCamera2D_ScreenToWorld(ref ix, ref iy);
-    //            SimpleObject_SetX(_simpleSpriteSheetRenderer, ix);
-    //        }
-    //    }
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
+        static extern void SimpleObject_SetHeight(IntPtr sObj, float height);
 
-    //    public float positionY
-    //    {
-    //        get
-    //        {
-    //            if (_simpleSpriteSheetRenderer == IntPtr.Zero)
-    //                return 0.0f;
-    //            float x = 0.0f;
-    //            float y = 0.0f;
-    //            float z = 0.0f;
-    //            SimpleObject_GetPosition(_simpleSpriteSheetRenderer, ref x, ref y, ref z);
-    //            float ix = x;
-    //            float iy = y;
-    //            SimpleCamera2D_WorldToScreen(ref ix, ref iy);
-    //            return iy;
-    //        }
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
+        static extern void SimpleObject_SetOrientation(IntPtr sObj, float orientation);
 
-    //        set
-    //        {
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
+        static extern void SimpleObject_SetName(IntPtr sObj, String name);
 
-    //            float x = 0.0f;
-    //            float y = 0.0f;
-    //            float z = 0.0f;
-    //            SimpleObject_GetPosition(_simpleSpriteSheetRenderer, ref x, ref y, ref z);
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
+        static extern UInt32 SimpleObject_GetType(IntPtr sObj);
+        #endregion
+        #region SimpleCameraImports
+        //Camera imports
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
+        static extern void SimpleCamera2D_WorldToScreen(ref float x, ref float y);
 
-    //            float ix = value;
-    //            float iy = y;
-    //            SimpleCamera2D_ScreenToWorld(ref ix, ref iy);
-    //            SimpleObject_SetY(_simpleSpriteSheetRenderer, iy);
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
+        static extern void SimpleCamera2D_ScreenToWorld(ref float x, ref float y);
 
-    //        }
-    //    }
+        #endregion
 
-    //    public float positionZ
-    //    {
-    //        get
-    //        {
-    //            float x = 0.0f;
-    //            float y = 0.0f;
-    //            float z = 0.0f;
-    //            SimpleObject_GetPosition(_simpleSpriteSheetRenderer, ref x, ref y, ref z);
-    //            return z;
-    //        }
+        IntPtr _simpleSpriteAnimation;
+        ManagedSimpleObject _managedSimpleObject;
 
-    //        set
-    //        {
-    //            SimpleObject_SetZ(_simpleSpriteSheetRenderer, value);
-    //        }
-    //    }
+        public ManagedSimpleObject GetManagedSimpleObject()
+        {
 
-    //    public float width
-    //    {
-    //        get
-    //        {
-    //            float w = 0.0f;
-    //            SimpleObject_GetWidth(_simpleSpriteSheetRenderer, ref w);
-    //            return w;
-    //        }
+            return _managedSimpleObject;
 
-    //        set
-    //        {
-    //            SimpleObject_SetWidth(_simpleSpriteSheetRenderer, value);
-    //        }
-    //    }
+        }
+        public SimpleSpriteAnimationControl()
+        {
+            _managedSimpleObject = new ManagedSimpleObject();
+            _simpleSpriteAnimation = SimpleSpriteAnimation_Create();
+        }
 
-    //    public float height
-    //    {
-    //        get
-    //        {
-    //            float h = 0.0f;
-    //            SimpleObject_GetHeight(_simpleSpriteSheetRenderer, ref h);
-    //            return h;
-    //        }
+        ~SimpleSpriteAnimationControl()
+        {
+            SimpleSpriteAnimation_Destroy(_simpleSpriteAnimation);
+        }
 
-    //        set
-    //        {
-    //            SimpleObject_SetHeight(_simpleSpriteSheetRenderer, value);
-    //        }
-    //    }
-    //}
-}
+        public int AddControl(String spriteSheet)
+        {
+
+            throw new NotImplementedException();
+            ////remove temp
+            //int from = path.IndexOf("/temp/");
+            //path = path.Remove(0, from + 6);
+
+            ////Try to find spritesheet to use
+            //IntPtr spriteSheet = SimpleRenderer_GetSpriteSheet(path);
+
+            //if (spriteSheet == IntPtr.Zero)
+            //{
+
+            //    SimpleRenderer_CreateSpriteSheetEmpty(path);
+            //    spriteSheet = SimpleRenderer_GetSpriteSheet(path);
+            //}
+
+            //int idx = SimpleSpriteSheet_GetFrameIndex(spriteSheet, x, y, w, h);
+            //if (idx == -1)
+            //    idx = SimpleSpriteSheet_AddSpriteFrame(spriteSheet, x, y, w, h);
+
+            ////Configure brush
+            //TileEditorApp_SetCursorTile(path, idx);
+            //return idx;
+            return 0;
+        }
+
+        public float positionX
+        {
+            get
+            {
+                if (_simpleSpriteAnimation == IntPtr.Zero)
+                    return 0.0f;
+                float x = 0.0f;
+                float y = 0.0f;
+                float z = 0.0f;
+                SimpleObject_GetPosition(_simpleSpriteAnimation, ref x, ref y, ref z);
+                float ix = x;
+                float iy = y;
+                SimpleCamera2D_WorldToScreen(ref ix, ref iy);
+                return ix;
+            }
+
+            set
+            {
+
+                float x = 0.0f;
+                float y = 0.0f;
+                float z = 0.0f;
+                SimpleObject_GetPosition(_simpleSpriteAnimation, ref x, ref y, ref z);
+
+                float ix = value;
+                float iy = y;
+                SimpleCamera2D_ScreenToWorld(ref ix, ref iy);
+                SimpleObject_SetX(_simpleSpriteAnimation, ix);
+            }
+        }
+
+        public float positionY
+        {
+            get
+            {
+                if (_simpleSpriteAnimation == IntPtr.Zero)
+                    return 0.0f;
+                float x = 0.0f;
+                float y = 0.0f;
+                float z = 0.0f;
+                SimpleObject_GetPosition(_simpleSpriteAnimation, ref x, ref y, ref z);
+                float ix = x;
+                float iy = y;
+                SimpleCamera2D_WorldToScreen(ref ix, ref iy);
+                return iy;
+            }
+
+            set
+            {
+
+                float x = 0.0f;
+                float y = 0.0f;
+                float z = 0.0f;
+                SimpleObject_GetPosition(_simpleSpriteAnimation, ref x, ref y, ref z);
+
+                float ix = value;
+                float iy = y;
+                SimpleCamera2D_ScreenToWorld(ref ix, ref iy);
+                SimpleObject_SetY(_simpleSpriteAnimation, iy);
+
+            }
+        }
+
+        public float positionZ
+        {
+            get
+            {
+                float x = 0.0f;
+                float y = 0.0f;
+                float z = 0.0f;
+                SimpleObject_GetPosition(_simpleSpriteAnimation, ref x, ref y, ref z);
+                return z;
+            }
+
+            set
+            {
+                SimpleObject_SetZ(_simpleSpriteAnimation, value);
+            }
+        }
+
+        public float width
+        {
+            get
+            {
+                float w = 0.0f;
+                SimpleObject_GetWidth(_simpleSpriteAnimation, ref w);
+                return w;
+            }
+
+            set
+            {
+                SimpleObject_SetWidth(_simpleSpriteAnimation, value);
+            }
+        }
+
+        public float height
+        {
+            get
+            {
+                float h = 0.0f;
+                SimpleObject_GetHeight(_simpleSpriteAnimation, ref h);
+                return h;
+            }
+
+            set
+            {
+                SimpleObject_SetHeight(_simpleSpriteAnimation, value);
+            }
+        }
+
+    }
 }
