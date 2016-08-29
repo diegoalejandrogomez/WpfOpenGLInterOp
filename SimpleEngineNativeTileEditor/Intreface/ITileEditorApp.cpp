@@ -105,7 +105,7 @@ TILEEDITOR_API int TileEditorApp_GetMapHeight()
 	return 0;
 }
 
-TILEEDITOR_API void SetCursorAnimated(const char* animationName) {
+TILEEDITOR_API void TileEditorApp_SetCursorAnimated(const char* animationName) {
 	TileEditorApp* app = dynamic_cast<TileEditorApp*>(SimpleEngine::Instance()->GetGameLogic());
 	if (app != nullptr)
 		app->SetCursorAnimated(animationName);

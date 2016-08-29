@@ -23,6 +23,7 @@ namespace WPF.ViewModel
             aTimer.Enabled = true;
             index = 0;
             this.Frequency = 100;
+            AnimatedControl = new SimpleAnimatedSpriteControl();
         }
 
         private void OnTimedEvent(object source, ElapsedEventArgs e)

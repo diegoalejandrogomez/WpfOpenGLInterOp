@@ -126,9 +126,9 @@ namespace SimpleEngineTileEditor
         static extern int SimpleSpriteSheet_AddSpriteFrame(IntPtr sheet, int positionX, int positionY, int sizeX, int sizeY);
         #endregion
         #region SimpleRendererImports
-        [DllImport("SimpleEngineNativeTileEditor.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
         static extern IntPtr SimpleRenderer_GetSpriteAnimation(string name);
-        [DllImport("SimpleEngineNativeTileEditor.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
         static extern bool Simplerenderer_CreateSpriteAnimationEmpty(String name);
         #endregion
         #region NativeTileEditorAppImports

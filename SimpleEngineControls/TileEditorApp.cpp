@@ -204,6 +204,7 @@ void TileEditorApp::SetCursorAnimated(SimpleID animationName) {
 	c->SnapToGrid(true);
 	c->SetSnapGridSize({ 1, 1 });
 	c->SetSerializable(false);
+	c->Play();
 	_cursor = c;
 	SimpleEngine::Instance()->GetScene()->AddEntity(_cursor, "MainTileMap");
 

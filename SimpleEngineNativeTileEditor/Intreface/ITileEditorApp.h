@@ -25,7 +25,7 @@ extern "C" {
 	TILEEDITOR_API int TileEditorApp_GetMapWidth();
 	TILEEDITOR_API int TileEditorApp_GetMapHeight();
 
-	TILEEDITOR_API void SetCursorAnimated(const char* animationName);
+	TILEEDITOR_API void TileEditorApp_SetCursorAnimated(const char* animationName);
 
 	//Not available in C
 	/*TILEEDITOR_API json TileEditorApp_Serialize();
