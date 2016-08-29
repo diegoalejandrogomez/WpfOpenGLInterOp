@@ -99,20 +99,42 @@ void TileEditorApp::_Draw() {
 		if (pos.x < 0.0f || pos.x > _tileMapSize.x || pos.y < 0.0f || pos.y > _tileMapSize.y)
 			return;
 	
+		if (!_animated) {
 
-		SimpleSpriteSheetRenderer *tile = new SimpleSpriteSheetRenderer();
-		tile->SetSpriteSheet(_cursor->GetSpriteSheet());
-		tile->SetIndex(_cursor->GetIndex());
-		tile->SetSize({ 1.0f,1.0f });
-		tile->SnapToGrid(true);
-		tile->SetSnapGridSize({ 1.0f,1.0f });
-		tile->SetPosition(_cursor->GetPosition());
+			SimpleSpriteSheetRenderer* c = dynamic_cast<SimpleSpriteSheetRenderer*>(_cursor);
+			SimpleSpriteSheetRenderer *tile = new SimpleSpriteSheetRenderer();
+			tile->SetSpriteSheet(c->GetSpriteSheet());
+			tile->SetIndex(c->GetIndex());
+			tile->SetSize({ 1.0f,1.0f });
+			tile->SnapToGrid(true);
+			tile->SetSnapGridSize({ 1.0f,1.0f });
+			tile->SetPosition(c->GetPosition());
+
+			int idx = _tileMapSize.x * int(pos.y) + (int)pos.x;
+			_tiles[idx] = tile;
+			SimpleAABB aabb;
+			aabb.position;
+			SimpleEngine::Instance()->GetScene()->AddEntity(tile, "MainTileMap");
+		}
+		else {
+
+			SimpleAnimatedSpriteRenderer *c = dynamic_cast<SimpleAnimatedSpriteRenderer*>(_cursor);
+			SimpleAnimatedSpriteRenderer *anim = new SimpleAnimatedSpriteRenderer();
+			anim->SetSpriteSheet(c->GetSpriteSheet());
+			anim->SetAnimation(c->GetAnimation());
+			anim->SetSize({ 1.0f,1.0f });
+			anim->SnapToGrid(true);
+			anim->SetSnapGridSize({ 1.0f,1.0f });
+			anim->SetPosition(c->GetPosition());
+
+			int idx = _tileMapSize.x * int(pos.y) + (int)pos.x;
+			_tiles[idx] = anim;
+			SimpleAABB aabb;
+			aabb.position;
+			SimpleEngine::Instance()->GetScene()->AddEntity(anim, "MainTileMap");
 		
-		int idx = _tileMapSize.x * int(pos.y) + (int)pos.x;
-		_tiles[idx] = tile;
-		SimpleAABB aabb;
-		aabb.position;
-		SimpleEngine::Instance()->GetScene()->AddEntity(tile, "MainTileMap");
+		
+		}
 	}
 }
 
@@ -147,6 +169,7 @@ void TileEditorApp::SetCursorIdle() {
 	_LoadCursor("media/grid.png", 0, "UI");
 	_hasTile = false;
 	_erasing = false;
+	_animated = false;
 }
 
 void TileEditorApp::SetCursorErase() {
@@ -154,18 +177,21 @@ void TileEditorApp::SetCursorErase() {
 	_LoadCursor("media/delete.png", 0,"UI");
 	_hasTile = false;
 	_erasing = true;
+	_animated = false;
 }
 
 void TileEditorApp::SetCursorTile(SimpleID sheet, int index) {
 	_LoadCursor(sheet, index, "MainTileMap");
 	_hasTile = true;
 	_erasing = false;
+	_animated = false;
 }
 
 void TileEditorApp::SetCursorAnimated(SimpleID animationName) {
 
 	_hasTile = true;
 	_erasing = false;
+	_animated = true;
 
 	if (_cursor != nullptr) {
 		SimpleEngine::Instance()->GetScene()->RemoveEntity(_cursor);
@@ -225,8 +251,8 @@ void TileEditorApp::SetMapSize(int width, int height) {
 	_tileMapSize.y = height;
 
 	int tileAmount = _tileMapSize.x * _tileMapSize.y;
-	_tiles = new SimpleSpriteRenderer*[tileAmount];
-	memset(_tiles, 0, tileAmount * sizeof(SimpleSpriteRenderer*));
+	_tiles = new SimpleObject*[tileAmount];
+	memset(_tiles, 0, tileAmount * sizeof(SimpleObject*));
 
 	_CreateGrid();
 	SimpleEngine::Instance()->GetScene()->GetCamera()->SetMaxVisibleArea(SimpleAABB({ 0.0f,0.0f }, _tileMapSize));
@@ -292,21 +318,21 @@ void TileEditorApp::_ResizeGrid() {
 	if (_tiles != nullptr)
 		delete[] _tiles;
 	int tileAmount = _tileMapSize.x * _tileMapSize.y;
-	_tiles = new SimpleSpriteRenderer*[tileAmount];
-	memset(_tiles, 0, tileAmount * sizeof(SimpleSpriteRenderer*));
+	_tiles = new SimpleObject*[tileAmount];
+	memset(_tiles, 0, tileAmount * sizeof(SimpleObject*));
 
 	//Reinsert the entities that still fit in the grid
-	std::vector<SimpleSpriteRenderer*> _toErase;
+	std::vector<SimpleObject*> _toErase;
 
 	SimpleLayer* _tileLayer = SimpleEngine::Instance()->GetScene()->GetLayer("MainTileMap");
 	for (auto e : _tileLayer->GetEntities()) {
 		//Compute position
 		glm::ivec3 iPos = e->GetPosition();
 		if (iPos.x >= _tileMapSize.x || iPos.x < 0 || iPos.y >= _tileMapSize.y || iPos.y < 0)
-			_toErase.push_back(static_cast<SimpleSpriteRenderer*>(e));
+			_toErase.push_back(static_cast<SimpleObject*>(e));
 		else {
 			int idx = _tileMapSize.x * iPos.y + iPos.x;
-			_tiles[idx] = static_cast<SimpleSpriteRenderer*>(e);
+			_tiles[idx] = static_cast<SimpleObject*>(e);
 		}
 
 	}

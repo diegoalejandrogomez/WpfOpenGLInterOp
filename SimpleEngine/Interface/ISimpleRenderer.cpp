@@ -33,6 +33,10 @@ extern "C" {
 		return SimpleEngine::Instance()->GetRenderer()->CreateSpriteAnimation(name, spriteSheet, std::vector<int>(frames[0], frames[frameCount - 1]), frameTime);
 	}
 
+	SIMPLE_API bool Simplerenderer_CreateSpriteAnimationEmpty(const char* name) {
+		return SimpleEngine::Instance()->GetRenderer()->CreateSpriteAnimation(name);
+	}
+
 	SIMPLE_API SimpleSpriteAnimation* SimpleRenderer_GetSpriteAnimation(const char* name) {
 		return SimpleEngine::Instance()->GetRenderer()->GetSpriteAnimation(name);
 	}

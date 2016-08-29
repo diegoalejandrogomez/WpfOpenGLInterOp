@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using SimpleEngineTileEditor;
 
 namespace WPF.ViewModel
 {
@@ -12,6 +13,8 @@ namespace WPF.ViewModel
     {
         System.Timers.Timer aTimer;
         int index;
+
+        public SimpleAnimatedSpriteControl AnimatedControl { get; set; }
 
         public AnimationViewModel()
         {

@@ -12,6 +12,7 @@
 #include "SimpleSpriteAnimation.h"
 #include "SimpleID.h"
 #include "SimpleConfiguration.h"
+#include "SimpleTexture.h"
 
 class SimpleScene;
 
@@ -37,12 +38,13 @@ public:
 	bool LoadTexture(std::string texturePath);
 	SimpleTexture* GetTexture(SimpleID name) ;
 	
-
 	bool CreateSpriteSheet(std::string texturePath, glm::ivec2 frameSize, glm::ivec2 frameCount);
 	bool CreateSpriteSheet(std::string texturePath);
 	SimpleSpriteSheet* GetSpriteSheet(SimpleID texturePath);
 
 	bool CreateSpriteAnimation(std::string name, std::string spriteSheet, std::vector<int> &frames, float frameTime);
+	bool CreateSpriteAnimation(std::string name);
+
 	SimpleSpriteAnimation* GetSpriteAnimation(SimpleID name);
 
 	inline SimpleMesh<VertexTextureFormat2D>* GetUnitaryQuad() { return _texturedQuad; };

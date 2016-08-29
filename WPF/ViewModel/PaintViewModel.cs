@@ -981,6 +981,16 @@ namespace WPF.ViewModel
                         window.Height = 600;
                         window.Closed += SaveAnimation;
                         window.ShowDialog();
+
+
+                        //Should be moved to the proper place
+                        animationViewModel.AnimatedControl.SetAnimation(animationViewModel.Name,(float) (1.0 / animationViewModel.Frequency));
+                        foreach(TileViewModel t in animationViewModel.Tiles) {
+                            animationViewModel.AnimatedControl.AddFrame(t.Path, t.x, t.y, t.width, t.heigth);
+                        }
+
+                        animationViewModel.AnimatedControl.AddControl(animationViewModel.Name);
+                        
                     });
                 }
 

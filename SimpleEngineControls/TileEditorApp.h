@@ -52,12 +52,13 @@ private:
 	SimpleLayer*				_gridLayer	= nullptr;
 	SimpleLineRenderer*			_grid		= nullptr;
 	SimpleLayer*				_uiLayer	= nullptr;
-	SimpleSpriteSheetRenderer*	_cursor		= nullptr;
+	SimpleObject*	_cursor		= nullptr;
 	SimpleLayer*				_tileMapLayer = nullptr;
 	glm::ivec2					_tileMapSize = glm::ivec2(0);
-	SimpleSpriteRenderer**		_tiles = nullptr;
+	SimpleObject**				_tiles = nullptr;
 	bool						_hasTile = false;
 	bool						_erasing = false;
+	bool						_animated = false;
 
 	
 };

@@ -389,6 +389,22 @@ bool SimpleRenderer::CreateSpriteAnimation(std::string name, std::string spriteS
 	return true;
 
 }
+
+bool SimpleRenderer::CreateSpriteAnimation(std::string name) {
+
+	//Check if it doesn't exist already
+
+	if (_spriteAnimations.find(name) == _spriteAnimations.end()) {
+		SimpleSpriteAnimation* anim = new SimpleSpriteAnimation();
+		anim->SetAnimationName(name);
+		_spriteAnimations[name] = anim;
+		return true;
+	}
+	return true;
+
+}
+
+
 SimpleSpriteAnimation* SimpleRenderer::GetSpriteAnimation(SimpleID name) {
 	auto it = _spriteAnimations.find(name);
 	

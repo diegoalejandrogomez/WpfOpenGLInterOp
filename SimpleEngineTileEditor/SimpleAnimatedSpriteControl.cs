@@ -7,10 +7,21 @@ using System.Runtime.InteropServices;
 
 namespace SimpleEngineTileEditor
 {
-    class SimpleAnimatedSpriteControl
+    public class SimpleAnimatedSpriteControl
     {
-
-        #region SimpleSpriteAnimationImports
+        #region SimpleSpriteAnimation
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
+        static extern void SimpleSpriteAnimation_SetSpriteSheet(IntPtr sprite, IntPtr sheet);
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
+        static extern void SimpleSpriteAnimation_SetSpriteSheetWithName(IntPtr sprite, string sheetName);
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
+        static extern void SimpleSpriteAnimation_AddFrame(IntPtr sprite, int idx);
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
+        static extern void SimpleSpriteAnimation_ClearFrames(IntPtr sprite);
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
+        static extern void  SimpleSpriteAnimation_SetFrameTime(IntPtr sprite, float frameTime);
+        #endregion
+        #region SimpleAnimatedSpriteRendererImport
         [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
         static extern IntPtr SimpleAnimatedSpriteRenderer_Create();
         [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
@@ -101,14 +112,31 @@ namespace SimpleEngineTileEditor
 
         #endregion
         #region SimpleRendererImports
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
+        static extern IntPtr SimpleRenderer_GetSpriteSheet(String texturePath);
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
+        static extern bool SimpleRenderer_CreateSpriteSheet(String texturePath, int frameSizeX, int frameSizeY, int frameCountX, int frameCountY);
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
+        static extern bool SimpleRenderer_CreateSpriteSheetEmpty(String texturePath);
+        #endregion
+        #region SimpleSpriteSheet
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
+        static extern int SimpleSpriteSheet_GetFrameIndex(IntPtr sheet, int positionX, int positionY, int sizeX, int sizeY);
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
+        static extern int SimpleSpriteSheet_AddSpriteFrame(IntPtr sheet, int positionX, int positionY, int sizeX, int sizeY);
+        #endregion
+        #region SimpleRendererImports
         [DllImport("SimpleEngineNativeTileEditor.dll", CallingConvention = CallingConvention.Cdecl)]
         static extern IntPtr SimpleRenderer_GetSpriteAnimation(string name);
+        [DllImport("SimpleEngineNativeTileEditor.dll", CallingConvention = CallingConvention.Cdecl)]
+        static extern bool Simplerenderer_CreateSpriteAnimationEmpty(String name);
         #endregion
         #region NativeTileEditorAppImports
         [DllImport("SimpleEngineNativeTileEditor.dll", CallingConvention = CallingConvention.Cdecl)]
         static extern void TileEditorApp_SetCursorAnimated(String animationName);
         #endregion
         IntPtr _simpleSpriteAnimation;
+        IntPtr _animation;
         ManagedSimpleObject _managedSimpleObject;
 
         public ManagedSimpleObject GetManagedSimpleObject()
@@ -128,6 +156,47 @@ namespace SimpleEngineTileEditor
             SimpleAnimatedSpriteRenderer_Destroy(_simpleSpriteAnimation);
         }
 
+        public void SetAnimation(String animationName,float speed) {
+
+            _animation = SimpleRenderer_GetSpriteAnimation(animationName);
+            if (_animation == IntPtr.Zero)
+            {
+                Simplerenderer_CreateSpriteAnimationEmpty(animationName);
+                _animation = SimpleRenderer_GetSpriteAnimation(animationName);
+                SimpleSpriteAnimation_SetFrameTime(_animation, speed);
+            }
+            
+
+        }
+
+        
+
+        public void AddFrame(String path, int x, int y, int w, int h)
+        {
+            //remove temp
+            int from = path.IndexOf("/temp/");
+            path = path.Remove(0, from + 6);
+
+            //Try to find spritesheet to use
+            IntPtr spriteSheet = SimpleRenderer_GetSpriteSheet(path);
+
+            if (spriteSheet == IntPtr.Zero)
+            {
+
+                SimpleRenderer_CreateSpriteSheetEmpty(path);
+                spriteSheet = SimpleRenderer_GetSpriteSheet(path);
+            }
+
+            int idx = SimpleSpriteSheet_GetFrameIndex(spriteSheet, x, y, w, h);
+            if (idx == -1)
+                idx = SimpleSpriteSheet_AddSpriteFrame(spriteSheet, x, y, w, h);
+
+            //Get current animation and set the frame
+            SimpleSpriteAnimation_SetSpriteSheet(_animation, spriteSheet);
+            SimpleSpriteAnimation_AddFrame(_animation, idx);
+            
+
+        }
         public void AddControl(String animationName)
         {
 

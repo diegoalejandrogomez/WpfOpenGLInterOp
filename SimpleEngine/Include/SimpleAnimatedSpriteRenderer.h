@@ -15,6 +15,7 @@ public:
 
 	void SetAnimation(SimpleSpriteAnimation* anim);
 	void SetAnimation(SimpleID animName);
+	SimpleSpriteAnimation* GetAnimation() { return _anim; }
 	
 	void Play();
 	void PlayOnce();
