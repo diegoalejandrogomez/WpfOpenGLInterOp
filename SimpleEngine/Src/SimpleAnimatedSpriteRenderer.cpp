@@ -68,6 +68,14 @@ void SimpleAnimatedSpriteRenderer::SetAnimation(SimpleSpriteAnimation* anim) {
 	SimpleSpriteSheetRenderer::SetSpriteSheet(_anim->GetSpriteSheet());
 }
 
+void SimpleAnimatedSpriteRenderer::SetAnimation(SimpleID animName) {
+
+	_anim = SimpleEngine::Instance()->GetRenderer()->GetSpriteAnimation(animName);
+	if(_anim != nullptr)
+		SimpleSpriteSheetRenderer::SetSpriteSheet(_anim->GetSpriteSheet());
+
+}
+
 void SimpleAnimatedSpriteRenderer::Render(float dt){
 
 	//Obtain information from current frame and render. The spritesheet must be previously configured

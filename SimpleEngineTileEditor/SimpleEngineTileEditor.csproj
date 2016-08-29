@@ -58,7 +58,7 @@
     <Compile Include="SimpleEngineViewerControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="SimpleSpriteAnimationControl.cs" />
+    <Compile Include="SimpleAnimatedSpriteControl.cs" />
     <Compile Include="SpriteControl.cs" />
     <Compile Include="SpriteSheetControl.cs" />
     <Compile Include="TileMapControl.cs" />

@@ -14,6 +14,7 @@ public:
 	void Render(float dt);
 
 	void SetAnimation(SimpleSpriteAnimation* anim);
+	void SetAnimation(SimpleID animName);
 	
 	void Play();
 	void PlayOnce();

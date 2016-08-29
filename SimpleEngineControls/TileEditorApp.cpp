@@ -2,6 +2,7 @@
 #include "TileEditorApp.h"
 #include "SimpleEngine.h"
 #include "SimpleSpriteSheetRenderer.h"
+#include "SimpleAnimatedSpriteRenderer.h"
 #include <filesystem>
 //C++ 14/17 ... but why not XD
 using namespace std::tr2::sys;
@@ -159,6 +160,28 @@ void TileEditorApp::SetCursorTile(SimpleID sheet, int index) {
 	_LoadCursor(sheet, index, "MainTileMap");
 	_hasTile = true;
 	_erasing = false;
+}
+
+void TileEditorApp::SetCursorAnimated(SimpleID animationName) {
+
+	_hasTile = true;
+	_erasing = false;
+
+	if (_cursor != nullptr) {
+		SimpleEngine::Instance()->GetScene()->RemoveEntity(_cursor);
+		delete _cursor;
+	}
+	
+	auto c = new SimpleAnimatedSpriteRenderer();
+	c->SetAnimation(animationName);
+	c->SetSize({ 1,1 });
+	c->SnapToGrid(true);
+	c->SetSnapGridSize({ 1, 1 });
+	c->SetSerializable(false);
+	_cursor = c;
+	SimpleEngine::Instance()->GetScene()->AddEntity(_cursor, "MainTileMap");
+
+
 }
 
 void TileEditorApp::_LoadCursor(SimpleID sheet, int index, SimpleID layer) {
