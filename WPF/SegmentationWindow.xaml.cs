@@ -70,6 +70,7 @@ namespace WPF
             box.Stroke = Brushes.Black;
             box.StrokeThickness = 1;
             box.EndInit();
+            
             previewImage.Children.Add(box);
 
             for (UInt32 i = 0; i < QuantityY - 1; ++i) {

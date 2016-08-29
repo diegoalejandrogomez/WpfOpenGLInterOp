@@ -34,5 +34,8 @@
         <Button Grid.Row="1" Grid.Column="1" Command="{Binding Path=SetDragCommand}">
             <Image Name="drag" Source="./Resources/Icons/drag.png" Style="{StaticResource ToolIcon}" />
         </Button>
+        <Button Grid.Row="2" Grid.Column="0" Command="{Binding Path=AnimateCommand}">
+            <Image Name="animate" Source="./Resources/Icons/animate.png" Style="{StaticResource ToolIcon}" />
+        </Button>
     </Grid>
 </UserControl>

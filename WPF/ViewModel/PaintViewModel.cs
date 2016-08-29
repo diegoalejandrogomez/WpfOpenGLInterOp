@@ -189,6 +189,10 @@ namespace WPF.ViewModel
 
         public ObservableCollection<TileViewModel> Tiles { get; set; }
 
+        public ManagedSimpleLayer SelectedLayer { get; set; }
+
+        public List<TileViewModel> SelectedTiles { get; set; }
+
         TileMapControl _tileMap;
         float _panSpeed = 1.0f;
         float _zoomSpeed = 0.005f;
@@ -504,6 +508,8 @@ namespace WPF.ViewModel
         private ICommand editSelectedLayer;
 
         private ICommand addLayer;
+
+        private ICommand animateCommand;
 
         public ICommand AddSelectedTile
         {
@@ -937,8 +943,37 @@ namespace WPF.ViewModel
             set { }
         }
 
-        public ManagedSimpleLayer SelectedLayer { get; set; }
+        
 
+        public ICommand AnimateCommand
+        {
+            get
+            {
+                if (animateCommand == null)
+                {
+
+                    animateCommand = new Command((vm) =>
+                    {
+                        Window window = new Window
+                        {
+                            Title = "Create Animation",
+                            Content = new AnimationEditor()
+                        };
+
+                        AnimationViewModel animationViewModel = new AnimationViewModel();
+                        animationViewModel.Tiles = this.SelectedTiles;
+                        ((System.Windows.Controls.UserControl)window.Content).DataContext = animationViewModel;
+                        window.Width = 300;
+                        window.Height = 600;
+                        window.Closed += Window_Closed;
+                        window.ShowDialog();
+                    });
+                }
+
+                return animateCommand;
+            }
+            set { }
+        }
         #endregion
     }
 }
