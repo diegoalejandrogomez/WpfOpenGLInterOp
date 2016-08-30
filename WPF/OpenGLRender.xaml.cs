@@ -33,7 +33,7 @@ namespace WPF
 
         public System.Windows.Forms.UserControl OpenGLControl { get; set; }
 
-        public int Ticks = 1600;
+        public int Ticks = 160000;
         int total = 0;
         public override void EndInit()
         {
