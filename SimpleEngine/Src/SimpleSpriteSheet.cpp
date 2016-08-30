@@ -19,7 +19,7 @@ int SimpleSpriteSheet::AddSpriteFrame(glm::ivec2 position, glm::ivec2 size) {
 int SimpleSpriteSheet::GetFrameIndex(glm::ivec2 position, glm::ivec2 size) {
 
 	for (unsigned int i = 0; i < _frames.size(); ++i)
-		if (_frames[i] == glm::ivec4{ position.x, position.y, size.x, size.y })
+		if (_frames[i] == glm::ivec4{ position.x, GetHeight() - size.y - position.y, size.x, size.y })
 			return i;
 	return -1;	
 }
