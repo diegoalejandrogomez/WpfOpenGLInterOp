@@ -1007,6 +1007,7 @@ namespace WPF.ViewModel
             }
 
             Animations.Add(animationViewModel);
+            PropertyChanged(this, new PropertyChangedEventArgs("Animations"));
         }
 
         public ObservableCollection<AnimationViewModel> Animations { get; set; }

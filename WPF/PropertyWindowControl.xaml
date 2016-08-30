@@ -14,7 +14,7 @@
         <Button Command="{Binding AddLayer}">
             <Image Name="addLayer" Source="./Resources/Icons/add.png" Style="{StaticResource ToolIcon}" />
         </Button>
-        <DataGrid ItemsSource="{Binding Layers}" AutoGenerateColumns="False" SelectedItem="{Binding Row, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ScrollViewer.CanContentScroll="true" ScrollViewer.VerticalScrollBarVisibility="Visible" Height="150" SelectionChanged="DataGrid_SelectionChanged">
+        <DataGrid ItemsSource="{Binding Layers}" AutoGenerateColumns="False" SelectedItem="{Binding Row, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ScrollViewer.CanContentScroll="true" ScrollViewer.VerticalScrollBarVisibility="Visible" Height="100" SelectionChanged="DataGrid_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="Name" Width="SizeToCells">
                     <DataGridTemplateColumn.CellTemplate>
@@ -50,7 +50,7 @@
         <Label Content="Images" />
         <ScrollViewer>
             <DataGrid ItemsSource="{Binding Tiles}" AutoGenerateColumns="False" SelectedItem="{Binding Row, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                      ScrollViewer.CanContentScroll="true" ScrollViewer.VerticalScrollBarVisibility="Visible" Height="400" SelectionChanged="TileGrid_SelectionChanged">
+                      ScrollViewer.CanContentScroll="true" ScrollViewer.VerticalScrollBarVisibility="Visible" Height="200" SelectionChanged="TileGrid_SelectionChanged">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn Header="Image" Width="SizeToCells">
                         <DataGridTemplateColumn.CellTemplate>
@@ -82,12 +82,12 @@
         <Label Content="Animations" />
         <ScrollViewer>
             <DataGrid ItemsSource="{Binding Animations}" AutoGenerateColumns="False" SelectedItem="{Binding Row, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                      ScrollViewer.CanContentScroll="true" ScrollViewer.VerticalScrollBarVisibility="Visible" Height="400" SelectionChanged="TileGrid_SelectionChanged">
+                      ScrollViewer.CanContentScroll="true" ScrollViewer.VerticalScrollBarVisibility="Visible" Height="200" >
                 <DataGrid.Columns>
                     <DataGridTemplateColumn Header="Image" Width="SizeToCells">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Image Source="{Binding Image}" Style="{StaticResource MidImage}" />
+                                <Image Source="{Binding CurrentTile.Image}" Style="{StaticResource MidImage}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
