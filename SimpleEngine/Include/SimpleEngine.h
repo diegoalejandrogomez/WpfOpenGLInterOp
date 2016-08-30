@@ -81,8 +81,8 @@ protected:
 	SimpleInput*	_input;
 
 	 //Instant frame time for logic and render update
-	std::chrono::nanoseconds _renderTime;
-	std::chrono::nanoseconds _logicTime;
+	std::chrono::duration<float> _renderTime;
+	std::chrono::duration<float> _logicTime;
 	
 	std::string _resBaseDir;
 
