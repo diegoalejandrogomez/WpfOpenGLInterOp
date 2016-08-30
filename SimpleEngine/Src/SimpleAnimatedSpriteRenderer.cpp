@@ -44,7 +44,7 @@ void SimpleAnimatedSpriteRenderer::Advance(float dt) {
 	_elapsedTime += dt;
 	float period = _anim->GetFrameTime();
 	
-	SIMPLE_LOG("T: %.3f DT : %.3f", period, dt);
+	//SIMPLE_LOG("T: %.3f DT : %.3f", period, dt);
 
 	while (_elapsedTime >= period) {
 		_elapsedTime -= period;
