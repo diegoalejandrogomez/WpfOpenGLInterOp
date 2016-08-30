@@ -33,7 +33,7 @@ namespace WPF
 
         public System.Windows.Forms.UserControl OpenGLControl { get; set; }
 
-        public int Ticks = 160000;
+        public int Ticks = 16000;
         int total = 0;
         public override void EndInit()
         {
@@ -45,7 +45,7 @@ namespace WPF
         public OpenGLRender()
         {
             InitializeComponent();
-            updateTimer = new System.Windows.Threading.DispatcherTimer();
+            updateTimer = new System.Windows.Threading.DispatcherTimer(System.Windows.Threading.DispatcherPriority.Render);
             updateTimer.Interval = new TimeSpan(Ticks);
             updateTimer.Tick += new EventHandler(UpdateTimer_Tick);
             updateTimer.Start();
