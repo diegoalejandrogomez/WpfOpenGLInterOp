@@ -5,6 +5,7 @@
 #include "SimpleInput.h"
 #include <chrono>
 #include "SimpleConfiguration.h"
+#include <queue>
 
 class SIMPLE_API SimpleEngine final{
 public:
@@ -38,8 +39,18 @@ public:
 	inline SimpleGameLogic*  GetGameLogic() { return _gameLogic == nullptr? _nextGameLogic:_gameLogic; }
 	inline SimpleRenderer* GetRenderer() { return _renderer; }
 	inline SimpleInput* GetInput() { return _input; }
-	inline float GetRenderFPS() const { return _renderTime.count() > 0? 1.0f / _renderTime.count() : 0; }
-	inline float GetLogicFPS() const { return _renderTime.count() > 0?  1.0f / _logicTime.count(): 0; }
+	inline float GetRenderFPS() const { 
+		std::chrono::duration<float> s = (_renderLastFPS.back() - _renderLastFPS.front());
+		if (s.count() > 0)
+			return _renderLastFPS.size() / s.count();
+		return 0.0f;
+	}
+	inline float GetLogicFPS() const {
+		std::chrono::duration<float> s = (_logicLastFPS.back() - _logicLastFPS.front());
+		if(s.count() > 0)
+			return _logicLastFPS.size() / s.count();
+		return 0.0f;
+	}
 
 	//Used by external event loops
 	void Render(float dt);
@@ -83,6 +94,11 @@ protected:
 	 //Instant frame time for logic and render update
 	std::chrono::duration<float> _renderTime;
 	std::chrono::duration<float> _logicTime;
+	
+	static constexpr uint32_t fpsCacheSize = 100;
+	std::queue<std::chrono::high_resolution_clock::time_point> _renderLastFPS;
+	std::queue<std::chrono::high_resolution_clock::time_point> _logicLastFPS;
+	
 	
 	std::string _resBaseDir;
 

@@ -65,6 +65,10 @@ void SimpleEngine::Render(float dt) {
 	if (_useInternalFrameTime)
 		dt = _renderTime.count();
 	
+	_renderLastFPS.push(current);
+	if (_renderLastFPS.size() > fpsCacheSize)
+		_renderLastFPS.pop();
+
 	if(_scene != nullptr)
 		_renderer->Render(dt, _scene);
 }
@@ -77,9 +81,14 @@ void SimpleEngine::Advance(float dt) {
 	high_resolution_clock::time_point current = high_resolution_clock::now();
 	_logicTime = current - prev;
 	prev = current;
+	
 
 	if (_useInternalFrameTime)
 		dt = _logicTime.count();
+
+	_logicLastFPS.push(current);
+	if (_logicLastFPS.size() > fpsCacheSize)
+		_logicLastFPS.pop();
 
 	////Check if we must switch the game mode
 	if (_nextGameLogic != nullptr)
@@ -97,7 +106,7 @@ void SimpleEngine::Advance(float dt) {
 	//Flush pending events
 	SimpleDispatcher::Instance()->Flush();
 
-	//SIMPLE_LOG("FPS: %.2f", GetRenderFPS());
+	//SIMPLE_LOG("FPS: %.2f", GetLogicFPS());
 }
 
 #define DEBUG_CONTENT
