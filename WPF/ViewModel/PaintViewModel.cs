@@ -994,7 +994,7 @@ namespace WPF.ViewModel
         private void SaveAnimation(object sender, EventArgs e)
         {
             //Should be moved to the proper place
-            animationViewModel.AnimatedControl.SetAnimation(animationViewModel.Name, (float)(1.0 / animationViewModel.Frequency));
+            animationViewModel.AnimatedControl.SetAnimation(animationViewModel.Name, (float)animationViewModel.Frequency * 1e-3f);
             foreach (TileViewModel t in animationViewModel.Tiles)
             {
                 animationViewModel.AnimatedControl.AddFrame(t.Path, t.x, t.y, t.width, t.heigth);

@@ -41,10 +41,12 @@ void SimpleAnimatedSpriteRenderer::Advance(float dt) {
 
 	if (!_playing)
 		return;
-	SIMPLE_LOG(" DT : %.2f", dt);
 	_elapsedTime += dt;
 	float period = _anim->GetFrameTime();
-	if (_elapsedTime >= period) {
+	
+	SIMPLE_LOG("T: %.3f DT : %.3f", period, dt);
+
+	while (_elapsedTime >= period) {
 		_elapsedTime -= period;
 		++_currentFrame;
 		if (_currentFrame >= _anim->GetFrameCount()) {

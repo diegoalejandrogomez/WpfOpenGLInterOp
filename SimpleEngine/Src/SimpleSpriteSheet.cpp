@@ -38,8 +38,8 @@ void SimpleSpriteSheet::CreateUniformFrames(glm::ivec2 size, glm::ivec2 count) {
 
 glm::ivec4 SimpleSpriteSheet::GetCoordsForIndex(int idx) {
 
-	SIMPLE_ASSERT(idx < _spriteCellCount.x * _spriteCellCount.y);
-
+	SIMPLE_ASSERT(idx < _frames.size());
+	
 	//Return the pixel coordinates for the current sheet
 	return _frames[idx];
 }
