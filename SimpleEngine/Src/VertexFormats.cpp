@@ -19,12 +19,14 @@ void VertexColorFormat2D::GetQuad(VertexColorFormat2D* &vertexs,
 	unsigned int* &indices,
 	unsigned int &indicesSize) {
 
-	float halfSize = 0.5f;
-	verticesSize = 12;
-	vertexs = new VertexColorFormat2D[12];
-	indices = new unsigned int[6];
-	indicesSize = 6;
+	static constexpr float halfSize{ 0.5f };
+	static constexpr size_t _verticesSize{ 12u };
+	static constexpr size_t _indicesSize{ 6u };
 
+	verticesSize = _verticesSize;
+	indicesSize  = _indicesSize;
+	vertexs = new VertexColorFormat2D[_verticesSize];  // Who releases the memory??
+	indices = new unsigned int[_indicesSize];          // Who releases the memory??
 
 	vertexs[0].pos[0] = -halfSize; vertexs[0].pos[1] = -halfSize;								// Bottom left corner  
 	vertexs[0].color[0] = 1.0; vertexs[0].color[1] = 1.0; vertexs[0].color[2] = 1.0; // Bottom left corner  
@@ -64,12 +66,15 @@ void VertexTextureFormat2D::GetQuad(VertexTextureFormat2D* &vertexs,
 	unsigned int* &indices,
 	unsigned int &indicesSize) {
 
-	float halfSize = 0.5f;
-	verticesSize = 12;
-	vertexs = new VertexTextureFormat2D[verticesSize];
-	indices = new unsigned int[6];
-	indicesSize = 6;
+	static constexpr float  halfSize{ 0.5f };
+	static constexpr size_t _verticesSize{ 12u };
+	static constexpr size_t _indicesSize{ 6u };
 
+	verticesSize = _verticesSize;
+	indicesSize = _indicesSize;
+
+	vertexs = new VertexTextureFormat2D[_verticesSize];
+	indices = new unsigned int[_indicesSize];
 
 	vertexs[0].pos[0] = -halfSize; vertexs[0].pos[1] = -halfSize;	// Bottom left corner  
 	vertexs[0].uv[0] = 0.0; vertexs[0].uv[1] = 0.0;					// Bottom left corner  

@@ -440,7 +440,8 @@ namespace WPF.ViewModel
         private void OnMouseWheel(object sender, System.Windows.Forms.MouseEventArgs e)
         {
             SimpleEngineViewerControl view = openGLRenderControl as SimpleEngineViewerControl;
-            ZoomLevel = (Int32)((e.Delta * _zoomSpeed * 10.0f + view.GetZoom()) / (float)MaxZoomLevel * 100.0f);//conversion to zoom level;
+            float maxZoomLevel = MaxZoomLevel * 100.0f; // Shouldn't this value be constant and always positive??
+            ZoomLevel = (Int32)((e.Delta * _zoomSpeed * 10.0f + view.GetZoom()) / maxZoomLevel);//conversion to zoom level;
 
         }
 

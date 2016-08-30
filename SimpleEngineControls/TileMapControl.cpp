@@ -36,14 +36,11 @@ System::String^ TileMapControl::TakeSnapshot() {
 	auto editor = dynamic_cast<TileEditorApp*>(SimpleEngine::Instance()->GetGameLogic());
 
 	return gcnew System::String(editor->GetState().c_str());
-
-	//return gcnew System::String(state.c_str());
 }
 
 void TileMapControl::RestoreSnapshot(System::String^ state)
 {
-	const char* chars =
-		(const char*)(Marshal::StringToHGlobalAnsi(state)).ToPointer();
+	const char* chars = static_cast<char*>((Marshal::StringToHGlobalAnsi(state)).ToPointer());
 	auto editor = dynamic_cast<TileEditorApp*>(SimpleEngine::Instance()->GetGameLogic());
 	editor->LoadState(chars);
 	//auto scene = SimpleEngine::Instance()->SetSceneState(chars);

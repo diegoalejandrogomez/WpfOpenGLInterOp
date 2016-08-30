@@ -22,8 +22,7 @@ SimpleScene::SimpleScene() {
 
 SimpleScene::~SimpleScene() {
 	
-	if (_camera != nullptr)
-		delete _camera;
+	delete _camera;
 
 	for (auto& layer : _layers)
 		delete layer;
@@ -152,13 +151,10 @@ bool SimpleScene::Deserialize(const json &node) {
 
 float SimpleScene::GetLowerZIndex() {
 	std::vector<SimpleLayer*> layers = GetLayers();
-	float min = 10000;
-	for (auto layer : layers) // access by reference to avoid copying
+	float min = 10000.f;
+	for (const auto& layer : layers) // access by reference to avoid copying (?)
 	{
-		if (layer->GetZ() < min)
-		{
-			min = layer->GetZ();
-		}
+		min = std::fmin(min, layer->GetZ());
 	}
 
 	return min;

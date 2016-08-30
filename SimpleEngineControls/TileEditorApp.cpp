@@ -128,7 +128,7 @@ void TileEditorApp::_Draw() {
 			anim->SetPosition(c->GetPosition());
 			anim->Play();
 
-			int idx = _tileMapSize.x * int(pos.y) + (int)pos.x;
+			int idx = _tileMapSize.x * int(pos.y) + int(pos.x);
 			_tiles[idx] = anim;
 			SimpleAABB aabb;
 			aabb.position;
@@ -143,7 +143,7 @@ void TileEditorApp::_Draw() {
 void TileEditorApp::_Erase() {
 	
 	glm::vec3 pos = _cursor->GetPosition();
-	int idx = _tileMapSize.x * int(pos.y) + (int)pos.x;
+	int idx = _tileMapSize.x * int(pos.y) + int(pos.x);
 	
 	//Scene picking... we aren't serializing the grid
 	SimpleAABB _pickArea;
@@ -246,8 +246,7 @@ bool TileEditorApp::IsRunning()
 }
 
 void TileEditorApp::SetMapSize(int width, int height) {
-	if (_tiles != nullptr)
-		delete[] _tiles;
+	delete[] _tiles;
 
 	_tileMapSize.x = width;
 	_tileMapSize.y = height;
@@ -317,9 +316,8 @@ void TileEditorApp::_ResizeGrid() {
 	//Remove all the tiles from the layer
 	//SimpleEngine::Instance()->GetScene()->GetLayer("MainTileMap")->Clear(true);
 
-	if (_tiles != nullptr)
-		delete[] _tiles;
-	int tileAmount = _tileMapSize.x * _tileMapSize.y;
+	delete[] _tiles;
+	const int tileAmount = _tileMapSize.x * _tileMapSize.y;
 	_tiles = new SimpleObject*[tileAmount];
 	memset(_tiles, 0, tileAmount * sizeof(SimpleObject*));
 

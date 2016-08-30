@@ -4,7 +4,7 @@
 ManagedSimpleLayer::ManagedSimpleLayer(SimpleLayer *simpleLayer) {
 	this->simpleLayer = simpleLayer;
 	_simpleObjects = gcnew System::Collections::Generic::List<ManagedSimpleObject^>();
-	for (auto &entity : this->simpleLayer->GetEntities())
+	for (const auto &entity : this->simpleLayer->GetEntities())
 	{
 		auto managedSimpleObject = gcnew ManagedSimpleObject();
 		managedSimpleObject->SetSimpleObject(entity);

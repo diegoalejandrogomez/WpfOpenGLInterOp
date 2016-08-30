@@ -36,11 +36,9 @@ SimpleCamera2D::~SimpleCamera2D() {
 
 
 void SimpleCamera2D::_UpdateTransform() {
-	
-	
-
 	_zoom = std::max(1e-3f, _zoom);
-
+	
+	SIMPLE_ASSERT(_restrictedArea.size.x > 0.f && _restrictedArea.size.y > 0.f);
 	//Compute zoom offset due to desired visible size
 	float _offsetX = _size.x / _restrictedArea.size.x;
 	float _offsetY = _size.y / _restrictedArea.size.y;
@@ -71,14 +69,14 @@ void SimpleCamera2D::_UpdateTransform() {
 	}
 
 	
-	if (leftOverlap < 0.0f)
+	if (std::signbit(leftOverlap))
 		_position.x -= sign * leftOverlap;
-	if (rightOverlap < 0.0f)
+	if (std::signbit(rightOverlap))
 		_position.x += sign * rightOverlap;
 
 
-	float restrictedTop = (_restrictedArea.position.y - _restrictedArea.size.y * 0.5f);
-	float restrictedBottom = (_restrictedArea.position.y + _restrictedArea.size.y * 0.5f);
+	const float restrictedTop = (_restrictedArea.position.y - _restrictedArea.size.y * 0.5f);
+	const float restrictedBottom = (_restrictedArea.position.y + _restrictedArea.size.y * 0.5f);
 
 	float topOverlap;
 	float bottomOverlap;
@@ -94,9 +92,9 @@ void SimpleCamera2D::_UpdateTransform() {
 		sign = -1.0f;
 	}
 	
-	if (topOverlap < 0.0f)
+	if (std::signbit(topOverlap))
 		_position.y -= sign * topOverlap;
-	if (bottomOverlap < 0.0f)
+	if (std::signbit(bottomOverlap))
 		_position.y += sign * bottomOverlap;
 	
 	
@@ -129,7 +127,7 @@ void SimpleCamera2D::Move(float dx, float dy) {
 	_UpdateTransform();
 }
 void SimpleCamera2D::SetViewportSize(float w, float h) {
-
+	SIMPLE_ASSERT(h > 0.f);
 	_aspectRatio = w / h;
 
 	//Readjust zoom
