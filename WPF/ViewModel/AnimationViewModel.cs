@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 using System.Timers;
 using SimpleEngineTileEditor;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace WPF.ViewModel
 {
     public class AnimationViewModel : INotifyPropertyChanged
     {
         
-        private Timer aTimer;
+        private DispatcherTimer aTimer;
         private int index;
         private TileViewModel currentTile;
         private double frequency;
@@ -21,15 +22,15 @@ namespace WPF.ViewModel
 
         public AnimationViewModel()
         {
-            aTimer = new System.Timers.Timer();
-            aTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
-            aTimer.Enabled = true;
+            aTimer = new DispatcherTimer(System.Windows.Threading.DispatcherPriority.Render);
+            aTimer.Tick += new EventHandler(OnTimedEvent);
             index = 0;
             this.Frequency = 100;
+            aTimer.Start();
             AnimatedControl = new SimpleAnimatedSpriteControl();
         }
 
-        private void OnTimedEvent(object source, ElapsedEventArgs e)
+        private void OnTimedEvent(object sender, EventArgs e)
         {
             if (Tiles != null)
             {
@@ -72,7 +73,7 @@ namespace WPF.ViewModel
                 if (frequency == 0)
                     frequency = 1;
 
-                aTimer.Interval = frequency;
+                aTimer.Interval = new TimeSpan((long)frequency * 10000);
                 PropertyChanged(this, new PropertyChangedEventArgs("CurrentTile"));
             }
         }
