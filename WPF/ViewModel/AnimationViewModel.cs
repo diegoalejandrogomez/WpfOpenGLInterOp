@@ -6,16 +6,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 using SimpleEngineTileEditor;
+using System.Windows;
 
 namespace WPF.ViewModel
 {
     public class AnimationViewModel : INotifyPropertyChanged
     {
         
-        System.Timers.Timer aTimer;
-        int index;
-
-        public SimpleAnimatedSpriteControl AnimatedControl { get; set; }
+        private Timer aTimer;
+        private int index;
+        private TileViewModel currentTile;
+        private double frequency;
+        private String name;
 
         public AnimationViewModel()
         {
@@ -43,12 +45,7 @@ namespace WPF.ViewModel
 
         public List<TileViewModel> Tiles;
 
-        private TileViewModel currentTile;
-
-        public event PropertyChangedEventHandler PropertyChanged = delegate (object sender, PropertyChangedEventArgs e)
-        {
-
-        };
+        public SimpleAnimatedSpriteControl AnimatedControl { get; set; }
 
         public TileViewModel CurrentTile
         {
@@ -63,7 +60,6 @@ namespace WPF.ViewModel
             }
         }
 
-        private double frequency;
         public double Frequency
         {
             get
@@ -81,7 +77,6 @@ namespace WPF.ViewModel
             }
         }
 
-        private String name;
         public String Name
         {
             get
@@ -92,6 +87,19 @@ namespace WPF.ViewModel
             {
                 name = value;
                 PropertyChanged(this, new PropertyChangedEventArgs("Name"));
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged = delegate (object sender, PropertyChangedEventArgs e)
+        {
+
+        };
+
+        public void Validate()
+        {
+            if (String.IsNullOrEmpty(this.Name))
+            {
+                throw new Exception("Please enter a name for this animation");
             }
         }
     }

@@ -95,7 +95,7 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel>
-                                    <Button Command="{Binding DataContext.DeleteSelectedTile,                                                              RelativeSource={RelativeSource Mode=FindAncestor,  AncestorType={x:Type local:MainWindow}}}" CommandParameter="{Binding }">
+                                    <Button Command="{Binding DataContext.DeleteSelectedAnimation,                                                              RelativeSource={RelativeSource Mode=FindAncestor,  AncestorType={x:Type local:MainWindow}}}" CommandParameter="{Binding }">
                                         <Image Name="delete" Source="./Resources/Icons/delete.png" Style="{StaticResource ToolIcon}" />
                                     </Button>
                                 </StackPanel>

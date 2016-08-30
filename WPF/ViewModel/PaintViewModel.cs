@@ -517,6 +517,8 @@ namespace WPF.ViewModel
 
         private ICommand deleteSelectedTile;
 
+        private ICommand deleteSelectedAnimation;
+
         private ICommand deleteSelectedLayer;
 
         private ICommand editSelectedLayer;
@@ -628,6 +630,24 @@ namespace WPF.ViewModel
                 return deleteSelectedTile;
             }
         }
+
+        public ICommand DeleteSelectedAnimation
+        {
+            get
+            {
+                if (deleteSelectedAnimation == null)
+                {
+                    deleteSelectedAnimation = new Command((animation) =>
+                    {
+                        var animationObject = animation as AnimationViewModel;
+                        if (animationObject != null)
+                            Animations.Remove(animationObject);
+                    });
+                }
+
+                return deleteSelectedAnimation;
+            }
+        }        
 
         public ICommand DeleteSelectedLayer
         {
@@ -993,7 +1013,8 @@ namespace WPF.ViewModel
 
         private void SaveAnimation(object sender, EventArgs e)
         {
-            //Should be moved to the proper place
+            animationViewModel.Validate();
+                
             animationViewModel.AnimatedControl.SetAnimation(animationViewModel.Name, (float)(1.0 / animationViewModel.Frequency));
             foreach (TileViewModel t in animationViewModel.Tiles)
             {
