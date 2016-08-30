@@ -16,7 +16,7 @@ using WPF.Model;
 
 namespace WPF.ViewModel
 {
-    public class PaintViewModel: INotifyPropertyChanged
+    public class PaintViewModel : INotifyPropertyChanged
     {
         #region Properties
 
@@ -36,8 +36,8 @@ namespace WPF.ViewModel
                 openGLRenderControl.MouseWheel += OnMouseWheel;
                 PropertyChanged(this, new PropertyChangedEventArgs("Layers"));
                 openGLRenderControl.Resize += Resize;
-                               
-                
+
+
             }
         }
 
@@ -66,19 +66,19 @@ namespace WPF.ViewModel
             set {
                 SimpleEngineViewerControl view = openGLRenderControl as SimpleEngineViewerControl;
                 _zoomLevel = value;
-                _zoomLevel = Math.Max(Math.Min(100, (int)_zoomLevel), 0);    
-                view.SetZoom(_zoomLevel / 100.0f*MaxZoomLevel);
+                _zoomLevel = Math.Max(Math.Min(100, (int)_zoomLevel), 0);
+                view.SetZoom(_zoomLevel / 100.0f * MaxZoomLevel);
                 PropertyChanged(this, new PropertyChangedEventArgs("ZoomLevel"));
             }
         }
-        
+
         public Int32 MaxZoomLevel
         {
             get {
                 SimpleEngineViewerControl view = openGLRenderControl as SimpleEngineViewerControl;
                 return view.MaxZoom;
             }
-            
+
         }
 
         public Object selected;
@@ -228,7 +228,7 @@ namespace WPF.ViewModel
             foreach (var tile in Tiles)
             {
                 var resource = new Resource();
-                if(tile.Path.Contains(AppDomain.CurrentDomain.BaseDirectory))
+                if (tile.Path.Contains(AppDomain.CurrentDomain.BaseDirectory))
                 {
                     resource.Name = tile.Path.Substring(AppDomain.CurrentDomain.BaseDirectory.Length, tile.Path.Length - AppDomain.CurrentDomain.BaseDirectory.Length);
                 }
@@ -236,7 +236,7 @@ namespace WPF.ViewModel
                 {
                     resource.Name = tile.Path;
                 }
-                
+
                 resource.Data = ConvertToBytes(tile.Image);
                 var property = new ResourceProperty();
                 property.Heigth = tile.heigth;
@@ -256,8 +256,8 @@ namespace WPF.ViewModel
             this.Drag = false;
             this.Paint = false;
             this.Erase = false;
-            this.Pick = false;        
-            
+            this.Pick = false;
+
         }
 
         public void OnClick(Object sender, EventArgs e)
@@ -268,7 +268,7 @@ namespace WPF.ViewModel
                     Drag = false;
                 float x = ((System.Windows.Forms.MouseEventArgs)e).X;
                 float y = ((System.Windows.Forms.MouseEventArgs)e).Y;
-                                 
+
                 Selected = null;
             }
             else
@@ -372,7 +372,7 @@ namespace WPF.ViewModel
                     if (bitmapImage != null)
                     {
                         var bitmapImageConverted = new Bitmap(BitmapImage2Bitmap((BitmapImage)bitmapImage));
-                        if(bitmapImageConverted.Height >= newTile.y + newTile.heigth && bitmapImageConverted.Width >= newTile.x + newTile.width)
+                        if (bitmapImageConverted.Height >= newTile.y + newTile.heigth && bitmapImageConverted.Width >= newTile.x + newTile.width)
                         {
                             var imageSplited = bitmapImageConverted.Clone(new Rectangle(newTile.x, newTile.y, newTile.width, newTile.heigth), System.Drawing.Imaging.PixelFormat.DontCare);
                             newTile.Image = BitmapToImageSource(imageSplited);
@@ -385,7 +385,7 @@ namespace WPF.ViewModel
                     }
                 }
                 else
-                { 
+                {
                     newTile.Image = new BitmapImage();
                     newTile.Image.BeginInit();
                     newTile.Image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
@@ -397,7 +397,7 @@ namespace WPF.ViewModel
                     bitmapImage = newTile.Image;
                 }
 
-                if(newTile.Image != null)
+                if (newTile.Image != null)
                 {
                     newTile.SpriteControl = new SpriteSheetControl();
                     if (Tiles == null)
@@ -533,7 +533,7 @@ namespace WPF.ViewModel
                 {
                     addSelectedTile = new Command((tile) =>
                     {
-                        
+
                         var tileObject = (TileViewModel)tile;
                         tileObject.Idx = tileObject.SpriteControl.AddControl(tileObject.Path, tileObject.x, tileObject.y, tileObject.width, tileObject.heigth);
                     });
@@ -562,22 +562,22 @@ namespace WPF.ViewModel
 
                         SegmentationWindow segmentWindow = new SegmentationWindow();
                         segmentWindow.ImageSource = image;
-                        if(segmentWindow.ShowDialog() == false)
+                        if (segmentWindow.ShowDialog() == false)
                             return;
                         QuantityX = segmentWindow.QuantityX;
                         QuantityY = segmentWindow.QuantityY;
 
-                        
+
 
                         if (QuantityX == 0)
                             QuantityX = 1;
                         if (QuantityY == 0)
                             QuantityY = 1;
 
-                        int proportionalWidth = width / QuantityX ;
+                        int proportionalWidth = width / QuantityX;
                         int proportionalHeigth = heigth / QuantityY;
 
-                        
+
                         while (y + proportionalHeigth <= heigth)
                         {
                             while (x + proportionalWidth <= width)
@@ -591,7 +591,7 @@ namespace WPF.ViewModel
                                 newTile.x = x;
                                 newTile.y = y;
                                 newTile.width = proportionalWidth;
-                                newTile.heigth = proportionalHeigth;                              
+                                newTile.heigth = proportionalHeigth;
                                 newTile.SpriteControl = new SpriteSheetControl();
                                 newTile.Splited = true;
                                 Tiles.Add(newTile);
@@ -620,7 +620,7 @@ namespace WPF.ViewModel
                     deleteSelectedTile = new Command((tile) =>
                     {
                         var tileObject = tile as TileViewModel;
-                        if(tileObject != null)
+                        if (tileObject != null)
                             Tiles.Remove(tileObject);
                     });
                 }
@@ -670,7 +670,7 @@ namespace WPF.ViewModel
                         window.Height = 600;
                         window.Closed += Window_Closed;
                         window.ShowDialog();
-                        
+
                     });
                 }
 
@@ -753,13 +753,13 @@ namespace WPF.ViewModel
                             {
                                 var project = new Project();
                                 var scene = new Scene();
-                                GetAvailableTiles(project);                              
+                                GetAvailableTiles(project);
                                 project.Scenes.Add(_tileMap.TakeSnapshot());
                                 var json = Newtonsoft.Json.JsonConvert.SerializeObject(project);
                                 System.IO.File.WriteAllText(dialog.FileName, json);
                             }
                         }
-                        catch(Exception ex)
+                        catch (Exception ex)
                         {
                             MessageBox.Show(ex.Message);
                         }
@@ -781,7 +781,7 @@ namespace WPF.ViewModel
             string path = AppDomain.CurrentDomain.BaseDirectory + relativePath;
 
             System.IO.DirectoryInfo di = new DirectoryInfo(path);
-            
+
             if (di.Exists)
             {
                 foreach (FileInfo file in di.GetFiles())
@@ -793,7 +793,7 @@ namespace WPF.ViewModel
                     dir.Delete(true);
                 }
             }
-            
+
         }
 
         public ICommand OpenFileCommand
@@ -813,7 +813,7 @@ namespace WPF.ViewModel
                             var json = System.IO.File.ReadAllText(dialog.FileName);
                             var project = Newtonsoft.Json.JsonConvert.DeserializeObject<Project>(json);
                             bitmapImage = GetSelectableTiles(bitmapImage, project);
-                            
+
 
                             foreach (var scene in project.Scenes)
                             {
@@ -868,7 +868,7 @@ namespace WPF.ViewModel
                 }
 
                 return importImageCommand;
-        }
+            }
 
             set { }
         }
@@ -907,7 +907,7 @@ namespace WPF.ViewModel
                         var originalpaint = Paint;
                         ClearParameters();
                         Paint = !originalpaint;
-                        _tileMap.IdleBrush();                        
+                        _tileMap.IdleBrush();
                     });
                 }
 
@@ -947,7 +947,7 @@ namespace WPF.ViewModel
                     {
                         var originalpick = Pick;
                         ClearParameters();
-                        Pick= !originalpick;
+                        Pick = !originalpick;
                         _tileMap.IdleBrush();
                     });
                 }
@@ -957,7 +957,7 @@ namespace WPF.ViewModel
             set { }
         }
 
-        
+
 
         public ICommand AnimateCommand
         {
@@ -1001,7 +1001,15 @@ namespace WPF.ViewModel
             }
 
             animationViewModel.AnimatedControl.AddControl(animationViewModel.Name);
+            if (Animations == null)
+            {
+                Animations = new ObservableCollection<AnimationViewModel>();
+            }
+
+            Animations.Add(animationViewModel);
         }
+
+        public ObservableCollection<AnimationViewModel> Animations { get; set; }
         #endregion
     }
 }
