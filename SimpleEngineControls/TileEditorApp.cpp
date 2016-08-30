@@ -353,7 +353,7 @@ json TileEditorApp::Serialize() {
 		{"_tileMapSize", {_tileMapSize.x, _tileMapSize.y}}
 	};
 }
-bool TileEditorApp::Deserialize(json &node) {
+bool TileEditorApp::Deserialize(const json &node) {
 	
 	SimpleEngine* engine = SimpleEngine::Instance();
 	

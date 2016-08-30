@@ -19,10 +19,10 @@ public:
 	virtual void Advance(float dt) = 0;
 	virtual void Render(float dt) = 0;
 
-	inline const glm::vec3& GetPosition()const { return _aabb.position; };
-	inline const glm::vec2& GetSize()const { return _aabb.size; };
-	inline const float& GetOrientation()const { return _orientation; };
-	inline const SimpleID& GetName() { return _name; };
+	inline const glm::vec3& GetPosition() const { return _aabb.position; };
+	inline const glm::vec2& GetSize() const { return _aabb.size; };
+	inline const float& GetOrientation() const { return _orientation; };
+	inline const SimpleID& GetName() const { return _name; };
 	inline void SetPosition(const glm::vec3&& pos) { _aabb.position = pos; };
 	inline void SetPosition(const glm::vec3& pos) { _aabb.position = pos; };
 	inline void SetSize(glm::vec2&& size) { _aabb.size = size; };
@@ -36,8 +36,8 @@ public:
 	const glm::mat4 GetTransform() const;
 	virtual SimpleID GetType() { return "SimpleObject"; }
 	
-	virtual json Serialize() override;
-	virtual bool Deserialize(json& node) override;
+	json Serialize() override;
+	bool Deserialize(const json& node) override;
 	
 
 protected:

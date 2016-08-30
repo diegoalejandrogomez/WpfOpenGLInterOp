@@ -89,12 +89,12 @@ json SimpleLineRenderer::Serialize() {
 	
 	return so;
 }
-bool SimpleLineRenderer::Deserialize(json &node) {
+bool SimpleLineRenderer::Deserialize(const json &node) {
 	SimpleObject::Deserialize(node);
 
 	SIMPLE_ASSERT(node.find("SimpleLineRenderer") != node.end());
 
-	json& local = node["SimpleLineRenderer"];
+	const json& local = node["SimpleLineRenderer"];
 	_vertices.clear();
 
 	for (auto v : local) {

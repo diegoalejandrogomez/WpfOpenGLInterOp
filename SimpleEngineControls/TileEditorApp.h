@@ -38,7 +38,7 @@ public:
 	inline int  GetMapHeight()const { return _tileMapSize.y; }
 
 	json Serialize() override;
-	bool Deserialize(json &node) override;
+	bool Deserialize(const json &node) override;
 private:
 
 	void _CreateGrid();

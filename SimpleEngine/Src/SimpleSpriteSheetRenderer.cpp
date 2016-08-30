@@ -70,11 +70,11 @@ json SimpleSpriteSheetRenderer::Serialize() {
 	return so;
 
 }
-bool SimpleSpriteSheetRenderer::Deserialize(json &node) {
+bool SimpleSpriteSheetRenderer::Deserialize(const json &node) {
 
 	SimpleSpriteRenderer::Deserialize(node);
 
-	json& local = node["SimpleSpriteSheetRenderer"];
+	const json& local = node["SimpleSpriteSheetRenderer"];
 
 	SIMPLE_ASSERT(local.find("frameIndex") != local.end());
 	_pos = local["frameIndex"];

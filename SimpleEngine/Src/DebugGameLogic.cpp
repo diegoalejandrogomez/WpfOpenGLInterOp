@@ -17,7 +17,7 @@ json DebugGameLogic::Serialize() {
 	return ret;
 }
 
-bool DebugGameLogic::Deserialize(json &node) {
+bool DebugGameLogic::Deserialize(const json &node) {
 	
 	SIMPLE_LOG("Debug: %i, Amount:%i ", node["Debug"].get<bool>(), node["Ducks"].get<int>());
 	return true;

@@ -9,26 +9,28 @@ class SIMPLE_API SimpleLayer : public SimpleSerializable{
 public:
 	SimpleLayer();
 	~SimpleLayer();
-	const std::vector<SimpleObject*>& GetEntities();
+	typedef std::vector<SimpleObject*> SimpleObjectList;
+
+	const SimpleObjectList& GetEntities();
 	
 	void AddEntity(SimpleObject* sObj);
-	bool RemoveEntity(SimpleObject* sObj);
+	bool RemoveEntity(const SimpleObject* sObj);
 	void Clear(bool deleteEntities = false);
 
 	void SetZ(float Z);
-	float GetZ();
+	float GetZ() const;
 	
-	inline const SimpleID& GetName()const { return _layerName; }
+	inline const SimpleID& GetName() const { return _layerName; }
 	inline void  SetName(SimpleID name) {_layerName = name; }
 
 	inline void SetQueryable(bool value) { _queryable = value; };
-	inline bool IsQueryable() { return _queryable; };
+	inline bool IsQueryable() const { return _queryable; };
 	
-	virtual json Serialize() override;
-	virtual bool Deserialize(json& layer) override;
+	json Serialize() override;
+	bool Deserialize(const json& layer) override;
 
 protected:
-	std::vector<SimpleObject*> _entities;
+	SimpleObjectList _entities;
 	float Z;
 	SimpleID _layerName;
 	bool _queryable;

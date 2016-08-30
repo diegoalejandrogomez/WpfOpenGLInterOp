@@ -43,8 +43,8 @@ public:
 	SimpleLayer* GetLayer(SimpleID layerName);
 	inline std::vector<SimpleLayer*>& GetLayers(std::string layerName) { return _layers; }
 
-	virtual json Serialize() override;
-	virtual bool Deserialize(json &node) override;
+	json Serialize() override;
+	bool Deserialize(const json &node) override;
 	
 	float GetLowerZIndex();
 

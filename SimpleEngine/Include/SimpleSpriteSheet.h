@@ -23,7 +23,7 @@ public:
 	glm::ivec4 GetCoordsForIndex(int idx);
 
 	json Serialize() override;
-	bool Deserialize(json &node) override;
+	bool Deserialize(const json &node) override;
 private:
 
 	//XY contains origin, ZW contains size

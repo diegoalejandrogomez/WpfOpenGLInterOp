@@ -160,11 +160,11 @@ void SimpleEngine::DeserializeResources() {
 	_renderer->DeserializeResources(_resBaseDir);
 }
 
-void SimpleEngine::SetResourcesBaseDir(std::string baseDir) {
+void SimpleEngine::SetResourcesBaseDir(std::string const& baseDir) {
 	_resBaseDir = baseDir;
 }
 
-bool SimpleEngine::SerializeGameLogic(std::string path) {
+bool SimpleEngine::SerializeGameLogic(std::string const& path) {
 	json logic = _gameLogic->Serialize();
 	std::ofstream file(SimpleEngine::Instance()->GetResourcesBaseDir() + path);
 	if (file.is_open()) {
@@ -175,7 +175,7 @@ bool SimpleEngine::SerializeGameLogic(std::string path) {
 	return false;
 
 }
-bool SimpleEngine::DeserializeGameLogic(std::string path) {
+bool SimpleEngine::DeserializeGameLogic(std::string const& path) {
 	
 	json logic;
 
@@ -190,18 +190,19 @@ bool SimpleEngine::DeserializeGameLogic(std::string path) {
 	
 }
 
-std::string SimpleEngine::GetGameLogicState() {
+std::string SimpleEngine::GetGameLogicState() const {
 	json logic = _gameLogic->Serialize();
 	return logic.dump(4);
 }
-void SimpleEngine::SetGameLogicState(std::string state) {
-	json logic = json::parse(state);
+
+void SimpleEngine::SetGameLogicState(std::string const& state) {
+	const json logic = json::parse(state);
 	_gameLogic->Deserialize(logic);
 }
 
-bool SimpleEngine::SerializeScene(std::string path) {
+bool SimpleEngine::SerializeScene(std::string const& path) {
 
-	json scene = _scene->Serialize();
+	const json scene = _scene->Serialize();
 	std::ofstream file(SimpleEngine::Instance()->GetResourcesBaseDir() + path);
 	if (file.is_open()) {
 		file << std::setw(4) << scene;
@@ -211,7 +212,7 @@ bool SimpleEngine::SerializeScene(std::string path) {
 	return false;
 
 }
-bool SimpleEngine::DeserializeScene(std::string path) {
+bool SimpleEngine::DeserializeScene(std::string const& path) {
 
 	json scene;
 	CreateScene();
@@ -228,20 +229,21 @@ bool SimpleEngine::DeserializeScene(std::string path) {
 
 }
 
-std::string SimpleEngine::GetSceneState() {
+std::string SimpleEngine::GetSceneState() const {
 	json scene = _scene->Serialize();
 	return scene.dump(4);
 }
-bool SimpleEngine::SetSceneState(std::string state) {
+
+bool SimpleEngine::SetSceneState(std::string const& state) {
 	json scene = json::parse(state);
 	_scene->Deserialize(scene);
 	return true;
 }
 
-bool SimpleEngine::SerializeGameState(std::string path) {
+bool SimpleEngine::SerializeGameState(std::string const& path) {
 
-	json logic = _gameLogic->Serialize();
-	json scene = _scene->Serialize();
+	const json logic = _gameLogic->Serialize();
+	const json scene = _scene->Serialize();
 	json gameState = {
 		{"gameLogic", logic},
 		{"scene", scene}
@@ -256,7 +258,7 @@ bool SimpleEngine::SerializeGameState(std::string path) {
 	return false;
 
 }
-bool SimpleEngine::DeserializeGameState(std::string path) {
+bool SimpleEngine::DeserializeGameState(std::string const& path) {
 	
 	json gameState;
 	std::ifstream file(SimpleEngine::Instance()->GetResourcesBaseDir() + path);
@@ -273,17 +275,18 @@ bool SimpleEngine::DeserializeGameState(std::string path) {
 }
 
 
-std::string SimpleEngine::GetGameState() {
-	json logic = _gameLogic->Serialize();
-	json scene = _scene->Serialize();
-	json gameState = {
+std::string SimpleEngine::GetGameState() const {
+	const json logic = _gameLogic->Serialize();
+	const json scene = _scene->Serialize();
+	const json gameState = {
 		{ "gameLogic", logic },
 		{ "scene", scene }
 	};
 	return gameState.dump(4);
 }
-bool SimpleEngine::SetGameState(std::string state) {
-	json gameState = json::parse(state);
+
+bool SimpleEngine::SetGameState(std::string const& state) {
+	const json gameState = json::parse(state);
 	
 	//Create a new scene with no layers
 	CreateScene();

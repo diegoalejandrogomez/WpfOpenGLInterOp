@@ -61,14 +61,14 @@ json SimpleSpriteSheet::Serialize() {
 	return ret;
 
 }
-bool SimpleSpriteSheet::Deserialize(json &node) {
+bool SimpleSpriteSheet::Deserialize(const json &node) {
 	
 	if (node.find("frames") == node.end()) {
 		SIMPLE_LOG("Couldn't deserialize frames");
 		return false;	
 	}
 
-	json &frames = node["frames"];
+	const json &frames = node["frames"];
 	for (auto frame : frames) {
 		_frames.emplace_back(	frame["from"][0],
 								frame["from"][1],
