@@ -38,8 +38,8 @@ public:
 	inline SimpleGameLogic*  GetGameLogic() { return _gameLogic == nullptr? _nextGameLogic:_gameLogic; }
 	inline SimpleRenderer* GetRenderer() { return _renderer; }
 	inline SimpleInput* GetInput() { return _input; }
-	inline float GetRenderFPS() const { return _renderTime.count() > 0? 1.0e9f / _renderTime.count() : 0; }
-	inline float GetLogicFPS() const { return _renderTime.count() > 0?  1.0e9f / _logicTime.count(): 0; }
+	inline float GetRenderFPS() const { return _renderTime.count() > 0? 1.0f / _renderTime.count() : 0; }
+	inline float GetLogicFPS() const { return _renderTime.count() > 0?  1.0f / _logicTime.count(): 0; }
 
 	//Used by external event loops
 	void Render(float dt);
