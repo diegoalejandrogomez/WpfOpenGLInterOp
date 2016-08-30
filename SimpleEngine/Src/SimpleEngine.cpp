@@ -106,7 +106,7 @@ void SimpleEngine::Advance(float dt) {
 	//Flush pending events
 	SimpleDispatcher::Instance()->Flush();
 
-	SIMPLE_LOG("FPS: %.2f", GetLogicFPS());
+	//SIMPLE_LOG("FPS: %.2f", GetLogicFPS());
 }
 
 #define DEBUG_CONTENT
