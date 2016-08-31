@@ -193,6 +193,16 @@ namespace WPF.ViewModel
 
         public List<TileViewModel> SelectedTiles { get; set; }
 
+        public string FontFamily { get; set; }
+
+        public string FontSize { get; set; }
+
+        public string FontColor { get; set; }
+
+        AnimationViewModel animationViewModel { get; set; }
+
+        public ObservableCollection<AnimationViewModel> Animations { get; set; }
+
         TileMapControl _tileMap;
         float _panSpeed = 1.0f;
         float _zoomSpeed = 0.005f;
@@ -424,6 +434,57 @@ namespace WPF.ViewModel
             return path;
         }
 
+        private void SaveAnimation(object sender, EventArgs e)
+        {
+            AddAnimation();
+        }
+
+        private void AddAnimation()
+        {
+            animationViewModel.Validate();
+
+            animationViewModel.AnimatedControl.SetAnimation(animationViewModel.Name, (float)animationViewModel.Frequency * 1e-3f);
+            foreach (TileViewModel t in animationViewModel.Tiles)
+            {
+                animationViewModel.AnimatedControl.AddFrame(t.Path, t.x, t.y, t.width, t.heigth);
+            }
+
+            animationViewModel.AnimatedControl.AddControl(animationViewModel.Name);
+            if (Animations == null)
+            {
+                Animations = new ObservableCollection<AnimationViewModel>();
+            }
+
+            Animations.Add(animationViewModel);
+            PropertyChanged(this, new PropertyChangedEventArgs("Animations"));
+        }
+
+        private void Clean()
+        {
+            ((SimpleEngineViewerControl)OpenGLRenderControl).Restart();
+            this.Tiles = new ObservableCollection<TileViewModel>();
+            PropertyChanged(this, new PropertyChangedEventArgs("Tiles"));
+            this.Selected = null;
+
+            string relativePath = @"/temp/";
+            string path = AppDomain.CurrentDomain.BaseDirectory + relativePath;
+
+            System.IO.DirectoryInfo di = new DirectoryInfo(path);
+
+            if (di.Exists)
+            {
+                foreach (FileInfo file in di.GetFiles())
+                {
+                    file.Delete();
+                }
+                foreach (DirectoryInfo dir in di.GetDirectories())
+                {
+                    dir.Delete(true);
+                }
+            }
+
+        }
+
         #endregion
 
         #region Events
@@ -491,6 +552,7 @@ namespace WPF.ViewModel
                 //paintViewModel.OpenGLRenderControl.SetProperty(e.PropertyName, true);
             }
         };
+
         #endregion
 
         #region Commands
@@ -527,6 +589,10 @@ namespace WPF.ViewModel
         private ICommand addLayer;
 
         private ICommand animateCommand;
+
+        private ICommand addSelectedAnimation;
+
+        private ICommand addTextCommand;
 
         public ICommand AddSelectedTile
         {
@@ -648,8 +714,25 @@ namespace WPF.ViewModel
 
                 return deleteSelectedAnimation;
             }
-        }        
+        }
 
+        public ICommand AddSelectedAnimation
+        {
+            get
+            {
+                if (addSelectedAnimation == null)
+                {
+                    addSelectedAnimation = new Command((animation) =>
+                    {
+                        animationViewModel = animation as AnimationViewModel;
+                        AddAnimation();
+                    });
+                }
+
+                return addSelectedAnimation;
+            }
+        }
+        
         public ICommand DeleteSelectedLayer
         {
             get
@@ -789,32 +872,6 @@ namespace WPF.ViewModel
 
                 return saveCommand;
             }
-        }
-
-        private void Clean()
-        {
-            ((SimpleEngineViewerControl)OpenGLRenderControl).Restart();
-            this.Tiles = new ObservableCollection<TileViewModel>();
-            PropertyChanged(this, new PropertyChangedEventArgs("Tiles"));
-            this.Selected = null;
-
-            string relativePath = @"/temp/";
-            string path = AppDomain.CurrentDomain.BaseDirectory + relativePath;
-
-            System.IO.DirectoryInfo di = new DirectoryInfo(path);
-
-            if (di.Exists)
-            {
-                foreach (FileInfo file in di.GetFiles())
-                {
-                    file.Delete();
-                }
-                foreach (DirectoryInfo dir in di.GetDirectories())
-                {
-                    dir.Delete(true);
-                }
-            }
-
         }
 
         public ICommand OpenFileCommand
@@ -957,6 +1014,7 @@ namespace WPF.ViewModel
             }
             set { }
         }
+
         public ICommand SetPickCommand
         {
             get
@@ -977,8 +1035,6 @@ namespace WPF.ViewModel
             }
             set { }
         }
-
-
 
         public ICommand AnimateCommand
         {
@@ -1010,29 +1066,23 @@ namespace WPF.ViewModel
             set { }
         }
 
-        AnimationViewModel animationViewModel { get; set; }
-
-        private void SaveAnimation(object sender, EventArgs e)
+        public ICommand AddTextCommand
         {
-            animationViewModel.Validate();
-                
-            animationViewModel.AnimatedControl.SetAnimation(animationViewModel.Name, (float)animationViewModel.Frequency * 1e-3f);
-            foreach (TileViewModel t in animationViewModel.Tiles)
+            get
             {
-                animationViewModel.AnimatedControl.AddFrame(t.Path, t.x, t.y, t.width, t.heigth);
-            }
+                if (addTextCommand == null)
+                {
 
-            animationViewModel.AnimatedControl.AddControl(animationViewModel.Name);
-            if (Animations == null)
-            {
-                Animations = new ObservableCollection<AnimationViewModel>();
-            }
+                    addTextCommand = new Command((vm) =>
+                    {
+                       
+                    });
+                }
 
-            Animations.Add(animationViewModel);
-            PropertyChanged(this, new PropertyChangedEventArgs("Animations"));
+                return addTextCommand;
+            }
+            set { }
         }
-
-        public ObservableCollection<AnimationViewModel> Animations { get; set; }
         #endregion
     }
 }
