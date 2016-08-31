@@ -193,6 +193,12 @@ namespace WPF.ViewModel
 
         public List<TileViewModel> SelectedTiles { get; set; }
 
+        AnimationViewModel animationViewModel { get; set; }
+
+        public ObservableCollection<AnimationViewModel> Animations { get; set; }
+
+        private FontViewModel fontViewModel;
+
         TileMapControl _tileMap;
         float _panSpeed = 1.0f;
         float _zoomSpeed = 0.01f;
@@ -201,26 +207,6 @@ namespace WPF.ViewModel
         #endregion
 
         #region Methods
-        private void GetTilesRendered(Scene scene)
-        {
-            ////Get all tiles on drawing area
-            //SimpleEngineViewerControl view = openGLRenderControl as SimpleEngineViewerControl;
-            //view.TakeSnapshot();
-            //foreach (var tile in ((SimpleEngineViewerControl)OpenGLRenderControl).GetAllTiles())
-            //{
-            //    var tileScene = new Tile();
-            //    var property = new ResourceProperty();
-            //    property.Heigth = (int)tile.sizeH;
-            //    property.Width = (int)tile.sizeW;
-            //    property.X = (int)tile.positionX;
-            //    property.Y = (int)tile.positionY;
-            //    property.Z = (int)tile.positionZ;
-            //    property.Orientation = (int)tile.Orientation;
-            //    property.Name = tile.Name;
-            //    tileScene.Properties = property;
-            //    scene.Tiles.Add(tileScene);
-            //}
-        }
 
         private void GetAvailableTiles(Project project)
         {
@@ -425,6 +411,57 @@ namespace WPF.ViewModel
             return path;
         }
 
+        private void SaveAnimation(object sender, EventArgs e)
+        {
+            AddAnimation();
+        }
+
+        private void AddAnimation()
+        {
+            animationViewModel.Validate();
+
+            animationViewModel.AnimatedControl.SetAnimation(animationViewModel.Name, (float)animationViewModel.Frequency * 1e-3f);
+            foreach (TileViewModel t in animationViewModel.Tiles)
+            {
+                animationViewModel.AnimatedControl.AddFrame(t.Path, t.x, t.y, t.width, t.heigth);
+            }
+
+            animationViewModel.AnimatedControl.AddControl(animationViewModel.Name);
+            if (Animations == null)
+            {
+                Animations = new ObservableCollection<AnimationViewModel>();
+            }
+
+            Animations.Add(animationViewModel);
+            PropertyChanged(this, new PropertyChangedEventArgs("Animations"));
+        }
+
+        private void Clean()
+        {
+            ((SimpleEngineViewerControl)OpenGLRenderControl).Restart();
+            this.Tiles = new ObservableCollection<TileViewModel>();
+            PropertyChanged(this, new PropertyChangedEventArgs("Tiles"));
+            this.Selected = null;
+
+            string relativePath = @"/temp/";
+            string path = AppDomain.CurrentDomain.BaseDirectory + relativePath;
+
+            System.IO.DirectoryInfo di = new DirectoryInfo(path);
+
+            if (di.Exists)
+            {
+                foreach (FileInfo file in di.GetFiles())
+                {
+                    file.Delete();
+                }
+                foreach (DirectoryInfo dir in di.GetDirectories())
+                {
+                    dir.Delete(true);
+                }
+            }
+
+        }
+
         #endregion
 
         #region Events
@@ -494,6 +531,7 @@ namespace WPF.ViewModel
                 //paintViewModel.OpenGLRenderControl.SetProperty(e.PropertyName, true);
             }
         };
+
         #endregion
 
         #region Commands
@@ -531,6 +569,10 @@ namespace WPF.ViewModel
 
         private ICommand animateCommand;
 
+        private ICommand addSelectedAnimation;
+
+        private ICommand addTextCommand;
+        
         public ICommand AddSelectedTile
         {
             get
@@ -651,8 +693,25 @@ namespace WPF.ViewModel
 
                 return deleteSelectedAnimation;
             }
-        }        
+        }
 
+        public ICommand AddSelectedAnimation
+        {
+            get
+            {
+                if (addSelectedAnimation == null)
+                {
+                    addSelectedAnimation = new Command((animation) =>
+                    {
+                        animationViewModel = animation as AnimationViewModel;
+                        AddAnimation();
+                    });
+                }
+
+                return addSelectedAnimation;
+            }
+        }
+        
         public ICommand DeleteSelectedLayer
         {
             get
@@ -792,32 +851,6 @@ namespace WPF.ViewModel
 
                 return saveCommand;
             }
-        }
-
-        private void Clean()
-        {
-            ((SimpleEngineViewerControl)OpenGLRenderControl).Restart();
-            this.Tiles = new ObservableCollection<TileViewModel>();
-            PropertyChanged(this, new PropertyChangedEventArgs("Tiles"));
-            this.Selected = null;
-
-            string relativePath = @"/temp/";
-            string path = AppDomain.CurrentDomain.BaseDirectory + relativePath;
-
-            System.IO.DirectoryInfo di = new DirectoryInfo(path);
-
-            if (di.Exists)
-            {
-                foreach (FileInfo file in di.GetFiles())
-                {
-                    file.Delete();
-                }
-                foreach (DirectoryInfo dir in di.GetDirectories())
-                {
-                    dir.Delete(true);
-                }
-            }
-
         }
 
         public ICommand OpenFileCommand
@@ -960,6 +993,7 @@ namespace WPF.ViewModel
             }
             set { }
         }
+
         public ICommand SetPickCommand
         {
             get
@@ -980,8 +1014,6 @@ namespace WPF.ViewModel
             }
             set { }
         }
-
-
 
         public ICommand AnimateCommand
         {
@@ -1013,29 +1045,46 @@ namespace WPF.ViewModel
             set { }
         }
 
-        AnimationViewModel animationViewModel { get; set; }
-
-        private void SaveAnimation(object sender, EventArgs e)
+        public ICommand AddTextCommand
         {
-            animationViewModel.Validate();
-                
-            animationViewModel.AnimatedControl.SetAnimation(animationViewModel.Name, (float)animationViewModel.Frequency * 1e-3f);
-            foreach (TileViewModel t in animationViewModel.Tiles)
+            get
             {
-                animationViewModel.AnimatedControl.AddFrame(t.Path, t.x, t.y, t.width, t.heigth);
-            }
+                if (addTextCommand == null)
+                {
 
-            animationViewModel.AnimatedControl.AddControl(animationViewModel.Name);
-            if (Animations == null)
-            {
-                Animations = new ObservableCollection<AnimationViewModel>();
-            }
+                    addTextCommand = new Command((vm) =>
+                    {
+                        Window window = new Window
+                        {
+                            Title = "Font Editor",
+                            Content = new FontEditor(),
+                            Width = 180,
+                            Height = 200,
+                        };
 
-            Animations.Add(animationViewModel);
-            PropertyChanged(this, new PropertyChangedEventArgs("Animations"));
+                        if(this.fontViewModel == null)
+                        {
+                            this.fontViewModel = new FontViewModel();
+                        }
+
+                        ((System.Windows.Controls.UserControl)window.Content).DataContext = this.fontViewModel;
+                        window.Width = 300;
+                        window.Height = 600;
+                        window.Closed += FontEditorClose; ;
+                        window.ShowDialog();
+                    });
+                }
+
+                return addTextCommand;
+            }
+            set { }
         }
 
-        public ObservableCollection<AnimationViewModel> Animations { get; set; }
+        private void FontEditorClose(object sender, EventArgs e)
+        {
+            var test = this.fontViewModel;
+            throw new NotImplementedException("Add interop");
+        }
         #endregion
     }
 }

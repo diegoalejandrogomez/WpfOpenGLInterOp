@@ -37,5 +37,8 @@
         <Button Grid.Row="2" Grid.Column="0" Command="{Binding Path=AnimateCommand}">
             <Image Name="animate" Source="./Resources/Icons/animate.png" Style="{StaticResource ToolIcon}" />
         </Button>
+        <Button Grid.Row="2" Grid.Column="1" Command="{Binding Path=AddTextCommand}">
+            <Image Name="text" Source="./Resources/Icons/text.png" Style="{StaticResource ToolIcon}" />
+        </Button>
     </Grid>
 </UserControl>

@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="WPF.FontEditor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPF"
+             xmlns:System="clr-namespace:System;assembly=mscorlib"
+             xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" 
+             mc:Ignorable="d" 
+             d:DesignHeight="150" d:DesignWidth="180">
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="SortedFontsCollection" Source="{Binding Source={x:Static Fonts.SystemFontFamilies}}" >
+            <CollectionViewSource.SortDescriptions>
+                <ComponentModel:SortDescription PropertyName="Source" />
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
+    </UserControl.Resources>
+    <StackPanel Width="150" Height="150">
+        <Label Content="Font Family"></Label>
+        <ComboBox x:Name="comboBoxFonts" SelectedValue="{Binding FontFamily}" ItemsSource="{Binding Source={StaticResource SortedFontsCollection}}" />
+        <Label Content="Font Size"></Label>
+        <TextBox Text="{Binding FontSize}"></TextBox>
+        <Label Content="Color"></Label>
+        <xctk:ColorPicker SelectedColor="{Binding FontColor}"></xctk:ColorPicker>
+    </StackPanel>
+</UserControl>
