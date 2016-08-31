@@ -193,15 +193,11 @@ namespace WPF.ViewModel
 
         public List<TileViewModel> SelectedTiles { get; set; }
 
-        public string FontFamily { get; set; }
-
-        public string FontSize { get; set; }
-
-        public string FontColor { get; set; }
-
         AnimationViewModel animationViewModel { get; set; }
 
         public ObservableCollection<AnimationViewModel> Animations { get; set; }
+
+        private FontViewModel fontViewModel;
 
         TileMapControl _tileMap;
         float _panSpeed = 1.0f;
@@ -211,26 +207,6 @@ namespace WPF.ViewModel
         #endregion
 
         #region Methods
-        private void GetTilesRendered(Scene scene)
-        {
-            ////Get all tiles on drawing area
-            //SimpleEngineViewerControl view = openGLRenderControl as SimpleEngineViewerControl;
-            //view.TakeSnapshot();
-            //foreach (var tile in ((SimpleEngineViewerControl)OpenGLRenderControl).GetAllTiles())
-            //{
-            //    var tileScene = new Tile();
-            //    var property = new ResourceProperty();
-            //    property.Heigth = (int)tile.sizeH;
-            //    property.Width = (int)tile.sizeW;
-            //    property.X = (int)tile.positionX;
-            //    property.Y = (int)tile.positionY;
-            //    property.Z = (int)tile.positionZ;
-            //    property.Orientation = (int)tile.Orientation;
-            //    property.Name = tile.Name;
-            //    tileScene.Properties = property;
-            //    scene.Tiles.Add(tileScene);
-            //}
-        }
 
         private void GetAvailableTiles(Project project)
         {
@@ -596,7 +572,7 @@ namespace WPF.ViewModel
         private ICommand addSelectedAnimation;
 
         private ICommand addTextCommand;
-
+        
         public ICommand AddSelectedTile
         {
             get
@@ -1078,13 +1054,36 @@ namespace WPF.ViewModel
 
                     addTextCommand = new Command((vm) =>
                     {
-                       
+                        Window window = new Window
+                        {
+                            Title = "Font Editor",
+                            Content = new FontEditor(),
+                            Width = 180,
+                            Height = 200,
+                        };
+
+                        if(this.fontViewModel == null)
+                        {
+                            this.fontViewModel = new FontViewModel();
+                        }
+
+                        ((System.Windows.Controls.UserControl)window.Content).DataContext = this.fontViewModel;
+                        window.Width = 300;
+                        window.Height = 600;
+                        window.Closed += FontEditorClose; ;
+                        window.ShowDialog();
                     });
                 }
 
                 return addTextCommand;
             }
             set { }
+        }
+
+        private void FontEditorClose(object sender, EventArgs e)
+        {
+            var test = this.fontViewModel;
+            throw new NotImplementedException("Add interop");
         }
         #endregion
     }

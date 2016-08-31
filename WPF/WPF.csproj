@@ -137,6 +137,9 @@
     <Compile Include="AnimationEditor.xaml.cs">
       <DependentUpon>AnimationEditor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FontEditor.xaml.cs">
+      <DependentUpon>FontEditor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Infrastructure\Command.cs" />
     <Compile Include="LayerEditor.xaml.cs">
       <DependentUpon>LayerEditor.xaml</DependentUpon>
@@ -156,9 +159,14 @@
       <DependentUpon>ToolBarControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\AnimationViewModel.cs" />
+    <Compile Include="ViewModel\FontViewModel.cs" />
     <Compile Include="ViewModel\TileViewModel.cs" />
     <Compile Include="ViewModel\PaintViewModel.cs" />
     <Page Include="AnimationEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FontEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
