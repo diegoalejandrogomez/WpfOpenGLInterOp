@@ -60,6 +60,7 @@
     </Compile>
     <Compile Include="SimpleAnimatedSpriteControl.cs" />
     <Compile Include="SpriteControl.cs" />
+    <Compile Include="TextControl.cs" />
     <Compile Include="SpriteSheetControl.cs" />
     <Compile Include="TileMapControl.cs" />
   </ItemGroup>

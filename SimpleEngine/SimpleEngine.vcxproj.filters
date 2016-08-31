@@ -206,6 +206,9 @@
     <ClInclude Include="Include\SimpleColor.h">
       <Filter>Engine\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="ISimpleTextRenderer.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\SimpleObjectsRenderPass.cpp">
@@ -321,6 +324,9 @@
     </ClCompile>
     <ClCompile Include="Src\SimpleTextRenderer.cpp">
       <Filter>Engine\Graphics\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="ISimpleTextRenderer.cpp">
+      <Filter>Interface</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
