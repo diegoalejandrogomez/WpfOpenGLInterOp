@@ -13,8 +13,6 @@
 #include "SimpleID.h"
 #include "SimpleConfiguration.h"
 #include "SimpleTexture.h"
-#include <ft2build.h>
-#include FT_FREETYPE_H
 #include "SimpleColor.h"
 
 class SimpleScene;
@@ -79,7 +77,6 @@ private:
 	
 	bool _LoadDefaultShaders();
 
-	void _InitializeFontEngine();
 	//Window parameters (Target render surface)
 	int _width;
 	int _height;
@@ -112,8 +109,6 @@ private:
 	SimpleMesh<VertexTextureFormat2D>* _texturedQuad;
 
 	
-	//Font managemente
-	FT_Library _fontLib;
 	std::unordered_map<SimpleID, std::pair<float,FontCharacters>> _fonts;
 		
 

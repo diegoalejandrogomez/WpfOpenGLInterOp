@@ -8,7 +8,8 @@
 #include <fstream>
 #include "SimpleEngine.h"
 #include "SimpleObjectsRenderPass.h"
-
+#include <ft2build.h>
+#include FT_FREETYPE_H
 
 //C++ 14/17 ... but why not XD
 using namespace std::tr2::sys;
@@ -19,14 +20,13 @@ SimpleRenderer::SimpleRenderer() {
 	_hWnd = 0;
 	_clearColor = { 0,0,0,0 };
 	_InitializeExtensions();
-	_InitializeFontEngine();
-
+	
 }
 
 SimpleRenderer::~SimpleRenderer() {
 
 	Shutdown();
-	FT_Done_FreeType(_fontLib);
+
 	// Release the rendering context.
 	if (_renderingContext)
 	{
@@ -440,13 +440,12 @@ bool SimpleRenderer::_LoadDefaultShaders() {
 }
 
 
-void SimpleRenderer::_InitializeFontEngine() {
 
+bool SimpleRenderer::LoadFont(std::string fontName, uint32_t size) {
+	//Font managemente
+	FT_Library _fontLib;
 	if (FT_Init_FreeType(&_fontLib))
 		SIMPLE_LOG("FREETYPE: Could not init FreeType Library");
-
-}
-bool SimpleRenderer::LoadFont(std::string fontName, uint32_t size) {
 
 	FT_Face face;
 	std::string resPath = SimpleEngine::Instance()->GetResourcesBaseDir() + fontName;
@@ -494,6 +493,7 @@ bool SimpleRenderer::LoadFont(std::string fontName, uint32_t size) {
 	float scale = 1.0f / (float)std::max(maxFontSize.x, maxFontSize.y);
 	_fonts[fontName] = std::make_pair(scale, chars);
 	FT_Done_Face(face);
+	FT_Done_FreeType(_fontLib);
 	return true;
 }
 bool SimpleRenderer::HasFont(SimpleID fontName) {
