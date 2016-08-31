@@ -14,7 +14,7 @@
 #include "SimpleConfiguration.h"
 #include "SimpleTexture.h"
 #include "SimpleColor.h"
-
+#include "SimpleTextRenderer.h"
 class SimpleScene;
 
 class SIMPLE_API SimpleRenderer {
@@ -40,7 +40,8 @@ public:
 	void Render(float dt, SimpleScene* scene);
 	void ResizeWindow(int width, int height);
 	void SetClearColor(SimpleColor c) { _clearColor = c; }
-
+	void ShowDebugInfo();
+	
 	inline int GetWidth()const { return _width; } ;
 	inline int GetHeight()const { return _height; } ;
 

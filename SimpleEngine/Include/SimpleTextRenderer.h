@@ -15,12 +15,12 @@ public:
 
 	void SetText(std::string text);
 	void SetFontName(std::string && name);
-	void SetFontSize(uint32_t size);
+	void SetFontSize(float size);
 	void SetColor(SimpleColor color);
 	
 	const std::string& GetText() const;
 	const std::string &GetFontName() const;
-	const uint32_t GetFontSize() const;
+	const float GetFontSize() const;
 	const SimpleColor &GetColor() const;
 
 	virtual SimpleID GetType() { return "SimpleTextRenderer"; }
@@ -32,7 +32,7 @@ private:
 
 	std::string _text;
 	std::string _fontName;
-	uint32_t _fontSize;
+	float _fontSize;
 	SimpleColor _fontColor;
 
 };

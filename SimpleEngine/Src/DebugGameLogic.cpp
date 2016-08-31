@@ -58,6 +58,8 @@ void DebugGameLogic::_CreateTestScene() {
 	layer->SetSerializable(false);
 
 	SimpleEngine::Instance()->GetRenderer()->SetClearColor({ 0,0,0,0});
+	SimpleEngine::Instance()->GetRenderer()->ShowDebugInfo();
+
 	/*SimpleSpriteRenderer* sprite = new SimpleSpriteRenderer();
 	sprite->SetAsTexture("./media/spriteFull.png");
 	sprite->SetOrientation(1.0f);

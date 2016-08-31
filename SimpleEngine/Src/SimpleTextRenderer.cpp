@@ -79,7 +79,7 @@ void SimpleTextRenderer::SetText(std::string text) {
 	_text = text;
 }
 
-void SimpleTextRenderer::SetFontSize(uint32_t size) {
+void SimpleTextRenderer::SetFontSize(float size) {
 
 	_fontSize = size;
 
@@ -94,7 +94,7 @@ const std::string& SimpleTextRenderer::GetText() const {
 const std::string& SimpleTextRenderer::GetFontName() const{
 	return _fontName;
 }
-const uint32_t SimpleTextRenderer::GetFontSize() const {
+const float SimpleTextRenderer::GetFontSize() const {
 	return _fontSize;
 }
 

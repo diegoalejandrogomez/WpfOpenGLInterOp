@@ -10,6 +10,7 @@
 #include "SimpleObjectsRenderPass.h"
 #include <ft2build.h>
 #include FT_FREETYPE_H
+#include "DebugRenderPass.h"
 
 //C++ 14/17 ... but why not XD
 using namespace std::tr2::sys;
@@ -19,6 +20,8 @@ SimpleRenderer::SimpleRenderer() {
 	_renderingContext = nullptr;
 	_hWnd = 0;
 	_clearColor = { 0,0,0,0 };
+
+
 	_InitializeExtensions();
 	
 }
@@ -40,7 +43,6 @@ SimpleRenderer::~SimpleRenderer() {
 
 void SimpleRenderer::Initialize() {
 	_LoadDefaultShaders();
-	//_renderer->AddPass(new DebugRenderPass());
 	AddPass(new SimpleObjectsRenderPass());
 }
 void SimpleRenderer::Shutdown() {
@@ -53,6 +55,10 @@ void SimpleRenderer::ClearPasses() {
 		delete pass;
 	_passes.clear();
 }
+void SimpleRenderer::ShowDebugInfo() { 
+	AddPass(new DebugRenderPass()); 
+}
+
 void SimpleRenderer::ClearResources() {
 
 	for (auto &shader : _programs)

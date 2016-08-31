@@ -29,6 +29,8 @@ void TileEditorApp::Init()
 	
 	SetCursorIdle();
 
+	engine->GetRenderer()->ShowDebugInfo();
+
 }
 
 void TileEditorApp::NewMap() {
@@ -59,10 +61,14 @@ void TileEditorApp::_CreateSceneStructure() {
 
 	//Copy resources to temp folder
 	remove_all("./temp/media/");
+	remove_all("./temp/fonts/");
 
 	create_directory("./temp/");
 	create_directory("./temp/media");
 	copy("./editorResources/media", "./temp/media");
+
+	create_directory("./temp/fonts");
+	copy("./editorResources/fonts", "./temp/fonts");
 
 
 }

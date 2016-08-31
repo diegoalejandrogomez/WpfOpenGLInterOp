@@ -96,6 +96,10 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>OIS_static_d.lib; ILU.lib; DevIL.lib; opengl32.lib; SimpleEngine_dyn.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy /E /Y "$(ProjectDir)media" "$(TargetDir)editorResources\media\"
+xcopy /E /Y "$(ProjectDir)fonts" "$(TargetDir)editorResources\fonts\"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
