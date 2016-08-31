@@ -14,14 +14,14 @@ public:
 	void LoadTexture(const char* path);
 	void LoadTextureFromMemory(const uint8_t* data, uint8_t channels, uint8_t width, uint8_t height);
 	
-	int GetWidth() { return texture.width; };
-	int GetHeight() { return texture.height; };
+	int GetWidth()const { return texture.width; };
+	int GetHeight()const { return texture.height; };
 
-	int GetPOTWidth() { return _potSize.x; };
-	int GetPOTHeight() { return _potSize.y; };
+	int GetPOTWidth()const { return _potSize.x; };
+	int GetPOTHeight()const { return _potSize.y; };
 
-	float GetWidthRatio() { return _sizeRatio.x; };
-	float GetHeightRatio() { return _sizeRatio.y; };
+	float GetWidthRatio()const { return _sizeRatio.x; };
+	float GetHeightRatio()const { return _sizeRatio.y; };
 
 	void BindTo(int textureChannel);
 
