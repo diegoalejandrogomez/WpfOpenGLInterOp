@@ -205,7 +205,7 @@ namespace WPF.ViewModel
 
         TileMapControl _tileMap;
         float _panSpeed = 1.0f;
-        float _zoomSpeed = 0.005f;
+        float _zoomSpeed = 0.01f;
         float _prevX, _prevY;
 
         #endregion
@@ -272,33 +272,34 @@ namespace WPF.ViewModel
 
         public void OnClick(Object sender, EventArgs e)
         {
+            System.Windows.Forms.MouseEventArgs args = (System.Windows.Forms.MouseEventArgs)e;
+            
             if (Drag)
             {
                 if (Selected != null)
                     Drag = false;
-                float x = ((System.Windows.Forms.MouseEventArgs)e).X;
-                float y = ((System.Windows.Forms.MouseEventArgs)e).Y;
-
                 Selected = null;
             }
             else
             {
-
-                if (Pick) //We should filter based on selected tool (brush, move tile, etc)
+                if (args.Button == System.Windows.Forms.MouseButtons.Left)
                 {
-                    if (Selected != null)
-                        Drag = false;
-                    int x = ((System.Windows.Forms.MouseEventArgs)e).X;
-                    int y = ((System.Windows.Forms.MouseEventArgs)e).Y;
-                    Selected = null;
-                    Selected = ((SimpleEngineViewerControl)OpenGLRenderControl).SetItem(x, y);
-                    if (Selected == null)
-                        Selected = _tileMap;
-                }
-                else
-                {
-                    _tileMap.Paint();
+                    if (Pick) //We should filter based on selected tool (brush, move tile, etc)
+                    {
+                        if (Selected != null)
+                            Drag = false;
+                        int x = ((System.Windows.Forms.MouseEventArgs)e).X;
+                        int y = ((System.Windows.Forms.MouseEventArgs)e).Y;
+                        Selected = null;
+                        Selected = ((SimpleEngineViewerControl)OpenGLRenderControl).SetItem(x, y);
+                        if (Selected == null)
+                            Selected = _tileMap;
+                    }
+                    else
+                    {
+                        _tileMap.Paint();
 
+                    }
                 }
             }
             PropertyChanged(this, new PropertyChangedEventArgs("Layers"));
@@ -501,8 +502,10 @@ namespace WPF.ViewModel
         private void OnMouseWheel(object sender, System.Windows.Forms.MouseEventArgs e)
         {
             SimpleEngineViewerControl view = openGLRenderControl as SimpleEngineViewerControl;
-            float maxZoomLevel = MaxZoomLevel * 100.0f; // Shouldn't this value be constant and always positive??
-            ZoomLevel = (Int32)((e.Delta * _zoomSpeed * 10.0f + view.GetZoom()) / maxZoomLevel);//conversion to zoom level;
+            //float maxZoomLevel = MaxZoomLevel * 100.0f; // Shouldn't this value be constant and always positive??
+            //-> Yes, I forgot to fix this after we added the ui control for the zoom. Now is a value in [1,100]
+
+            ZoomLevel = (Int32)(e.Delta * _zoomSpeed  + _zoomLevel);
 
         }
 
