@@ -8,9 +8,6 @@
 #include "SimpleConfiguration.h"
 class SimpleShaderProgram;
 
-
-
-
 class SIMPLE_API SimpleSpriteRenderer : public SimpleObject {
 public:
 
@@ -26,6 +23,8 @@ public:
 	void SnapToGrid(bool snap) { _snapToGrid = snap; };
 	void SetSnapGridSize(glm::vec2 snapGridSize) { _snapSize = snapGridSize; };
 	
+	//Overrides the default shader
+	void SetShader(SimpleShaderProgram* shader) { _shader = shader; }
 
 	inline SimpleTexture* GetTexture() { return _tex; };
 
@@ -53,9 +52,7 @@ protected:
 
 	//Snapping utilities
 	bool _snapToGrid;
-	glm::vec2 _snapSize;
-
-	
+	glm::vec2 _snapSize;	
 
 private:
 		

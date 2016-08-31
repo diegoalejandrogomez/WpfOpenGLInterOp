@@ -45,6 +45,9 @@
     <Filter Include="Interface">
       <UniqueIdentifier>{9b3910bf-804a-48a1-87ae-023ece0fc22c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Graphics\Text">
+      <UniqueIdentifier>{28062adb-d33e-4c84-95b6-af867f6bc3b7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -197,6 +200,12 @@
     <ClInclude Include="interface\ISimpleAnimatedSpriteRenderer.h">
       <Filter>Interface</Filter>
     </ClInclude>
+    <ClInclude Include="Include\SimpleTextRenderer.h">
+      <Filter>Engine\Graphics\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\SimpleColor.h">
+      <Filter>Engine\Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\SimpleObjectsRenderPass.cpp">
@@ -310,6 +319,9 @@
     <ClCompile Include="interface\ISimpleAnimatedSpriteRenderer.cpp">
       <Filter>Interface</Filter>
     </ClCompile>
+    <ClCompile Include="Src\SimpleTextRenderer.cpp">
+      <Filter>Engine\Graphics\Text</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Src\shaders\SimpleColorShader.frag">
@@ -322,6 +334,12 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="Src\shaders\SimpleSpriteShader.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Src\shaders\SimpleTextShader.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Src\shaders\SimpleTextShader.vert">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

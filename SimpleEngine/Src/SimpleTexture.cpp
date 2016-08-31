@@ -63,7 +63,7 @@ void SimpleTexture::_UploadData() {
 	
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, _tex);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, _potSize.x, _potSize.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, texture.imageData);
+	glTexImage2D(GL_TEXTURE_2D, 0, texture.internalFormat, _potSize.x, _potSize.y, 0, texture.dataFormat, texture.dataType, texture.imageData);
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
@@ -101,8 +101,52 @@ void SimpleTexture::LoadTexture(const char* path)
 			
 	}
 	
+	texture.dataFormat = GL_RGBA;
+	texture.internalFormat = GL_RGBA;
+	texture.dataType = GL_UNSIGNED_BYTE;
 	_UploadData();
 
 	_path = path;
+}
+
+
+void SimpleTexture::LoadTextureFromMemory(const uint8_t* data, uint8_t channels, uint8_t width, uint8_t height)
+{
+
+	this->texture.id = 0;
+	
+	this->texture.width = width;
+	this->texture.height = height;
+
+	//create as pot texture
+	_potSize.x = SimpleUtils::NextPOT(texture.width);
+	_potSize.y = SimpleUtils::NextPOT(texture.height);
+
+	_sizeRatio.x = texture.width / (float)_potSize.x;
+	_sizeRatio.y = texture.height / (float)_potSize.y;
+
+	texture.imageData = new uint8_t[_potSize.x * _potSize.y * channels];
+	memset(texture.imageData, 0, _potSize.x * _potSize.y * channels);
+	for (uint32_t i = 0; i < texture.height; ++i) {
+		memcpy( &texture.imageData[(texture.height - i - 1) * _potSize.x * channels], &data[i*texture.width * channels], texture.width * channels);
+	}
+
+	switch (channels)
+	{
+	case 1:
+		texture.dataFormat = GL_RED;
+		texture.internalFormat = GL_RED;
+		break;
+	case 4:
+		texture.dataFormat = GL_RGBA;
+		texture.internalFormat = GL_RGBA;
+		break;
+	default:
+		break;
+	}
+	texture.dataType = GL_UNSIGNED_BYTE;
+
+	_UploadData();
+	_path = "MEMORY";
 }
 

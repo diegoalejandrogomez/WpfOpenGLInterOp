@@ -34,11 +34,11 @@ inline void CheckILError(const char* stmt, const char* fname, int line) {
 
 #ifdef _DEBUG
 #define SIMPLE_LOG(format, ...) \
-	char str[1024];				\
+	{char str[1024];				\
 	std::string f = format;		\
 	f += " -> File: %s:%d \n";		\
 	sprintf_s(str, f.c_str() , __VA_ARGS__, __FILE__, __LINE__); \
-	OutputDebugStringA(str); 
+	OutputDebugStringA(str);}
 
 #define SIMPLE_ASSERT(test)\
 if(! (test) ){					\

@@ -99,7 +99,7 @@
     <IncludePath>./External/ois/include/;./External/devil/include/;$(ProjectDir);./External/glm/;./External/glew/;./Include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_DLL|Win32'">
-    <IncludePath>./External/freetype/include;./External/ois/include/;./External/devil/include/;$(ProjectDir);./External/glm/;./External/glew/;./Include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <IncludePath>./External/ois/include/;./External/freetype/include;./External/devil/include/;$(ProjectDir);./External/glm/;./External/glew/;./Include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
     <TargetName>$(ProjectName)_dyn</TargetName>
     <LibraryPath>$(SolutionDir)\SimpleEngine\External\freetype\lib;$(SolutionDir)\SimpleEngine\External\ois\lib\;$(SolutionDir)SimpleEngine\External\devil\lib\;..\Debug\;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
     <OutDir>$(SolutionDir)Debug\</OutDir>
@@ -140,7 +140,8 @@ copy /Y "$(ProjectDir)\External\devil\lib\ILU.dll" "$(TargetDir)"</Command>
       <TargetMachine>MachineX86</TargetMachine>
     </Lib>
     <PostBuildEvent>
-      <Command>xcopy /E /Y "$(ProjectDir)Src\shaders" "$(TargetDir)shaders\"
+      <Command>xcopy /E /Y "$(ProjectDir)fonts" "$(TargetDir)debugResources\fonts\"
+xcopy /E /Y "$(ProjectDir)Src\shaders" "$(TargetDir)shaders\"
 xcopy /E /Y "$(ProjectDir)media" "$(TargetDir)debugResources\media\"
 copy /Y "$(ProjectDir)\External\devil\lib\DevIL.dll" "$(TargetDir)"
 copy /Y "$(ProjectDir)\External\devil\lib\ILU.dll" "$(TargetDir)"</Command>
@@ -205,6 +206,7 @@ copy /Y "$(ProjectDir)\External\devil\lib\ILU.dll" "$(TargetDir)"</Command>
     <ClInclude Include="Include\json.hpp" />
     <ClInclude Include="Include\SimpleAABB.h" />
     <ClInclude Include="Include\SimpleAnimatedSpriteRenderer.h" />
+    <ClInclude Include="Include\SimpleColor.h" />
     <ClInclude Include="Include\SimpleConfiguration.h" />
     <ClInclude Include="Include\SimpleFactory.h" />
     <ClInclude Include="Include\SimpleID.h" />
@@ -233,6 +235,7 @@ copy /Y "$(ProjectDir)\External\devil\lib\ILU.dll" "$(TargetDir)"</Command>
     <ClInclude Include="Include\SimpleShaderProgram.h" />
     <ClInclude Include="Include\SimpleSpriteSheet.h" />
     <ClInclude Include="Include\SimpleSpriteSheetRenderer.h" />
+    <ClInclude Include="Include\SimpleTextRenderer.h" />
     <ClInclude Include="Include\SimpleTexture.h" />
     <ClInclude Include="Include\SimpleUtils.h" />
     <ClInclude Include="Include\Texture.h" />
@@ -287,6 +290,7 @@ copy /Y "$(ProjectDir)\External\devil\lib\ILU.dll" "$(TargetDir)"</Command>
     <ClCompile Include="Src\SimpleSpriteRenderer.cpp" />
     <ClCompile Include="Src\SimpleSpriteSheet.cpp" />
     <ClCompile Include="Src\SimpleSpriteSheetRenderer.cpp" />
+    <ClCompile Include="Src\SimpleTextRenderer.cpp" />
     <ClCompile Include="Src\SimpleTexture.cpp" />
     <ClCompile Include="Src\VertexFormats.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -307,6 +311,8 @@ copy /Y "$(ProjectDir)\External\devil\lib\ILU.dll" "$(TargetDir)"</Command>
     </None>
     <None Include="Src\shaders\SimpleSpriteShader.frag" />
     <None Include="Src\shaders\SimpleSpriteShader.vert" />
+    <None Include="Src\shaders\SimpleTextShader.frag" />
+    <None Include="Src\shaders\SimpleTextShader.vert" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">

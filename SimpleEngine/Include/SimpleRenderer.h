@@ -13,12 +13,25 @@
 #include "SimpleID.h"
 #include "SimpleConfiguration.h"
 #include "SimpleTexture.h"
+#include <ft2build.h>
+#include FT_FREETYPE_H
+#include "SimpleColor.h"
 
 class SimpleScene;
 
 class SIMPLE_API SimpleRenderer {
-
 public:
+
+	//Font library
+	struct SimpleCharacter {
+		SimpleTexture* Texture;  //The glyph texture
+		glm::ivec2 Size;       // Size of glyph
+		glm::ivec2 Bearing;    // Offset from baseline to left/top of glyph
+		long  Advance;    // Offset to advance to next glyph
+	};
+	using FontCharacters = std::vector<SimpleCharacter>;
+
+
 	SimpleRenderer();
 	virtual ~SimpleRenderer();
 	
@@ -28,6 +41,7 @@ public:
 	void Shutdown();
 	void Render(float dt, SimpleScene* scene);
 	void ResizeWindow(int width, int height);
+	void SetClearColor(SimpleColor c) { _clearColor = c; }
 
 	inline int GetWidth()const { return _width; } ;
 	inline int GetHeight()const { return _height; } ;
@@ -47,6 +61,10 @@ public:
 
 	SimpleSpriteAnimation* GetSpriteAnimation(SimpleID name);
 
+	bool LoadFont(std::string fontName, uint32_t size = 48);
+	bool HasFont(SimpleID fontName);
+	FontCharacters GetFontChars(SimpleID fontName);
+	float GetFontScale(SimpleID fontName);
 	inline SimpleMesh<VertexTextureFormat2D>* GetUnitaryQuad() { return _texturedQuad; };
 	inline HWND GetWindowHandle() { return _hWnd; };
 
@@ -61,6 +79,7 @@ private:
 	
 	bool _LoadDefaultShaders();
 
+	void _InitializeFontEngine();
 	//Window parameters (Target render surface)
 	int _width;
 	int _height;
@@ -78,6 +97,9 @@ private:
 	//Render passes
 	std::vector<RenderPass*> _passes;
 
+	//Clear color
+	SimpleColor _clearColor;
+
 	//This class also serves as a mini graphics resource admin
 	//Memory owners
 	std::unordered_map<SimpleID, SimpleShaderProgram*> _programs;
@@ -88,6 +110,11 @@ private:
 
 	//Reusable meshes
 	SimpleMesh<VertexTextureFormat2D>* _texturedQuad;
+
 	
+	//Font managemente
+	FT_Library _fontLib;
+	std::unordered_map<SimpleID, std::pair<float,FontCharacters>> _fonts;
+		
 
 };

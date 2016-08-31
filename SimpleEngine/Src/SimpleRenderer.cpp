@@ -8,6 +8,8 @@
 #include <fstream>
 #include "SimpleEngine.h"
 #include "SimpleObjectsRenderPass.h"
+
+
 //C++ 14/17 ... but why not XD
 using namespace std::tr2::sys;
 
@@ -15,12 +17,16 @@ SimpleRenderer::SimpleRenderer() {
 	_deviceContext = nullptr;
 	_renderingContext = nullptr;
 	_hWnd = 0;
+	_clearColor = { 0,0,0,0 };
 	_InitializeExtensions();
+	_InitializeFontEngine();
+
 }
 
 SimpleRenderer::~SimpleRenderer() {
 
 	Shutdown();
+	FT_Done_FreeType(_fontLib);
 	// Release the rendering context.
 	if (_renderingContext)
 	{
@@ -28,6 +34,8 @@ SimpleRenderer::~SimpleRenderer() {
 		wglDeleteContext(_renderingContext);
 		_renderingContext = nullptr;
 	}
+
+	
 };
 
 void SimpleRenderer::Initialize() {
@@ -68,7 +76,8 @@ void SimpleRenderer::ClearResources() {
 void SimpleRenderer::Render(float dt, SimpleScene* scene ) {
 
 	glViewport(0, 0, _width, _height);
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+
+	glClearColor(_clearColor.r / 255.0f, _clearColor.g / 255.0f, _clearColor.b / 255.0f, _clearColor.a / 255.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	for (auto &pass : _passes) {
@@ -423,11 +432,90 @@ bool SimpleRenderer::_LoadDefaultShaders() {
 	if (!CreateProgram("VertexSprite", "./shaders/SimpleSpriteShader.vert", "./shaders/SimpleSpriteShader.frag"))
 		return false;
 
+	if (!CreateProgram("TextSprite", "./shaders/SimpleTextShader.vert", "./shaders/SimpleTextShader.frag"))
+		return false;
+
 	return true;
 
 }
 
 
+void SimpleRenderer::_InitializeFontEngine() {
+
+	if (FT_Init_FreeType(&_fontLib))
+		SIMPLE_LOG("FREETYPE: Could not init FreeType Library");
+
+}
+bool SimpleRenderer::LoadFont(std::string fontName, uint32_t size) {
+
+	FT_Face face;
+	std::string resPath = SimpleEngine::Instance()->GetResourcesBaseDir() + fontName;
+
+	if (FT_New_Face(_fontLib, resPath.c_str(), 0, &face)) {
+		SIMPLE_LOG("FREETYPE: Failed to load font : %s", fontName);
+		return false;
+	}
+
+
+	//Load the characters for the font
+	FT_Set_Pixel_Sizes(face, 0, 48);
+
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1); // Single channel textures
+	FontCharacters chars;
+	//Compute max char size
+	glm::ivec2 maxFontSize = {1,1};
+
+	chars.resize(128);
+
+	for (uint8_t c = 0; c < 128; c++) //Currently we only load the first 128 ascii chars
+	{
+		// Load character glyph 
+		if (FT_Load_Char(face, c, FT_LOAD_RENDER))
+		{
+			SIMPLE_LOG("FREETYTPE: Failed to load Glyph %c", c);
+			continue;
+		}
+
+		// Generate texture
+		SimpleTexture* tex = new SimpleTexture();
+		tex->LoadTextureFromMemory(face->glyph->bitmap.buffer, 1, face->glyph->bitmap.width, face->glyph->bitmap.rows);
+		maxFontSize.x = std::max(maxFontSize.x, (int32_t)face->glyph->bitmap.width);
+		maxFontSize.y = std::max(maxFontSize.y, (int32_t)face->glyph->bitmap.rows);
+
+		// Now store character for later use
+		chars[c] = {
+			tex,
+			glm::ivec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
+			glm::ivec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
+			face->glyph->advance.x
+		};
+
+	}
+	float scale = 1.0f / (float)std::max(maxFontSize.x, maxFontSize.y);
+	_fonts[fontName] = std::make_pair(scale, chars);
+	FT_Done_Face(face);
+	return true;
+}
+bool SimpleRenderer::HasFont(SimpleID fontName) {
+
+	return _fonts.find(fontName) != _fonts.end();
+
+}
+
+SimpleRenderer::FontCharacters SimpleRenderer::GetFontChars(SimpleID fontName) {
+
+	SIMPLE_ASSERT(HasFont(fontName));
+	return _fonts[fontName].second;
+	
+}
+
+
+float SimpleRenderer::GetFontScale(SimpleID fontName) {
+
+	SIMPLE_ASSERT(HasFont(fontName));
+	return _fonts[fontName].first;
+
+}
 
 //Serializes the currently loaded resources
 bool SimpleRenderer::SerializeResources(std::string dir) {

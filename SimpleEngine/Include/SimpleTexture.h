@@ -12,6 +12,7 @@ public:
 	~SimpleTexture();
 
 	void LoadTexture(const char* path);
+	void LoadTextureFromMemory(const uint8_t* data, uint8_t channels, uint8_t width, uint8_t height);
 	
 	int GetWidth() { return texture.width; };
 	int GetHeight() { return texture.height; };
@@ -27,6 +28,8 @@ public:
 	//No mipmaps for now...
 	void SetSmooth();
 	void SetPixelated();
+
+	GLuint GetNativeTexture() { return _tex; };
 
 	std::string GetPath() { return _path; }
 private:

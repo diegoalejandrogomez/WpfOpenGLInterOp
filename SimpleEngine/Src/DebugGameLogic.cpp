@@ -6,6 +6,7 @@
 #include "SimpleSpriteRenderer.h"
 #include "SimpleSpriteSheetRenderer.h"
 #include "SimpleAnimatedSpriteRenderer.h"
+#include "SimpleTextRenderer.h"
 #include <fstream>
 
 json DebugGameLogic::Serialize() {
@@ -25,7 +26,7 @@ bool DebugGameLogic::Deserialize(const json &node) {
 
 void DebugGameLogic::Init()
 {
-	bool save = false;
+	bool save = true;
 	SimpleEngine::Instance()->SetResourcesBaseDir("./debugResources/");
 
 	if (save) {
@@ -56,13 +57,14 @@ void DebugGameLogic::_CreateTestScene() {
 	SimpleEngine::Instance()->GetScene()->AddLayer(layer);
 	layer->SetSerializable(false);
 
-	SimpleSpriteRenderer* sprite = new SimpleSpriteRenderer();
+	SimpleEngine::Instance()->GetRenderer()->SetClearColor({ 0,0,0,0});
+	/*SimpleSpriteRenderer* sprite = new SimpleSpriteRenderer();
 	sprite->SetAsTexture("./media/spriteFull.png");
 	sprite->SetOrientation(1.0f);
 	SimpleEngine::Instance()->GetScene()->AddEntity(sprite, 100);
 
 
-	SimpleEngine::Instance()->GetRenderer()->CreateSpriteSheet("media/spriteSheet.png", { 104,149 }, { 6,3 });
+	SimpleEngine::Instance()->GetRenderer()->CreateSpriteSheet("media/spriteSheet.png", { 104,149 }, { 6,3 });*/
 
 	//SimpleEngine::Instance()->GetRenderer()->CreateSpriteSheet("media/spriteSheet.png");
 	//SimpleSpriteSheet* _spriteSheet = SimpleEngine::Instance()->GetRenderer()->GetSpriteSheet("media/spriteSheet.png");
@@ -71,11 +73,11 @@ void DebugGameLogic::_CreateTestScene() {
 
 
 
-	SimpleSpriteSheetRenderer* guybrush = new SimpleSpriteSheetRenderer();
+	/*SimpleSpriteSheetRenderer* guybrush = new SimpleSpriteSheetRenderer();
 	guybrush->SetSpriteSheet("media/spriteSheet.png");
 	guybrush->SetIndex(0);
 	guybrush->SetSize({ 100, 500 });
-	SimpleEngine::Instance()->GetScene()->AddEntity(guybrush, 0);
+	SimpleEngine::Instance()->GetScene()->AddEntity(guybrush, 0);*/
 
 	//Guybrush animation
 	/*SimpleEngine::Instance()->GetRenderer()->CreateSpriteAnimation(	"walking","media/spriteSheet.png",
@@ -89,6 +91,13 @@ void DebugGameLogic::_CreateTestScene() {
 	walkingGuybrush->SetSize({ 100,500 });
 	SimpleEngine::Instance()->GetScene()->AddEntity(walkingGuybrush, layer);*/
 
+
+	SimpleTextRenderer *title = new SimpleTextRenderer();
+	title->SetFontName("fonts/arial.ttf");
+	title->SetFontSize(30);
+	title->SetText("Dedicated to all the pioneers");
+	title->SetColor({255,255,255,255});
+	SimpleEngine::Instance()->GetScene()->AddEntity(title, 0);
 }
 
 void DebugGameLogic::Advance(float dt)
