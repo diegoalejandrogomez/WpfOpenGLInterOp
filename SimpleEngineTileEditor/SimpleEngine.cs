@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 
 namespace SimpleEngineTileEditor
 {
-    class SimpleEngine
+    public class SimpleEngine
     {
 
         #region DllImports

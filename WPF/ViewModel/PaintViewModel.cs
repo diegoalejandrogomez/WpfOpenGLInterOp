@@ -1083,7 +1083,8 @@ namespace WPF.ViewModel
         private void FontEditorClose(object sender, EventArgs e)
         {
             var test = this.fontViewModel;
-            throw new NotImplementedException("Add interop");
+            var textControl = new TextControl();
+            textControl.AddControl();
         }
         #endregion
     }
