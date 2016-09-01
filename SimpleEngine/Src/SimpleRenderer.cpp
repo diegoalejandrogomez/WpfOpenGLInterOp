@@ -455,9 +455,16 @@ bool SimpleRenderer::LoadFont(std::string fontName, uint32_t size) {
 		SIMPLE_LOG("FREETYPE: Could not init FreeType Library");
 
 	FT_Face face;
-	std::string resPath = SimpleEngine::Instance()->GetResourcesBaseDir() + fontName;
 
-	if (FT_New_Face(_fontLib, resPath.c_str(), 0, &face)) {
+	path resPath = fontName;
+	std::string finalPath;
+	if(resPath.is_absolute())
+		finalPath = fontName;
+	else
+		finalPath = SimpleEngine::Instance()->GetResourcesBaseDir() + fontName;
+
+
+	if (FT_New_Face(_fontLib, finalPath.c_str(), 0, &face)) {
 		SIMPLE_LOG("FREETYPE: Failed to load font : %s", fontName);
 		return false;
 	}
