@@ -25,5 +25,12 @@ namespace WPF.ViewModel
             
         };
 
+        public void Clear()
+        {
+            this.Text = string.Empty;
+            this.FontSize = 1;
+            this.FontColor = String.Empty;
+            this.FontFamily = String.Empty;
+        }
     }
 }
