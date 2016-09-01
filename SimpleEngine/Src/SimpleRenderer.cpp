@@ -11,6 +11,7 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 #include "DebugRenderPass.h"
+#include "SimpleUtils.h"
 
 //C++ 14/17 ... but why not XD
 using namespace std::tr2::sys;
@@ -461,6 +462,7 @@ bool SimpleRenderer::LoadFont(std::string fontName, uint32_t size) {
 		return false;
 	}
 
+	std::vector<SimpleTexture*> toPack;
 
 	//Load the characters for the font
 	FT_Set_Pixel_Sizes(face, 0, 48);
@@ -471,8 +473,8 @@ bool SimpleRenderer::LoadFont(std::string fontName, uint32_t size) {
 	glm::ivec2 maxFontSize = {1,1};
 
 	chars.resize(128);
-
-	for (uint8_t c = 0; c < 128; c++) //Currently we only load the first 128 ascii chars
+	uint32_t packPadding = 2;
+	for (uint8_t c = 0 ; c < 128; c++) //Currently we only load the first 128 ascii chars
 	{
 		// Load character glyph 
 		if (FT_Load_Char(face, c, FT_LOAD_RENDER))
@@ -483,23 +485,29 @@ bool SimpleRenderer::LoadFont(std::string fontName, uint32_t size) {
 
 		// Generate texture
 		SimpleTexture* tex = new SimpleTexture();
-		tex->LoadTextureFromMemory(face->glyph->bitmap.buffer, 1, face->glyph->bitmap.width, face->glyph->bitmap.rows);
+		tex->LoadTextureFromMemory(face->glyph->bitmap.buffer, 1, face->glyph->bitmap.width, face->glyph->bitmap.rows, false);
 		maxFontSize.x = std::max(maxFontSize.x, (int32_t)face->glyph->bitmap.width);
 		maxFontSize.y = std::max(maxFontSize.y, (int32_t)face->glyph->bitmap.rows);
 
 		// Now store character for later use
 		chars[c] = {
-			tex,
+			c,
 			glm::ivec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
 			glm::ivec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
 			face->glyph->advance.x
 		};
 
+		toPack.push_back(tex);
 	}
 	float scale = 1.0f / (float)std::max(maxFontSize.x, maxFontSize.y);
 	_fonts[fontName] = std::make_pair(scale, chars);
 	FT_Done_Face(face);
 	FT_Done_FreeType(_fontLib);
+
+	//Create spritesheet for font
+	SimpleSpriteSheet* packedFont = SimpleUtils::PackTextures(toPack, packPadding);
+	//packedFont->SaveTexture("FontAtlas.png");
+	_spriteSheets[fontName] = packedFont;
 	return true;
 }
 bool SimpleRenderer::HasFont(SimpleID fontName) {

@@ -2,9 +2,10 @@
 #include "SimpleConfiguration.h"
 #include "SimpleObject.h"
 #include "SimpleSpriteRenderer.h"
+#include "SimpleSpriteSheetRenderer.h"
 #include "SimpleColor.h"
 
-class SIMPLE_API SimpleTextRenderer : public SimpleSpriteRenderer {
+class SIMPLE_API SimpleTextRenderer : public SimpleSpriteSheetRenderer {
 public:
 
 	SimpleTextRenderer();

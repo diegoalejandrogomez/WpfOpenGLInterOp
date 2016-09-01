@@ -47,6 +47,7 @@ if(! (test) ){					\
 	f += " -> File: %s:%d";		\
 	sprintf_s(str, f.c_str(), __FILE__, __LINE__); \
 	OutputDebugStringA(str);	\
+	__debugbreak();\
 }			
 
 #define GL_CHECK(stmt) do { \

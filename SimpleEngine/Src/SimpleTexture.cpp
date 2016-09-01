@@ -5,6 +5,7 @@
 #include <IL/ilut.h>
 #include "SimpleUtils.h"
 #include "SimpleEngine.h"
+#include "SimpleTextureRegion.h"
 
 SimpleTexture::SimpleTexture() {
 
@@ -49,10 +50,7 @@ void SimpleTexture::BindTo(int textureChannel) {
 SimpleTexture::~SimpleTexture()
 {
 	glDeleteTextures(1, &_tex);
-
-	ilBindImage(0);
-	ilDeleteImage(this->texture.id);
-	free(this->texture.imageData);
+	delete[] texture.imageData;
 	this->texture.width = 0;
 	this->texture.height = 0;
 	this->texture.id = 0;
@@ -67,7 +65,7 @@ void SimpleTexture::_UploadData() {
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void SimpleTexture::LoadTexture(const char* path)
+void SimpleTexture::LoadTexture(const char* path, bool autoFlush)
 {
 
 	std::string resPath = SimpleEngine::Instance()->GetResourcesBaseDir() + path;
@@ -104,19 +102,26 @@ void SimpleTexture::LoadTexture(const char* path)
 	texture.dataFormat = GL_RGBA;
 	texture.internalFormat = GL_RGBA;
 	texture.dataType = GL_UNSIGNED_BYTE;
-	_UploadData();
+	if(autoFlush)
+		_UploadData();
 
 	_path = path;
+
+	ilBindImage(0);
+	ilDeleteImage(this->texture.id);
+
 }
 
 
-void SimpleTexture::LoadTextureFromMemory(const uint8_t* data, uint8_t channels, uint8_t width, uint8_t height)
+void SimpleTexture::LoadTextureFromMemory(const uint8_t* data, uint8_t channels, uint32_t width, uint32_t height, bool autoFlush)
 {
 
 	this->texture.id = 0;
 	
 	this->texture.width = width;
 	this->texture.height = height;
+
+	texture.channels = channels;
 
 	//create as pot texture
 	_potSize.x = SimpleUtils::NextPOT(texture.width);
@@ -127,9 +132,11 @@ void SimpleTexture::LoadTextureFromMemory(const uint8_t* data, uint8_t channels,
 
 	texture.imageData = new uint8_t[_potSize.x * _potSize.y * channels];
 	memset(texture.imageData, 0, _potSize.x * _potSize.y * channels);
-	for (uint32_t i = 0; i < texture.height; ++i) {
-		memcpy( &texture.imageData[(texture.height - i - 1) * _potSize.x * channels], &data[i*texture.width * channels], texture.width * channels);
-	}
+
+	if(data != nullptr)
+		for (uint32_t i = 0; i < texture.height; ++i)
+			memcpy( &texture.imageData[(texture.height - i - 1) * _potSize.x * channels], &data[i*texture.width * channels], texture.width * channels);
+	
 
 	switch (channels)
 	{
@@ -145,8 +152,52 @@ void SimpleTexture::LoadTextureFromMemory(const uint8_t* data, uint8_t channels,
 		break;
 	}
 	texture.dataType = GL_UNSIGNED_BYTE;
+	if(autoFlush)
+		_UploadData();
 
-	_UploadData();
 	_path = "MEMORY";
 }
 
+
+
+uint8_t* SimpleTexture::Pixel(uint32_t x, uint32_t y){
+	uint32_t pos = y * _potSize.x * texture.channels + x * texture.channels;
+	SIMPLE_ASSERT(pos < _potSize.x * _potSize.y * texture.channels);
+	return &texture.imageData[pos];
+}
+
+void SimpleTexture::SetSubTexture(SimpleTextureRegion region, SimpleTexture* tex) {
+
+	//Check sizes (we could check also for boundaries... but not for now)
+	SIMPLE_ASSERT(region.Width() == tex->GetWidth() && region.Height() == tex->GetHeight());
+	
+	//When size is not POT, center is biased to the right
+
+	for (int i = 0;i < (int32_t)region.Height() ; ++i) {
+		for (int j = 0;j < (int32_t)region.Width() ; ++j) {
+			uint8_t* pixel = Pixel(region.lowerLeft.x + j , region.lowerLeft.y + i);
+			const uint8_t* other = tex->Pixel(j, i);
+			for(int k = 0; k < (int32_t)texture.channels; ++k)
+				pixel[k] = other[k];
+			
+			
+		}
+	}
+
+
+
+}
+
+void SimpleTexture::SaveTexture(const char* path) {
+
+	ILuint ImgId = 0;
+	IL_CHECK(ilGenImages(1, &ImgId));
+	this->texture.id = ImgId;
+	IL_CHECK(ilBindImage(ImgId));
+	uint32_t format = texture.channels == 1 ? IL_LUMINANCE : IL_RGBA;
+	IL_CHECK(ilTexImage(texture.width, texture.height, 1, texture.channels, format, IL_UNSIGNED_BYTE, texture.imageData));
+	ilEnable(IL_FILE_OVERWRITE);
+	std::string finalPath = SimpleEngine::Instance()->GetResourcesBaseDir() + path;
+	ilSave(IL_PNG, finalPath.c_str() );
+
+}

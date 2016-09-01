@@ -209,6 +209,9 @@
     <ClInclude Include="ISimpleTextRenderer.h">
       <Filter>Interface</Filter>
     </ClInclude>
+    <ClInclude Include="Include\SimpleTextureRegion.h">
+      <Filter>Engine\Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\SimpleObjectsRenderPass.cpp">

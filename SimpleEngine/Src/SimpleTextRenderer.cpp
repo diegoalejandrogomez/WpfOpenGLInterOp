@@ -2,6 +2,9 @@
 #include "SimpleTextRenderer.h"
 #include "SimpleEngine.h"
 
+//Register entry as simpleID for factory
+FACTORY_REGISTER(SimpleObject, SimpleTextRenderer)
+
 SimpleTextRenderer::SimpleTextRenderer() {
 
 	SimpleRenderer* render = SimpleEngine::Instance()->GetRenderer();
@@ -17,7 +20,7 @@ SimpleTextRenderer::~SimpleTextRenderer() {
 void SimpleTextRenderer::Advance(float dt) {
 
 	
-	SimpleSpriteRenderer::Advance(dt);
+	SimpleSpriteSheetRenderer::Advance(dt);
 
 }
 
@@ -32,6 +35,7 @@ void SimpleTextRenderer::Render(float dt) {
 	glm::vec3 pos = GetPosition();
 	glm::vec3 originalPos = pos;
 	float scale = render->GetFontScale(_fontName) * _fontSize;
+	SimpleSpriteSheetRenderer::SetSpriteSheet(_fontName);
 
 	for (c = _text.begin(); c != _text.end(); c++)
 	{
@@ -46,9 +50,9 @@ void SimpleTextRenderer::Render(float dt) {
 		GLfloat h = float(ch.Size.y * scale);
 
 			
-		SimpleSpriteRenderer::SetAsTexture(ch.Texture);
-		SimpleSpriteRenderer::SetPosition({ xpos + 0.5f*w, ypos + 0.5f* h, 0.0f });
-		SimpleSpriteRenderer::SetSize({ w,h });
+		SimpleSpriteSheetRenderer::SetIndex(ch.SpriteIndex);
+		SimpleSpriteSheetRenderer::SetPosition({ xpos + 0.5f*w, ypos + 0.5f* h, 0.0f });
+		SimpleSpriteSheetRenderer::SetSize({ w,h });
 
 		_shader->Bind();
 		GLuint textColor = _shader->GetLocationFor("textColor");

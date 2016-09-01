@@ -1,6 +1,6 @@
 #pragma once
 #include "SimpleConfiguration.h"
-#include "SimpleAABB.h"
+#include "SimpleTextureRegion.h"
 #include "SimpleSpriteSheet.h"
 
 class SIMPLE_API SimpleUtils {
@@ -24,10 +24,10 @@ public:
 	struct AdHocBTreeNode
 	{
 		AdHocBTreeNode* child[2] = { nullptr,nullptr };
-		SimpleAABB rc;
+		SimpleTextureRegion rc;
 		SimpleTexture* texture;
 
-		AdHocBTreeNode* Insert(const SimpleTexture* tex) {
+		AdHocBTreeNode* Insert(const SimpleTextureRegion& tex) {
 
 			//If we aren't a leaf
 			if (child[0] != nullptr || child[1] != nullptr) {
@@ -43,10 +43,10 @@ public:
 				if (texture != nullptr)
 					return nullptr;
 				//If the texture can't fit in the available space we fail... (we should stop failing)
-				if (tex->GetWidth() > rc.size.x || tex->GetHeight() > rc.size.y)
+				if (tex.Width() > rc.Width() || tex.Height() > rc.Height())
 					return nullptr;
 				//If we are a perfect fit return
-				if (tex->GetWidth() == rc.size.x && tex->GetHeight() == rc.size.y)
+				if (tex.Width() == rc.Width() && tex.Height() == rc.Height())
 					return this;
 
 				//Few things are a perfect fit in life, so ... split the node
@@ -54,31 +54,33 @@ public:
 				child[1] = new AdHocBTreeNode();
 
 				//Let's pick which way to split (POT is not taken into account)
-				uint32_t dw = rc.size.x - tex->GetWidth();
-				uint32_t dh = rc.size.y - tex->GetHeight();
+				uint32_t dw = (uint32_t)rc.Width() - tex.Width();
+				uint32_t dh = (uint32_t)rc.Height() - tex.Height();
 
 				if (dw > dh) {
-					child[0]->rc.position.x = rc.position.x - 0.5f* (rc.size.x - tex->GetWidth());
-					child[0]->rc.position.y = rc.position.y;
-					child[0]->rc.size.x = tex->GetWidth();
-					child[0]->rc.size.y = rc.size.y;
 
-					child[1]->rc.position.x = rc.position.x + 0.5f * tex->GetWidth();
-					child[1]->rc.position.y = rc.position.y;
-					child[1]->rc.size.x = rc.size.x - tex->GetWidth();
-					child[1]->rc.size.y = rc.size.y;
+					child[0]->rc.lowerLeft.x = rc.lowerLeft.x;
+					child[0]->rc.lowerLeft.y = rc.lowerLeft.y;
+					child[0]->rc.upperRight.x = rc.lowerLeft.x + tex.Width() - 1;
+					child[0]->rc.upperRight.y = rc.upperRight.y;
+					
+					child[1]->rc.lowerLeft.x = rc.lowerLeft.x + tex.Width();
+					child[1]->rc.lowerLeft.y = rc.lowerLeft.y;
+					child[1]->rc.upperRight.x = rc.upperRight.x;
+					child[1]->rc.upperRight.y = rc.upperRight.y;
+
 				}
 				else {
 
-					child[0]->rc.position.x = rc.position.x;
-					child[0]->rc.position.y = rc.position.y - 0.5f*(rc.size.y - tex->GetHeight());
-					child[0]->rc.size.x = rc.size.x;
-					child[0]->rc.size.y = tex->GetHeight();
+					child[0]->rc.lowerLeft.x = rc.lowerLeft.x;
+					child[0]->rc.lowerLeft.y = rc.lowerLeft.y;
+					child[0]->rc.upperRight.x = rc.upperRight.x;
+					child[0]->rc.upperRight.y = rc.lowerLeft.y + tex.Height() -1;
 
-					child[1]->rc.position.x = rc.position.x;
-					child[1]->rc.position.y = rc.position.y + 0.5f * tex->GetHeight();
-					child[1]->rc.size.x = rc.size.x;
-					child[1]->rc.size.y = tex->GetHeight();
+					child[1]->rc.lowerLeft.x = rc.lowerLeft.x;
+					child[1]->rc.lowerLeft.y = rc.lowerLeft.y + tex.Height();
+					child[1]->rc.upperRight.x = rc.upperRight.x;
+					child[1]->rc.upperRight.y = rc.upperRight.y;
 
 				}
 
@@ -88,31 +90,43 @@ public:
 		}
 	};
 	
-	inline static SimpleSpriteSheet* PackTextures(std::vector<SimpleTexture*> _textures) {
+	inline static SimpleSpriteSheet* PackTextures(std::vector<SimpleTexture*> _textures, uint32_t padding) {
 	
 		constexpr int initialSize = 512;
-		constexpr int maxSize = 512;
-
-		SimpleSpriteSheet* sheet = new SimpleSpriteSheet();
+		constexpr int maxSize = 4096;
 
 		int currentSize = initialSize;
 		AdHocBTreeNode* root = new AdHocBTreeNode();
 		bool packed = false;
-
+		SimpleSpriteSheet* sheet;
 		while (currentSize <= maxSize && !packed) {
-			root->rc = { {0,0} , {currentSize / 2 , currentSize / 2} };
+			root->rc.lowerLeft = { 0 , 0};
+			root->rc.upperRight= { currentSize,currentSize};
 			
+			sheet = new SimpleSpriteSheet();
+			sheet->LoadTextureFromMemory(nullptr, 1, currentSize, currentSize, false);
 			packed = true;
 			for (const auto t : _textures) {
-			
-				AdHocBTreeNode* node = root->Insert(t);
+				
+				SimpleTextureRegion toInsert;
+				toInsert.lowerLeft = { 0,0 };
+				toInsert.upperRight= { t->GetWidth() - 1 + 2 * padding, t->GetHeight() - 1 + 2 * padding};
+
+				AdHocBTreeNode* node = root->Insert(toInsert);
 				if (node == nullptr) {
 					packed = false;
+					delete sheet;
+					sheet = nullptr;
 					break;
 				}
 				else {
 					node->texture = t;
-					//Should create sprite frame and copy pixels
+					node->rc.lowerLeft.x += padding;
+					node->rc.upperRight.x -= padding;
+					node->rc.lowerLeft.y += padding;
+					node->rc.upperRight.y -= padding;
+					sheet->SetSubTexture(node->rc, t);
+					sheet->AddSpriteFrame(node->rc.lowerLeft, {node->rc.Width(), node->rc.Height()},false);
 				}
 
 			}				
@@ -120,6 +134,9 @@ public:
 
 		}
 		
+		SIMPLE_ASSERT(sheet != nullptr);
+		
+		sheet->Flush();
 		return sheet;
 	}
 

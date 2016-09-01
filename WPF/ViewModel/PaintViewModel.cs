@@ -493,6 +493,7 @@ namespace WPF.ViewModel
 
         public void OnDrag(object sender, System.Windows.Forms.MouseEventArgs e)
         {
+            
             SimpleEngineViewerControl view = openGLRenderControl as SimpleEngineViewerControl;
 
             //Panning
