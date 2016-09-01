@@ -57,7 +57,9 @@ namespace SimpleEngineTileEditor
 
         public void AddControl(int fontSize, string text, string fontFamily, string color)
         {
-            SimpleTextRenderer_SetFontName(simpleTextRenderer, string.Format("fonts/{0}.ttf", fontFamily.ToLower()));
+            string fontsfolder = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Fonts);
+
+            SimpleTextRenderer_SetFontName(simpleTextRenderer, string.Format("{0}\\{1}.ttf", fontsfolder, fontFamily.ToLower()));
             SimpleTextRenderer_SetFontSize(simpleTextRenderer, fontSize);
             SimpleTextRenderer_SetText(simpleTextRenderer, text);
             
@@ -65,6 +67,7 @@ namespace SimpleEngineTileEditor
             string R = colour.Substring(2, 2);
             string G = colour.Substring(4, 2);
             string B = colour.Substring(6, 2);
+            
             SimpleTextRenderer_SetColor(simpleTextRenderer, int.Parse(R, System.Globalization.NumberStyles.HexNumber), int.Parse(G, System.Globalization.NumberStyles.HexNumber), int.Parse(B, System.Globalization.NumberStyles.HexNumber), 255);
             SimpleScene_AddEntityWithIdx(simpleTextRenderer, 0);
         }
