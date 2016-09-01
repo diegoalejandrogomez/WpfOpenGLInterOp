@@ -55,12 +55,17 @@ namespace SimpleEngineTileEditor
             SimpleTextRenderer_Destroy(simpleTextRenderer);
         }
 
-        public void AddControl()
+        public void AddControl(int fontSize, string text, string fontFamily, string color)
         {
-            SimpleTextRenderer_SetFontName(simpleTextRenderer, "fonts/arial.ttf");
-            SimpleTextRenderer_SetFontSize(simpleTextRenderer, 30);
-            SimpleTextRenderer_SetText(simpleTextRenderer, "Dedicated to all the pioneers");
-            SimpleTextRenderer_SetColor(simpleTextRenderer, 255,255,255,255);
+            SimpleTextRenderer_SetFontName(simpleTextRenderer, string.Format("fonts/{0}.ttf", fontFamily.ToLower()));
+            SimpleTextRenderer_SetFontSize(simpleTextRenderer, fontSize);
+            SimpleTextRenderer_SetText(simpleTextRenderer, text);
+            
+            string colour = color.TrimStart('#');
+            string R = colour.Substring(2, 2);
+            string G = colour.Substring(4, 2);
+            string B = colour.Substring(6, 2);
+            SimpleTextRenderer_SetColor(simpleTextRenderer, int.Parse(R, System.Globalization.NumberStyles.HexNumber), int.Parse(G, System.Globalization.NumberStyles.HexNumber), int.Parse(B, System.Globalization.NumberStyles.HexNumber), 255);
             SimpleScene_AddEntityWithIdx(simpleTextRenderer, 0);
         }
     }

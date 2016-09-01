@@ -1084,8 +1084,9 @@ namespace WPF.ViewModel
         private void FontEditorClose(object sender, EventArgs e)
         {
             var test = this.fontViewModel;
-            var textControl = new TextControl();
-            textControl.AddControl();
+            if(this.fontViewModel.textControl == null)
+                this.fontViewModel.textControl = new TextControl();
+            this.fontViewModel.textControl.AddControl(this.fontViewModel.FontSize, this.fontViewModel.Text, this.fontViewModel.FontFamily, this.fontViewModel.FontColor);
         }
         #endregion
     }
