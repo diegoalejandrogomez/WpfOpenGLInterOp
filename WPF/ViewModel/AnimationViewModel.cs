@@ -32,7 +32,7 @@ namespace WPF.ViewModel
 
         private void OnTimedEvent(object sender, EventArgs e)
         {
-            if (Tiles != null)
+            if (Tiles != null && Tiles.Any())
             {
                 index++;
                 if (index >= Tiles.Count)

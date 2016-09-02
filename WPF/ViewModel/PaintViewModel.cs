@@ -224,6 +224,7 @@ namespace WPF.ViewModel
                 }
 
                 resource.Data = ConvertToBytes(tile.Image);
+                resource.Id = tile.Id;
                 var property = new ResourceProperty();
                 property.Heigth = tile.heigth;
                 property.Width = tile.width;
@@ -328,6 +329,33 @@ namespace WPF.ViewModel
             return data;
         }
 
+        private void GetSelectableAnimations(Project project)
+        {
+            this.Animations = new ObservableCollection<ViewModel.AnimationViewModel>();
+            int i = this.Animations.Count + 1;
+            string path = string.Empty;
+            foreach (var animation in project.Animations)
+            {
+                var animationViewModel = new AnimationViewModel();
+                animationViewModel.Name = animation.Name;
+                animationViewModel.Frequency = animation.Frequency;
+                var addedTiles = this.Tiles.Where(tile => animation.Resources.Contains(tile.Id)).ToList();
+                if (animationViewModel.Tiles == null)
+                    animationViewModel.Tiles = new List<ViewModel.TileViewModel>();
+
+                animationViewModel.Tiles.AddRange(addedTiles);
+                this.animationViewModel = animationViewModel;
+                
+                if (Animations == null)
+                {
+                    Animations = new ObservableCollection<AnimationViewModel>();
+                }
+
+                Animations.Add(animationViewModel);
+                PropertyChanged(this, new PropertyChangedEventArgs("Animations"));
+            }
+        }
+
         private BitmapImage GetSelectableTiles(BitmapImage bitmapImage, Project project)
         {
             int i = this.Tiles.Count + 1;
@@ -344,7 +372,7 @@ namespace WPF.ViewModel
                     i++;
                 }
 
-                var newTile = new TileViewModel();
+                var newTile = new TileViewModel(item.Id);
                 newTile.Path = path;
                 if (item.Properties != null)
                 {
@@ -414,6 +442,13 @@ namespace WPF.ViewModel
         private void SaveAnimation(object sender, EventArgs e)
         {
             AddAnimation();
+            if (Animations == null)
+            {
+                Animations = new ObservableCollection<AnimationViewModel>();
+            }
+
+            Animations.Add(animationViewModel);
+            PropertyChanged(this, new PropertyChangedEventArgs("Animations"));
         }
 
         private void AddAnimation()
@@ -427,13 +462,6 @@ namespace WPF.ViewModel
             }
 
             animationViewModel.AnimatedControl.AddControl(animationViewModel.Name);
-            if (Animations == null)
-            {
-                Animations = new ObservableCollection<AnimationViewModel>();
-            }
-
-            Animations.Add(animationViewModel);
-            PropertyChanged(this, new PropertyChangedEventArgs("Animations"));
         }
 
         private void Clean()
@@ -838,6 +866,15 @@ namespace WPF.ViewModel
                                 var project = new Project();
                                 var scene = new Scene();
                                 GetAvailableTiles(project);
+                                foreach(var item in Animations)
+                                {
+                                    Animation animation = new Animation();
+                                    animation.Resources.AddRange(item.Tiles.Select(i => i.Id));
+                                    animation.Frequency = item.Frequency;
+                                    animation.Name = item.Name;
+                                    project.Animations.Add(animation);
+                                }
+
                                 project.Scenes.Add(_tileMap.TakeSnapshot());
                                 var json = Newtonsoft.Json.JsonConvert.SerializeObject(project);
                                 System.IO.File.WriteAllText(dialog.FileName, json);
@@ -871,11 +908,11 @@ namespace WPF.ViewModel
                             var json = System.IO.File.ReadAllText(dialog.FileName);
                             var project = Newtonsoft.Json.JsonConvert.DeserializeObject<Project>(json);
                             bitmapImage = GetSelectableTiles(bitmapImage, project);
-
+                            GetSelectableAnimations(project);
 
                             foreach (var scene in project.Scenes)
                             {
-                                _tileMap.RestoreSnapshot(scene);
+                                //_tileMap.RestoreSnapshot(scene);
                             }
                         }
                     });

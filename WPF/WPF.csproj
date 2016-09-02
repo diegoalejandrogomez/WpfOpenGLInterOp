@@ -144,6 +144,7 @@
     <Compile Include="LayerEditor.xaml.cs">
       <DependentUpon>LayerEditor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\Animation.cs" />
     <Compile Include="Model\Project.cs" />
     <Compile Include="Model\Resource.cs" />
     <Compile Include="Model\ResourceProperty.cs" />

@@ -11,6 +11,31 @@ namespace WPF.ViewModel
 {
     public class TileViewModel : IDisposable
     {
+        public Guid DateTimeToGuid()
+        {
+            DateTime dateTime = DateTime.Now;
+            Guid guid = Guid.NewGuid();
+            string guidEnd = guid.ToString().Substring(guid.ToString().IndexOf("-"), guid.ToString().Length - guid.ToString().IndexOf("-"));
+            string guidStart = dateTime.Day.ToString() + dateTime.Month.ToString() + dateTime.Year.ToString();
+            guidStart = guidStart.PadRight(8, '0');
+            guid = new Guid(guidStart + guidEnd);
+
+            return guid;
+        }
+
+        public TileViewModel()
+        {
+            this.Id = DateTimeToGuid();
+
+        }
+
+        public TileViewModel(Guid Id)
+        {
+            this.Id = Id;
+        }
+
+        public readonly Guid Id;
+
         public BitmapImage Image { get; set; }
 
         public String Path { get; set; }

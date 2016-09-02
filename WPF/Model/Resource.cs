@@ -13,5 +13,7 @@ namespace WPF.Model
         public String Name { get; set; }
 
         public ResourceProperty Properties { get; set; }
+
+        public Guid Id { get; set; }
     }
 }
