@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
+using System.IO;
 
 namespace SimpleEngineTileEditor
 {
@@ -59,7 +60,12 @@ namespace SimpleEngineTileEditor
         {
             string fontsfolder = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Fonts);
 
-            SimpleTextRenderer_SetFontName(simpleTextRenderer, string.Format("{0}\\{1}.ttf", fontsfolder, fontFamily.ToLower()));
+            string[] dirs = Directory.GetFiles(fontsfolder, fontFamily + "*");
+            if (dirs.Any())
+            {
+                SimpleTextRenderer_SetFontName(simpleTextRenderer, dirs.First());
+            }
+            
             SimpleTextRenderer_SetFontSize(simpleTextRenderer, fontSize);
             SimpleTextRenderer_SetText(simpleTextRenderer, text);
             
