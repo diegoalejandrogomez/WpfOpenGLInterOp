@@ -73,7 +73,7 @@ void SimpleTextRenderer::Render(float dt) {
 void SimpleTextRenderer::SetFontName(std::string && name) {
 	//Obtain font name
 	path filePath = name;
-	_fontName = filePath.stem().string();
+	_fontName = filePath.filename().string();
 
 	SimpleRenderer* render = SimpleEngine::Instance()->GetRenderer();
 	if (!render->HasFont(_fontName))
@@ -110,7 +110,7 @@ const SimpleColor& SimpleTextRenderer::GetColor() const {
 
 json SimpleTextRenderer::Serialize() {
 
-	json so = SimpleSpriteSheetRenderer::Serialize();
+	json so = SimpleObject::Serialize();
 	json ret{
 		{"text",_text},
 		{"fontName", _fontName},
@@ -129,15 +129,16 @@ json SimpleTextRenderer::Serialize() {
 }
 bool SimpleTextRenderer::Deserialize(const json &node) {
 
-	SimpleSpriteSheetRenderer::Deserialize(node);
+	SimpleObject::Deserialize(node);
 
 	const json& local = node["SimpleTextRenderer"];
 
 	SIMPLE_ASSERT(local.find("text") != local.end());
 	_text = local["text"].get<std::string>();
 	
+	//We have already deserialized font data
 	SIMPLE_ASSERT(local.find("fontName") != local.end());
-	SetFontName(local["fontName"].get<std::string>());
+	SetFontName("/fonts/" + local["fontName"].get<std::string>());
 	
 	SIMPLE_ASSERT(local.find("fontSize") != local.end());
 	_fontSize = local["fontSize"];

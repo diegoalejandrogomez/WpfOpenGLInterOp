@@ -15,6 +15,7 @@
 #include "SimpleTexture.h"
 #include "SimpleColor.h"
 #include "SimpleTextRenderer.h"
+
 class SimpleScene;
 
 class SIMPLE_API SimpleRenderer {
@@ -62,6 +63,7 @@ public:
 
 	bool LoadFont(std::string fontPath, uint32_t size = 48);
 	bool HasFont(SimpleID fontName);
+
 	FontCharacters GetFontChars(SimpleID fontName);
 	float GetFontScale(SimpleID fontName);
 	inline SimpleMesh<VertexTextureFormat2D>* GetUnitaryQuad() { return _texturedQuad; };
@@ -72,12 +74,16 @@ public:
 	
 	void ClearResources();
 	void ClearPasses();
+
+	void ExportResources(std::string exportPath);
+	void ImportResources(std::string exportPath);
 private:
 
 	bool _InitializeExtensions();
 	
 	bool _LoadDefaultShaders();
 
+	void _AddFilesToArchive(std::vector<std::string>& files, std::string relativePath, std::string archiveName);
 	//Window parameters (Target render surface)
 	int _width;
 	int _height;

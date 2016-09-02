@@ -12,6 +12,9 @@
 #include FT_FREETYPE_H
 #include "DebugRenderPass.h"
 #include "SimpleUtils.h"
+#include "ZipLib/ZipFile.h"
+#include <iostream>
+
 
 //C++ 14/17 ... but why not XD
 using namespace std::tr2::sys;
@@ -449,7 +452,7 @@ bool SimpleRenderer::_LoadDefaultShaders() {
 
 
 bool SimpleRenderer::LoadFont(std::string fontPath, uint32_t size) {
-	//Font managemente
+	//Font management
 	FT_Library _fontLib;
 	if (FT_Init_FreeType(&_fontLib))
 		SIMPLE_LOG("FREETYPE: Could not init FreeType Library");
@@ -458,7 +461,7 @@ bool SimpleRenderer::LoadFont(std::string fontPath, uint32_t size) {
 
 	path resPath = fontPath;
 	std::string finalPath;
-	std::string fontName = resPath.stem().string();
+	std::string fontName = resPath.filename().string();
 	
 	if (resPath.is_absolute()) {
 		//Copy to local directory
@@ -519,7 +522,8 @@ bool SimpleRenderer::LoadFont(std::string fontPath, uint32_t size) {
 
 	//Create spritesheet for font
 	SimpleSpriteSheet* packedFont = SimpleUtils::PackTextures(toPack, packPadding);
-	//packedFont->SaveTexture("FontAtlas.png");
+	packedFont->SetSerializable(false);
+	//packedFont->SaveTexture(SimpleEngine::Instance()->GetResourcesBaseDir() + "/fonts/" + FontAtlas.png");
 	_spriteSheets[fontName] = packedFont;
 	return true;
 }
@@ -555,6 +559,9 @@ bool SimpleRenderer::SerializeResources(std::string dir) {
 
 	for (auto &sheet : _spriteSheets) {
 		
+		if (!sheet.second->IsSerializable())
+			continue;
+
 		std::string  filename=   sheet.second->GetPath();
 		std::replace(filename.begin(), filename.end(), '/', '_');
 		filename = p.generic_string() +  filename + ".sheet";
@@ -576,6 +583,9 @@ bool SimpleRenderer::SerializeResources(std::string dir) {
 
 	for (auto &anim: _spriteAnimations) {
 		
+		if (!anim.second->IsSerializable())
+			continue;
+
 		std::string  filename = anim.second->GetAnimationName();
 		std::replace(filename.begin(), filename.end(), '/', '_');
 		filename = p.generic_string() + filename + ".anim";
@@ -646,4 +656,98 @@ bool SimpleRenderer::DeserializeResources(std::string dir) {
 	}
 
 	return true;
+}
+
+
+void SimpleRenderer::_AddFilesToArchive(std::vector<std::string>& files, std::string relativePath, std::string archiveName) {
+	
+	ZipArchive::Ptr archive = ZipFile::Open(archiveName);
+	std::string base = SimpleEngine::Instance()->GetResourcesBaseDir();
+	for (auto file : files) {
+
+		std::string entryPath = relativePath + file;
+		ZipArchiveEntry::Ptr entry = archive->CreateEntry(entryPath);
+
+		// if entry is nullptr, it means the file already exists in the archive
+		assert(entry != nullptr);
+		std::ifstream contentStream(base + entryPath, std::ios::binary);
+		SIMPLE_ASSERT(contentStream.is_open());
+		entry->SetCompressionStream(contentStream, DeflateMethod::Create(), ZipArchiveEntry::CompressionMode::Immediate);
+	}
+
+	ZipFile::SaveAndClose(archive, archiveName);
+
+}
+void SimpleRenderer::ExportResources(std::string exportPath) {
+	//For lib documentation check
+	//http://mindless-area.blogspot.com.ar/2013/06/ziplib-lightweight-c11-library-for.html
+
+	std::string base = SimpleEngine::Instance()->GetResourcesBaseDir();
+
+	if(exists(exportPath))
+		remove(exportPath);
+
+	//Font packing
+	std::vector<std::string> files;
+	SimpleUtils::GetFolderContents(base + "/fonts/", files);
+	_AddFilesToArchive(files, "/fonts/", exportPath);
+	
+	//Texture packing
+	files.clear();
+	SimpleUtils::GetFolderContents(base + "/media/", files);
+	_AddFilesToArchive(files, "/media/" , exportPath);
+
+	//Animations packing
+	files.clear();
+	SimpleUtils::GetFolderContents(base + "/animations/", files);
+	_AddFilesToArchive(files, "/animations/", exportPath);
+
+	//Spritesheets packing
+	files.clear();
+	SimpleUtils::GetFolderContents(base + "/spriteSheets/", files);
+	_AddFilesToArchive(files, "/spriteSheets/", exportPath);
+	
+	files.clear();
+	SimpleUtils::GetFolderContents(base + "/", files);
+	_AddFilesToArchive(files, "/", exportPath);
+
+}
+
+void SimpleRenderer::ImportResources(std::string exportPath) {
+	std::string base = SimpleEngine::Instance()->GetResourcesBaseDir();
+
+
+	//if (exists(base + "fonts"))
+	//	remove(base + "fonts");
+	//if (exists(base + "media"))
+	//	remove(base + "media");
+	//if (exists(base + "animations"))
+	//	remove(base + "animations");
+	//if (exists(base + "spriteSheets"))
+	//	remove(base + "spriteSheets");
+
+	//Create directory structure
+	create_directory(base + "fonts");
+	create_directory(base + "media");
+	create_directory(base + "animations");
+	create_directory(base + "spriteSheets");
+
+	ZipArchive::Ptr archive = ZipFile::Open(exportPath);
+	uint32_t fileCount = archive->GetEntriesCount();
+
+	for (uint32_t i = 0; i < fileCount; ++i) {
+		ZipArchiveEntry::Ptr entry = archive->GetEntry(i);
+		
+		std::istream* decompressStream = entry->GetDecompressionStream();
+		
+		SIMPLE_LOG(entry->GetFullName());
+		std::ofstream out(base + entry->GetFullName(), std::ios::binary | std::ios::trunc);
+		SIMPLE_ASSERT(out.is_open());	
+
+		out << decompressStream->rdbuf();
+		out.close();
+	}
+
+	ZipFile::SaveAndClose(archive, exportPath);
+
 }

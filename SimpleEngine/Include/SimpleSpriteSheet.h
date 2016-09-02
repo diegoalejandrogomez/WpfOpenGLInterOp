@@ -9,7 +9,7 @@
 
 using json = nlohmann::json;
 
-class SIMPLE_API SimpleSpriteSheet : public SimpleTexture, SimpleSerializable{
+class SIMPLE_API SimpleSpriteSheet : public SimpleTexture, public SimpleSerializable{
 
 public:
 

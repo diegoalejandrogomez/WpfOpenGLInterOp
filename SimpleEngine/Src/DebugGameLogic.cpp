@@ -26,7 +26,7 @@ bool DebugGameLogic::Deserialize(const json &node) {
 
 void DebugGameLogic::Init()
 {
-	bool save = true;
+	bool save = false;
 	SimpleEngine::Instance()->SetResourcesBaseDir("./debugResources/");
 
 	if (save) {
@@ -35,12 +35,17 @@ void DebugGameLogic::Init()
 		//SimpleEngine::Instance()->SerializeScene("DebugScene.scene");
 		//SimpleEngine::Instance()->SerializeGameLogic("DebugState.state");
 		SimpleEngine::Instance()->SerializeGameState("DebugGameState.save");
+
+		SimpleEngine::Instance()->GetRenderer()->ExportResources("res.pack");
 	}
 	else {
+		SimpleEngine::Instance()->GetRenderer()->ImportResources("res.pack");
+
 		SimpleEngine::Instance()->DeserializeResources();
 		/*SimpleEngine::Instance()->DeserializeScene("DebugScene.scene");
 		SimpleEngine::Instance()->DeserializeGameLogic("DebugState.state");*/
 		SimpleEngine::Instance()->DeserializeGameState("DebugGameState.save");
+
 	}
 
 	//Configure input system we are going to use

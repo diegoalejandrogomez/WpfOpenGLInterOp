@@ -2,6 +2,8 @@
 #include "SimpleConfiguration.h"
 #include "SimpleTextureRegion.h"
 #include "SimpleSpriteSheet.h"
+#include <filesystem>
+using namespace std::tr2::sys;
 
 class SIMPLE_API SimpleUtils {
 
@@ -18,6 +20,24 @@ public:
 		x |= x >> 8;
 		x |= x >> 16;
 		return x + 1;
+	}
+
+	static void GetFolderContents(const path p, std::vector<std::string>& files)
+	{
+		std::cout << L"Begin iterating " << p.wstring() << std::endl;
+		for (const auto& entry : directory_iterator{ p })
+		{
+			if (is_regular_file(entry.status()))
+			{
+				files.emplace_back(entry.path().filename().string());
+				//SIMPLE_LOG(" File: %s ", entry.path().filename().string().c_str().c_str());
+
+			}
+			else if (is_directory(entry.status()))
+			{
+				//SIMPLE_LOG(" Dir: %s ", entry.path().filename().string().c_str());			
+			}
+		}
 	}
 
 	
