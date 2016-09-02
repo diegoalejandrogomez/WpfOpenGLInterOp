@@ -1,6 +1,9 @@
 #include "stdafx.h"
 #include "SimpleTextRenderer.h"
 #include "SimpleEngine.h"
+#include <filesystem>
+using namespace std::tr2::sys;
+
 
 //Register entry as simpleID for factory
 FACTORY_REGISTER(SimpleObject, SimpleTextRenderer)
@@ -68,15 +71,14 @@ void SimpleTextRenderer::Render(float dt) {
 }
 
 void SimpleTextRenderer::SetFontName(std::string && name) {
-	SimpleRenderer* render = SimpleEngine::Instance()->GetRenderer();
-	if (!render->HasFont(name)) {
-		if (render->LoadFont(name))
-			_fontName = name;
-	}
-	else {
-		_fontName = name;
+	//Obtain font name
+	path filePath = name;
+	_fontName = filePath.stem().string();
 
-	}	
+	SimpleRenderer* render = SimpleEngine::Instance()->GetRenderer();
+	if (!render->HasFont(_fontName))
+		render->LoadFont(name);		
+	
 }
 
 void SimpleTextRenderer::SetText(std::string text) {

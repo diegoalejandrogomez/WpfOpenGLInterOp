@@ -448,7 +448,7 @@ bool SimpleRenderer::_LoadDefaultShaders() {
 
 
 
-bool SimpleRenderer::LoadFont(std::string fontName, uint32_t size) {
+bool SimpleRenderer::LoadFont(std::string fontPath, uint32_t size) {
 	//Font managemente
 	FT_Library _fontLib;
 	if (FT_Init_FreeType(&_fontLib))
@@ -456,12 +456,18 @@ bool SimpleRenderer::LoadFont(std::string fontName, uint32_t size) {
 
 	FT_Face face;
 
-	path resPath = fontName;
+	path resPath = fontPath;
 	std::string finalPath;
-	if(resPath.is_absolute())
-		finalPath = fontName;
+	std::string fontName = resPath.stem().string();
+	
+	if (resPath.is_absolute()) {
+		//Copy to local directory
+		fontPath = "/fonts/" + resPath.filename().string();
+		finalPath = SimpleEngine::Instance()->GetResourcesBaseDir() + fontPath;
+		copy(resPath, finalPath, copy_options::overwrite_existing);
+	}
 	else
-		finalPath = SimpleEngine::Instance()->GetResourcesBaseDir() + fontName;
+		finalPath = SimpleEngine::Instance()->GetResourcesBaseDir() + fontPath;
 
 
 	if (FT_New_Face(_fontLib, finalPath.c_str(), 0, &face)) {
