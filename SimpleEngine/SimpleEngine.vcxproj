@@ -99,9 +99,9 @@
     <IncludePath>./External/ois/include/;./External/devil/include/;$(ProjectDir);./External/glm/;./External/glew/;./Include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_DLL|Win32'">
-    <IncludePath>./External/ziplib/Source/;./External/ois/include/;./External/freetype/include;./External/devil/include/;$(ProjectDir);./External/glm/;./External/glew/;./Include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <IncludePath>./External/ziplib/Include/;./External/ois/include/;./External/freetype/include;./External/devil/include/;$(ProjectDir);./External/glm/;./External/glew/;./Include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
     <TargetName>$(ProjectName)_dyn</TargetName>
-    <LibraryPath>./External/ziplib/Bin/x86/Debug/;$(SolutionDir)\SimpleEngine\External\freetype\lib;$(SolutionDir)\SimpleEngine\External\ois\lib\;$(SolutionDir)SimpleEngine\External\devil\lib\;..\Debug\;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
+    <LibraryPath>./External/ziplib/Lib/x86/Debug/;$(SolutionDir)\SimpleEngine\External\freetype\lib;$(SolutionDir)\SimpleEngine\External\ois\lib\;$(SolutionDir)SimpleEngine\External\devil\lib\;..\Debug\;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
     <OutDir>$(SolutionDir)Debug\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

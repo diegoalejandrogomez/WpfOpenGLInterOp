@@ -252,3 +252,4 @@ paket-files/
 *.sln.iml
 /SimpleEngine/Debug_DLL
 /SimpleEngineTest/Debug_FromDll
+/SimpleEngine/External/ziplib/
