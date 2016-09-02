@@ -60,7 +60,7 @@ public:
 
 	SimpleSpriteAnimation* GetSpriteAnimation(SimpleID name);
 
-	bool LoadFont(std::string fontName, uint32_t size = 48);
+	bool LoadFont(std::string fontPath, uint32_t size = 48);
 	bool HasFont(SimpleID fontName);
 	FontCharacters GetFontChars(SimpleID fontName);
 	float GetFontScale(SimpleID fontName);

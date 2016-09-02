@@ -15,6 +15,6 @@ extern "C" {
 	SIMPLE_API const char* SimpleTextRenderer_GetText(SimpleTextRenderer* simpleTextRenderer);
 	SIMPLE_API const char* SimpleTextRenderer_GetFontName(SimpleTextRenderer* simpleTextRenderer);
 	SIMPLE_API float SimpleTextRenderer_GetFontSize(SimpleTextRenderer* simpleTextRenderer);
-	SIMPLE_API SimpleColor SimpleTextRenderer_GetColor(SimpleTextRenderer* simpleTextRenderer);
+	SIMPLE_API void SimpleTextRenderer_GetColor(SimpleTextRenderer* simpleTextRenderer, int &r, int &g, int &b, int &a);
 }
 

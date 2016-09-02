@@ -47,8 +47,13 @@ extern "C" {
 		return simpleTextRenderer->GetFontSize();
 	}
 
-	SIMPLE_API SimpleColor SimpleTextRenderer_GetColor(SimpleTextRenderer* simpleTextRenderer)
+	SIMPLE_API void SimpleTextRenderer_GetColor(SimpleTextRenderer* simpleTextRenderer, int &r, int &g, int &b, int &a)
 	{
-		return simpleTextRenderer->GetColor();
+		SimpleColor color = simpleTextRenderer->GetColor();
+		r = color.r;
+		g = color.g;
+		b = color.b;
+		a = color.a;
+		return;
 	}
 }

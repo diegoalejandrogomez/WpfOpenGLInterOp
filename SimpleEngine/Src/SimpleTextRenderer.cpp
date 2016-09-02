@@ -1,6 +1,9 @@
 #include "stdafx.h"
 #include "SimpleTextRenderer.h"
 #include "SimpleEngine.h"
+#include <filesystem>
+using namespace std::tr2::sys;
+
 
 //Register entry as simpleID for factory
 FACTORY_REGISTER(SimpleObject, SimpleTextRenderer)
@@ -68,15 +71,14 @@ void SimpleTextRenderer::Render(float dt) {
 }
 
 void SimpleTextRenderer::SetFontName(std::string && name) {
-	SimpleRenderer* render = SimpleEngine::Instance()->GetRenderer();
-	if (!render->HasFont(name)) {
-		if (render->LoadFont(name))
-			_fontName = name;
-	}
-	else {
-		_fontName = name;
+	//Obtain font name
+	path filePath = name;
+	_fontName = filePath.stem().string();
 
-	}	
+	SimpleRenderer* render = SimpleEngine::Instance()->GetRenderer();
+	if (!render->HasFont(_fontName))
+		render->LoadFont(name);		
+	
 }
 
 void SimpleTextRenderer::SetText(std::string text) {
@@ -108,12 +110,44 @@ const SimpleColor& SimpleTextRenderer::GetColor() const {
 
 json SimpleTextRenderer::Serialize() {
 
-	json obj = json::object;
-	return obj;
+	json so = SimpleSpriteSheetRenderer::Serialize();
+	json ret{
+		{"text",_text},
+		{"fontName", _fontName},
+		{"fontSize", _fontSize},
+		{"fontColor",	{_fontColor.r,
+						 _fontColor.g,
+						 _fontColor.b,
+						 _fontColor.a
+						}
+		}
+	};
+	
+	so["SimpleTextRenderer"] = ret;
+	return so;
 
 }
 bool SimpleTextRenderer::Deserialize(const json &node) {
 
+	SimpleSpriteSheetRenderer::Deserialize(node);
 
+	const json& local = node["SimpleTextRenderer"];
+
+	SIMPLE_ASSERT(local.find("text") != local.end());
+	_text = local["text"].get<std::string>();
+	
+	SIMPLE_ASSERT(local.find("fontName") != local.end());
+	SetFontName(local["fontName"].get<std::string>());
+	
+	SIMPLE_ASSERT(local.find("fontSize") != local.end());
+	_fontSize = local["fontSize"];
+	
+	SIMPLE_ASSERT(local.find("fontColor") != local.end());
+	SIMPLE_ASSERT(local["fontColor"].is_array());
+	_fontColor.r = local["fontColor"][0];
+	_fontColor.g = local["fontColor"][1];
+	_fontColor.b = local["fontColor"][2];
+	_fontColor.a = local["fontColor"][3];
+	
 	return true;
 }
