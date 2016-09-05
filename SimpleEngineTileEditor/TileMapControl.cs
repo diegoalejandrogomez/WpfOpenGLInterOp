@@ -24,6 +24,12 @@ namespace SimpleEngineTileEditor
         static extern void SimpleEngine_GetGameState(StringBuilder state, int maxSize);
         [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
         static extern void SimpleEngine_SetGameState(String state);
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
+        static extern void SimpleResourceManager_ClearResources();
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
+        static extern void SimpleResourceManager_ExportResources(String exportPath);
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
+        static extern void SimpleResourceManager_ImportResources(String exportPath);
 
         #endregion
         #region NativeEditorImports
@@ -107,15 +113,25 @@ namespace SimpleEngineTileEditor
                 TileEditorApp_Paint();
         }
 
+        public void PackResources(String path) {
+            SimpleResourceManager_ExportResources(path);
+        }
         public String TakeSnapshot() {
             //TODO: Temporal fix, we should allocate dynamically this buffer
             StringBuilder builder = new StringBuilder(102400); 
-            SimpleEngine_GetGameState(builder, builder.Capacity);
+            SimpleEngine_GetGameState(builder, builder.Capacity);         
+            
             return builder.ToString();
         }
 
+        public void UnpackResources(String path) {
+            SimpleResourceManager_ImportResources(path);
+          }
+
         public void RestoreSnapshot(String state) {
+           
             SimpleEngine_SetGameState(state);
+
         }
 
         //Properties

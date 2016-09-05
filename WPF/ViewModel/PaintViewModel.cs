@@ -877,6 +877,7 @@ namespace WPF.ViewModel
 
                                 project.Scenes.Add(_tileMap.TakeSnapshot());
                                 var json = Newtonsoft.Json.JsonConvert.SerializeObject(project);
+                                _tileMap.PackResources(Path.ChangeExtension(dialog.FileName, ".pack"));
                                 System.IO.File.WriteAllText(dialog.FileName, json);
                             }
                         }
@@ -909,10 +910,10 @@ namespace WPF.ViewModel
                             var project = Newtonsoft.Json.JsonConvert.DeserializeObject<Project>(json);
                             bitmapImage = GetSelectableTiles(bitmapImage, project);
                             GetSelectableAnimations(project);
-
+                            _tileMap.UnpackResources(Path.ChangeExtension(dialog.FileName, "pack"));
                             foreach (var scene in project.Scenes)
                             {
-                                //_tileMap.RestoreSnapshot(scene);
+                                _tileMap.RestoreSnapshot(scene);
                             }
                         }
                     });

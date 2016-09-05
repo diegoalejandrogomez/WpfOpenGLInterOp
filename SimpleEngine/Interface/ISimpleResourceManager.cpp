@@ -29,4 +29,21 @@ extern "C" {
 	}
 
 
+	SIMPLE_API void SimpleResourceManager_ClearResources() {
+		SimpleEngine::Instance()->GetResourceManager()->ClearResources();
+	}
+	SIMPLE_API bool SimpleResourceManager_SerializeResources(const char* dir) {
+		return SimpleEngine::Instance()->GetResourceManager()->SerializeResources(dir);
+	}
+
+	SIMPLE_API bool SimpleResourceManager_DeserializeResources(const char *dir) {
+		return SimpleEngine::Instance()->GetResourceManager()->DeserializeResources(dir);
+	}
+
+	SIMPLE_API void SimpleResourceManager_ExportResources(const char* exportPath) {
+		SimpleEngine::Instance()->GetResourceManager()->ExportResources(exportPath);
+	}
+	SIMPLE_API void SimpleResourceManager_ImportResources(const char* exportPath) {
+		SimpleEngine::Instance()->GetResourceManager()->ImportResources(exportPath);
+	}
 }

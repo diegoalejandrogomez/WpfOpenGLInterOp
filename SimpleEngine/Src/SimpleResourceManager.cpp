@@ -294,8 +294,10 @@ void SimpleResourceManager::_AddFilesToArchive(std::vector<std::string>& files, 
 void SimpleResourceManager::ExportResources(std::string exportPath) {
 	//For lib documentation check
 	//http://mindless-area.blogspot.com.ar/2013/06/ziplib-lightweight-c11-library-for.html
-
+	
 	std::string base = SimpleEngine::Instance()->GetResourceManager()->GetResourcesBaseDir();
+
+	SerializeResources(base);
 
 	if (exists(exportPath))
 		remove(exportPath);
@@ -329,7 +331,7 @@ void SimpleResourceManager::ExportResources(std::string exportPath) {
 void SimpleResourceManager::ImportResources(std::string exportPath) {
 	std::string base = SimpleEngine::Instance()->GetResourceManager()->GetResourcesBaseDir();
 
-
+	
 	//if (exists(base + "fonts"))
 	//	remove(base + "fonts");
 	//if (exists(base + "media"))
@@ -363,6 +365,7 @@ void SimpleResourceManager::ImportResources(std::string exportPath) {
 
 	ZipFile::SaveAndClose(archive, exportPath);
 
+	DeserializeResources(base);
 }
 
 
