@@ -203,6 +203,7 @@ copy /Y "$(ProjectDir)\External\devil\lib\ILU.dll" "$(TargetDir)"</Command>
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Include\SimpleResourceManager.h" />
     <ClInclude Include="Include\SimpleTextureRegion.h" />
     <ClInclude Include="Include\json.hpp" />
     <ClInclude Include="Include\SimpleAABB.h" />
@@ -246,6 +247,7 @@ copy /Y "$(ProjectDir)\External\devil\lib\ILU.dll" "$(TargetDir)"</Command>
     <ClInclude Include="Interface\ISimpleLayer.h" />
     <ClInclude Include="Interface\ISimpleObject.h" />
     <ClInclude Include="Interface\ISimpleRenderer.h" />
+    <ClInclude Include="Interface\ISimpleResourceManager.h" />
     <ClInclude Include="Interface\ISimpleScene.h" />
     <ClInclude Include="Interface\ISimpleSpriteAnimation.h" />
     <ClInclude Include="Interface\ISimpleSpriteRenderer.h" />
@@ -265,6 +267,7 @@ copy /Y "$(ProjectDir)\External\devil\lib\ILU.dll" "$(TargetDir)"</Command>
     <ClCompile Include="Interface\ISimpleLayer.cpp" />
     <ClCompile Include="Interface\ISimpleObject.cpp" />
     <ClCompile Include="Interface\ISimpleRenderer.cpp" />
+    <ClCompile Include="Interface\ISimpleResourceManager.cpp" />
     <ClCompile Include="Interface\ISimpleScene.cpp" />
     <ClCompile Include="Interface\ISimpleSpriteAnimation.cpp" />
     <ClCompile Include="Interface\ISimpleSpriteRenderer.cpp" />
@@ -287,6 +290,7 @@ copy /Y "$(ProjectDir)\External\devil\lib\ILU.dll" "$(TargetDir)"</Command>
     <ClCompile Include="Src\SimpleObject.cpp" />
     <ClCompile Include="Src\SimpleObjectsRenderPass.cpp" />
     <ClCompile Include="Src\SimpleRenderer.cpp" />
+    <ClCompile Include="Src\SimpleResourceManager.cpp" />
     <ClCompile Include="Src\SimpleScene.cpp" />
     <ClCompile Include="Src\SimpleShaderProgram.cpp" />
     <ClCompile Include="Src\SimpleSpriteAnimation.cpp" />

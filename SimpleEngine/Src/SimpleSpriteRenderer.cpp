@@ -10,9 +10,10 @@ FACTORY_REGISTER(SimpleObject, SimpleSpriteRenderer)
 SimpleSpriteRenderer::SimpleSpriteRenderer() {
 
 	SimpleRenderer* render = SimpleEngine::Instance()->GetRenderer();
+	SimpleResourceManager* resources = SimpleEngine::Instance()->GetResourceManager();
 	//All the sprites use the same geometry
 	_mesh = render->GetUnitaryQuad();
-	_shader = render->GetProgram("VertexSprite");
+	_shader = resources->GetProgram("VertexSprite");
 	_cam = SimpleEngine::Instance()->GetScene()->GetCamera();
 
 	_rectOffset = glm::vec2(0.0f);
@@ -35,11 +36,11 @@ SimpleSpriteRenderer::~SimpleSpriteRenderer() {
 
 void SimpleSpriteRenderer::SetAsTexture(std::string && name) {
 	
-	SimpleRenderer* render = SimpleEngine::Instance()->GetRenderer();
-	_tex = render->GetTexture(name);
+	SimpleResourceManager* resources = SimpleEngine::Instance()->GetResourceManager();
+	_tex = resources->GetTexture(name);
 	if (_tex == nullptr) {
-		render->LoadTexture(name);
-		_tex = render->GetTexture(name);
+		resources->LoadTexture(name);
+		_tex = resources->GetTexture(name);
 	}
 	SIMPLE_ASSERT(_tex != nullptr);
 
@@ -60,11 +61,11 @@ void SimpleSpriteRenderer::SetAsTexture(SimpleTexture* t) {
 
 
 void SimpleSpriteRenderer::SetAsTextureRect(std::string && name, glm::vec2 offset, glm::vec2 size) {
-	SimpleRenderer* render = SimpleEngine::Instance()->GetRenderer();
-	_tex = render->GetTexture(name);
+	SimpleResourceManager* resources = SimpleEngine::Instance()->GetResourceManager();
+	_tex = resources->GetTexture(name);
 	if (_tex == nullptr) {
-		render->LoadTexture(name);
-		_tex = render->GetTexture(name);
+		resources->LoadTexture(name);
+		_tex = resources->GetTexture(name);
 	}
 	SetRect(offset, size);
 }

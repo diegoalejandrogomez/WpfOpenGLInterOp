@@ -68,7 +68,7 @@ void SimpleTexture::_UploadData() {
 void SimpleTexture::LoadTexture(const char* path, bool autoFlush)
 {
 
-	std::string resPath = SimpleEngine::Instance()->GetResourcesBaseDir() + path;
+	std::string resPath = SimpleEngine::Instance()->GetResourceManager()->GetResourcesBaseDir() + path;
 	ILuint ImgId = 0;
 	IL_CHECK(ilGenImages(1, &ImgId));
 	this->texture.id = ImgId;
@@ -197,7 +197,7 @@ void SimpleTexture::SaveTexture(const char* path) {
 	uint32_t format = texture.channels == 1 ? IL_LUMINANCE : IL_RGBA;
 	IL_CHECK(ilTexImage(texture.width, texture.height, 1, texture.channels, format, IL_UNSIGNED_BYTE, texture.imageData));
 	ilEnable(IL_FILE_OVERWRITE);
-	std::string finalPath = SimpleEngine::Instance()->GetResourcesBaseDir() + path;
+	std::string finalPath = SimpleEngine::Instance()->GetResourceManager()->GetResourcesBaseDir() + path;
 	ilSave(IL_PNG, finalPath.c_str() );
 
 }

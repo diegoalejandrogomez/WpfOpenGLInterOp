@@ -5,7 +5,7 @@
 
 
 void SimpleSpriteAnimation::SetSpriteSheet(const std::string sheetName) {
-	_sheet = SimpleEngine::Instance()->GetRenderer()->GetSpriteSheet(sheetName);
+	_sheet = SimpleEngine::Instance()->GetResourceManager()->GetSpriteSheet(sheetName);
 	SIMPLE_ASSERT(_sheet != nullptr);
 }
 
@@ -52,7 +52,7 @@ bool SimpleSpriteAnimation::Deserialize(const json &node) {
 	}
 
 	std::string spriteSheet = node["spriteSheet"].get<std::string>();
-	_sheet = SimpleEngine::Instance()->GetRenderer()->GetSpriteSheet(spriteSheet);
+	_sheet = SimpleEngine::Instance()->GetResourceManager()->GetSpriteSheet(spriteSheet);
 	if (_sheet == nullptr) {
 		SIMPLE_LOG("Couldn't find spritesheet");
 		return false;

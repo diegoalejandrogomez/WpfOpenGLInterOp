@@ -72,7 +72,7 @@ void SimpleAnimatedSpriteRenderer::SetAnimation(SimpleSpriteAnimation* anim) {
 
 void SimpleAnimatedSpriteRenderer::SetAnimation(SimpleID animName) {
 
-	_anim = SimpleEngine::Instance()->GetRenderer()->GetSpriteAnimation(animName);
+	_anim = SimpleEngine::Instance()->GetResourceManager()->GetSpriteAnimation(animName);
 	if(_anim != nullptr)
 		SimpleSpriteSheetRenderer::SetSpriteSheet(_anim->GetSpriteSheet());
 
@@ -112,7 +112,7 @@ bool SimpleAnimatedSpriteRenderer::Deserialize(const json &node) {
 
 	SIMPLE_ASSERT(local.find("animation") != local.end());
 	std::string animName = local["animation"];
-	_anim = SimpleEngine::Instance()->GetRenderer()->GetSpriteAnimation(animName);
+	_anim = SimpleEngine::Instance()->GetResourceManager()->GetSpriteAnimation(animName);
 	SIMPLE_ASSERT(_anim != nullptr);
 
 	SIMPLE_ASSERT(local.find("currentFrame") != local.end());

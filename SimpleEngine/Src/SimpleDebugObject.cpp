@@ -13,7 +13,8 @@ SimpleDebugObject::SimpleDebugObject() {
 
 	//Save reference to the used shader
 	auto renderer = SimpleEngine::Instance()->GetRenderer();
-	_shader = renderer->GetProgram("VertexColor");
+	auto resources = SimpleEngine::Instance()->GetResourceManager();
+	_shader = resources->GetProgram("VertexColor");
 	_cam = SimpleEngine::Instance()->GetScene()->GetCamera();
 	
 	//Generate geometry

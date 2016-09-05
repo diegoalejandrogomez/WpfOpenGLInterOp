@@ -7,9 +7,10 @@ FACTORY_REGISTER(SimpleObject, SimpleLineRenderer);
 SimpleLineRenderer::SimpleLineRenderer() {
 
 	SimpleRenderer* render = SimpleEngine::Instance()->GetRenderer();
+	SimpleResourceManager* resources = SimpleEngine::Instance()->GetResourceManager();
 	//All the sprites use the same geometry
 	_mesh = new SimpleMesh<VertexColorFormat2D>(false);
-	_shader = render->GetProgram("VertexColor");
+	_shader = resources->GetProgram("VertexColor");
 	_cam = SimpleEngine::Instance()->GetScene()->GetCamera();
 	
 }

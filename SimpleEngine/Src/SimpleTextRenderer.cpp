@@ -10,8 +10,8 @@ FACTORY_REGISTER(SimpleObject, SimpleTextRenderer)
 
 SimpleTextRenderer::SimpleTextRenderer() {
 
-	SimpleRenderer* render = SimpleEngine::Instance()->GetRenderer();
-	SimpleShaderProgram* p = render->GetProgram("TextSprite");
+	SimpleResourceManager* resources = SimpleEngine::Instance()->GetResourceManager();
+	SimpleShaderProgram* p = resources->GetProgram("TextSprite");
 	SetShader(p);
 
 }
@@ -33,16 +33,17 @@ void SimpleTextRenderer::Render(float dt) {
 	// Iterate through all characters
 	std::string::const_iterator c;
 	SimpleRenderer* render = SimpleEngine::Instance()->GetRenderer();
-	SimpleRenderer::FontCharacters chars = render->GetFontChars(_fontName);
+	SimpleResourceManager* resources = SimpleEngine::Instance()->GetResourceManager();
+	SimpleResourceManager::FontCharacters chars = resources->GetFontChars(_fontName);
 
 	glm::vec3 pos = GetPosition();
 	glm::vec3 originalPos = pos;
-	float scale = render->GetFontScale(_fontName) * _fontSize;
+	float scale = resources->GetFontScale(_fontName) * _fontSize;
 	SimpleSpriteSheetRenderer::SetSpriteSheet(_fontName);
 
 	for (c = _text.begin(); c != _text.end(); c++)
 	{
-		SimpleRenderer::SimpleCharacter ch = chars[*c];
+		SimpleResourceManager::SimpleCharacter ch = chars[*c];
 
 		//Obtain the current position
 		
@@ -75,9 +76,9 @@ void SimpleTextRenderer::SetFontName(std::string && name) {
 	path filePath = name;
 	_fontName = filePath.filename().string();
 
-	SimpleRenderer* render = SimpleEngine::Instance()->GetRenderer();
-	if (!render->HasFont(_fontName))
-		render->LoadFont(name);		
+	SimpleResourceManager* resources = SimpleEngine::Instance()->GetResourceManager();
+	if (!resources->HasFont(_fontName))
+		resources->LoadFont(name);
 	
 }
 

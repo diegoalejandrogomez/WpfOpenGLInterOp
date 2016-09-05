@@ -113,11 +113,11 @@ namespace SimpleEngineTileEditor
         #endregion
         #region SimpleRendererImports
         [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
-        static extern IntPtr SimpleRenderer_GetSpriteSheet(String texturePath);
+        static extern IntPtr SimpleResourceManager_GetSpriteSheet(String texturePath);
         [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
-        static extern bool SimpleRenderer_CreateSpriteSheet(String texturePath, int frameSizeX, int frameSizeY, int frameCountX, int frameCountY);
+        static extern bool SimpleResourceManager_CreateSpriteSheet(String texturePath, int frameSizeX, int frameSizeY, int frameCountX, int frameCountY);
         [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
-        static extern bool SimpleRenderer_CreateSpriteSheetEmpty(String texturePath);
+        static extern bool SimpleResourceManager_CreateSpriteSheetEmpty(String texturePath);
         #endregion
         #region SimpleSpriteSheet
         [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
@@ -127,9 +127,9 @@ namespace SimpleEngineTileEditor
         #endregion
         #region SimpleRendererImports
         [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
-        static extern IntPtr SimpleRenderer_GetSpriteAnimation(string name);
+        static extern IntPtr SimpleResourceManager_GetSpriteAnimation(string name);
         [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
-        static extern bool Simplerenderer_CreateSpriteAnimationEmpty(String name);
+        static extern bool SimpleResourceManager_CreateSpriteAnimationEmpty(String name);
         #endregion
         #region NativeTileEditorAppImports
         [DllImport("SimpleEngineNativeTileEditor.dll", CallingConvention = CallingConvention.Cdecl)]
@@ -158,11 +158,11 @@ namespace SimpleEngineTileEditor
 
         public void SetAnimation(String animationName,float speed) {
 
-            _animation = SimpleRenderer_GetSpriteAnimation(animationName);
+            _animation = SimpleResourceManager_GetSpriteAnimation(animationName);
             if (_animation == IntPtr.Zero)
             {
-                Simplerenderer_CreateSpriteAnimationEmpty(animationName);
-                _animation = SimpleRenderer_GetSpriteAnimation(animationName);
+                SimpleResourceManager_CreateSpriteAnimationEmpty(animationName);
+                _animation = SimpleResourceManager_GetSpriteAnimation(animationName);
                 SimpleSpriteAnimation_SetFrameTime(_animation, speed);
             }
             
@@ -178,13 +178,13 @@ namespace SimpleEngineTileEditor
             path = path.Remove(0, from + 6);
 
             //Try to find spritesheet to use
-            IntPtr spriteSheet = SimpleRenderer_GetSpriteSheet(path);
+            IntPtr spriteSheet = SimpleResourceManager_GetSpriteSheet(path);
 
             if (spriteSheet == IntPtr.Zero)
             {
 
-                SimpleRenderer_CreateSpriteSheetEmpty(path);
-                spriteSheet = SimpleRenderer_GetSpriteSheet(path);
+                SimpleResourceManager_CreateSpriteSheetEmpty(path);
+                spriteSheet = SimpleResourceManager_GetSpriteSheet(path);
             }
 
             int idx = SimpleSpriteSheet_GetFrameIndex(spriteSheet, x, y, w, h);
@@ -201,7 +201,7 @@ namespace SimpleEngineTileEditor
         {
 
             //Check if the animation exists... otherwise, we should assert
-            IntPtr anim = SimpleRenderer_GetSpriteAnimation(animationName);
+            IntPtr anim = SimpleResourceManager_GetSpriteAnimation(animationName);
 
             if (anim == IntPtr.Zero)
                 throw new Exception("Animation not found!");

@@ -35,11 +35,11 @@ extern "C" {
 	}
 
 	SIMPLE_API void SimpleEngine_SetResourcesBaseDir(const char* baseDir) {
-		SimpleEngine::Instance()->SetResourcesBaseDir(baseDir);
+		SimpleEngine::Instance()->GetResourceManager()->SetResourcesBaseDir(baseDir);
 	}
 
 	SIMPLE_API const char* SimpleEngine_GetResourcesBaseDir() {
-		return SimpleEngine::Instance()->GetResourcesBaseDir().c_str();
+		return SimpleEngine::Instance()->GetResourceManager()->GetResourcesBaseDir().c_str();
 	};
 
 	SIMPLE_API void SimpleEngine_CreateScene() {

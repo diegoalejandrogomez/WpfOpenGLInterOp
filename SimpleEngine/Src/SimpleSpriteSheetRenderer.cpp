@@ -20,7 +20,7 @@ SimpleSpriteSheetRenderer::~SimpleSpriteSheetRenderer() {
 
 void SimpleSpriteSheetRenderer::SetSpriteSheet(SimpleID sheetName){
 
-	_spriteSheet = SimpleEngine::Instance()->GetRenderer()->GetSpriteSheet(sheetName);
+	_spriteSheet = SimpleEngine::Instance()->GetResourceManager()->GetSpriteSheet(sheetName);
 	_UpdateFrame();
 }
 
@@ -81,7 +81,7 @@ bool SimpleSpriteSheetRenderer::Deserialize(const json &node) {
 
 	SIMPLE_ASSERT(local.find("spriteSheet") != local.end());
 	std::string sprPath = local["spriteSheet"];
-	_spriteSheet = SimpleEngine::Instance()->GetRenderer()->GetSpriteSheet(sprPath);
+	_spriteSheet = SimpleEngine::Instance()->GetResourceManager()->GetSpriteSheet(sprPath);
 	SIMPLE_ASSERT(_spriteSheet != nullptr);
 
 	return true;

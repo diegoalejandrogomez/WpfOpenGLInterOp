@@ -48,6 +48,9 @@
     <Filter Include="Engine\Graphics\Text">
       <UniqueIdentifier>{28062adb-d33e-4c84-95b6-af867f6bc3b7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Resources">
+      <UniqueIdentifier>{40ee258f-80bd-4e10-8c4a-75cc870db77a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -212,6 +215,12 @@
     <ClInclude Include="Include\SimpleTextureRegion.h">
       <Filter>Engine\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Include\SimpleResourceManager.h">
+      <Filter>Engine\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\ISimpleResourceManager.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\SimpleObjectsRenderPass.cpp">
@@ -329,6 +338,12 @@
       <Filter>Engine\Graphics\Text</Filter>
     </ClCompile>
     <ClCompile Include="ISimpleTextRenderer.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\SimpleResourceManager.cpp">
+      <Filter>Engine\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Interface\ISimpleResourceManager.cpp">
       <Filter>Interface</Filter>
     </ClCompile>
   </ItemGroup>

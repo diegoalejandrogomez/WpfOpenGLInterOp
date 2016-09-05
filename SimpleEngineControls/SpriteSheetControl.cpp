@@ -28,10 +28,10 @@ int SpriteSheetControl::AddControl(System::String^ path, int x, int y, int w, in
 	 chars.erase(0, from + 6);
 
 
-	SimpleSpriteSheet* sheet = SimpleEngine::Instance()->GetRenderer()->GetSpriteSheet(chars);
+	SimpleSpriteSheet* sheet = SimpleEngine::Instance()->GetResourceManager()->GetSpriteSheet(chars);
 	if (sheet == nullptr) {
-		SimpleEngine::Instance()->GetRenderer()->CreateSpriteSheet(chars);
-		sheet = SimpleEngine::Instance()->GetRenderer()->GetSpriteSheet(chars);
+		SimpleEngine::Instance()->GetResourceManager()->CreateSpriteSheet(chars);
+		sheet = SimpleEngine::Instance()->GetResourceManager()->GetSpriteSheet(chars);
 	}
 
 	int idx = sheet->GetFrameIndex({ x,y }, { w,h });

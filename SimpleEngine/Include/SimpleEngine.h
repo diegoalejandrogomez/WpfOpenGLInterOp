@@ -5,6 +5,7 @@
 #include "SimpleInput.h"
 #include <chrono>
 #include "SimpleConfiguration.h"
+#include "SimpleResourceManager.h"
 #include <queue>
 
 class SIMPLE_API SimpleEngine final{
@@ -24,10 +25,7 @@ public:
 
 	void Initialize();
 	void Shutdown();
-
-	void SetResourcesBaseDir(std::string const& baseDir);
-	std::string GetResourcesBaseDir() { return _resBaseDir; };
-		
+	
 	void InitRenderer(HWND hWnd, uint32_t width, uint32_t height);
 	void InitInput(HWND hWnd, bool exclusive);
 	void SetGameLogic(SimpleGameLogic* _newGameMode);
@@ -38,6 +36,7 @@ public:
 	//Obtain current or next game logic
 	inline SimpleGameLogic*  GetGameLogic() { return _gameLogic == nullptr? _nextGameLogic:_gameLogic; }
 	inline SimpleRenderer* GetRenderer() { return _renderer; }
+	inline SimpleResourceManager* GetResourceManager() { return _resManager; }
 	inline SimpleInput* GetInput() { return _input; }
 	inline float GetRenderFPS() const { 
 		std::chrono::duration<float> s = (_renderLastFPS.back() - _renderLastFPS.front());
@@ -90,6 +89,7 @@ protected:
 	SimpleGameLogic* _gameLogic = nullptr;
 	SimpleGameLogic* _nextGameLogic = nullptr;
 	SimpleInput*	_input;
+	SimpleResourceManager *_resManager = nullptr;
 
 	 //Instant frame time for logic and render update
 	std::chrono::duration<float> _renderTime;

@@ -115,11 +115,13 @@ void SimpleEngine::Initialize() {
 	SIMPLE_ASSERT(_renderer != nullptr);
 	SIMPLE_ASSERT(_input != nullptr);
 	
+	//Init resource manager
+	_resManager = new SimpleResourceManager();
+	_resManager->SetResourcesBaseDir("./resources");
+
 	//Init render passes
 	_renderer->Initialize();
 	
-	_resBaseDir = "./resources/";
-
 	//Loads a default scene
 	CreateScene();
 	_scene->GetCamera()->SetViewportSize((float)_renderer->GetWidth(), (float)_renderer->GetHeight());
@@ -150,8 +152,12 @@ void SimpleEngine::Shutdown() {
 		_scene = nullptr;
 	}
 
-	//Destroy resources
+	
+	//Destroy render passes
 	_renderer->Shutdown();
+
+	//Destroy resource
+	_resManager->ClearResources();
 
 }
 
@@ -162,20 +168,16 @@ void SimpleEngine::SerializeResources() {
 	create_directory(_resBaseDir);
 
 	//Serialize graphical resources
-	_renderer->SerializeResources(_resBaseDir);
+	_resManager->SerializeResources(_resBaseDir);
 
 }
 void SimpleEngine::DeserializeResources() {
-	_renderer->DeserializeResources(_resBaseDir);
-}
-
-void SimpleEngine::SetResourcesBaseDir(std::string const& baseDir) {
-	_resBaseDir = baseDir;
+	_resManager->DeserializeResources(_resBaseDir);
 }
 
 bool SimpleEngine::SerializeGameLogic(std::string const& path) {
 	json logic = _gameLogic->Serialize();
-	std::ofstream file(SimpleEngine::Instance()->GetResourcesBaseDir() + path);
+	std::ofstream file(_resManager->GetResourcesBaseDir() + path);
 	if (file.is_open()) {
 		file << std::setw(4) << logic;
 		file.close();
@@ -188,7 +190,7 @@ bool SimpleEngine::DeserializeGameLogic(std::string const& path) {
 	
 	json logic;
 
-	std::ifstream file(SimpleEngine::Instance()->GetResourcesBaseDir() + path);
+	std::ifstream file(_resManager->GetResourcesBaseDir() + path);
 	if (file.is_open())
 	{
 		file >> logic;
@@ -212,7 +214,7 @@ void SimpleEngine::SetGameLogicState(std::string const& state) {
 bool SimpleEngine::SerializeScene(std::string const& path) {
 
 	const json scene = _scene->Serialize();
-	std::ofstream file(SimpleEngine::Instance()->GetResourcesBaseDir() + path);
+	std::ofstream file(_resManager->GetResourcesBaseDir() + path);
 	if (file.is_open()) {
 		file << std::setw(4) << scene;
 		file.close();
@@ -227,7 +229,7 @@ bool SimpleEngine::DeserializeScene(std::string const& path) {
 	CreateScene();
 	_scene->RemoveLayer(_scene->GetLayer(0));
 
-	std::ifstream file(SimpleEngine::Instance()->GetResourcesBaseDir() + path);
+	std::ifstream file(_resManager->GetResourcesBaseDir() + path);
 	if (file.is_open())
 	{
 		file >> scene;
@@ -258,7 +260,7 @@ bool SimpleEngine::SerializeGameState(std::string const& path) {
 		{"scene", scene}
 	};
 	
-	std::ofstream file(SimpleEngine::Instance()->GetResourcesBaseDir() + path);
+	std::ofstream file(_resManager->GetResourcesBaseDir() + path);
 	if (file.is_open()) {
 		file << std::setw(4) << gameState;
 		file.close();
@@ -270,7 +272,7 @@ bool SimpleEngine::SerializeGameState(std::string const& path) {
 bool SimpleEngine::DeserializeGameState(std::string const& path) {
 	
 	json gameState;
-	std::ifstream file(SimpleEngine::Instance()->GetResourcesBaseDir() + path);
+	std::ifstream file(_resManager->GetResourcesBaseDir() + path);
 	if (file.is_open())
 	{
 		file >> gameState;

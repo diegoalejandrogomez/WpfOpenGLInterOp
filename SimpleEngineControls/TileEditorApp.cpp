@@ -12,18 +12,18 @@ void TileEditorApp::Init()
 
 	SimpleEngine* engine = SimpleEngine::Instance();
 	
-	engine->SetResourcesBaseDir("./temp/");
+	engine->GetResourceManager()->SetResourcesBaseDir("./temp/");
 	SetMapSize(10, 10);
 
 	_CreateSceneStructure();
 
 	//Load cursor spritesheet
-	engine->GetRenderer()->CreateSpriteSheet("media/grid.png");
-	SimpleSpriteSheet *spriteSheet = engine->GetRenderer()->GetSpriteSheet("media/grid.png");
+	engine->GetResourceManager()->CreateSpriteSheet("media/grid.png");
+	SimpleSpriteSheet *spriteSheet = engine->GetResourceManager()->GetSpriteSheet("media/grid.png");
 	spriteSheet->AddSpriteFrame({ 0,0 }, { spriteSheet->GetWidth(), spriteSheet->GetHeight() });
 
-	engine->GetRenderer()->CreateSpriteSheet("media/delete.png");
-	spriteSheet = engine->GetRenderer()->GetSpriteSheet("media/delete.png");
+	engine->GetResourceManager()->CreateSpriteSheet("media/delete.png");
+	spriteSheet = engine->GetResourceManager()->GetSpriteSheet("media/delete.png");
 	spriteSheet->AddSpriteFrame({ 0,0 }, { spriteSheet->GetWidth(), spriteSheet->GetHeight() });
 	
 	

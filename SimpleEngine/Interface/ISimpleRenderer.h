@@ -14,16 +14,4 @@ extern "C" {
 
 	SIMPLE_API int SimpleRenderer_GetHeight();
 
-	SIMPLE_API bool SimpleRenderer_CreateSpriteSheet(const char* texturePath, int frameSizeX, int frameSizeY, int frameCountX, int frameCountY);
-
-	SIMPLE_API bool SimpleRenderer_CreateSpriteSheetEmpty(const char* texturePath);
-
-	SIMPLE_API SimpleSpriteSheet* Renderer_GetSpriteSheet(const char* texturePath);
-
-	SIMPLE_API bool SimpleRenderer_CreateSpriteAnimation(const char* name, const char* spriteSheet, int* frames, int frameCount, float frameTime);
-	SIMPLE_API bool Simplerenderer_CreateSpriteAnimationEmpty(const char* name);
-
-	SIMPLE_API SimpleSpriteAnimation* SimpleRenderer_GetSpriteAnimation(const char* name);
-
-
 }

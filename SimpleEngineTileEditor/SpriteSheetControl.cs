@@ -17,11 +17,11 @@ namespace SimpleEngineTileEditor
         #endregion
         #region SimpleRendererImports
         [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
-        static extern IntPtr SimpleRenderer_GetSpriteSheet(String texturePath);
+        static extern IntPtr SimpleResourceManager_GetSpriteSheet(String texturePath);
         [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
-        static extern bool SimpleRenderer_CreateSpriteSheet(String texturePath, int frameSizeX, int frameSizeY, int frameCountX, int frameCountY);
+        static extern bool SimpleResourceManager_CreateSpriteSheet(String texturePath, int frameSizeX, int frameSizeY, int frameCountX, int frameCountY);
         [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
-        static extern bool SimpleRenderer_CreateSpriteSheetEmpty(String texturePath);
+        static extern bool SimpleResourceManager_CreateSpriteSheetEmpty(String texturePath);
         #endregion
         #region SimpleSpriteSheet
         [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl )]
@@ -127,12 +127,12 @@ namespace SimpleEngineTileEditor
             path = path.Remove(0, from + 6);
 
             //Try to find spritesheet to use
-            IntPtr spriteSheet = SimpleRenderer_GetSpriteSheet(path);
+            IntPtr spriteSheet = SimpleResourceManager_GetSpriteSheet(path);
 
             if (spriteSheet == IntPtr.Zero) {
 
-                SimpleRenderer_CreateSpriteSheetEmpty(path);
-                spriteSheet = SimpleRenderer_GetSpriteSheet(path);
+                SimpleResourceManager_CreateSpriteSheetEmpty(path);
+                spriteSheet = SimpleResourceManager_GetSpriteSheet(path);
             }
 
             int idx = SimpleSpriteSheet_GetFrameIndex(spriteSheet,x,y,w,h);
