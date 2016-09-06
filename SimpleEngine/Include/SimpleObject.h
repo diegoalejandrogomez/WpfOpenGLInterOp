@@ -21,10 +21,12 @@ public:
 
 	inline const glm::vec3& GetPosition() const { return _aabb.position; };
 	inline const glm::vec2& GetSize() const { return _aabb.size; };
+	inline const SimpleAABB::ANCHOR_POINT GetAnchor() const { return _aabb.anchor; };
 	inline const float& GetOrientation() const { return _orientation; };
 	inline const SimpleID& GetName() const { return _name; };
 	inline void SetPosition(const glm::vec3&& pos) { _aabb.position = pos; };
 	inline void SetPosition(const glm::vec3& pos) { _aabb.position = pos; };
+	inline const void SetAnchor(SimpleAABB::ANCHOR_POINT anchor) { _aabb.anchor = anchor; }
 	inline void SetSize(glm::vec2&& size) { _aabb.size = size; };
 	inline void SetSize(glm::vec2& size) { _aabb.size = size; };
 	inline void SetOrientation(float&& orientation) { _orientation = orientation; };

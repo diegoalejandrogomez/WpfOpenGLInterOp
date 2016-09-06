@@ -31,6 +31,7 @@ public:
 
 private:
 
+	void _ComputeSize();
 	std::string _text;
 	std::string _fontName;
 	float _fontSize;

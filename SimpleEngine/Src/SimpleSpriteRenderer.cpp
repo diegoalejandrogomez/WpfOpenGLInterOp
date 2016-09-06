@@ -89,11 +89,11 @@ void SimpleSpriteRenderer::Render(float dt) {
 	//Bad way of querying uniforms
 	GLuint modelLoc = _shader->GetLocationFor( "modelMatrix");
 
-	glm::vec3 pos = _aabb.position;
+	glm::vec3 pos = _aabb.Center();
 	//Not efficient at all, but easier to read for now
 	if (_snapToGrid) {
-		pos.x = std::floor(pos.x / _snapSize.x) + 0.5f * _aabb.size.x;
-		pos.y = std::floor(pos.y / _snapSize.y) + 0.5f * _aabb.size.x;
+		pos.x = std::floor(pos.x / _snapSize.x) + 0.5f * _snapSize.x;
+		pos.y = std::floor(pos.y / _snapSize.y) + 0.5f * _snapSize.y;
 	}
 	_aabb.position = pos;
 

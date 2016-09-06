@@ -13,6 +13,8 @@ SimpleTextRenderer::SimpleTextRenderer() {
 	SimpleResourceManager* resources = SimpleEngine::Instance()->GetResourceManager();
 	SimpleShaderProgram* p = resources->GetProgram("TextSprite");
 	SetShader(p);
+	
+	SetAnchor(SimpleAABB::LOWER_LEFT);
 
 }
 SimpleTextRenderer::~SimpleTextRenderer() {
@@ -36,11 +38,13 @@ void SimpleTextRenderer::Render(float dt) {
 	SimpleResourceManager* resources = SimpleEngine::Instance()->GetResourceManager();
 	SimpleResourceManager::FontCharacters chars = resources->GetFontChars(_fontName);
 
-	glm::vec3 pos = GetPosition();
+	glm::vec3 pos = GetAABB().LowerLeft();
 	glm::vec3 originalPos = pos;
 	float scale = resources->GetFontScale(_fontName) * _fontSize;
 	SimpleSpriteSheetRenderer::SetSpriteSheet(_fontName);
 
+	glm::vec2 originalSize = GetSize();
+	
 	for (c = _text.begin(); c != _text.end(); c++)
 	{
 		SimpleResourceManager::SimpleCharacter ch = chars[*c];
@@ -55,7 +59,8 @@ void SimpleTextRenderer::Render(float dt) {
 
 			
 		SimpleSpriteSheetRenderer::SetIndex(ch.SpriteIndex);
-		SimpleSpriteSheetRenderer::SetPosition({ xpos + 0.5f*w, ypos + 0.5f* h, 0.0f });
+		//SimpleSpriteSheetRenderer::SetPosition({ xpos + 0.5f*w - originalSize.x * 0.5f, ypos + 0.5f* h - originalSize.y * 0.5f, 0.0f });
+		SimpleSpriteSheetRenderer::SetPosition({ xpos , ypos , 0.0f });
 		SimpleSpriteSheetRenderer::SetSize({ w,h });
 
 		_shader->Bind();
@@ -68,7 +73,8 @@ void SimpleTextRenderer::Render(float dt) {
 	}
 	
 	SetPosition(originalPos);
-	
+	SetSize(originalSize);
+
 }
 
 void SimpleTextRenderer::SetFontName(std::string && name) {
@@ -82,8 +88,31 @@ void SimpleTextRenderer::SetFontName(std::string && name) {
 	
 }
 
+void SimpleTextRenderer::_ComputeSize() {
+
+	SimpleResourceManager* resources = SimpleEngine::Instance()->GetResourceManager();
+	float scale = resources->GetFontScale(_fontName) * _fontSize;
+	SimpleSpriteSheetRenderer::SetSpriteSheet(_fontName);
+	std::string::const_iterator c;
+	
+	GLfloat sizeW = 0.0f;
+	GLfloat sizeH = 0.0f;
+
+	SimpleResourceManager::FontCharacters chars = resources->GetFontChars(_fontName);
+	
+	for (c = _text.begin(); c != _text.end(); c++)
+	{
+		SimpleResourceManager::SimpleCharacter ch = chars[*c];
+		sizeW += float(ch.Advance >> 6) * scale;
+		sizeH = std::max(sizeH, float(ch.Size.y * scale));
+	}
+	
+	SimpleSpriteSheetRenderer::SetSize({ sizeW,sizeH });
+}
+
 void SimpleTextRenderer::SetText(std::string text) {
 	_text = text;
+	_ComputeSize();
 }
 
 void SimpleTextRenderer::SetFontSize(float size) {
