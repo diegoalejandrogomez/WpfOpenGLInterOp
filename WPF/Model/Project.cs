@@ -20,5 +20,7 @@ namespace WPF.Model
         public List<String> Scenes { get; set; }
 
         public List<Animation> Animations { get; set; }
+
+        public byte[] PackResources { get; set; }
     }
 }

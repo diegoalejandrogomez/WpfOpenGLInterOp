@@ -6,8 +6,10 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Drawing;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Net.Cache;
+using System.Text;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
@@ -210,6 +212,11 @@ namespace WPF.ViewModel
 
         private void GetAvailableTiles(Project project)
         {
+            if(Tiles == null)
+            {
+                return;
+            }
+
             //get all available tiles on bar
             foreach (var tile in Tiles)
             {
@@ -866,18 +873,32 @@ namespace WPF.ViewModel
                                 var project = new Project();
                                 var scene = new Scene();
                                 GetAvailableTiles(project);
-                                foreach(var item in Animations)
+                                if (Animations != null)
                                 {
-                                    Animation animation = new Animation();
-                                    animation.Resources.AddRange(item.Tiles.Select(i => i.Id));
-                                    animation.Frequency = item.Frequency;
-                                    animation.Name = item.Name;
-                                    project.Animations.Add(animation);
+                                    foreach (var item in Animations)
+                                    {
+                                        Animation animation = new Animation();
+                                        animation.Resources.AddRange(item.Tiles.Select(i => i.Id));
+                                        animation.Frequency = item.Frequency;
+                                        animation.Name = item.Name;
+                                        project.Animations.Add(animation);
+                                    }
+                                }
+                                
+                                project.Scenes.Add(_tileMap.TakeSnapshot());
+                                
+                                var packFile = Path.ChangeExtension(dialog.FileName, ".pack");
+                                _tileMap.PackResources(packFile);
+                                byte[] fileBytes = File.ReadAllBytes(packFile);
+                                StringBuilder sb = new StringBuilder();
+
+                                foreach (byte b in fileBytes)
+                                {
+                                    sb.Append(Convert.ToString(b, 2).PadLeft(8, '0'));
                                 }
 
-                                project.Scenes.Add(_tileMap.TakeSnapshot());
+                                project.PackResources = Zip(sb.ToString());
                                 var json = Newtonsoft.Json.JsonConvert.SerializeObject(project);
-                                _tileMap.PackResources(Path.ChangeExtension(dialog.FileName, ".pack"));
                                 System.IO.File.WriteAllText(dialog.FileName, json);
                             }
                         }
@@ -911,8 +932,12 @@ namespace WPF.ViewModel
                             bitmapImage = GetSelectableTiles(bitmapImage, project);
                             GetSelectableAnimations(project);
                             _tileMap.UnpackResources(Path.ChangeExtension(dialog.FileName, "pack"));
+                            var packFile = Path.ChangeExtension(dialog.FileName, ".pack");
+                            File.WriteAllText(packFile, Unzip(project.PackResources));
+
                             foreach (var scene in project.Scenes)
                             {
+                                _tileMap.UnpackResources(packFile);
                                 _tileMap.RestoreSnapshot(scene);
                             }
                         }
@@ -920,6 +945,50 @@ namespace WPF.ViewModel
                 }
 
                 return openFileCommand;
+            }
+        }
+
+        public static void CopyTo(Stream src, Stream dest)
+        {
+            byte[] bytes = new byte[4096];
+
+            int cnt;
+
+            while ((cnt = src.Read(bytes, 0, bytes.Length)) != 0)
+            {
+                dest.Write(bytes, 0, cnt);
+            }
+        }
+
+        public static byte[] Zip(string str)
+        {
+            var bytes = Encoding.UTF8.GetBytes(str);
+
+            using (var msi = new MemoryStream(bytes))
+            using (var mso = new MemoryStream())
+            {
+                using (var gs = new GZipStream(mso, CompressionMode.Compress))
+                {
+                    //msi.CopyTo(gs);
+                    CopyTo(msi, gs);
+                }
+
+                return mso.ToArray();
+            }
+        }
+
+        public static string Unzip(byte[] bytes)
+        {
+            using (var msi = new MemoryStream(bytes))
+            using (var mso = new MemoryStream())
+            {
+                using (var gs = new GZipStream(msi, CompressionMode.Decompress))
+                {
+                    //gs.CopyTo(mso);
+                    CopyTo(gs, mso);
+                }
+
+                return Encoding.UTF8.GetString(mso.ToArray());
             }
         }
 
