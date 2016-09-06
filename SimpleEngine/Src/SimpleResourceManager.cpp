@@ -287,6 +287,7 @@ void SimpleResourceManager::_AddFilesToArchive(std::vector<std::string>& files, 
 		zip_error_fini(&error);
 		return;
 	}
+
 	if(!relativePath.empty())
 		zip_dir_add(zipArchive, relativePath.c_str(), ZIP_FL_OVERWRITE);
 
@@ -313,6 +314,7 @@ void SimpleResourceManager::_AddFilesToArchive(std::vector<std::string>& files, 
 			return;
 		}
 
+		zip_set_file_compression(zipArchive, index, ZIP_CM_STORE, 0);
 	}
 		
 	zip_close(zipArchive);
