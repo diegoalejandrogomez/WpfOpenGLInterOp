@@ -274,7 +274,7 @@ SimpleObject* SimpleScene::PickFirst(SimpleAABB rect, SimpleLayer* l) {
 
 	for (SimpleObject* obj : l->GetEntities()) {
 		SimpleAABB other = obj->GetAABB();
-		other.position = glm::vec3(0.0f);
+		//other.position = glm::vec3(0.0f);
 		if (rect.Overlaps(glm::translate(rect.position) , other, obj->GetTransform()))
 			return obj;
 	}

@@ -1124,7 +1124,7 @@ namespace WPF.ViewModel
             var test = this.fontViewModel;
             if(this.fontViewModel.textControl == null)
                 this.fontViewModel.textControl = new TextControl();
-            this.fontViewModel.textControl.AddControl(this.fontViewModel.FontSize, this.fontViewModel.Text, this.fontViewModel.FontFamily, this.fontViewModel.FontColor);
+            this.fontViewModel.textControl.AddControl(this.fontViewModel.FontSize, this.fontViewModel.Text, this.fontViewModel.FontFamily, this.fontViewModel.FontColor, "MainTileMap");
             this.fontViewModel.Clear();
         }
         #endregion

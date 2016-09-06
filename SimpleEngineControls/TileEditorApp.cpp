@@ -157,16 +157,22 @@ void TileEditorApp::_Erase() {
 	_pickArea.size = { 1.0f,1.0f };
 
 	
-	/*SimpleObject* obj = SimpleEngine::Instance()->GetScene()->PickFirst(_pickArea, _tileMapLayer);
-	if (obj != nullptr) {
-		SimpleEngine::Instance()->GetScene()->RemoveEntity(obj, _tileMapLayer);
-		delete obj;
-	}*/
+
 
 	if (_tiles[idx] != nullptr) {
 		SimpleEngine::Instance()->GetScene()->RemoveEntity(_tiles[idx], "MainTileMap");
 		delete _tiles[idx];
 		_tiles[idx] = nullptr;
+	}
+	else {
+		
+		//Check to see if it is somehting not in the grid (like text)
+		SimpleObject* obj = SimpleEngine::Instance()->GetScene()->PickFirst(_pickArea, _tileMapLayer);
+		if (obj != nullptr) {
+		SimpleEngine::Instance()->GetScene()->RemoveEntity(obj, _tileMapLayer);
+		delete obj;
+		}
+	
 	}
 
 }

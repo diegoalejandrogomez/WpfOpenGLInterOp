@@ -44,7 +44,8 @@ namespace SimpleEngineTileEditor
 
         [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
         static extern void SimpleScene_AddEntityWithIdx(IntPtr sObj, int nLayer);
-
+        [DllImport("SimpleEngine_dyn.dll", CallingConvention = CallingConvention.Cdecl)]
+        static extern void SimpleScene_AddEntityWithName(IntPtr sObj, String layerName);
         #endregion
         IntPtr simpleTextRenderer;
 
@@ -56,7 +57,7 @@ namespace SimpleEngineTileEditor
             SimpleTextRenderer_Destroy(simpleTextRenderer);
         }
 
-        public void AddControl(int fontSize, string text, string fontFamily, string color)
+        public void AddControl(int fontSize, string text, string fontFamily, string color, string layer)
         {
             string fontsfolder = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Fonts);
 
@@ -75,7 +76,7 @@ namespace SimpleEngineTileEditor
             string B = colour.Substring(6, 2);
             
             SimpleTextRenderer_SetColor(simpleTextRenderer, int.Parse(R, System.Globalization.NumberStyles.HexNumber), int.Parse(G, System.Globalization.NumberStyles.HexNumber), int.Parse(B, System.Globalization.NumberStyles.HexNumber), 255);
-            SimpleScene_AddEntityWithIdx(simpleTextRenderer, 0);
+            SimpleScene_AddEntityWithName(simpleTextRenderer, layer);
         }
     }
 }

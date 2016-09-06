@@ -39,7 +39,7 @@ struct SIMPLE_API SimpleAABB {
 	const glm::vec3 Center() const {
 		switch (anchor) {
 		case LOWER_LEFT:
-			return{ position.x + 0.5f*size.x, position.y + 0.5f * size.y, 0.0f };
+			return{ position.x + 0.5f*size.x, position.y + 0.5f * size.y, position.z };
 			break;
 		case CENTER:
 		default:
@@ -48,7 +48,17 @@ struct SIMPLE_API SimpleAABB {
 		}
 	}
 
-	glm::vec3 UpperRight();
+	const glm::vec3 UpperRight() const {
+		switch (anchor) {
+		case LOWER_LEFT:
+			return{ position.x + size.x ,position.y + size.y, position.z };
+			break;
+		case CENTER:
+		default:
+			return{ position.x + 0.5f*size.x, position.y + 0.5f * size.y, position.z };
+			break;
+		}
+	};
 	void SetAnchor(ANCHOR_POINT anchor) { anchor = anchor; }
 
 	bool Contains(float px, float py) const;
