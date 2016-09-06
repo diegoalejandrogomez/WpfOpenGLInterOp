@@ -12,7 +12,6 @@
 #include FT_FREETYPE_H
 #include "DebugRenderPass.h"
 #include "SimpleUtils.h"
-#include "ZipLib/ZipFile.h"
 #include <iostream>
 #include "SimpleResourceManager.h"
 

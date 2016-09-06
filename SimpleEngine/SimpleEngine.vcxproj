@@ -99,9 +99,9 @@
     <IncludePath>./External/ois/include/;./External/devil/include/;$(ProjectDir);./External/glm/;./External/glew/;./Include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_DLL|Win32'">
-    <IncludePath>./External/ziplib/Include/;./External/ois/include/;./External/freetype/include;./External/devil/include/;$(ProjectDir);./External/glm/;./External/glew/;./Include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <IncludePath>./External/libzip/lib/libzip/include;./External/libzip/include;./External/ois/include/;./External/freetype/include;./External/devil/include/;$(ProjectDir);./External/glm/;./External/glew/;./Include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
     <TargetName>$(ProjectName)_dyn</TargetName>
-    <LibraryPath>./External/ziplib/Lib/x86/Debug/;$(SolutionDir)\SimpleEngine\External\freetype\lib;$(SolutionDir)\SimpleEngine\External\ois\lib\;$(SolutionDir)SimpleEngine\External\devil\lib\;..\Debug\;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
+    <LibraryPath>./External/libzip/lib;$(SolutionDir)\SimpleEngine\External\freetype\lib;$(SolutionDir)\SimpleEngine\External\ois\lib\;$(SolutionDir)SimpleEngine\External\devil\lib\;..\Debug\;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
     <OutDir>$(SolutionDir)Debug\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -134,17 +134,22 @@ copy /Y "$(ProjectDir)\External\devil\lib\ILU.dll" "$(TargetDir)"</Command>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <AdditionalDependencies>freetype-d.lib;OIS_static_d.lib;ILU.lib;DevIL.lib;opengl32.lib;ZipLib.lib;zlib.lib;lzma.lib;bzip2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>zip.lib;freetype-d.lib;OIS_static_d.lib;ILU.lib;DevIL.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
       <TargetMachine>MachineX86</TargetMachine>
     </Lib>
     <PostBuildEvent>
       <Command>xcopy /E /Y "$(ProjectDir)fonts" "$(TargetDir)debugResources\fonts\"
+
 xcopy /E /Y "$(ProjectDir)Src\shaders" "$(TargetDir)shaders\"
+
 xcopy /E /Y "$(ProjectDir)media" "$(TargetDir)debugResources\media\"
+
 copy /Y "$(ProjectDir)\External\devil\lib\DevIL.dll" "$(TargetDir)"
-copy /Y "$(ProjectDir)\External\devil\lib\ILU.dll" "$(TargetDir)"</Command>
+
+copy /Y "$(ProjectDir)\External\devil\lib\ILU.dll" "$(TargetDir)"
+copy /Y "$(ProjectDir)\External\libzip\bin\zip.dll" "$(TargetDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

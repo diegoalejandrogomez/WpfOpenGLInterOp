@@ -2,12 +2,12 @@
 #include "SimpleResourceManager.h"
 #include <filesystem>
 #include "SimpleUtils.h"
-#include "ZipLib/ZipFile.h"
 #include <iostream>
 #include <fstream>
 #include <ft2build.h>
 #include FT_FREETYPE_H
 #include "SimpleEngine.h"
+#include <zip.h>
 
 //C++ 14/17 ... but why not XD
 using namespace std::tr2::sys;
@@ -274,27 +274,51 @@ bool SimpleResourceManager::DeserializeResources(std::string dir) {
 
 void SimpleResourceManager::_AddFilesToArchive(std::vector<std::string>& files, std::string relativePath, std::string archiveName) {
 
-	ZipArchive::Ptr archive = ZipFile::Open(archiveName);
+	
+	zip_source_t *src;
+	zip_error_t error;
+		
+	zip_error_init(&error);
+	int ierror;
+	zip *zipArchive = zip_open(archiveName.c_str(), ZIP_CREATE, &ierror);
+	if (zipArchive == NULL) {
+		
+		SIMPLE_LOG("%s", zip_error_strerror(&error));
+		zip_error_fini(&error);
+		return;
+	}
+	if(!relativePath.empty())
+		zip_dir_add(zipArchive, relativePath.c_str(), ZIP_FL_OVERWRITE);
+
 	std::string base = SimpleEngine::Instance()->GetResourceManager()->GetResourcesBaseDir();
 	for (auto file : files) {
 
-		std::string entryPath = relativePath + file;
-		ZipArchiveEntry::Ptr entry = archive->CreateEntry(entryPath);
+		std::string entryPath = relativePath.empty()? file : relativePath  + "/" + file;
+		std::string finalPath = base +  entryPath;
 
-		// if entry is nullptr, it means the file already exists in the archive
-		assert(entry != nullptr);
-		std::ifstream contentStream(base + entryPath, std::ios::binary);
-		SIMPLE_ASSERT(contentStream.is_open());
-		entry->SetCompressionStream(contentStream, DeflateMethod::Create(), ZipArchiveEntry::CompressionMode::Immediate);
+		src = zip_source_file_create(finalPath.c_str(),0,0, &error);
+
+		if (src == NULL) {
+			SIMPLE_LOG("%s", zip_error_strerror(&error));
+			zip_error_fini(&error);
+			zip_close(zipArchive);
+			return;
+
+		}
+
+		int index = (int)zip_file_add(zipArchive, entryPath.c_str(), src, ZIP_FL_OVERWRITE);
+		if (index < 0)
+		{
+			SIMPLE_LOG("Couldn't add file to archive");
+			return;
+		}
+
 	}
-
-	ZipFile::SaveAndClose(archive, archiveName);
-
+		
+	zip_close(zipArchive);
 }
 void SimpleResourceManager::ExportResources(std::string exportPath) {
-	//For lib documentation check
-	//http://mindless-area.blogspot.com.ar/2013/06/ziplib-lightweight-c11-library-for.html
-	
+		
 	std::string base = SimpleEngine::Instance()->GetResourceManager()->GetResourcesBaseDir();
 
 	SerializeResources(base);
@@ -305,26 +329,26 @@ void SimpleResourceManager::ExportResources(std::string exportPath) {
 	//Font packing
 	std::vector<std::string> files;
 	SimpleUtils::GetFolderContents(base + "/fonts/", files);
-	_AddFilesToArchive(files, "/fonts/", exportPath);
+	_AddFilesToArchive(files, "fonts", exportPath);
 
 	//Texture packing
 	files.clear();
 	SimpleUtils::GetFolderContents(base + "/media/", files);
-	_AddFilesToArchive(files, "/media/", exportPath);
+	_AddFilesToArchive(files, "media", exportPath);
 
 	//Animations packing
 	files.clear();
 	SimpleUtils::GetFolderContents(base + "/animations/", files);
-	_AddFilesToArchive(files, "/animations/", exportPath);
+	_AddFilesToArchive(files, "animations", exportPath);
 
 	//Spritesheets packing
 	files.clear();
 	SimpleUtils::GetFolderContents(base + "/spriteSheets/", files);
-	_AddFilesToArchive(files, "/spriteSheets/", exportPath);
+	_AddFilesToArchive(files, "spriteSheets", exportPath);
 
 	files.clear();
 	SimpleUtils::GetFolderContents(base + "/", files);
-	_AddFilesToArchive(files, "/", exportPath);
+	_AddFilesToArchive(files, "", exportPath);
 
 }
 
@@ -347,24 +371,43 @@ void SimpleResourceManager::ImportResources(std::string exportPath) {
 	create_directory(base + "animations");
 	create_directory(base + "spriteSheets");
 
-	ZipArchive::Ptr archive = ZipFile::Open(exportPath);
-	uint32_t fileCount = archive->GetEntriesCount();
+	zip_source_t *src;
+	zip_error_t error;
+
+	zip_error_init(&error);
+	int ierror;
+	zip *zipArchive = zip_open(exportPath.c_str(), ZIP_RDONLY, &ierror);
+	if (zipArchive == NULL) {
+
+		SIMPLE_LOG("%s", zip_error_strerror(&error));
+		zip_error_fini(&error);
+		return;
+	}
+	
+	uint32_t fileCount = zip_get_num_entries(zipArchive, 0);
+	char buffer[100];
 
 	for (uint32_t i = 0; i < fileCount; ++i) {
-		ZipArchiveEntry::Ptr entry = archive->GetEntry(i);
-
-		std::istream* decompressStream = entry->GetDecompressionStream();
-
-		SIMPLE_LOG(entry->GetFullName());
-		std::ofstream out(base + entry->GetFullName(), std::ios::binary | std::ios::trunc);
-		SIMPLE_ASSERT(out.is_open());
-
-		out << decompressStream->rdbuf();
+		zip_stat_t stat;
+		zip_stat_index(zipArchive, i, 0, &stat);
+		
+		if (stat.size == 0)
+			continue;
+		std::ofstream out(base + stat.name , std::ios::binary | std::ios::trunc);
+		
+		zip_file_t *zipFile = zip_fopen_index(zipArchive, i, 0);
+		uint8_t readBytes = zip_fread(zipFile, buffer, 100);
+		while (readBytes > 0) {
+			out.write(buffer, readBytes);
+			readBytes = zip_fread(zipFile, buffer, 100);
+		}
+	
+		zip_fclose(zipFile);
 		out.close();
 	}
 
-	ZipFile::SaveAndClose(archive, exportPath);
-
+	zip_discard(zipArchive);
+	zip_close(zipArchive);
 	DeserializeResources(base);
 }
 

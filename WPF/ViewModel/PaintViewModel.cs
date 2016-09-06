@@ -930,14 +930,13 @@ namespace WPF.ViewModel
                             var json = System.IO.File.ReadAllText(dialog.FileName);
                             var project = Newtonsoft.Json.JsonConvert.DeserializeObject<Project>(json);
                             bitmapImage = GetSelectableTiles(bitmapImage, project);
-                            GetSelectableAnimations(project);
-                            _tileMap.UnpackResources(Path.ChangeExtension(dialog.FileName, "pack"));
+                            GetSelectableAnimations(project);                          
                             var packFile = Path.ChangeExtension(dialog.FileName, ".pack");
                             File.WriteAllText(packFile, Unzip(project.PackResources));
+                            _tileMap.UnpackResources(packFile);
 
                             foreach (var scene in project.Scenes)
-                            {
-                                _tileMap.UnpackResources(packFile);
+                            {                               
                                 _tileMap.RestoreSnapshot(scene);
                             }
                         }
