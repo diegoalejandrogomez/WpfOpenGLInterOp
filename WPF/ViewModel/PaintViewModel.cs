@@ -890,14 +890,10 @@ namespace WPF.ViewModel
                                 var packFile = Path.ChangeExtension(dialog.FileName, ".pack");
                                 _tileMap.PackResources(packFile);
                                 byte[] fileBytes = File.ReadAllBytes(packFile);
-                                StringBuilder sb = new StringBuilder();
+                                string sb = System.Text.Encoding.UTF8.GetString(fileBytes);
+                                
 
-                                foreach (byte b in fileBytes)
-                                {
-                                    sb.Append(Convert.ToString(b, 2).PadLeft(8, '0'));
-                                }
-
-                                project.PackResources = Zip(sb.ToString());
+                                project.PackResources = Zip(sb);
                                 var json = Newtonsoft.Json.JsonConvert.SerializeObject(project);
                                 System.IO.File.WriteAllText(dialog.FileName, json);
                             }
