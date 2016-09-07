@@ -890,7 +890,7 @@ namespace WPF.ViewModel
                                 var packFile = Path.ChangeExtension(dialog.FileName, ".pack");
                                 _tileMap.PackResources(packFile);
                                 byte[] fileBytes = File.ReadAllBytes(packFile);
-                                string sb = System.Text.Encoding.UTF8.GetString(fileBytes);
+                                string sb = System.Text.Encoding.ASCII.GetString(fileBytes);
                                 
 
                                 project.PackResources = Zip(sb);
