@@ -928,7 +928,7 @@ namespace WPF.ViewModel
                             bitmapImage = GetSelectableTiles(bitmapImage, project);
                             GetSelectableAnimations(project);                          
                             var packFile = Path.ChangeExtension(dialog.FileName, ".pack");
-                            File.WriteAllText(packFile, Unzip(project.PackResources));
+                            File.WriteAllBytes(packFile, Encoding.ASCII.GetBytes(Unzip(project.PackResources)));
                             _tileMap.UnpackResources(packFile);
 
                             foreach (var scene in project.Scenes)
