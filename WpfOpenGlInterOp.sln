@@ -32,6 +32,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SimpleEngineNativeTileEdito
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameUI", "GameUI\GameUI.vcxproj", "{EC734738-714B-48C5-B934-252B067E8E31}"
+	ProjectSection(ProjectDependencies) = postProject
+		{37BC156B-0948-4591-A77B-6DD682BDBD21} = {37BC156B-0948-4591-A77B-6DD682BDBD21}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Engine", "Engine", "{E44551CF-FED0-4BA2-8B57-CDDE347C41AD}"
 EndProject

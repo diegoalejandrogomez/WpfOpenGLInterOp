@@ -4,6 +4,10 @@
 #include "stdafx.h"
 #include "GameUI.h"
 #include <SimpleEngine.h>
+#include "SimpleCharacter.h"
+#include "SimpleController.h"
+#include "SimpleAnimatedSpriteRenderer.h"
+
 #define MAX_LOADSTRING 100
 
 // Global Variables:
@@ -129,10 +133,28 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    engine->InitRenderer(hWnd, clientArea.right - clientArea.left, clientArea.bottom - clientArea.top);
    engine->InitInput(hWnd, false);
    engine->Initialize();
-
-
+   //get all pack files from resources folder
+   SimpleEngine::Instance()->GetResourceManager()->SetResourcesBaseDir(".\\Resources\\");
+   SimpleEngine::Instance()->GetResourceManager()->ImportResources("./resources/gameExample.pack");
+   SimpleEngine::Instance()->CreateScene();
+   SimpleCharacter* character = new SimpleCharacter();
+	auto animation = SimpleEngine::Instance()->GetResourceManager()->GetSpriteAnimation("walk_rigth");
+	SimpleAnimatedSpriteRenderer* animatedSpriteRenderer = new SimpleAnimatedSpriteRenderer();
+	animatedSpriteRenderer->SetAnimation(animation);
+   character->AddAnimation("walk_rigth", animatedSpriteRenderer);
+   auto animation2 = SimpleEngine::Instance()->GetResourceManager()->GetSpriteAnimation("walk_left");
+   SimpleAnimatedSpriteRenderer* animatedSpriteRenderer2 = new SimpleAnimatedSpriteRenderer();
+   animatedSpriteRenderer2->SetAnimation(animation2);
+   character->AddAnimation("walk_left", animatedSpriteRenderer2);
+   character->SetSize(glm::vec2(111, 111));
+   auto layer = new SimpleLayer();
+   SimpleEngine::Instance()->GetScene()->AddLayer(layer);
+   
+   SimpleEngine::Instance()->GetScene()->AddEntity(character, layer);
    return TRUE;
 }
+
+
 
 //
 //  FUNCTION: WndProc(HWND, UINT, WPARAM, LPARAM)
