@@ -51,6 +51,9 @@
     <Filter Include="Engine\Resources">
       <UniqueIdentifier>{40ee258f-80bd-4e10-8c4a-75cc870db77a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Actors">
+      <UniqueIdentifier>{4da9d0f3-e52d-4502-98bd-fef768faf5cc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -221,6 +224,9 @@
     <ClInclude Include="Interface\ISimpleResourceManager.h">
       <Filter>Interface</Filter>
     </ClInclude>
+    <ClInclude Include="Include\SimpleController.h">
+      <Filter>Engine\Actors</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\SimpleObjectsRenderPass.cpp">
@@ -345,6 +351,9 @@
     </ClCompile>
     <ClCompile Include="Interface\ISimpleResourceManager.cpp">
       <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\SimpleController.cpp">
+      <Filter>Engine\Actors</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
