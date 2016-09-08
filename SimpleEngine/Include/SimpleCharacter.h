@@ -17,6 +17,7 @@ public:
 		void RemoveAnimation(std::string);
 		virtual void Render(float dt) override;
 		virtual void Advance(float dt) override;
+		virtual void Die();
 private:
 	SimpleAnimatedSpriteRenderer* _mainSprite;
 	SimpleAnimator* _animator;

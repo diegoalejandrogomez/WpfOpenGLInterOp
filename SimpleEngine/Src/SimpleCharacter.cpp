@@ -47,6 +47,10 @@ void SimpleCharacter::Advance(float dt) {
 	//Should do this for all the events that the character can emmit
 }
 
+void SimpleCharacter::Die() {
+	SimpleDispatcher::Instance()->Send<CharacterDiedEvent>(this, this);
+}
+
 void SimpleCharacter::Render(float dt)
 {
 

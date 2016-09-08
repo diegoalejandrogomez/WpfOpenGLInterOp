@@ -7,6 +7,8 @@
 #include "SimpleSpriteSheetRenderer.h"
 #include "SimpleAnimatedSpriteRenderer.h"
 #include "SimpleTextRenderer.h"
+#include "SimpleCharacter.h"
+#include "SimplePlayerController.h"
 #include <fstream>
 
 json DebugGameLogic::Serialize() {
@@ -26,7 +28,7 @@ bool DebugGameLogic::Deserialize(const json &node) {
 
 void DebugGameLogic::Init()
 {
-	bool save = false;
+	bool save = true;
 	SimpleEngine::Instance()->GetResourceManager()->SetResourcesBaseDir("./debugResources/");
 
 	if (save) {
@@ -105,6 +107,19 @@ void DebugGameLogic::_CreateTestScene() {
 	title->SetText("Dedicated to all the pioneers");
 	title->SetColor({255,255,255,255});
 	SimpleEngine::Instance()->GetScene()->AddEntity(title, 0);
+
+
+	//Test player controllers
+	SimpleCharacter* pl = new SimpleCharacter();
+	SimpleController* ctrl = new SimpleController();
+	ctrl->Control(pl);
+	pl->Die();
+	ctrl->Release(pl);
+
+	SimplePlayerController* pctrl = new SimplePlayerController();
+	pctrl->Control(pl);
+	pl->Die();
+	
 }
 
 void DebugGameLogic::Advance(float dt)

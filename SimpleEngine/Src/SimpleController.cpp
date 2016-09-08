@@ -8,25 +8,40 @@ FACTORY_REGISTER(SimpleObject, SimpleController)
 
 void SimpleController::Control(SimpleCharacter* character) {
 	
-	//Register to receive the default messages
-	SimpleDispatcher::Instance()->AddObjectListener(character,
-													CharacterDiedEvent::descriptor, 
-													{ this, 
-													std::bind(&SimpleController::OnCharacterEvent,this, std::placeholders::_1) } );
+	_character = character;
+	_RegisterDefaultListeners();
 	
 }
+
+
+void SimpleController::_RegisterDefaultListeners() {
+
+	//Register to receive the default messages
+	SimpleDispatcher::Instance()->AddObjectListener(_character,
+		CharacterDiedEvent::descriptor,
+		{ this,
+		std::bind(&SimpleController::OnCharacterEvent,this, std::placeholders::_1) });
+
+}
+void SimpleController::_UnregisterDefaultListeners() {
+
+
+	//Remove common event registration
+	SimpleDispatcher::Instance()->RemoveObjectListener(_character, CharacterDiedEvent::descriptor, this);
+}
+
 
 void SimpleController::OnCharacterEvent(const SimpleEvent& event) {
 
 	if (event.type() == CharacterDiedEvent::descriptor) {
-		SIMPLE_LOG("Character Died");
+		SIMPLE_LOG("SimpleController - Character Died");
 	}
 	
 }
 void SimpleController::Release(SimpleCharacter* character) {
 
-	//Remove common event registration
-	SimpleDispatcher::Instance()->RemoveObjectListener(character, CharacterDiedEvent::descriptor, this);
+	_UnregisterDefaultListeners();
+	_character = nullptr;
 
 }
 
