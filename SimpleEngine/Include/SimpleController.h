@@ -1,6 +1,7 @@
 #pragma once
 #include "SimpleConfiguration.h"
 #include "SimpleObject.h"
+#include "SimpleEvent.h"
 
 class SimpleCharacter;
 
@@ -11,20 +12,14 @@ public:
 	SimpleController() {}
 	~SimpleController() {}
 
-	void Control(SimpleCharacter* character);
-	void Release(SimpleCharacter* character);
+	virtual void Control(SimpleCharacter* character);
+	virtual void Release(SimpleCharacter* character);
 		
 	void Advance(float dt) override;
 	void Render(float dt) override;
 	
 	//Callbacks
-	virtual void OnCharacterControlled() {};
-	virtual void OnCharacterReleased() {};
-	virtual void OnCharacterDamaged() {};
-	virtual void OnCharacterDied() {};
-	virtual void OnCharacterCollition() {};
-		
-
+	virtual void OnCharacterEvent(const SimpleEvent& event);
 private:
 
 	SimpleCharacter* _character = nullptr;

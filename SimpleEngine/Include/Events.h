@@ -33,3 +33,21 @@ public:
 	float width;
 	float height;
 };
+
+
+class SimpleCharacter;
+
+class CharacterDiedEvent : public SimpleEvent
+{
+public:
+	CharacterDiedEvent(SimpleCharacter* character) : _character(character) {}
+	virtual ~CharacterDiedEvent() {};
+
+	static constexpr DescriptorType descriptor = "CharacterDiedEvent";
+
+	virtual DescriptorType type() const
+	{
+		return descriptor;
+	}
+	SimpleCharacter* _character;
+};

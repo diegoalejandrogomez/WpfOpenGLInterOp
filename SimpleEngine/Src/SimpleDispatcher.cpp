@@ -6,6 +6,12 @@ void SimpleDispatcher::AddListener(const SimpleEvent::DescriptorType& descriptor
 	_listeners[descriptor].push_back(callback);
 }
 
+
+void SimpleDispatcher::AddObjectListener(void* object, const SimpleEvent::DescriptorType& descriptor, EventCallback&& callback){
+
+	_objectListeners[object][descriptor].push_back(callback);
+}
+
 void SimpleDispatcher::RemoveListener(const SimpleEvent::DescriptorType& descriptor, void *owner) {
 
 	auto& listeners = _listeners[descriptor];
@@ -21,6 +27,34 @@ void SimpleDispatcher::RemoveListener(const SimpleEvent::DescriptorType& descrip
 
 }
 
+
+void SimpleDispatcher::RemoveObjectListener(void* object, const SimpleEvent::DescriptorType& descriptor, void *owner) {
+
+	auto& listeners = _objectListeners[object][descriptor];
+	auto it = listeners.begin();
+	while (it != listeners.end()) {
+		if ((*it) == owner) {
+			listeners.erase(it);
+			return;
+		}
+		++it;
+	}
+}
+
+void SimpleDispatcher::RemoveAllObjectsListener(const SimpleEvent::DescriptorType& descriptor, void *owner) {
+
+	for (auto o : _objectListeners) {
+		auto& listeners = o.second[descriptor];
+		auto it = listeners.begin();
+		while (it != listeners.end()) {
+			if ((*it) == owner) {
+				listeners.erase(it);
+				return;
+			}
+			++it;
+		}
+	}
+}
 
 void SimpleDispatcher::Flush() {
 
