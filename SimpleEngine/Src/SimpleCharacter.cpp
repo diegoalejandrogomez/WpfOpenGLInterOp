@@ -49,6 +49,7 @@ void SimpleCharacter::Advance(float dt) {
 
 void SimpleCharacter::Die() {
 	SimpleDispatcher::Instance()->Send<CharacterDiedEvent>(this, this);
+	//SimpleDispatcher::Instance()->SendImmediate<CharacterDiedEvent>(this, this);
 }
 
 void SimpleCharacter::Render(float dt)

@@ -56,40 +56,47 @@ void SimpleDispatcher::RemoveAllObjectsListener(const SimpleEvent::DescriptorTyp
 	}
 }
 
+
+void SimpleDispatcher::_DispatchEvent(SimpleEvent *evt) const {
+
+	//Try to call listeners of events with source
+	if (evt->Source() != nullptr) {
+
+		if (_objectListeners.find(evt->Source()) != _objectListeners.end()) {
+			auto& object = _objectListeners.at(evt->Source());
+
+			if (object.find(evt->type()) != object.end()) {
+				auto& listeners = object.at(evt->type());
+				for (auto& listener : listeners)
+					listener(*evt);
+			}
+		}
+	}
+
+	//Now call the anonymous events
+	if (_listeners.find(evt->type()) != _listeners.end()) {
+
+
+		auto& listeners = _listeners.at(evt->type());
+
+		for (auto& listener : listeners)
+			listener(*evt);
+
+		SIMPLE_LOG("Sent delayed event %s", evt->type());
+	}
+
+	delete evt;
+
+
+}
+
 void SimpleDispatcher::Flush() {
 
 	while (!_queuedEvents.empty()) {
 		SimpleEvent *evt = _queuedEvents.front();
-
-		//Try to call listeners of events with source
-		if (evt->Source() != nullptr) {
-
-			if (_objectListeners.find(evt->Source()) != _objectListeners.end()) {
-				auto& object = _objectListeners.at(evt->Source());
-
-				if (object.find(evt->type()) != object.end()) {
-					auto& listeners = object.at(evt->type());
-					for (auto& listener : listeners)
-						listener(*evt);
-				}
-			}
-		}
-
-		//Now call the anonymous events
-		if (_listeners.find(evt->type()) != _listeners.end()) {
-
-
-			auto& listeners = _listeners.at(evt->type());
-
-			for (auto& listener : listeners)
-				listener(*evt);
-
-			SIMPLE_LOG("Sent delayed event %s", evt->type());
-		}
-	
-		delete evt;
+		_DispatchEvent(evt);
 		_queuedEvents.pop();
-		
+	
 	}
 
 }

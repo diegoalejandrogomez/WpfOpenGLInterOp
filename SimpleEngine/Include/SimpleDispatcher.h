@@ -57,17 +57,9 @@ public:
 	template <class T, class... Args>
 	void SendImmediate(Args&&... args) const
 	{
-		auto type = T::descriptor;
-
-		if (_listeners.find(type) == _listeners.end())
-			return;
-
-		auto& listeners = _listeners.at(type);
-
-		for (auto& listener : listeners)
-			listener(T{std::forward<Args>(args)... });
-
-		SIMPLE_LOG("Sent Immediate event %s", type);
+		SimpleEvent *evt = new T{ std::forward<Args>(args)... };
+		_DispatchEvent(evt);
+		SIMPLE_LOG("Sent Immediate event %s", T::descriptor);
 	}
 
 	//Sends an event synchronously
@@ -82,6 +74,7 @@ public:
 	void Flush();
 private:
 
+	void _DispatchEvent(SimpleEvent *evt) const;
 	//Lets assume the registration order is not important
 	std::unordered_map< SimpleEvent::DescriptorType, std::vector<EventCallback> > _listeners;
 	std::unordered_map<void*, std::unordered_map< SimpleEvent::DescriptorType, std::vector<EventCallback> > > _objectListeners;
