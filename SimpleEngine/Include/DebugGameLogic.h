@@ -3,7 +3,7 @@
 #include "json.hpp"
 using json = nlohmann::json;
 
-class DebugGameLogic : public SimpleGameLogic {
+class SIMPLE_API DebugGameLogic : public SimpleGameLogic {
 	
 	// Inherited via SimpleGameLogic
 	virtual void Init() override;

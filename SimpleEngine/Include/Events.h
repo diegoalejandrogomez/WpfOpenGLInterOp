@@ -4,7 +4,7 @@
 class DebugEvent : public SimpleEvent
 {
 public:
-	DebugEvent() {};
+	DebugEvent(void* source) : SimpleEvent(source) {};
 	virtual ~DebugEvent() {};
 
 	static constexpr DescriptorType descriptor = "DebugEvent";
@@ -20,7 +20,7 @@ public:
 class WindowResizeEvent : public SimpleEvent
 {
 public:
-	WindowResizeEvent(float w, float h):width(w), height(h) {};
+	WindowResizeEvent(float w, float h):width(w), height(h), SimpleEvent(nullptr) {};
 	virtual ~WindowResizeEvent() {};
 
 	static constexpr DescriptorType descriptor = "WindowResizeEvent";
@@ -32,4 +32,22 @@ public:
 
 	float width;
 	float height;
+};
+
+
+class SimpleCharacter;
+
+class CharacterDiedEvent : public SimpleEvent
+{
+public:
+	CharacterDiedEvent(void * source, SimpleCharacter* character) : SimpleEvent(source),  _character(character) {}
+	virtual ~CharacterDiedEvent() {};
+
+	static constexpr DescriptorType descriptor = "CharacterDiedEvent";
+
+	virtual DescriptorType type() const
+	{
+		return descriptor;
+	}
+	SimpleCharacter* _character;
 };

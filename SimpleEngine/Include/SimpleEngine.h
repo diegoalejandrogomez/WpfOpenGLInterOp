@@ -100,8 +100,6 @@ protected:
 	std::queue<std::chrono::high_resolution_clock::time_point> _logicLastFPS;
 	
 	
-	std::string _resBaseDir;
-
 	bool _useInternalFrameTime = true;
 
 	void _SwitchGameLogic();

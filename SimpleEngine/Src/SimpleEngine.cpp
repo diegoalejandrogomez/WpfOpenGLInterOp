@@ -167,14 +167,14 @@ void SimpleEngine::SerializeResources() {
 
 	//Create the dir for the resources
 	
-	create_directory(_resBaseDir);
+	create_directory(_resManager->GetResourcesBaseDir());
 
 	//Serialize graphical resources
-	_resManager->SerializeResources(_resBaseDir);
+	_resManager->SerializeResources(_resManager->GetResourcesBaseDir());
 
 }
 void SimpleEngine::DeserializeResources() {
-	_resManager->DeserializeResources(_resBaseDir);
+	_resManager->DeserializeResources(_resManager->GetResourcesBaseDir());
 }
 
 bool SimpleEngine::SerializeGameLogic(std::string const& path) {

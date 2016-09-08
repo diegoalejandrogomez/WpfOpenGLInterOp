@@ -51,7 +51,7 @@
     <Filter Include="Engine\Resources">
       <UniqueIdentifier>{40ee258f-80bd-4e10-8c4a-75cc870db77a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Actors">
+    <Filter Include="Engine\Controllers">
       <UniqueIdentifier>{4da9d0f3-e52d-4502-98bd-fef768faf5cc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -225,7 +225,7 @@
       <Filter>Interface</Filter>
     </ClInclude>
     <ClInclude Include="Include\SimpleController.h">
-      <Filter>Engine\Actors</Filter>
+      <Filter>Engine\Controllers</Filter>
     </ClInclude>
     <ClInclude Include="Include\SimpleCharacter.h">
       <Filter>Engine</Filter>
@@ -235,6 +235,9 @@
     </ClInclude>
     <ClInclude Include="Include\SimpleAnimator.h">
       <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\SimplePlayerController.h">
+      <Filter>Engine\Controllers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -362,13 +365,16 @@
       <Filter>Interface</Filter>
     </ClCompile>
     <ClCompile Include="Src\SimpleController.cpp">
-      <Filter>Engine\Actors</Filter>
-    </ClCompile>   
+      <Filter>Engine\Controllers</Filter>
+    </ClCompile>
     <ClCompile Include="Src\SimpleCharacter.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="Src\SimpleAnimator.cpp">
       <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\SimplePlayerController.cpp">
+      <Filter>Engine\Controllers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

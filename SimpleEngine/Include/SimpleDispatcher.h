@@ -45,9 +45,14 @@ public:
 	
 	//register a new listener
 	void AddListener(const SimpleEvent::DescriptorType& descriptor, EventCallback&& callback);
+	//register a listener to a particular object
+	void AddObjectListener(void* object, const SimpleEvent::DescriptorType& descriptor, EventCallback&& callback);
 	//remove a listener
 	void RemoveListener(const SimpleEvent::DescriptorType& descriptor, void *owner);
-
+	//remove a listener pointing to a particular object
+	void RemoveObjectListener(void* object, const SimpleEvent::DescriptorType& descriptor, void *owner);
+	//removes the listeners of owner associated to any object
+	void RemoveAllObjectsListener(const SimpleEvent::DescriptorType& descriptor, void *owner);
 	//Sends an event "asynchronously"
 	template <class T, class... Args>
 	void SendImmediate(Args&&... args) const
@@ -79,5 +84,6 @@ private:
 
 	//Lets assume the registration order is not important
 	std::unordered_map< SimpleEvent::DescriptorType, std::vector<EventCallback> > _listeners;
+	std::unordered_map<void*, std::unordered_map< SimpleEvent::DescriptorType, std::vector<EventCallback> > > _objectListeners;
 	std::queue<SimpleEvent*> _queuedEvents;
 };

@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "SimpleCharacter.h"
+#include "SimpleDispatcher.h"
 
 //FACTORY_REGISTER(SimpleObject, SimpleCharacter)
 
@@ -27,6 +28,15 @@ void SimpleCharacter::Advance(float dt) {
 	
 	if(_controller != nullptr)
 		_controller->Advance(dt);
+
+
+	//If character dies send the event so the controller knows
+	//SimpleDispatcher::Instance()->Send<CharacterDiedEvent>(this);
+	//Should do this for all the events that the character can emmit
+}
+
+void SimpleCharacter::Die() {
+	SimpleDispatcher::Instance()->Send<CharacterDiedEvent>(this, this);
 }
 
 void SimpleCharacter::Render(float dt)
