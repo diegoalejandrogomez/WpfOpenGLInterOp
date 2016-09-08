@@ -1,5 +1,8 @@
 #include "stdafx.h"
 #include "SimpleCharacter.h"
+
+FACTORY_REGISTER(SimpleObject, SimpleCharacter)
+
 SimpleCharacter::SimpleCharacter()
 {
 	_animator = new SimpleAnimator();

@@ -15,6 +15,7 @@ public:
 	void Release(SimpleCharacter* character);
 		
 	void Advance(float dt) override;
+	void Render(float dt) override;
 	
 	//Callbacks
 	virtual void OnCharacterControlled() {};

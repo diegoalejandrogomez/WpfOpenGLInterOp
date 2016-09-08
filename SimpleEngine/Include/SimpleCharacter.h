@@ -6,7 +6,7 @@
 #include "SimpleSpriteAnimation.h"
 #include "SimpleController.h"
 
-class SimpleCharacter : SimpleObject {
+class SimpleCharacter : public SimpleObject {
 public:
 		SimpleCharacter();
 		~SimpleCharacter();
