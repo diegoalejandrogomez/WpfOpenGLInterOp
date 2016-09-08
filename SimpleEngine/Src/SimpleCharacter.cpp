@@ -28,19 +28,11 @@ void SimpleCharacter::Advance(float dt) {
 	
 	if(_controller != nullptr)
 		_controller->Advance(dt);
-
-
-	//If character dies send the event so the controller knows
-	//SimpleDispatcher::Instance()->Send<CharacterDiedEvent>(this);
-	//Should do this for all the events that the character can emmit
-}
-
-void SimpleCharacter::Die() {
-	SimpleDispatcher::Instance()->Send<CharacterDiedEvent>(this, this);
 }
 
 void SimpleCharacter::Render(float dt)
 {
+	//controller should do this (and not with a flag, it must read keyboard)
 	flag++;
 	if (flag > 500)
 	{
@@ -62,4 +54,11 @@ void SimpleCharacter::Render(float dt)
 		currentAnimation->Render(dt);
 		currentAnimation->Advance(dt);
 	}
+}
+
+//If character dies send the event so the controller knows
+//SimpleDispatcher::Instance()->Send<CharacterDiedEvent>(this);
+//Should do this for all the events that the character can emmit
+void SimpleCharacter::Die() {
+	SimpleDispatcher::Instance()->Send<CharacterDiedEvent>(this, this);
 }
