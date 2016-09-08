@@ -4,6 +4,7 @@
 #include "SimpleObject.h"
 #include "SimpleAnimator.h"
 #include "SimpleSpriteAnimation.h"
+#include "SimpleController.h"
 
 class SimpleCharacter : SimpleObject {
 public:
@@ -15,7 +16,9 @@ public:
 		void AddAnimation(std::string, SimpleAnimatedSpriteRenderer*);
 		void RemoveAnimation(std::string);
 		virtual void Render(float dt) override;
+		virtual void Advance(float dt) override;
 private:
 	SimpleAnimatedSpriteRenderer* _mainSprite;
 	SimpleAnimator* _animator;
+	SimpleController *_controller;
 };

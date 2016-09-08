@@ -9,7 +9,7 @@ void SimpleController::Release(SimpleCharacter* character) {
 
 }
 
-void SimpleController::Update(float dt) {
+void SimpleController::Advance(float dt) {
 
 
 }

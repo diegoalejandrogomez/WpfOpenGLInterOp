@@ -32,9 +32,15 @@ void SimpleCharacter::RemoveAnimation(std::string stateName)
 	this->_animator->RemoveAnimation(stateName);
 }
 
+void SimpleCharacter::Advance(float dt) {
+	
+	if(_controller != nullptr)
+		_controller->Advance(dt);
+}
+
 void SimpleCharacter::Render(float dt)
 {
-	//controller.Update
+
 
 	auto currentAnimation = this->_animator->GetCurrentState();
 	if (currentAnimation != nullptr) {
