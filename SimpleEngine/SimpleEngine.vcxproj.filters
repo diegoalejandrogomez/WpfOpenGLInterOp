@@ -363,8 +363,7 @@
     </ClCompile>
     <ClCompile Include="Src\SimpleController.cpp">
       <Filter>Engine\Actors</Filter>
-    </ClCompile>
-    </ClCompile>
+    </ClCompile>   
     <ClCompile Include="Src\SimpleCharacter.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
