@@ -371,6 +371,9 @@
     <ClCompile Include="Src\SimpleAnimator.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
+    <ClCompile Include="Src\SimpleAnimator.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Src\shaders\SimpleColorShader.frag">
