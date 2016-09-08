@@ -208,6 +208,8 @@ copy /Y "$(ProjectDir)\External\libzip\bin\zip.dll" "$(TargetDir)"</Command>
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Include\SimpleAnimator.h" />
+    <ClInclude Include="Include\SimpleCharacter.h" />
     <ClInclude Include="Include\SimpleResourceManager.h" />
     <ClInclude Include="Include\SimpleTextureRegion.h" />
     <ClInclude Include="Include\json.hpp" />
@@ -282,6 +284,8 @@ copy /Y "$(ProjectDir)\External\libzip\bin\zip.dll" "$(TargetDir)"</Command>
     <ClCompile Include="ISimpleTextRenderer.cpp" />
     <ClCompile Include="Src\SimpleAABB.cpp" />
     <ClCompile Include="Src\SimpleAnimatedSpriteRenderer.cpp" />
+    <ClCompile Include="Src\SimpleAnimator.cpp" />
+    <ClCompile Include="Src\SimpleCharacter.cpp" />
     <ClCompile Include="Src\SimpleID.cpp" />
     <ClCompile Include="Src\SimpleInput.cpp" />
     <ClCompile Include="Src\SimpleLayer.cpp" />

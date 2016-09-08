@@ -221,6 +221,12 @@
     <ClInclude Include="Interface\ISimpleResourceManager.h">
       <Filter>Interface</Filter>
     </ClInclude>
+    <ClInclude Include="Include\SimpleCharacter.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\SimpleAnimator.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\SimpleObjectsRenderPass.cpp">
@@ -345,6 +351,12 @@
     </ClCompile>
     <ClCompile Include="Interface\ISimpleResourceManager.cpp">
       <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\SimpleCharacter.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\SimpleAnimator.cpp">
+      <Filter>Engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
