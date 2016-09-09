@@ -11,6 +11,7 @@ using namespace MyGUI;
 
 SimpleGUI::SimpleGUI() {
 
+	
 
 }
 

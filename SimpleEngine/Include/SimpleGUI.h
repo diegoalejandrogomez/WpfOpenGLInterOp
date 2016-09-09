@@ -43,10 +43,10 @@ private:
 
 
 	MyGUI::Gui* _gui;
-	MyGUI::OpenGL3Platform* _platform;
-	SimpleOpenGL3ImageLoader* _loader;
+	MyGUI::OpenGL3Platform* _platform = nullptr;
+	SimpleOpenGL3ImageLoader* _loader = nullptr;
 
-	std::stack<SimpleWindow*> _windows;
+	std::stack<SimpleWindow*> _windows ;
 };
 
 
