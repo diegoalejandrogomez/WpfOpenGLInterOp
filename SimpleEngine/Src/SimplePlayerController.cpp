@@ -2,6 +2,8 @@
 #include "SimplePlayerController.h"
 #include "SimpleDispatcher.h"
 
+FACTORY_REGISTER(SimpleObject, SimplePlayerController)
+
 void SimplePlayerController::Advance(float dt) {
 
 

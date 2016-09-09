@@ -2,7 +2,7 @@
 #include "SimpleCharacter.h"
 #include "SimpleDispatcher.h"
 
-//FACTORY_REGISTER(SimpleObject, SimpleCharacter)
+FACTORY_REGISTER(SimpleObject, SimpleCharacter)
 
 SimpleCharacter::SimpleCharacter()
 {
