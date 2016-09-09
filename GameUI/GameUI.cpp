@@ -146,16 +146,25 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    SimpleEngine::Instance()->CreateScene();
    SimpleCharacter* character = new SimpleCharacter();
    character->Initialize();
+   character->SetSpeed(2);
    auto layer = new SimpleLayer();
+   layer->SetZ(0);
    SimpleEngine::Instance()->GetScene()->AddLayer(layer);
    
    SimpleEngine::Instance()->GetScene()->AddEntity(character, layer);
 
-   for (int i = 0; i < 10; i++)
+   auto layerBackground = new SimpleLayer();
+   layer->SetZ(-1);
+   SimpleEngine::Instance()->GetScene()->AddLayer(layerBackground);
+   int z = -1;
+   for (int i = 0; i < 50; i++)
    {
 	   SimpleFixedObject* tree = new SimpleFixedObject();
 	   tree->Initialize();
-	   SimpleEngine::Instance()->GetScene()->AddEntity(tree, layer);
+	   glm::vec3 position = tree->GetPosition();
+	   tree->SetPosition(glm::vec3(position.x, position.y, z));
+	   z--;
+	   SimpleEngine::Instance()->GetScene()->AddEntity(tree, layerBackground);
    }
    
    

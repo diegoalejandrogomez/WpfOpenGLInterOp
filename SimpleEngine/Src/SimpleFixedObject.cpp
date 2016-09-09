@@ -20,7 +20,7 @@ void SimpleFixedObject::Initialize()
 {
 	this->_spriteRenderer->SetSpriteSheet("tree/image1.png");
 	this->_spriteRenderer->SetIndex(rand() % 4);
-	this->_spriteRenderer->SetPosition(glm::vec3(rand() % 300, rand() % 300, 0));
+	this->_spriteRenderer->SetPosition(glm::vec3(rand() % 600 * (rand() % 2 == 0 ? 1 : -1) , rand() % 300 * (rand() % 2 == 0 ? 1 : -1), 0));
 	this->_spriteRenderer->SetSize({ 100, 100 });
 }
 
