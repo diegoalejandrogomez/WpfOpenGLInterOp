@@ -23,6 +23,7 @@ void SimpleAnimatedSpriteRenderer::Play() {
 
 
 void SimpleAnimatedSpriteRenderer::PlayOnce() {
+	_playing = true;
 	_loop = false;
 }
 
@@ -50,10 +51,8 @@ void SimpleAnimatedSpriteRenderer::Advance(float dt) {
 		_elapsedTime -= period;
 		++_currentFrame;
 		if (_currentFrame >= _anim->GetFrameCount()) {
-			if (_loop)
-				_currentFrame = 0;
-			else {
-				--_currentFrame;
+			_currentFrame = 0;
+			if (!_loop){
 				_playing = false;
 			}
 

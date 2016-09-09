@@ -104,7 +104,8 @@ void DebugGameLogic::_CreateTestScene() {
 	SimpleTextRenderer *title = new SimpleTextRenderer();
 	title->SetFontName("fonts/arial.ttf");
 	title->SetFontSize(30);
-	title->SetText("Dedicated to all the pioneers");
+	title->SetPosition(glm::vec3(-600, 300, 0));
+	title->SetText("Developing!!!");
 	title->SetColor({255,255,255,255});
 	SimpleEngine::Instance()->GetScene()->AddEntity(title, 0);
 

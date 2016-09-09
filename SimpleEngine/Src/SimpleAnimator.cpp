@@ -47,5 +47,5 @@ void SimpleAnimator::SwitchState(std::string newState)
 	}
 
 	this->_currentState = state;
-	this->_currentState->Play();
+	this->_currentState->PlayOnce();
 }
