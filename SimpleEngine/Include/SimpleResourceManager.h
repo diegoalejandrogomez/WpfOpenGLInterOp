@@ -49,10 +49,12 @@ public:
 	void ClearResources();
 	bool SerializeResources(std::string dir);
 	bool DeserializeResources(std::string dir);
+	bool DeserializeResources(std::string dir, std::string subPath);
 
 	void ExportResources(std::string exportPath);
+	
 	void ImportResources(std::string exportPath);
-
+	void ImportResources(std::string exportPath, std::string subPath);
 
 private:
 	void _AddFilesToArchive(std::vector<std::string>& files, std::string relativePath, std::string archiveName);

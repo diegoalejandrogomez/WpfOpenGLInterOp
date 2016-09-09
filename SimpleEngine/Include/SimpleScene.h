@@ -45,7 +45,7 @@ public:
 
 	json Serialize() override;
 	bool Deserialize(const json &node) override;
-	
+	bool Deserialize(const json &node, std::string dir);
 	float GetLowerZIndex();
 
 	float GetFPS(); 

@@ -28,7 +28,7 @@ public:
 
 	virtual json Serialize();
 	virtual bool Deserialize(const json &node);
-
+	virtual bool Deserialize(const json &node, std::string dir);
 private:
 
 	void _ComputeSize();

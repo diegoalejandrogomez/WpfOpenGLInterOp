@@ -239,6 +239,9 @@
     <ClInclude Include="Include\SimplePlayerController.h">
       <Filter>Engine\Controllers</Filter>
     </ClInclude>
+    <ClInclude Include="Include\SimpleFixedObject.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\SimpleObjectsRenderPass.cpp">
@@ -375,6 +378,9 @@
     </ClCompile>
     <ClCompile Include="Src\SimplePlayerController.cpp">
       <Filter>Engine\Controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\SimpleFixedObject.cpp">
+      <Filter>Engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

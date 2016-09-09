@@ -211,6 +211,7 @@ copy /Y "$(ProjectDir)\External\libzip\bin\zip.dll" "$(TargetDir)"</Command>
     <ClInclude Include="Include\SimpleAnimator.h" />
     <ClInclude Include="Include\SimpleController.h" />
     <ClInclude Include="Include\SimpleCharacter.h" />
+    <ClInclude Include="Include\SimpleFixedObject.h" />
     <ClInclude Include="Include\SimplePlayerController.h" />
     <ClInclude Include="Include\SimpleResourceManager.h" />
     <ClInclude Include="Include\SimpleTextureRegion.h" />
@@ -265,6 +266,7 @@ copy /Y "$(ProjectDir)\External\libzip\bin\zip.dll" "$(TargetDir)"</Command>
     <ClInclude Include="interface\ISimpleAnimatedSpriteRenderer.h" />
     <ClInclude Include="ISimpleTextRenderer.h" />
     <ClInclude Include="resource.h" />
+    <ClCompile Include="Src\SimpleFixedObject.cpp" />
     <ClCompile Include="Src\SimplePlayerController.cpp" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />

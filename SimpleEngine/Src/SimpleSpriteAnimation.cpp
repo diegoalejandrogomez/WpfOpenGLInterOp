@@ -28,8 +28,9 @@ json SimpleSpriteAnimation::Serialize() {
 	return ret;
 
 }
-bool SimpleSpriteAnimation::Deserialize(const json &node) {
 
+bool SimpleSpriteAnimation::Deserialize(const json &node, std::string dir)
+{
 	if (node.find("name") == node.end()) {
 		SIMPLE_LOG("Couldn't deserialize animation");
 		return false;
@@ -43,7 +44,7 @@ bool SimpleSpriteAnimation::Deserialize(const json &node) {
 
 	_frames.clear();
 	for (auto f : node["frames"]) {
-		_frames.push_back(f); 
+		_frames.push_back(f);
 	}
 
 	if (node.find("spriteSheet") == node.end()) {
@@ -52,6 +53,11 @@ bool SimpleSpriteAnimation::Deserialize(const json &node) {
 	}
 
 	std::string spriteSheet = node["spriteSheet"].get<std::string>();
+	if (dir != "")
+	{
+		spriteSheet = dir + "/" + spriteSheet;
+	}
+
 	_sheet = SimpleEngine::Instance()->GetResourceManager()->GetSpriteSheet(spriteSheet);
 	if (_sheet == nullptr) {
 		SIMPLE_LOG("Couldn't find spritesheet");
@@ -65,4 +71,9 @@ bool SimpleSpriteAnimation::Deserialize(const json &node) {
 	_frameTime = node["frameTime"];
 
 	return true;
+}
+
+bool SimpleSpriteAnimation::Deserialize(const json &node) {
+
+	return this->Deserialize(node, "");
 }

@@ -31,6 +31,7 @@ public:
 	
 	json Serialize() override;
 	bool Deserialize(const json &node) override;
+	virtual bool Deserialize(const json &node, std::string dir);
 protected:
 		
 	void _UpdateFrame();

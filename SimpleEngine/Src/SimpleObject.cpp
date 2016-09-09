@@ -29,8 +29,11 @@ json SimpleObject::Serialize() {
 	return ret;	
 }
 
-
 bool SimpleObject::Deserialize(const json &node) {
+	return this->Deserialize(node, "");
+}
+
+bool SimpleObject::Deserialize(const json &node, std::string dir) {
 	
 	SIMPLE_ASSERT(node.find("name") != node.end());
 	

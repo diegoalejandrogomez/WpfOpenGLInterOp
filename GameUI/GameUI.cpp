@@ -7,6 +7,7 @@
 #include "SimpleCharacter.h"
 #include "SimpleController.h"
 #include "SimpleAnimatedSpriteRenderer.h"
+#include "SimpleFixedObject.h"
 
 #define MAX_LOADSTRING 100
 
@@ -136,8 +137,8 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    //all this must be in a initialize method in other class
    //get all pack files from resources folder
    SimpleEngine::Instance()->GetResourceManager()->SetResourcesBaseDir(".\\Resources\\");
-   SimpleEngine::Instance()->GetResourceManager()->ImportResources("./resources/ash.pack");
-
+   SimpleEngine::Instance()->GetResourceManager()->ImportResources("./resources/ash.pack", "ash");
+   SimpleEngine::Instance()->GetResourceManager()->ImportResources("./resources/trees.pack", "tree");
    
 //   SimpleEngine::Instance()->GetInput()->CreateKeyboard();
   // SimpleEngine::Instance()->GetInput()->CreateMouse();
@@ -149,6 +150,15 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    SimpleEngine::Instance()->GetScene()->AddLayer(layer);
    
    SimpleEngine::Instance()->GetScene()->AddEntity(character, layer);
+
+   for (int i = 0; i < 10; i++)
+   {
+	   SimpleFixedObject* tree = new SimpleFixedObject();
+	   tree->Initialize();
+	   SimpleEngine::Instance()->GetScene()->AddEntity(tree, layer);
+   }
+   
+   
    return TRUE;
 }
 

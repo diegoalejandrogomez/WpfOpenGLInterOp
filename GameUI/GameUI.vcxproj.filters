@@ -55,5 +55,6 @@
   <ItemGroup>
     <None Include="Resources\gameExample.pack" />
     <None Include="Resources\ash.pack" />
+    <None Include="Resources\trees.pack" />
   </ItemGroup>
 </Project>

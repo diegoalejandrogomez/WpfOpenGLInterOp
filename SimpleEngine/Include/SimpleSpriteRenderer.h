@@ -31,7 +31,7 @@ public:
 	virtual SimpleID GetType() { return "SimpleSpriteRenderer"; }
 	virtual json Serialize();
 	virtual bool Deserialize(const json &node);
-	
+	virtual bool Deserialize(const json &node, std::string dir);
 
 protected:
 	unsigned int _vertexCount;

@@ -70,7 +70,13 @@ json SimpleSpriteSheetRenderer::Serialize() {
 	return so;
 
 }
-bool SimpleSpriteSheetRenderer::Deserialize(const json &node) {
+
+bool SimpleSpriteSheetRenderer::Deserialize(const json &node)
+{
+	return this->Deserialize(node, "");
+}
+
+bool SimpleSpriteSheetRenderer::Deserialize(const json &node, std::string dir) {
 
 	SimpleSpriteRenderer::Deserialize(node);
 
