@@ -9,7 +9,7 @@ public:
 	SimpleEvent(void* source) : _source(source) {};
 		
 	virtual ~SimpleEvent(){};
-	virtual DescriptorType type() const = 0;
+		virtual DescriptorType type() const = 0;
 	
 	void* Source() const { return _source; }
 	
