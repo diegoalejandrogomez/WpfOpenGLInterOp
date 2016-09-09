@@ -6,6 +6,9 @@
 #include "DebugGameLogic.h"
 #include <filesystem>
 #include <fstream>
+
+#include "SimpleUtils.h"
+
 //C++ 14/17 ... but why not XD
 using namespace std::tr2::sys;
 using namespace std::chrono;
@@ -129,7 +132,6 @@ void SimpleEngine::Initialize() {
 #ifdef DEBUG_CONTENT
 	SetGameLogic(new DebugGameLogic());
 #endif
-
 }
 void SimpleEngine::Shutdown() {
 

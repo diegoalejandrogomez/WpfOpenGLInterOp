@@ -2,7 +2,7 @@
 #include "SimpleCharacter.h"
 #include "SimpleDispatcher.h"
 
-FACTORY_REGISTER(SimpleObject, SimpleCharacter)
+//FACTORY_REGISTER(SimpleObject, SimpleCharacter)
 
 SimpleCharacter::SimpleCharacter()
 {
@@ -11,19 +11,7 @@ SimpleCharacter::SimpleCharacter()
 
 SimpleCharacter::~SimpleCharacter()
 {
-	delete _mainSprite;
 	delete _animator;
-}
-
-
-void SimpleCharacter::SetMainSprite(SimpleAnimatedSpriteRenderer* mainSprite)
-{
-	this->_mainSprite = mainSprite;
-}
-
-SimpleSpriteRenderer* SimpleCharacter::GetMainSprite()
-{
-	return _mainSprite;
 }
 
 void SimpleCharacter::AddAnimation(std::string stateName, SimpleAnimatedSpriteRenderer* animation)
@@ -40,30 +28,37 @@ void SimpleCharacter::Advance(float dt) {
 	
 	if(_controller != nullptr)
 		_controller->Advance(dt);
-
-
-	//If character dies send the event so the controller knows
-	//SimpleDispatcher::Instance()->Send<CharacterDiedEvent>(this);
-	//Should do this for all the events that the character can emmit
-}
-
-void SimpleCharacter::Die() {
-	SimpleDispatcher::Instance()->Send<CharacterDiedEvent>(this, this);
-	//SimpleDispatcher::Instance()->SendImmediate<CharacterDiedEvent>(this, this);
 }
 
 void SimpleCharacter::Render(float dt)
 {
-
-
+	//controller should do this (and not with a flag, it must read keyboard)
+	flag++;
+	if (flag > 500)
+	{
+		this->_animator->SwitchState("walk_left");
+	}
+	if (flag > 1000)
+	{
+		this->_animator->SwitchState("walk_rigth");
+		flag = 0;
+	}
+	
 	auto currentAnimation = this->_animator->GetCurrentState();
 	if (currentAnimation != nullptr) {
 		currentAnimation->SetPosition(this->GetPosition());
 		auto size = this->GetSize();
 		currentAnimation->SetSize(size);
-		currentAnimation->SetAnchor(this->GetAnchor());
 		float orientation = GetOrientation();
 		currentAnimation->SetOrientation(orientation);
-		currentAnimation->Play();
+		currentAnimation->Render(dt);
+		currentAnimation->Advance(dt);
 	}
+}
+
+//If character dies send the event so the controller knows
+//SimpleDispatcher::Instance()->Send<CharacterDiedEvent>(this);
+//Should do this for all the events that the character can emmit
+void SimpleCharacter::Die() {
+	SimpleDispatcher::Instance()->Send<CharacterDiedEvent>(this, this);
 }

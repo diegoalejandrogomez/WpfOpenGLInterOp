@@ -12,12 +12,6 @@ SimpleAnimator::~SimpleAnimator()
 
 void SimpleAnimator::AddAnimation(std::string stateName, SimpleAnimatedSpriteRenderer* animation){
 	auto element = std::pair<std::string, SimpleAnimatedSpriteRenderer*>(stateName, animation);
-	if (_animations->size() == 0)
-	{
-		//if it is the first one, it should be the current state
-		this->_currentState = animation;
-	}
-	
 	if (_animations->count(stateName)  == 0)
 	{
 		_animations->insert(element);
@@ -25,6 +19,12 @@ void SimpleAnimator::AddAnimation(std::string stateName, SimpleAnimatedSpriteRen
 	else
 	{
 		SIMPLE_LOG("Status key already exists");
+	}
+
+	if (_animations->size() == 1)
+	{
+		//if it is the first one, it should be the current state
+		this->SwitchState(stateName);
 	}
 	
 }
@@ -47,4 +47,5 @@ void SimpleAnimator::SwitchState(std::string newState)
 	}
 
 	this->_currentState = state;
+	this->_currentState->Play();
 }

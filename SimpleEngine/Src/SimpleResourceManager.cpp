@@ -409,7 +409,8 @@ void SimpleResourceManager::ImportResources(std::string exportPath) {
 	}
 
 	zip_discard(zipArchive);
-	zip_close(zipArchive);
+	//fix it
+	//zip_close(zipArchive);
 	DeserializeResources(base);
 }
 
