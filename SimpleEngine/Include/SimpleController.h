@@ -2,14 +2,13 @@
 #include "SimpleConfiguration.h"
 #include "SimpleObject.h"
 #include "SimpleEvent.h"
-
 class SimpleCharacter;
 
 class SIMPLE_API SimpleController : public SimpleObject {
 
 public:
 
-	SimpleController() {}
+	SimpleController() { }
 	~SimpleController() {}
 
 	virtual void Control(SimpleCharacter* character);

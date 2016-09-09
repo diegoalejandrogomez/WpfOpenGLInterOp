@@ -5,7 +5,7 @@
 #include "SimpleAnimator.h"
 #include "SimpleSpriteAnimation.h"
 #include "SimpleController.h"
-
+#include <string>
 class SIMPLE_API SimpleCharacter : public SimpleObject {
 public:
 		SimpleCharacter();
@@ -16,8 +16,10 @@ public:
 		virtual void Render(float dt) override;
 		virtual void Advance(float dt) override;
 		virtual void Die();
+		virtual void Initialize(); // = 0
+		void ChangeAnimationState(std::string);
 private:
 	SimpleAnimator* _animator;
-	SimpleController *_controller = nullptr;
+	SimpleController* _controller = nullptr;
 	int flag = 0;
 };

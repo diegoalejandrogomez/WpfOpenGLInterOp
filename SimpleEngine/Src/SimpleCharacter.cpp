@@ -1,12 +1,15 @@
 #include "stdafx.h"
 #include "SimpleCharacter.h"
 #include "SimpleDispatcher.h"
+#include "SimpleEngine.h"
 
 FACTORY_REGISTER(SimpleObject, SimpleCharacter)
 
 SimpleCharacter::SimpleCharacter()
 {
 	_animator = new SimpleAnimator();
+	_controller = new SimpleController();
+	_controller->Control(this);
 }
 
 SimpleCharacter::~SimpleCharacter()
@@ -32,18 +35,6 @@ void SimpleCharacter::Advance(float dt) {
 
 void SimpleCharacter::Render(float dt)
 {
-	//controller should do this (and not with a flag, it must read keyboard)
-	flag++;
-	if (flag > 500)
-	{
-		this->_animator->SwitchState("walk_left");
-	}
-	if (flag > 1000)
-	{
-		this->_animator->SwitchState("walk_rigth");
-		flag = 0;
-	}
-	
 	auto currentAnimation = this->_animator->GetCurrentState();
 	if (currentAnimation != nullptr) {
 		currentAnimation->SetPosition(this->GetPosition());
@@ -61,4 +52,30 @@ void SimpleCharacter::Render(float dt)
 //Should do this for all the events that the character can emmit
 void SimpleCharacter::Die() {
 	SimpleDispatcher::Instance()->Send<CharacterDiedEvent>(this, this);
+}
+
+void SimpleCharacter::Initialize() // to "Hero class"
+{
+	auto animation = SimpleEngine::Instance()->GetResourceManager()->GetSpriteAnimation("walk_rigth");
+	SimpleAnimatedSpriteRenderer* animatedSpriteRenderer = new SimpleAnimatedSpriteRenderer();
+	animatedSpriteRenderer->SetAnimation(animation);
+	this->AddAnimation("walk_rigth", animatedSpriteRenderer);
+	auto animation2 = SimpleEngine::Instance()->GetResourceManager()->GetSpriteAnimation("walk_left");
+	SimpleAnimatedSpriteRenderer* animatedSpriteRenderer2 = new SimpleAnimatedSpriteRenderer();
+	animatedSpriteRenderer2->SetAnimation(animation2);
+	this->AddAnimation("walk_left", animatedSpriteRenderer2);
+	auto animation3 = SimpleEngine::Instance()->GetResourceManager()->GetSpriteAnimation("walk_up");
+	SimpleAnimatedSpriteRenderer* animatedSpriteRenderer3 = new SimpleAnimatedSpriteRenderer();
+	animatedSpriteRenderer3->SetAnimation(animation3);
+	this->AddAnimation("walk_up", animatedSpriteRenderer3);
+	auto animation4 = SimpleEngine::Instance()->GetResourceManager()->GetSpriteAnimation("walk_down");
+	SimpleAnimatedSpriteRenderer* animatedSpriteRenderer4 = new SimpleAnimatedSpriteRenderer();
+	animatedSpriteRenderer4->SetAnimation(animation4);
+	this->AddAnimation("walk_down", animatedSpriteRenderer4);
+	this->SetSize(glm::vec2(60, 60));
+}
+
+void SimpleCharacter::ChangeAnimationState(std::string newState)
+{
+	this->_animator->SwitchState(newState);
 }
