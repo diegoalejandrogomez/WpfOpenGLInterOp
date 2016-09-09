@@ -28,7 +28,7 @@ public:
 	float GetHeight() const { return _size.y / _zoom; };
 	float GetZoom() const { return _zoom; }
 	float GetMaxZoom() const { return std::min(_size.x, _size.y); };
-
+	glm::vec2 GetViewportSize() { return _size; }
 	glm::vec2 ScreenToWorld(glm::vec2 viewPos);
 	glm::vec2 ViewportToWorld(glm::vec2 viewPos);
 	

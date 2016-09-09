@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout" version="3.2.0">
+    <Widget type="ListBox" skin="ListBox" position="0 290 1024 150" align="HStretch Bottom" layer="Main">
+        <Property key="AddItem" value="Chat line 1"/>
+        <Property key="AddItem" value="Chat or console line 2"/>
+    </Widget>
+    <CodeGeneratorSettings/>
+</MyGUI>

@@ -6,8 +6,9 @@
 #include "DebugGameLogic.h"
 #include <filesystem>
 #include <fstream>
-
+#include "SimpleGUI.h"
 #include "SimpleUtils.h"
+
 
 //C++ 14/17 ... but why not XD
 using namespace std::tr2::sys;
@@ -125,6 +126,9 @@ void SimpleEngine::Initialize() {
 	//Init render passes
 	_renderer->Initialize();
 	
+	//Init GUI
+	_gui = new SimpleGUI();
+
 	//Loads a default scene
 	CreateScene();
 	_scene->GetCamera()->SetViewportSize((float)_renderer->GetWidth(), (float)_renderer->GetHeight());

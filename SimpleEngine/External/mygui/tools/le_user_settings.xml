@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Settings>
+	<Controls>
+		<WidgetsWindow>
+			<LastSkinGroup>Default</LastSkinGroup>
+		</WidgetsWindow>
+		<Main>
+			<Maximized>false</Maximized>
+			<Coord>163 0 881 784</Coord>
+		</Main>
+	</Controls>
+	<Settings>
+		<LayoutVersion>3.2.0</LayoutVersion>
+		<GridStep>5</GridStep>
+		<LoadLastProject>false</LoadLastProject>
+		<InterfaceLanguage>Auto</InterfaceLanguage>
+		<WorkspaceTextureSize>1024 1024</WorkspaceTextureSize>
+		<ShowName>true</ShowName>
+		<ShowType>true</ShowType>
+		<ShowSkin>true</ShowSkin>
+	</Settings>
+	<Files>
+		<RecentFolder>C:\Users\sebastian.rojas\Source\Repos\WpfOpenGLInterOp\SimpleEngine\gui</RecentFolder>
+		<RecentFolder.List>
+			<Value>C:\Users\sebastian.rojas\Source\Repos\WpfOpenGLInterOp\SimpleEngine\gui</Value>
+			<Value>C:\Users\sebastian.rojas\Source\Repos\WpfOpenGLInterOp\GameUI\Resources</Value>
+		</RecentFolder.List>
+		<RecentFile.List>
+			<Value>C:\Users\sebastian.rojas\Source\Repos\WpfOpenGLInterOp\SimpleEngine\gui\TestUI.layout</Value>
+			<Value>C:\Users\sebastian.rojas\Source\Repos\WpfOpenGLInterOp\SimpleEngine\gui\TestUI</Value>
+			<Value>C:\Users\sebastian.rojas\Source\Repos\WpfOpenGLInterOp\GameUI\Resources\TestUI</Value>
+		</RecentFile.List>
+		<RecentProject.List />
+	</Files>
+	<Resources>
+		<AdditionalPath.List />
+		<AdditionalResource.List />
+		<UpdateResource.List />
+	</Resources>
+</Settings>

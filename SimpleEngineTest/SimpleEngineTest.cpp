@@ -153,7 +153,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    engine->InitRenderer(hWnd, clientArea.right- clientArea.left, clientArea.bottom - clientArea.top);
    engine->InitInput(hWnd, false);
    engine->Initialize();
-
+   ShowCursor(false);
    return TRUE;
 }
 

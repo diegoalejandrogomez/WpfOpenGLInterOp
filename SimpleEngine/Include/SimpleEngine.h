@@ -8,6 +8,8 @@
 #include "SimpleResourceManager.h"
 #include <queue>
 
+class SimpleGUI;
+
 class SIMPLE_API SimpleEngine final{
 public:
 
@@ -38,6 +40,7 @@ public:
 	inline SimpleRenderer* GetRenderer() { return _renderer; }
 	inline SimpleResourceManager* GetResourceManager() { return _resManager; }
 	inline SimpleInput* GetInput() { return _input; }
+	inline SimpleGUI* GetGUI() { return _gui; }
 	inline float GetRenderFPS() const { 
 		std::chrono::duration<float> s = (_renderLastFPS.back() - _renderLastFPS.front());
 		if (s.count() > 0)
@@ -90,6 +93,7 @@ protected:
 	SimpleGameLogic* _nextGameLogic = nullptr;
 	SimpleInput*	_input;
 	SimpleResourceManager *_resManager = nullptr;
+	SimpleGUI*		_gui = nullptr;
 
 	 //Instant frame time for logic and render update
 	std::chrono::duration<float> _renderTime;

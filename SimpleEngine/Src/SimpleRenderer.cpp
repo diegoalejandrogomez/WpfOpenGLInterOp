@@ -14,6 +14,7 @@
 #include "SimpleUtils.h"
 #include <iostream>
 #include "SimpleResourceManager.h"
+#include "GUIRenderPass.h"
 
 //C++ 14/17 ... but why not XD
 using namespace std::tr2::sys;
@@ -64,6 +65,7 @@ void SimpleRenderer::Initialize() {
 
 	_LoadDefaultShaders();
 	AddPass(new SimpleObjectsRenderPass());
+	AddPass(new GUIRenderPass());
 }
 void SimpleRenderer::Shutdown() {
 	

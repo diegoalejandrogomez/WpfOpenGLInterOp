@@ -54,6 +54,9 @@
     <Filter Include="Engine\Controllers">
       <UniqueIdentifier>{4da9d0f3-e52d-4502-98bd-fef768faf5cc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\GUI">
+      <UniqueIdentifier>{f2f60f59-d663-4e6d-bd3e-815b05f4034c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -239,6 +242,21 @@
     <ClInclude Include="Include\SimplePlayerController.h">
       <Filter>Engine\Controllers</Filter>
     </ClInclude>
+    <ClInclude Include="Include\SimpleGUI.h">
+      <Filter>Engine\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\SimpleOpenGL3ImageLoader.h">
+      <Filter>Engine\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\GUIRenderPass.h">
+      <Filter>Engine\Graphics\RenderPasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\SimpleWindow.h">
+      <Filter>Engine\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\DebugSimpleWindow.h">
+      <Filter>Engine\Debug</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\SimpleObjectsRenderPass.cpp">
@@ -375,6 +393,18 @@
     </ClCompile>
     <ClCompile Include="Src\SimplePlayerController.cpp">
       <Filter>Engine\Controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\SimpleGUI.cpp">
+      <Filter>Engine\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\GUIRenderPass.cpp">
+      <Filter>Engine\Graphics\RenderPasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\SimpleWindow.cpp">
+      <Filter>Engine\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\DebugSimpleWindow.cpp">
+      <Filter>Engine\Debug</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

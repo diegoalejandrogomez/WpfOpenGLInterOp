@@ -9,6 +9,8 @@
 #include "SimpleTextRenderer.h"
 #include "SimpleCharacter.h"
 #include "SimplePlayerController.h"
+#include "SimpleGUI.h"
+#include "DebugSimpleWindow.h"
 #include <fstream>
 
 json DebugGameLogic::Serialize() {
@@ -29,31 +31,35 @@ bool DebugGameLogic::Deserialize(const json &node) {
 void DebugGameLogic::Init()
 {
 	bool save = true;
-	SimpleEngine::Instance()->GetResourceManager()->SetResourcesBaseDir("./debugResources/");
+	//SimpleEngine::Instance()->GetResourceManager()->SetResourcesBaseDir("./debugResources/");
 
-	if (save) {
-		_CreateTestScene();
-		SimpleEngine::Instance()->SerializeResources();
-		//SimpleEngine::Instance()->SerializeScene("DebugScene.scene");
-		//SimpleEngine::Instance()->SerializeGameLogic("DebugState.state");
-		SimpleEngine::Instance()->SerializeGameState("DebugGameState.save");
+	//if (save) {
+	//	_CreateTestScene();
+	//	SimpleEngine::Instance()->SerializeResources();
+	//	//SimpleEngine::Instance()->SerializeScene("DebugScene.scene");
+	//	//SimpleEngine::Instance()->SerializeGameLogic("DebugState.state");
+	//	SimpleEngine::Instance()->SerializeGameState("DebugGameState.save");
 
-		SimpleEngine::Instance()->GetResourceManager()->ExportResources("res.pack");
-	}
-	else {
-		SimpleEngine::Instance()->GetResourceManager()->ImportResources("res.pack");
+	//	SimpleEngine::Instance()->GetResourceManager()->ExportResources("res.pack");
+	//}
+	//else {
+	//	SimpleEngine::Instance()->GetResourceManager()->ImportResources("res.pack");
 
-		SimpleEngine::Instance()->DeserializeResources();
-		/*SimpleEngine::Instance()->DeserializeScene("DebugScene.scene");
-		SimpleEngine::Instance()->DeserializeGameLogic("DebugState.state");*/
-		SimpleEngine::Instance()->DeserializeGameState("DebugGameState.save");
+	//	SimpleEngine::Instance()->DeserializeResources();
+	//	/*SimpleEngine::Instance()->DeserializeScene("DebugScene.scene");
+	//	SimpleEngine::Instance()->DeserializeGameLogic("DebugState.state");*/
+	//	SimpleEngine::Instance()->DeserializeGameState("DebugGameState.save");
 
-	}
+	//}
 
 	//Configure input system we are going to use
-	SimpleEngine::Instance()->GetInput()->CreateKeyboard();
-	SimpleEngine::Instance()->GetInput()->CreateMouse();
-	
+	SimpleEngine::Instance()->GetInput()->CreateKeyboard(true);
+	SimpleEngine::Instance()->GetInput()->CreateMouse(true);
+
+	//Tell the engine we are going to use the UI... This should be done after creating the inputs
+	//otherwise the UI won't be responsive
+	SimpleEngine::Instance()->GetGUI()->Initialize();
+	//SimpleEngine::Instance()->GetGUI()->PushWindow(new DebugSimpleWindow());
 }
 
 void DebugGameLogic::_CreateTestScene() {
@@ -111,15 +117,13 @@ void DebugGameLogic::_CreateTestScene() {
 
 	//Test player controllers
 	SimpleCharacter* pl = new SimpleCharacter();
-	SimpleController* ctrl = new SimpleController();
-	ctrl->Control(pl);
-	pl->Die();
-	ctrl->Release(pl);
-
 	SimplePlayerController* pctrl = new SimplePlayerController();
 	pctrl->Control(pl);
 	pl->Die();
 	
+
+	
+
 }
 
 void DebugGameLogic::Advance(float dt)
