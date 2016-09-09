@@ -638,8 +638,8 @@ namespace WPF.ViewModel
                     {
                         var tileObject = (TileViewModel)tile;
                         var image = tileObject.Image;
-                        int width = (int)((BitmapImage)image).Width;
-                        int heigth = (int)((BitmapImage)image).Height;
+                        int width = (int)((BitmapImage)image).PixelWidth;
+                        int heigth = (int)((BitmapImage)image).PixelHeight;
                         int x = 0;
                         int y = 0;
 
@@ -1008,15 +1008,15 @@ namespace WPF.ViewModel
                                 this.FilePath = path;
                                 newTile.Image = new BitmapImage();
                                 newTile.Image.BeginInit();
-                                newTile.Image.CacheOption = BitmapCacheOption.OnLoad;
+                                newTile.Image.CacheOption = BitmapCacheOption.None;
                                 newTile.Image.UriSource = new Uri(filePath);
                                 newTile.Image.EndInit();
                                 newTile.Image.Freeze();
                                 newTile.Path = this.FilePath;
                                 newTile.x = 0;
                                 newTile.y = 0;
-                                newTile.width = (int)newTile.Image.Width;
-                                newTile.heigth = (int)newTile.Image.Height;
+                                newTile.width = (int)newTile.Image.PixelWidth;
+                                newTile.heigth = (int)newTile.Image.PixelHeight;
                                 newTile.SpriteControl = new SpriteSheetControl();
                                 if (Tiles == null)
                                     Tiles = new ObservableCollection<TileViewModel>();
