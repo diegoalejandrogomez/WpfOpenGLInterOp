@@ -217,9 +217,11 @@ bool SimpleResourceManager::SerializeResources(std::string dir) {
 	return true;
 }
 
-
-
 bool SimpleResourceManager::DeserializeResources(std::string dir) {
+	return this->DeserializeResources(dir, "");
+}
+
+bool SimpleResourceManager::DeserializeResources(std::string dir, std::string subDir) {
 
 	//Load spriteSheets
 	path p = dir + "/spriteSheets/";
@@ -234,7 +236,7 @@ bool SimpleResourceManager::DeserializeResources(std::string dir) {
 			json sprSheet;
 			in >> sprSheet;
 			SimpleSpriteSheet* sheet = new SimpleSpriteSheet();
-			sheet->Deserialize(sprSheet);
+			sheet->Deserialize(sprSheet, subDir);
 			_spriteSheets[sheet->GetPath()] = sheet;
 			in.close();
 		}
@@ -258,7 +260,7 @@ bool SimpleResourceManager::DeserializeResources(std::string dir) {
 			json sprAnim;
 			in >> sprAnim;
 			SimpleSpriteAnimation* anim = new SimpleSpriteAnimation();
-			anim->Deserialize(sprAnim);
+			anim->Deserialize(sprAnim, subDir);
 			_spriteAnimations[anim->GetAnimationName()] = anim;
 			in.close();
 		}
@@ -355,8 +357,16 @@ void SimpleResourceManager::ExportResources(std::string exportPath) {
 }
 
 void SimpleResourceManager::ImportResources(std::string exportPath) {
+	this->ImportResources(exportPath, "");
+}
+void SimpleResourceManager::ImportResources(std::string exportPath, std::string subPath) {
 	std::string base = SimpleEngine::Instance()->GetResourceManager()->GetResourcesBaseDir();
-
+	if (subPath != "")
+	{
+		create_directory(base + subPath);
+		base = base + subPath + "\\";
+		
+	}
 	
 	//if (exists(base + "fonts"))
 	//	remove(base + "fonts");
@@ -411,7 +421,7 @@ void SimpleResourceManager::ImportResources(std::string exportPath) {
 	zip_discard(zipArchive);
 	//fix it
 	//zip_close(zipArchive);
-	DeserializeResources(base);
+	DeserializeResources(base, subPath);
 }
 
 

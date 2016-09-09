@@ -157,7 +157,13 @@ json SimpleTextRenderer::Serialize() {
 	return so;
 
 }
-bool SimpleTextRenderer::Deserialize(const json &node) {
+
+bool SimpleTextRenderer::Deserialize(const json &node)
+{
+	return this->Deserialize(node, "");
+}
+
+bool SimpleTextRenderer::Deserialize(const json &node, std::string dir) {
 
 	SimpleObject::Deserialize(node);
 

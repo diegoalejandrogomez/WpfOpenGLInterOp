@@ -5,8 +5,8 @@
 			<LastSkinGroup>Default</LastSkinGroup>
 		</WidgetsWindow>
 		<Main>
-			<Maximized>false</Maximized>
-			<Coord>163 0 881 784</Coord>
+			<Maximized>true</Maximized>
+			<Coord>-8 -8 1382 744</Coord>
 		</Main>
 	</Controls>
 	<Settings>

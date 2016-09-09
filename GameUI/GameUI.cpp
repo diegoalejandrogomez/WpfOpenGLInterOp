@@ -7,6 +7,7 @@
 #include "SimpleCharacter.h"
 #include "SimpleController.h"
 #include "SimpleAnimatedSpriteRenderer.h"
+#include "SimpleFixedObject.h"
 
 #define MAX_LOADSTRING 100
 
@@ -136,8 +137,8 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    //all this must be in a initialize method in other class
    //get all pack files from resources folder
    SimpleEngine::Instance()->GetResourceManager()->SetResourcesBaseDir(".\\Resources\\");
-   SimpleEngine::Instance()->GetResourceManager()->ImportResources("./resources/ash.pack");
-
+   SimpleEngine::Instance()->GetResourceManager()->ImportResources("./resources/ash.pack", "ash");
+   SimpleEngine::Instance()->GetResourceManager()->ImportResources("./resources/trees.pack", "tree");
    
 //   SimpleEngine::Instance()->GetInput()->CreateKeyboard();
   // SimpleEngine::Instance()->GetInput()->CreateMouse();
@@ -145,10 +146,28 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    SimpleEngine::Instance()->CreateScene();
    SimpleCharacter* character = new SimpleCharacter();
    character->Initialize();
+   character->SetSpeed(2);
    auto layer = new SimpleLayer();
+   layer->SetZ(0);
    SimpleEngine::Instance()->GetScene()->AddLayer(layer);
    
    SimpleEngine::Instance()->GetScene()->AddEntity(character, layer);
+
+   auto layerBackground = new SimpleLayer();
+   layer->SetZ(-1);
+   SimpleEngine::Instance()->GetScene()->AddLayer(layerBackground);
+   int z = -1;
+   for (int i = 0; i < 50; i++)
+   {
+	   SimpleFixedObject* tree = new SimpleFixedObject();
+	   tree->Initialize();
+	   glm::vec3 position = tree->GetPosition();
+	   tree->SetPosition(glm::vec3(position.x, position.y, z));
+	   z--;
+	   SimpleEngine::Instance()->GetScene()->AddEntity(tree, layerBackground);
+   }
+   
+   
    return TRUE;
 }
 

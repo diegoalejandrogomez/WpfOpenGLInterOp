@@ -178,6 +178,7 @@
     <None Include="Resources\gameExample.pack">
       <DeploymentContent>true</DeploymentContent>
     </None>
+    <None Include="Resources\trees.pack" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

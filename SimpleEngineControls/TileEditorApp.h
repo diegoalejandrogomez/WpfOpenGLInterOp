@@ -38,6 +38,7 @@ public:
 	inline int  GetMapHeight()const { return _tileMapSize.y; }
 
 	json Serialize() override;
+	bool Deserialize(const json &node, std::string dir) override;
 	bool Deserialize(const json &node) override;
 private:
 

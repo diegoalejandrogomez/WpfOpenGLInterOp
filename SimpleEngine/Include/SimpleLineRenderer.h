@@ -23,7 +23,7 @@ public:
 	virtual SimpleID GetType() { return "SimpleLineRenderer"; }
 	virtual json Serialize() override;
 	virtual bool Deserialize(const json &node) override;
-
+	virtual bool Deserialize(const json &node, std::string dir);
 private:
 
 	

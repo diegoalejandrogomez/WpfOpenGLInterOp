@@ -152,7 +152,12 @@ json SimpleSpriteRenderer::Serialize() {
 }
 bool SimpleSpriteRenderer::Deserialize(const json &node) {
 	
-	SimpleObject::Deserialize(node);
+	return this->Deserialize(node, "");
+}
+
+bool SimpleSpriteRenderer::Deserialize(const json &node, std::string dir)
+{
+	SimpleObject::Deserialize(node, dir);
 
 	const json& local = node["SimpleSpriteRenderer"];
 
@@ -181,4 +186,3 @@ bool SimpleSpriteRenderer::Deserialize(const json &node) {
 
 	return true;
 }
-

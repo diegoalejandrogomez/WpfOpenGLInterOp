@@ -65,7 +65,13 @@ json SimpleSpriteSheet::Serialize() {
 	return ret;
 
 }
-bool SimpleSpriteSheet::Deserialize(const json &node) {
+
+bool SimpleSpriteSheet::Deserialize(const json &node)
+{
+	return this->Deserialize(node, "");
+}
+
+bool SimpleSpriteSheet::Deserialize(const json &node, std::string dir) {
 	
 	if (node.find("frames") == node.end()) {
 		SIMPLE_LOG("Couldn't deserialize frames");
@@ -84,7 +90,12 @@ bool SimpleSpriteSheet::Deserialize(const json &node) {
 		SIMPLE_LOG("Couldn't deserialize path");
 		return false;
 	}
+
 	std::string path = node["path"];
+
+	if(dir != "")
+		path = dir + "/" + path;
+
 	LoadTexture(path.c_str());
 	
 	if (node.find("cellSize") == node.end()) {

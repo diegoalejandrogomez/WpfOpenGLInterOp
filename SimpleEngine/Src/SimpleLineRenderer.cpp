@@ -90,7 +90,13 @@ json SimpleLineRenderer::Serialize() {
 	
 	return so;
 }
-bool SimpleLineRenderer::Deserialize(const json &node) {
+
+bool SimpleLineRenderer::Deserialize(const json &node)
+{
+	return this->Deserialize(node, "");
+}
+
+bool SimpleLineRenderer::Deserialize(const json &node, std::string dir) {
 	SimpleObject::Deserialize(node);
 
 	SIMPLE_ASSERT(node.find("SimpleLineRenderer") != node.end());

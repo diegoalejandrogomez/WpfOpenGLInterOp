@@ -79,3 +79,13 @@ void SimpleCharacter::ChangeAnimationState(std::string newState)
 {
 	this->_animator->SwitchState(newState);
 }
+
+int SimpleCharacter::GetSpeed()
+{
+	return this->speed;
+}
+
+void SimpleCharacter::SetSpeed(int speed)
+{
+	this->speed = speed;
+}

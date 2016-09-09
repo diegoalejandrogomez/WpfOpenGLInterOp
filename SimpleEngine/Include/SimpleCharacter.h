@@ -18,8 +18,11 @@ public:
 		virtual void Die();
 		virtual void Initialize(); // = 0
 		void ChangeAnimationState(std::string);
+		int GetSpeed();
+		void SetSpeed(int);
 private:
 	SimpleAnimator* _animator;
 	SimpleController* _controller = nullptr;
 	int flag = 0;
+	int speed = 0;
 };
