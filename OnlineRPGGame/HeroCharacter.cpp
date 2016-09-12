@@ -3,9 +3,12 @@
 #include "SimpleDispatcher.h"
 #include "SimpleEngine.h"
 #include "HeroCharacter.h"
+#include "HeroController.h"
 
 HeroCharacter::HeroCharacter() : SimpleCharacter()
 {
+	_controller = new HeroController();
+	_controller->Control(this);
 }
 
 HeroCharacter::~HeroCharacter()

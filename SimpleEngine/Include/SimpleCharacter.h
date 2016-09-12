@@ -15,11 +15,10 @@ public:
 		virtual void Render(float dt) override;
 		virtual void Advance(float dt) override;
 		virtual void Die();
-		virtual void Initialize(); // = 0
+		virtual void Initialize() = 0;
 		int GetSpeed();
 		void SetSpeed(int);
-private:
-	SimpleController* _controller = nullptr;
 protected:
+	SimpleController* _controller = nullptr;
 	int speed = 0;
 };

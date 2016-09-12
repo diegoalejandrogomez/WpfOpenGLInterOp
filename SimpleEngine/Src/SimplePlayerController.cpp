@@ -2,15 +2,7 @@
 #include "SimplePlayerController.h"
 #include "SimpleDispatcher.h"
 
-FACTORY_REGISTER(SimpleObject, SimplePlayerController)
-
-void SimplePlayerController::Advance(float dt) {
-
-
-}
-void SimplePlayerController::Render(float dt) {
-
-}
+//FACTORY_REGISTER(SimpleObject, SimplePlayerController)
 
 //Callbacks
 void SimplePlayerController::OnCharacterEvent(const SimpleEvent& event) {
