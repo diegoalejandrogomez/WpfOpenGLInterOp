@@ -1,5 +1,6 @@
 #pragma once
 #include "stdafx.h"
+#include <GL/glew.h>
 typedef struct
 {
 	GLubyte* imageData;         // Hold All The Color Values For The Image.     

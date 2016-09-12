@@ -2,35 +2,14 @@
 #include "SimpleCharacter.h"
 #include "SimpleDispatcher.h"
 #include "SimpleEngine.h"
+#include "HeroCharacter.h"
 
-FACTORY_REGISTER(SimpleObject, SimpleCharacter)
-
-SimpleCharacter::SimpleCharacter() : SimpleAnimatedEntity()
+HeroCharacter::HeroCharacter() : SimpleCharacter()
 {
-	_controller = new SimpleController();
-	_controller->Control(this);
 }
 
 SimpleCharacter::~SimpleCharacter()
 {
-}
-
-void SimpleCharacter::Advance(float dt) {
-	
-	if(_controller != nullptr)
-		_controller->Advance(dt);
-}
-
-void SimpleCharacter::Render(float dt)
-{
-	SimpleAnimatedEntity::Render(dt);
-}
-
-//If character dies send the event so the controller knows
-//SimpleDispatcher::Instance()->Send<CharacterDiedEvent>(this);
-//Should do this for all the events that the character can emmit
-void SimpleCharacter::Die() {
-	SimpleDispatcher::Instance()->Send<CharacterDiedEvent>(this, this);
 }
 
 void SimpleCharacter::Initialize() // to "Hero class"
@@ -54,12 +33,3 @@ void SimpleCharacter::Initialize() // to "Hero class"
 	this->SetSize(glm::vec2(60, 60));
 }
 
-int SimpleCharacter::GetSpeed()
-{
-	return this->speed;
-}
-
-void SimpleCharacter::SetSpeed(int speed)
-{
-	this->speed = speed;
-}

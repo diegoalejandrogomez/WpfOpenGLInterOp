@@ -260,6 +260,9 @@
     <ClInclude Include="Include\DebugSimpleWindow.h">
       <Filter>Engine\Debug</Filter>
     </ClInclude>
+    <ClInclude Include="Include\SimpleAnimatedEntity.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\SimpleObjectsRenderPass.cpp">
@@ -411,6 +414,9 @@
     </ClCompile>
     <ClCompile Include="Src\DebugSimpleWindow.cpp">
       <Filter>Engine\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\SimpleAnimatedEntity.cpp">
+      <Filter>Engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

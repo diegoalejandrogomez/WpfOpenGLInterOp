@@ -208,6 +208,7 @@ copy /Y "$(ProjectDir)\External\mygui\runtime\MyGUIEngine_d.dll" "$(TargetDir)"<
   <ItemGroup>
     <ClInclude Include="Include\DebugSimpleWindow.h" />
     <ClInclude Include="Include\GUIRenderPass.h" />
+    <ClInclude Include="Include\SimpleAnimatedEntity.h" />
     <ClInclude Include="Include\SimpleAnimator.h" />
     <ClInclude Include="Include\SimpleController.h" />
     <ClInclude Include="Include\SimpleCharacter.h" />
@@ -269,6 +270,7 @@ copy /Y "$(ProjectDir)\External\mygui\runtime\MyGUIEngine_d.dll" "$(TargetDir)"<
     <ClInclude Include="interface\ISimpleAnimatedSpriteRenderer.h" />
     <ClInclude Include="ISimpleTextRenderer.h" />
     <ClInclude Include="resource.h" />
+    <ClCompile Include="Src\SimpleAnimatedEntity.cpp" />
     <ClCompile Include="Src\SimpleFixedObject.cpp" />
     <ClCompile Include="Src\DebugSimpleWindow.cpp" />
     <ClCompile Include="Src\GUIRenderPass.cpp" />
