@@ -23,14 +23,23 @@
 		<RecentFolder>C:\Users\sebastian.rojas\Source\Repos\WpfOpenGLInterOp\SimpleEngine\gui</RecentFolder>
 		<RecentFolder.List>
 			<Value>C:\Users\sebastian.rojas\Source\Repos\WpfOpenGLInterOp\SimpleEngine\gui</Value>
+			<Value>C:\Users\sebastian.rojas\Source\Repos\mygui\Media\Demos\Demo_Gui</Value>
 			<Value>C:\Users\sebastian.rojas\Source\Repos\WpfOpenGLInterOp\GameUI\Resources</Value>
 		</RecentFolder.List>
 		<RecentFile.List>
+			<Value>C:\Users\sebastian.rojas\Source\Repos\WpfOpenGLInterOp\SimpleEngine\gui\TestPopup.layout</Value>
 			<Value>C:\Users\sebastian.rojas\Source\Repos\WpfOpenGLInterOp\SimpleEngine\gui\TestUI.layout</Value>
+			<Value>C:\Users\sebastian.rojas\Source\Repos\mygui\Media\Demos\Demo_Gui\MainPanel.layout</Value>
+			<Value>C:\Users\sebastian.rojas\Source\Repos\mygui\Media\Demos\Demo_Gui\ColourWindowCellView.layout</Value>
+			<Value>C:\Users\sebastian.rojas\Source\Repos\mygui\Media\Demos\Demo_Gui\EditorWindow.layout</Value>
 			<Value>C:\Users\sebastian.rojas\Source\Repos\WpfOpenGLInterOp\SimpleEngine\gui\TestUI</Value>
 			<Value>C:\Users\sebastian.rojas\Source\Repos\WpfOpenGLInterOp\GameUI\Resources\TestUI</Value>
 		</RecentFile.List>
-		<RecentProject.List />
+		<RecentProject.List>
+			<Value>C:\Users\sebastian.rojas\Source\Repos\WpfOpenGLInterOp\SimpleEngine\gui\DebugProject</Value>
+		</RecentProject.List>
+		<LastProjectName>DebugProject</LastProjectName>
+		<LastProjectPath>C:\Users\sebastian.rojas\Source\Repos\WpfOpenGLInterOp\SimpleEngine\gui</LastProjectPath>
 	</Files>
 	<Resources>
 		<AdditionalPath.List />

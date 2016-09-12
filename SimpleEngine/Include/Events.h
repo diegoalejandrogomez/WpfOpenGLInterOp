@@ -51,3 +51,23 @@ public:
 	}
 	SimpleCharacter* _character;
 };
+
+
+///GUI Events
+
+
+class SimpleWindow;
+class WindowClosed : public SimpleEvent
+{
+public:
+	WindowClosed(void * source, SimpleWindow* window) : SimpleEvent(source), _window(window) {}
+	virtual ~WindowClosed() {};
+
+	static constexpr DescriptorType descriptor = "WindowClosed";
+
+	virtual DescriptorType type() const
+	{
+		return descriptor;
+	}
+	SimpleWindow* _window;
+};

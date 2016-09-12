@@ -1,9 +1,27 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="ListBox" skin="ListBox" position="0 290 1024 150" align="HStretch Bottom" layer="Main">
-        <Property key="AddItem" value="Chat line 1"/>
-        <Property key="AddItem" value="Chat or console line 2"/>
+    <Widget type="Window" skin="WindowC" position="5 10 200 265" align="Left Top" layer="Main" name="UIDebugWindow">
+        <Property key="Caption" value="UI Debug"/>
+        <Widget type="Button" skin="Button" position="15 190 165 30" name="exitButton">
+            <Property key="Caption" value="Exit"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="10 10 165 30" name="openButton">
+            <Property key="Caption" value="Open Window"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="10 45 165 30" name="closeButton">
+            <Property key="Caption" value="Close Window"/>
+        </Widget>
+        <Widget type="ListBox" skin="ListBox" position="-220 165 165 60"/>
     </Widget>
-    <Widget type="Button" skin="ButtonCloseSkin" position="950 15 42 42" align="Right Top" layer="Main" name="ExitButton"/>
-    <CodeGeneratorSettings/>
+    <Widget type="Window" skin="WindowCS" position="12 320 1000 150" align="HCenter Bottom" layer="Main" name="StatusWindow">
+        <Property key="Caption" value="Status console"/>
+        <Property key="Movable" value="false"/>
+        <Widget type="ListBox" skin="ListBox" position="5 5 980 105" align="Stretch" name="statusListBox"/>
+    </Widget>
+    <CodeGeneratorSettings>
+        <Property key="IncludeDirectory" value=""/>
+        <Property key="PanelName" value=""/>
+        <Property key="PanelNamespace" value=""/>
+        <Property key="SourceDirectory" value=""/>
+    </CodeGeneratorSettings>
 </MyGUI>

@@ -29,10 +29,10 @@ bool SimpleGUI::Initialize() {
 
 	_loader = new SimpleOpenGL3ImageLoader();
 	_platform = new OpenGL3Platform();
-	_platform->initialise(_loader); // mWindow is Ogre::RenderWindow*, mSceneManager is Ogre::SceneManager*
+	_platform->initialise(_loader); 
 	SimpleCamera2D* cam = SimpleEngine::Instance()->GetScene()->GetCamera();
 	glm::vec2 size = cam->GetViewportSize();
-	_platform->getRenderManagerPtr()->setViewSize(size.x, size.y);
+	_platform->getRenderManagerPtr()->setViewSize((int)size.x,(int) size.y);
 
 	_InitResources();
 
@@ -79,9 +79,13 @@ void SimpleGUI::PushWindow(SimpleWindow* w){
 	w->Load();
 	w->Initialize();
 	_windows.push(w);
+
+	if (w->IsModal()) {
+		InputManager::getInstancePtr()->addWidgetModal(w->GetRootControl());
+	}
 }
 
-void SimpleGUI::PopWindow(bool destroy = true) {
+void SimpleGUI::PopWindow(bool destroy) {
 
 	SimpleWindow * w = _windows.top();
 	w->Shutdown();
@@ -92,6 +96,16 @@ void SimpleGUI::PopWindow(bool destroy = true) {
 	}
 	_windows.pop();
 
+}
+
+
+SimpleWindow* SimpleGUI::GetTopWindow() {
+	
+	if (_windows.empty())
+		return nullptr;
+
+	SimpleWindow *wnd = _windows.top();
+	return wnd;
 }
 
 bool SimpleGUI::LoadLayout(std::string layout) {

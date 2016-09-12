@@ -2,14 +2,39 @@
 #include "DebugSimpleWindow.h"
 #include "MyGUI_Gui.h"
 #include "MyGUI.h"
+#include "SimpleGUI.h"
+#include "DebugSimplePopup.h"
+
 
  void DebugSimpleWindow::Initialize(){
 
- MyGUI::ButtonPtr button = _gui->findWidget<MyGUI::Button>("ExitButton");
- auto lambda = [](MyGUI::Widget* w) { PostQuitMessage(0);};
-
+ MyGUI::ButtonPtr button = _gui->findWidget<MyGUI::Button>("exitButton");
+ auto exitLambda = [](MyGUI::Widget* w) { PostQuitMessage(0);};
  // set callback
- button->eventMouseButtonClick += MyGUI::newDelegate<MyGUI::Widget*>(lambda);
+ button->eventMouseButtonClick += MyGUI::newDelegate<MyGUI::Widget*>(exitLambda);
 
+ button = _gui->findWidget<MyGUI::Button>("openButton");
+ button->eventMouseButtonClick += MyGUI::newDelegate<DebugSimpleWindow>(this, &DebugSimpleWindow::OnOpenWindowButton);
+
+ button = _gui->findWidget<MyGUI::Button>("closeButton");
+ button->eventMouseButtonClick += MyGUI::newDelegate<DebugSimpleWindow>(this, &DebugSimpleWindow::OnCloseWindowButton);
 
 }
+
+
+ 
+ void DebugSimpleWindow::OnOpenWindowButton(MyGUI::Widget* w) {
+ 
+	 _popup = new DebugSimplePopup();
+	 SimpleEngine::Instance()->GetGUI()->PushWindow(_popup);
+ 
+ }
+
+ void DebugSimpleWindow::OnCloseWindowButton(MyGUI::Widget* w) {
+	 if (_popup != nullptr)
+		 _popup->Close();
+	 _popup = nullptr;
+ }
+
+
+

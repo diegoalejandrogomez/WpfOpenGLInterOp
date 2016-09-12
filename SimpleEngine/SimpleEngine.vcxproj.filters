@@ -260,6 +260,9 @@
     <ClInclude Include="Include\DebugSimpleWindow.h">
       <Filter>Engine\Debug</Filter>
     </ClInclude>
+    <ClInclude Include="Include\DebugSimplePopup.h">
+      <Filter>Engine\Debug</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\SimpleObjectsRenderPass.cpp">
@@ -410,6 +413,9 @@
       <Filter>Engine\GUI</Filter>
     </ClCompile>
     <ClCompile Include="Src\DebugSimpleWindow.cpp">
+      <Filter>Engine\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\DebugSimplePopup.cpp">
       <Filter>Engine\Debug</Filter>
     </ClCompile>
   </ItemGroup>

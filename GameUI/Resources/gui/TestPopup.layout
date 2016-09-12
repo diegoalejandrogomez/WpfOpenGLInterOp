@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout" version="3.2.0">
+    <Widget type="Window" skin="WindowCSX" position="335 230 320 120" layer="Popup">
+        <Property key="Caption" value="Simple Popup Window"/>
+        <Widget type="TextBox" skin="TextBox" position="20 15 270 40">
+            <Property key="Caption" value="This is a simple Popup. Close me using \n the &quot;x&quot; on the  upper right corner"/>
+            <Property key="TextColour" value="1 0.960938 0"/>
+            <Property key="TextShadow" value="true"/>
+            <Property key="TextShadowColour" value="1 0 0"/>
+        </Widget>
+    </Widget>
+    <CodeGeneratorSettings/>
+</MyGUI>

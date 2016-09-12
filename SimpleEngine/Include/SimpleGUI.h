@@ -30,7 +30,8 @@ public:
 
 
 	void PushWindow(SimpleWindow* w);
-	void PopWindow(bool destroy);
+	void PopWindow(bool destroy = true);
+	SimpleWindow* GetTopWindow();
 private:
 
 	void _InitResources();

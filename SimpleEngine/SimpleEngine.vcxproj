@@ -206,6 +206,7 @@ copy /Y "$(ProjectDir)\External\mygui\runtime\MyGUIEngine_d.dll" "$(TargetDir)"<
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Include\DebugSimplePopup.h" />
     <ClInclude Include="Include\DebugSimpleWindow.h" />
     <ClInclude Include="Include\GUIRenderPass.h" />
     <ClInclude Include="Include\SimpleAnimator.h" />
@@ -269,6 +270,7 @@ copy /Y "$(ProjectDir)\External\mygui\runtime\MyGUIEngine_d.dll" "$(TargetDir)"<
     <ClInclude Include="interface\ISimpleAnimatedSpriteRenderer.h" />
     <ClInclude Include="ISimpleTextRenderer.h" />
     <ClInclude Include="resource.h" />
+    <ClCompile Include="Src\DebugSimplePopup.cpp" />
     <ClCompile Include="Src\SimpleFixedObject.cpp" />
     <ClCompile Include="Src\DebugSimpleWindow.cpp" />
     <ClCompile Include="Src\GUIRenderPass.cpp" />
