@@ -33,6 +33,7 @@ bool SimpleGUI::Initialize() {
 	SimpleCamera2D* cam = SimpleEngine::Instance()->GetScene()->GetCamera();
 	glm::vec2 size = cam->GetViewportSize();
 	_platform->getRenderManagerPtr()->setViewSize((int)size.x,(int) size.y);
+	
 
 	_InitResources();
 
@@ -53,6 +54,7 @@ bool SimpleGUI::Initialize() {
 		[this](const SimpleEvent& evt) {
 		const WindowResizeEvent &res = static_cast<const WindowResizeEvent&>(evt);
 		_platform->getRenderManagerPtr()->setViewSize(res.width, res.height);	
+	
 	}
 	});
 	

@@ -19,6 +19,9 @@
  button = _gui->findWidget<MyGUI::Button>("closeButton");
  button->eventMouseButtonClick += MyGUI::newDelegate<DebugSimpleWindow>(this, &DebugSimpleWindow::OnCloseWindowButton);
 
+ button = _gui->findWidget<MyGUI::Button>("sendButton");
+ button->eventMouseButtonClick += MyGUI::newDelegate<DebugSimpleWindow>(this, &DebugSimpleWindow::OnSendButton);
+
 }
 
 
@@ -36,5 +39,15 @@
 	 _popup = nullptr;
  }
 
+
+ void DebugSimpleWindow::OnSendButton(MyGUI::Widget* w) {
+	
+	 MyGUI::ListBox* _lbox = _gui->findWidget<MyGUI::ListBox>("statusListBox");
+	 MyGUI::EditBox* _editBox = _gui->findWidget<MyGUI::EditBox>("sendEditBox");
+
+	 _lbox->addItem(_editBox->getCaption() );
+	 _editBox->setCaption("");
+	 
+ }
 
 
