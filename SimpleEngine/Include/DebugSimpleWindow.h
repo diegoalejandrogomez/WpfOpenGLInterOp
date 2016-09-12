@@ -13,8 +13,8 @@ public:
 	};
 
 	void OnOpenWindowButton(MyGUI::Widget* w);
-
 	void OnCloseWindowButton(MyGUI::Widget* w);
+	void OnSendButton(MyGUI::Widget* w);
 
 	virtual const char* GetFilename() { return "TestUI.layout"; }
 	

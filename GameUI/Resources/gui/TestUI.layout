@@ -13,10 +13,14 @@
         </Widget>
         <Widget type="ListBox" skin="ListBox" position="-220 165 165 60"/>
     </Widget>
-    <Widget type="Window" skin="WindowCS" position="12 320 1000 150" align="HCenter Bottom" layer="Main" name="StatusWindow">
+    <Widget type="Window" skin="WindowCS" position="12 280 1000 185" align="HCenter Bottom" layer="Main" name="StatusWindow">
         <Property key="Caption" value="Status console"/>
         <Property key="Movable" value="false"/>
-        <Widget type="ListBox" skin="ListBox" position="5 5 980 105" align="Stretch" name="statusListBox"/>
+        <Widget type="ListBox" skin="ListBox" position="5 5 980 110" align="Stretch" name="statusListBox"/>
+        <Widget type="EditBox" skin="EditBox" position="5 120 905 25" name="sendEditBox"/>
+        <Widget type="Button" skin="Button" position="910 120 75 25" name="sendButton">
+            <Property key="Caption" value="Send"/>
+        </Widget>
     </Widget>
     <CodeGeneratorSettings>
         <Property key="IncludeDirectory" value=""/>

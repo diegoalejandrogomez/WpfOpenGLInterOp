@@ -80,28 +80,26 @@ public:
 
 		switch (format)
 		{
-		case IL_COLOUR_INDEX: convertToFormat = IL_RGB; break;
-		case IL_ALPHA: convertToFormat = IL_LUMINANCE_ALPHA; break;
-		case IL_BGR: convertToFormat = IL_RGB; break;
-		case IL_BGRA: convertToFormat = IL_RGBA; break;
+		case IL_RGB: convertToFormat = IL_BGR; break;
+		case IL_RGBA: convertToFormat = IL_BGRA; break;
 		default: break;
 		}
-
+		
+		//Hotfix, due a MyGUI bug... should fix mygui sometime...
+		
 		if ((convertToFormat != format) || (type != IL_UNSIGNED_BYTE))
 		{
 			if (ilConvertImage(convertToFormat, IL_UNSIGNED_BYTE) == IL_FALSE)
 			{
 				return 0;
-			}
+			}		
 		}
 
 		// Determine MyGUI pixel formats
 		switch (format)
 		{
 		case IL_RGB: _format = MyGUI::PixelFormat::R8G8B8; break;
-		case IL_RGBA: _format = MyGUI::PixelFormat::R8G8B8A8; break;
-		case IL_LUMINANCE: _format = MyGUI::PixelFormat::L8; break;
-		case IL_LUMINANCE_ALPHA: _format = MyGUI::PixelFormat::L8A8; break;
+		case IL_RGBA: _format = MyGUI::PixelFormat::R8G8B8A8; break;	
 		default: _format = MyGUI::PixelFormat::Unknow; break;
 		}
 
