@@ -5,24 +5,21 @@
 #include "SimpleAnimator.h"
 #include "SimpleSpriteAnimation.h"
 #include "SimpleController.h"
+#include "SimpleAnimatedEntity.h"
 #include <string>
-class SIMPLE_API SimpleCharacter : public SimpleObject {
+class SIMPLE_API SimpleCharacter : public SimpleAnimatedEntity {
 public:
 		SimpleCharacter();
 		~SimpleCharacter();
 		
-		void AddAnimation(std::string, SimpleAnimatedSpriteRenderer*);
-		void RemoveAnimation(std::string);
 		virtual void Render(float dt) override;
 		virtual void Advance(float dt) override;
 		virtual void Die();
 		virtual void Initialize(); // = 0
-		void ChangeAnimationState(std::string);
 		int GetSpeed();
 		void SetSpeed(int);
 private:
-	SimpleAnimator* _animator;
 	SimpleController* _controller = nullptr;
-	int flag = 0;
+protected:
 	int speed = 0;
 };
