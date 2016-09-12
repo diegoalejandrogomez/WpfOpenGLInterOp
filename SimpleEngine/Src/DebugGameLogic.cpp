@@ -115,16 +115,11 @@ void DebugGameLogic::_CreateTestScene() {
 	title->SetColor({255,255,255,255});
 	SimpleEngine::Instance()->GetScene()->AddEntity(title, 0);
 
-
 	//Test player controllers
-	SimpleCharacter* pl = new SimpleCharacter();
-	SimplePlayerController* pctrl = new SimplePlayerController();
-	pctrl->Control(pl);
-	pl->Die();
-	
-
-	
-
+	//SimpleCharacter* pl = new SimpleCharacter();
+	//SimplePlayerController* pctrl = new SimplePlayerController();
+	//pctrl->Control(pl);
+	//pl->Die();
 }
 
 void DebugGameLogic::Advance(float dt)

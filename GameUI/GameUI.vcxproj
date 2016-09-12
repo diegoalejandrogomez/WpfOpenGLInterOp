@@ -71,7 +71,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>../SimpleEngine/Include/;$(SolutionDir)\SimpleEngine\External\ois\include\;$(SolutionDir)\SimpleEngine\External\glm\;$(IncludePath)</IncludePath>
+    <IncludePath>../SimpleEngine/Include/;$(SolutionDir)\SimpleEngine\External\ois\include\;$(SolutionDir)\OnlineRPGGame;$(SolutionDir)\SimpleEngine\External\glm\;$(IncludePath)</IncludePath>
     <ReferencePath>$(SolutionDir)SimpleEngine\External\devil\lib\;$(SolutionDir)\SimpleEngine\External\ois\lib\;$(ReferencePath)</ReferencePath>
     <LibraryPath>$(SolutionDir)\SimpleEngine\External\ois\lib\;$(SolutionDir)SimpleEngine\External\devil\lib\;..\Debug\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
@@ -95,7 +95,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>OIS_static_d.lib;ILU.lib;DevIL.lib;opengl32.lib;SimpleEngine_dyn.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OIS_static_d.lib;ILU.lib;DevIL.lib;opengl32.lib;SimpleEngine_dyn.lib;OnlineRPGGame.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(ProjectDir)Resources\*.*" "$(SolutionDir)Debug\Resources" /Y /I /E</Command>

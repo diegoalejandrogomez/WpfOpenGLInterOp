@@ -4,8 +4,8 @@
 #include "stdafx.h"
 #include "GameUI.h"
 #include <SimpleEngine.h>
-#include "SimpleCharacter.h"
-#include "SimpleController.h"
+#include "HeroCharacter.h"
+#include "HeroController.h"
 #include "SimpleAnimatedSpriteRenderer.h"
 #include "SimpleFixedObject.h"
 
@@ -144,7 +144,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
   // SimpleEngine::Instance()->GetInput()->CreateMouse();
 
    SimpleEngine::Instance()->CreateScene();
-   SimpleCharacter* character = new SimpleCharacter();
+   HeroCharacter* character = new HeroCharacter();
    character->Initialize();
    character->SetSpeed(2);
    auto layer = new SimpleLayer();
