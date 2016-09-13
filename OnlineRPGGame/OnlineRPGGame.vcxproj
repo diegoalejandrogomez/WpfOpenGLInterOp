@@ -132,6 +132,8 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="EnemyCharacter.h" />
+    <ClInclude Include="EnemyController.h" />
     <ClInclude Include="HeroCharacter.h" />
     <ClInclude Include="HeroController.h" />
     <ClInclude Include="OnlineRpg.h" />
@@ -139,6 +141,8 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="EnemyCharacter.cpp" />
+    <ClCompile Include="EnemyController.cpp" />
     <ClCompile Include="HeroCharacter.cpp" />
     <ClCompile Include="HeroController.cpp" />
     <ClCompile Include="OnlineRpg.cpp" />

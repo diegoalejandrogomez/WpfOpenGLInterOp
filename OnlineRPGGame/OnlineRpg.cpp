@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "OnlineRpg.h"
+#include "EnemyCharacter.h"
 
 OnlineRpg::OnlineRpg()
 {
@@ -39,7 +40,15 @@ void OnlineRpg::Initialize()
 		glm::vec3 position = tree->GetPosition();
 		tree->SetPosition(glm::vec3(position.x, position.y, z));
 		z--;
-		SimpleEngine::Instance()->GetScene()->AddEntity(tree, _layerBackground);
+		//SimpleEngine::Instance()->GetScene()->AddEntity(tree, _layerBackground);
+	}
+
+	for (int i = 0; i < 5; i++)
+	{
+		EnemyCharacter* enemy = new EnemyCharacter();
+		enemy->SetSpeed(rand() % 2 + 1);
+		enemy->Initialize();
+		SimpleEngine::Instance()->GetScene()->AddEntity(enemy, _layerBackground);
 	}
 
 }
