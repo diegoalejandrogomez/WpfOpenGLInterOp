@@ -33,7 +33,7 @@ void DebugGameLogic::Init()
 	bool save = true;
 
 	SimpleEngine::Instance()->GetRenderer()->SetClearColor({ 0,0,0,0 });
-	//SimpleEngine::Instance()->GetRenderer()->ShowDebugInfo();
+	SimpleEngine::Instance()->GetRenderer()->ShowDebugInfo();
 
 	//SimpleEngine::Instance()->GetResourceManager()->SetResourcesBaseDir("./debugResources/");
 
