@@ -49,13 +49,13 @@ SimpleRenderer::~SimpleRenderer() {
 bool SimpleRenderer::_LoadDefaultShaders() {
 	SimpleResourceManager *res = SimpleEngine::Instance()->GetResourceManager();
 
-	if (!res->CreateProgram("VertexColor", "./shaders/SimpleColorShader.vert", "./shaders/SimpleColorShader.frag"))
+	if (!res->CreateProgram("VertexColor", "../SimpleEngine/Src/shaders/SimpleColorShader.vert", "../SimpleEngine/Src/shaders/SimpleColorShader.frag"))
 		return false;
 
-	if (!res->CreateProgram("VertexSprite", "./shaders/SimpleSpriteShader.vert", "./shaders/SimpleSpriteShader.frag"))
+	if (!res->CreateProgram("VertexSprite", "../SimpleEngine/Src/shaders/SimpleSpriteShader.vert", "../SimpleEngine/Src/shaders/SimpleSpriteShader.frag"))
 		return false;
 
-	if (!res->CreateProgram("TextSprite", "./shaders/SimpleTextShader.vert", "./shaders/SimpleTextShader.frag"))
+	if (!res->CreateProgram("TextSprite", "../SimpleEngine/Src/shaders/SimpleTextShader.vert", "../SimpleEngine/Src/shaders/SimpleTextShader.frag"))
 		return false;
 
 	return true;
