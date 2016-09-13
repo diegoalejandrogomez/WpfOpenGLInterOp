@@ -7,6 +7,11 @@
 
 SimpleCharacter::SimpleCharacter() : SimpleAnimatedEntity()
 {
+	SetSize({ 1,1 });
+	InitDynamicPhysics();
+	FixOrientation(true);
+	_body->SetLinearDamping(15.0f);
+	
 }
 
 SimpleCharacter::~SimpleCharacter()
@@ -15,6 +20,7 @@ SimpleCharacter::~SimpleCharacter()
 
 void SimpleCharacter::Advance(float dt) {
 	
+	SimpleAnimatedEntity::Advance(dt);
 	if(_controller != nullptr)
 		_controller->Advance(dt);
 }

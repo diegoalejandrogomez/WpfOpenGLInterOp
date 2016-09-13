@@ -146,7 +146,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    SimpleEngine::Instance()->CreateScene();
    HeroCharacter* character = new HeroCharacter();
    character->Initialize();
-   character->SetSpeed(2);
+   character->SetSpeed(200);
    auto layer = new SimpleLayer();
    layer->SetZ(0);
    SimpleEngine::Instance()->GetScene()->AddLayer(layer);

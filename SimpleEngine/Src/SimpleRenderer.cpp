@@ -15,6 +15,7 @@
 #include <iostream>
 #include "SimpleResourceManager.h"
 #include "GUIRenderPass.h"
+#include "PhysicsDebugRenderPass.h"
 
 //C++ 14/17 ... but why not XD
 using namespace std::tr2::sys;
@@ -78,7 +79,8 @@ void SimpleRenderer::ClearPasses() {
 	_passes.clear();
 }
 void SimpleRenderer::ShowDebugInfo() { 
-	AddPass(new DebugRenderPass()); 
+	AddPass(new DebugRenderPass());
+	AddPass(new PhysicsDebugRenderPass());
 }
 
 void SimpleRenderer::Render(float dt, SimpleScene* scene ) {

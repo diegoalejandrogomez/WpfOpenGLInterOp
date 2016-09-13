@@ -107,6 +107,8 @@ void SimpleEngine::Advance(float dt) {
 			_scene->Advance(dt);
 	}
 
+	_physics->Advance(dt);
+
 	//Flush pending events
 	SimpleDispatcher::Instance()->Flush();
 
@@ -126,6 +128,11 @@ void SimpleEngine::Initialize() {
 	//Init render passes
 	_renderer->Initialize();
 	
+	//Init physics
+	_physics = new SimplePhysics();
+	_physics->Initialize();
+
+
 	//Init GUI
 	_gui = new SimpleGUI();
 
@@ -152,6 +159,14 @@ void SimpleEngine::Shutdown() {
 		_nextGameLogic = nullptr;
 	}
 	
+	if (_physics != nullptr) {
+		_physics->Shutdown();
+		delete _physics;
+		_physics = nullptr;
+		
+	}
+
+
 	//Destroy scene
 	if (_scene != nullptr) {
 		delete _scene;

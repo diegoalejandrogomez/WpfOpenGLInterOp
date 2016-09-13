@@ -1,10 +1,5 @@
 #pragma once
-
-
-#include "stdafx.h"
-#include "SimpleRenderer.h"
 #include "SimpleConfiguration.h"
-#include "SimpleEngine.h"
 
 extern "C" {
 

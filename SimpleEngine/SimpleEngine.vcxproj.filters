@@ -57,6 +57,9 @@
     <Filter Include="Engine\GUI">
       <UniqueIdentifier>{f2f60f59-d663-4e6d-bd3e-815b05f4034c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Physics">
+      <UniqueIdentifier>{4c693c55-2c3c-44f2-8af3-e55b3524a76d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -266,6 +269,12 @@
     <ClInclude Include="Include\SimpleAnimatedEntity.h">
       <Filter>Engine</Filter>
     </ClInclude>
+    <ClInclude Include="Include\SimplePhysics.h">
+      <Filter>Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\PhysicsDebugRenderPass.h">
+      <Filter>Engine\Graphics\RenderPasses</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\SimpleObjectsRenderPass.cpp">
@@ -423,6 +432,12 @@
     </ClCompile>
     <ClCompile Include="Src\SimpleAnimatedEntity.cpp">
       <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\SimplePhysics.cpp">
+      <Filter>Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\PhysicsDebugRenderPass.cpp">
+      <Filter>Engine\Graphics\RenderPasses</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -6,6 +6,7 @@
 #include <chrono>
 #include "SimpleConfiguration.h"
 #include "SimpleResourceManager.h"
+#include "SimplePhysics.h"
 #include <queue>
 
 class SimpleGUI;
@@ -41,6 +42,7 @@ public:
 	inline SimpleResourceManager* GetResourceManager() { return _resManager; }
 	inline SimpleInput* GetInput() { return _input; }
 	inline SimpleGUI* GetGUI() { return _gui; }
+	inline SimplePhysics* GetPhysics() { return _physics; }
 	inline float GetRenderFPS() const { 
 		std::chrono::duration<float> s = (_renderLastFPS.back() - _renderLastFPS.front());
 		if (s.count() > 0)
@@ -94,6 +96,7 @@ protected:
 	SimpleInput*	_input;
 	SimpleResourceManager *_resManager = nullptr;
 	SimpleGUI*		_gui = nullptr;
+	SimplePhysics* _physics = nullptr;
 
 	 //Instant frame time for logic and render update
 	std::chrono::duration<float> _renderTime;

@@ -26,7 +26,7 @@ void SimpleAnimatedEntity::RemoveAnimation(std::string stateName)
 }
 
 void SimpleAnimatedEntity::Advance(float dt) {
-		
+	SimpleObject::Advance(dt);
 }
 
 void SimpleAnimatedEntity::Render(float dt)
