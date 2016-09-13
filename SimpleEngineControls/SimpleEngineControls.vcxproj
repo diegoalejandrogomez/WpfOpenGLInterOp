@@ -74,7 +74,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)\SimpleEngine\External\ois\include;$(SolutionDir)\SimpleEngine\Include;$(SolutionDir)\SimpleEngine\External\glm\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)SimpleEngine\External\box2d\include;$(SolutionDir)\SimpleEngine\External\ois\include;$(SolutionDir)\SimpleEngine\Include;$(SolutionDir)\SimpleEngine\External\glm\;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)\SimpleEngine\External\ois\lib;$(SolutionDir)\SimpleEngine\External\devil\lib\;$(SolutionDir)\Debug\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

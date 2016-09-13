@@ -71,7 +71,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)SimpleEngineControls\;$(SolutionDir)\SimpleEngine\External\ois\include\;$(SolutionDir)\SimpleEngine\External\glm\;..\SimpleEngine\Include;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)</IncludePath>
+    <IncludePath>$(SolutionDir)SimpleEngine\External\box2d\include;$(SolutionDir)SimpleEngineControls\;$(SolutionDir)\SimpleEngine\External\ois\include\;$(SolutionDir)\SimpleEngine\External\glm\;..\SimpleEngine\Include;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)</IncludePath>
     <LibraryPath>$(SolutionDir)\SimpleEngine\External\ois\lib\;$(SolutionDir)SimpleEngine\External\devil\lib\;..\Debug\;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

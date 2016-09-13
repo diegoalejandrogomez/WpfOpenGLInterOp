@@ -102,7 +102,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_FromDll|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)\SimpleEngine\External\glm\;$(SolutionDir)\SimpleEngine\External\ois\include\;..\SimpleEngine\Include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)SimpleEngine\External\box2d\include;$(SolutionDir)\SimpleEngine\External\glm\;$(SolutionDir)\SimpleEngine\External\ois\include\;..\SimpleEngine\Include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)\SimpleEngine\External\ois\lib\;$(SolutionDir)SimpleEngine\External\devil\lib\;..\Debug\;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)Debug\</OutDir>
   </PropertyGroup>

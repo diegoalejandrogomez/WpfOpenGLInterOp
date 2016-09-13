@@ -16,6 +16,7 @@ void HeroController::Advance(float dt) {
 	auto keyboard = SimpleEngine::Instance()->GetInput()->GetKeyboard();
 	glm::vec3 position = _character->GetPosition();
 	int speed = _character->GetSpeed();
+	glm::vec2 vel = _character->GetVelocity();
 
 	if (_character != nullptr)
 	{
@@ -27,29 +28,35 @@ void HeroController::Advance(float dt) {
 		if (keyboard->isKeyDown(OIS::KeyCode::KC_UP))
 		{
 			_character->ChangeAnimationState("walk_up");
-			_character->SetVelocity({ 0.0f, (float)speed });
+			vel.y += speed;
+			//_character->SetVelocity({ 0.0f, (float)speed });
 			//_character->SetPosition(glm::vec3(position.x, position.y + speed, position.z));
 		}
 
 		if (keyboard->isKeyDown(OIS::KeyCode::KC_DOWN)) {
 			_character->ChangeAnimationState("walk_down");
-			_character->SetVelocity({ 0.0f, -(float)speed });
+			vel.y += -speed;
+			//_character->SetVelocity({ 0.0f, -(float)speed });		
 			//_character->SetPosition(glm::vec3(position.x, position.y - speed, position.z));
 		}
 
 		if (keyboard->isKeyDown(OIS::KeyCode::KC_LEFT))
 		{
 			_character->ChangeAnimationState("walk_left");
-			_character->SetVelocity({ -(float)speed, 0.0f });
+			vel.x += -speed;
+			//_character->SetVelocity({ -(float)speed, 0.0f });
 			//_character->SetPosition(glm::vec3(position.x - speed, position.y, position.z));
 		}
 
 		if (keyboard->isKeyDown(OIS::KeyCode::KC_RIGHT))
 		{
 			_character->ChangeAnimationState("walk_rigth");
-			_character->SetVelocity({ (float)speed, 0.0f });
+			vel.x += speed;
+			//_character->SetVelocity({ (float)speed, 0.0f });
 			//_character->SetPosition(glm::vec3(position.x + speed, position.y, position.z));
 		}
+
+		_character->SetVelocity( glm::clamp(vel, {-speed, -speed}, { speed, speed }));
 
 	}
 }
