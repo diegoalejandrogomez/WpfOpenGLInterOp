@@ -4,6 +4,7 @@
 #include "SimpleDebug.h"
 #include "SimplePhysics.h"
 #include "SimpleEngine.h"
+#include "SimpleScene.h"
 
 SimpleObject::SimpleObject() :_name("") {
 
@@ -98,6 +99,17 @@ void SimpleObject::Render(float dt) {
 }
 
 
+void SimpleObject::AddedToScene(SimpleScene* scene) {
+	if (HasPhysics())
+		_body->SetActive(true);
+}
+
+
+void SimpleObject::RemovedFromScene(SimpleScene* scene) {
+	if (HasPhysics())
+		_body->SetActive(false);
+}
+
 void SimpleObject::_DestroyPhysics() {
 
 	if (_body != nullptr) {
@@ -128,7 +140,7 @@ void SimpleObject::InitStaticPhysics() {
 	def.position.y = _aabb.Center().y;
 	def.angle = _orientation;
 	def.userData = this;	
-
+	def.active = false;
 	_body = world->CreateBody(&def);
 	_CreateFixtures(0.0f);
 
@@ -143,6 +155,8 @@ void SimpleObject::InitKinematicPhysics() {
 	def.angle = _orientation;
 	def.linearVelocity = { 0.0f, 0.0f };
 	def.userData = this;
+	def.active = false;
+
 	_body = world->CreateBody(&def);
 	_CreateFixtures(0.0f);
 }
@@ -155,6 +169,8 @@ void SimpleObject::InitDynamicPhysics(float density, float restitution, float fr
 	def.angle = _orientation;
 	def.linearVelocity = { 0.0f, 0.0f };
 	def.userData = this;
+	def.active = false;
+
 	_body = world->CreateBody(&def);
 	_CreateFixtures(1.0f);
 }

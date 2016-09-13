@@ -58,4 +58,5 @@ void SimplePhysics::PreSolve(b2Contact* contact, const b2Manifold* oldManifold)
 { /* handle pre-solve event */
 }
 void SimplePhysics::PostSolve(b2Contact* contact, const b2ContactImpulse* impulse)
-{ /* handle post-solve event */}
+{ /* handle post-solve event */
+}

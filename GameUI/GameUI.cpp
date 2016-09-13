@@ -4,10 +4,7 @@
 #include "stdafx.h"
 #include "GameUI.h"
 #include <SimpleEngine.h>
-#include "HeroCharacter.h"
-#include "HeroController.h"
-#include "SimpleAnimatedSpriteRenderer.h"
-#include "SimpleFixedObject.h"
+#include "OnlineRpg.h"
 
 #define MAX_LOADSTRING 100
 
@@ -22,6 +19,7 @@ BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 SimpleEngine * engine = nullptr;
+OnlineRpg* onlineRpg;
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,
@@ -137,37 +135,9 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    //all this must be in a initialize method in other class
    //get all pack files from resources folder
    SimpleEngine::Instance()->GetResourceManager()->SetResourcesBaseDir(".\\Resources\\");
-   SimpleEngine::Instance()->GetResourceManager()->ImportResources("./resources/ash.pack", "ash");
-   SimpleEngine::Instance()->GetResourceManager()->ImportResources("./resources/trees.pack", "tree");
-   
-//   SimpleEngine::Instance()->GetInput()->CreateKeyboard();
-  // SimpleEngine::Instance()->GetInput()->CreateMouse();
-
-   SimpleEngine::Instance()->CreateScene();
-   HeroCharacter* character = new HeroCharacter();
-   character->Initialize();
-   character->SetSpeed(200);
-   auto layer = new SimpleLayer();
-   layer->SetZ(0);
-   SimpleEngine::Instance()->GetScene()->AddLayer(layer);
-   
-   SimpleEngine::Instance()->GetScene()->AddEntity(character, layer);
-
-   auto layerBackground = new SimpleLayer();
-   layer->SetZ(-1);
-   SimpleEngine::Instance()->GetScene()->AddLayer(layerBackground);
-   int z = -1;
-   for (int i = 0; i < 50; i++)
-   {
-	   SimpleFixedObject* tree = new SimpleFixedObject();
-	   tree->Initialize();
-	   glm::vec3 position = tree->GetPosition();
-	   tree->SetPosition(glm::vec3(position.x, position.y, z));
-	   z--;
-	   SimpleEngine::Instance()->GetScene()->AddEntity(tree, layerBackground);
-   }
-   
-   
+ 
+   onlineRpg = new OnlineRpg();
+   onlineRpg->Initialize();
    return TRUE;
 }
 
@@ -197,6 +167,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
 			break;
 		case IDM_EXIT:
+			delete onlineRpg;
 			DestroyWindow(hWnd);
 			break;
 		default:

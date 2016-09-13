@@ -10,6 +10,7 @@
 #include <Box2D\Box2D.h>
 
 using json = nlohmann::json;
+class SimpleScene;
 
 class SIMPLE_API SimpleObject :public SimpleFactory<SimpleObject>,
 					public SimpleSerializable{
@@ -19,6 +20,8 @@ public:
 	SimpleObject() ;
 	virtual void Advance(float dt);
 	virtual void Render(float dt);
+	virtual void AddedToScene(SimpleScene* scene);
+	virtual void RemovedFromScene(SimpleScene* scene);
 
 	inline const glm::vec3& GetPosition() const { return _aabb.position; };
 	inline const glm::vec2& GetSize() const { return _aabb.size; };

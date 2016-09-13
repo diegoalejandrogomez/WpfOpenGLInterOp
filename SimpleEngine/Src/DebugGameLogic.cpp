@@ -62,8 +62,8 @@ void DebugGameLogic::Init()
 
 	//Tell the engine we are going to use the UI... This should be done after creating the inputs
 	//otherwise the UI won't be responsive
-	SimpleEngine::Instance()->GetGUI()->Initialize();
-	SimpleEngine::Instance()->GetGUI()->PushWindow(new DebugSimpleWindow());	
+	//SimpleEngine::Instance()->GetGUI()->Initialize();
+	//SimpleEngine::Instance()->GetGUI()->PushWindow(new DebugSimpleWindow());
 }
 
 void DebugGameLogic::_CreateTestScene() {

@@ -132,14 +132,20 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="EnemyCharacter.h" />
+    <ClInclude Include="EnemyController.h" />
     <ClInclude Include="HeroCharacter.h" />
     <ClInclude Include="HeroController.h" />
+    <ClInclude Include="OnlineRpg.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="EnemyCharacter.cpp" />
+    <ClCompile Include="EnemyController.cpp" />
     <ClCompile Include="HeroCharacter.cpp" />
     <ClCompile Include="HeroController.cpp" />
+    <ClCompile Include="OnlineRpg.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
