@@ -295,7 +295,7 @@ bool SimpleInput::keyPressed(const OIS::KeyEvent &e) {
 			return true;
 		++it;
 	}
-	return false;
+	return true;
 }
 
 bool SimpleInput::keyReleased(const OIS::KeyEvent &e) {
@@ -306,7 +306,7 @@ bool SimpleInput::keyReleased(const OIS::KeyEvent &e) {
 			return true;
 		++it;
 	}
-	return false;
+	return true;
 }
 
 bool SimpleInput::mouseMoved(const OIS::MouseEvent &e) {
@@ -316,7 +316,7 @@ bool SimpleInput::mouseMoved(const OIS::MouseEvent &e) {
 			return true;
 		++it;
 	}
-	return false;
+	return true;
 }
 
 bool SimpleInput::mousePressed(const OIS::MouseEvent &e, OIS::MouseButtonID id) {
@@ -327,7 +327,7 @@ bool SimpleInput::mousePressed(const OIS::MouseEvent &e, OIS::MouseButtonID id) 
 			return true;
 		++it;
 	}
-	return false;
+	return true;
 }
 
 bool SimpleInput::mouseReleased(const OIS::MouseEvent &e, OIS::MouseButtonID id) {
@@ -337,7 +337,7 @@ bool SimpleInput::mouseReleased(const OIS::MouseEvent &e, OIS::MouseButtonID id)
 			return true;
 		++it;
 	}
-	return false;
+	return true;
 }
 
 //Truly useful XD
@@ -348,7 +348,7 @@ bool SimpleInput::povMoved(const OIS::JoyStickEvent &e, int pov) {
 			return true;
 		++it;
 	}
-	return false;
+	return true;
 }
 
 bool SimpleInput::axisMoved(const OIS::JoyStickEvent &e, int axis) {
@@ -358,7 +358,7 @@ bool SimpleInput::axisMoved(const OIS::JoyStickEvent &e, int axis) {
 			return true;
 		++it;
 	}
-	return false;
+	return true;
 }
 
 bool SimpleInput::sliderMoved(const OIS::JoyStickEvent &e, int sliderID) {
@@ -368,7 +368,7 @@ bool SimpleInput::sliderMoved(const OIS::JoyStickEvent &e, int sliderID) {
 			return true;
 		++it;
 	}
-	return false;
+	return true;
 }
 
 bool SimpleInput::buttonPressed(const OIS::JoyStickEvent &e, int button) {
@@ -378,7 +378,7 @@ bool SimpleInput::buttonPressed(const OIS::JoyStickEvent &e, int button) {
 			return true;
 		++it;
 	}
-	return false;
+	return true;
 }
 
 bool SimpleInput::buttonReleased(const OIS::JoyStickEvent &e, int button) {
@@ -388,5 +388,5 @@ bool SimpleInput::buttonReleased(const OIS::JoyStickEvent &e, int button) {
 			return true;
 		++it;
 	}
-	return false;
+	return true;
 }

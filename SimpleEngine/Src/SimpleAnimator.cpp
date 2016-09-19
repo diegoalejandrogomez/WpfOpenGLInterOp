@@ -43,7 +43,7 @@ void SimpleAnimator::SwitchState(std::string newState)
 	auto state = _animations->at(newState);
 	if (state != nullptr)
 	{
-		//SIMPLE_LOG("Cannot swith to state, because it doesn't exist");
+		SIMPLE_LOG("Cannot swith to state, because it doesn't exist");
 	}
 
 	this->_currentState = state;
