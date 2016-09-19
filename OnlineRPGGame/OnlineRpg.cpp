@@ -14,14 +14,20 @@ OnlineRpg::OnlineRpg()
 
 OnlineRpg::~OnlineRpg()
 {
-	delete _character;
-	delete _layer;
-	delete _layerBackground;
-	SimpleEngine::Instance()->Shutdown();
+	
 }
 
-void OnlineRpg::Initialize()
+void OnlineRpg::Init()
 {
+
+	SimpleEngine::Instance()->GetRenderer()->SetClearColor({ 0,0,0,0 });
+	SimpleEngine::Instance()->GetRenderer()->ShowDebugInfo();
+
+	//Configure input system we are going to use
+	SimpleEngine::Instance()->GetInput()->CreateKeyboard(true);
+	SimpleEngine::Instance()->GetInput()->CreateMouse(true);
+
+
 	_character->Initialize();
 	_character->SetSpeed(200);
 	_layer->SetZ(0);
@@ -51,4 +57,30 @@ void OnlineRpg::Initialize()
 		SimpleEngine::Instance()->GetScene()->AddEntity(enemy, _layerBackground);
 	}
 
+}
+
+// Inherited via SimpleGameLogic
+void OnlineRpg::Advance(float dt)  {
+
+
+}
+void OnlineRpg::Shutdown()  {
+
+	delete _character;
+	delete _layer;
+	delete _layerBackground;
+	SimpleEngine::Instance()->Shutdown();
+
+}
+bool OnlineRpg::IsRunning()  {
+	return true;
+}
+json OnlineRpg::Serialize()  {
+	
+	return {};
+}
+
+bool OnlineRpg::Deserialize(const json &node)  {
+
+	return true;
 }

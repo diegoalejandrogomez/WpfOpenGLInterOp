@@ -61,11 +61,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 			}
 		}
 		else {
-			static auto prevStamp = std::chrono::high_resolution_clock::now();
-			auto currentStamp = std::chrono::high_resolution_clock::now();
-			auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(currentStamp - prevStamp);
-			prevStamp = currentStamp;
-			engine->Advance(elapsed.count() * 1e-9f);
+			engine->Advance(0.0f);
 			engine->Render(0.0f);
 		}
 	}
@@ -135,9 +131,10 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    //all this must be in a initialize method in other class
    //get all pack files from resources folder
    SimpleEngine::Instance()->GetResourceManager()->SetResourcesBaseDir(".\\Resources\\");
- 
    onlineRpg = new OnlineRpg();
-   onlineRpg->Initialize();
+   engine->SetGameLogic(onlineRpg);
+   engine->UseInternalFrameTime(true);
+   
    return TRUE;
 }
 
