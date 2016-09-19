@@ -5,6 +5,7 @@
 #include "SimplePhysics.h"
 #include "SimpleEngine.h"
 #include "SimpleScene.h"
+#include "SimpleDebug.h"
 
 SimpleObject::SimpleObject() :_name("") {
 
@@ -128,7 +129,7 @@ void SimpleObject::_DestroyFixtures() {
 	}
 
 }
-void SimpleObject::InitStaticPhysics() {
+void SimpleObject::InitStaticPhysics(bool isSensor) {
 
 	_DestroyPhysics();
 	
@@ -142,10 +143,10 @@ void SimpleObject::InitStaticPhysics() {
 	def.userData = this;	
 	def.active = false;
 	_body = world->CreateBody(&def);
-	_CreateFixtures(0.0f);
+	_CreateFixtures(0.0f, 0.0f, 0.0f, isSensor);
 
 }
-void SimpleObject::InitKinematicPhysics() {
+void SimpleObject::InitKinematicPhysics(bool isSensor) {
 	
 	b2World* world = SimpleEngine::Instance()->GetPhysics()->GetNativeWorld();
 	b2BodyDef def;
@@ -158,9 +159,9 @@ void SimpleObject::InitKinematicPhysics() {
 	def.active = false;
 
 	_body = world->CreateBody(&def);
-	_CreateFixtures(0.0f);
+	_CreateFixtures(0.0f, 0.0f, 0.0f, isSensor);
 }
-void SimpleObject::InitDynamicPhysics(float density, float restitution, float friction) {
+void SimpleObject::InitDynamicPhysics(float density, float restitution, float friction, bool isSensor) {
 	b2World* world = SimpleEngine::Instance()->GetPhysics()->GetNativeWorld();
 	b2BodyDef def;
 	def.type = b2_dynamicBody;
@@ -170,18 +171,19 @@ void SimpleObject::InitDynamicPhysics(float density, float restitution, float fr
 	def.linearVelocity = { 0.0f, 0.0f };
 	def.userData = this;
 	def.active = false;
-
+	
 	_body = world->CreateBody(&def);
-	_CreateFixtures(1.0f);
+	_CreateFixtures(1.0f, 0.0f, 0.0f, isSensor);
 }
 
-void SimpleObject::_CreateFixtures(float density , float restitution , float friction ) {
+void SimpleObject::_CreateFixtures(float density , float restitution , float friction, bool isSensor ) {
 	
 	b2Fixture* old= _body->GetFixtureList();
 	if (old != nullptr) { //Keep old values if we are recreating the shape
 		density = old->GetDensity();
 		restitution = old->GetRestitution();
 		friction = old->GetRestitution();
+		isSensor = old->IsSensor();
 	}
 
 	_DestroyFixtures();
@@ -195,7 +197,9 @@ void SimpleObject::_CreateFixtures(float density , float restitution , float fri
 	fixtureDef.density = density;
 	fixtureDef.restitution = restitution;
 	fixtureDef.friction = friction;
-	b2Fixture* myFixture = _body->CreateFixture(&fixtureDef);	
+	fixtureDef.isSensor = isSensor;
+	b2Fixture* myFixture = _body->CreateFixture(&fixtureDef);
+	
 }
 
 const glm::mat4 SimpleObject::GetTransform()const {
@@ -256,4 +260,35 @@ bool SimpleObject::Deserialize(const json &node, std::string dir) {
 
 	return true;
 	
+}
+
+
+bool SimpleObject::OnBeginCollision(SimpleContactInfo& contactInfo) {
+	/*SIMPLE_LOG("BEGIN  -  Collided %s with %s at points {(%.2f, %.2f),(%.2f, %.2f)} with normal (%.2f, %.2f)", GetType().GetString().c_str(),
+		contactInfo.other->GetType().GetString().c_str(),
+		contactInfo.points[0].x, contactInfo.points[0].y,
+		contactInfo.points[1].x, contactInfo.points[1].y,
+		contactInfo.normal.x, contactInfo.normal.y);*/
+	return false;
+};
+
+
+bool SimpleObject::OnEndCollision(SimpleContactInfo& contactInfo) {
+	/*SIMPLE_LOG("END  -  Collided %s with %s at points {(%.2f, %.2f),(%.2f, %.2f)} with normal (%.2f, %.2f)", GetType().GetString().c_str(),
+		contactInfo.other->GetType().GetString().c_str(),
+		contactInfo.points[0].x, contactInfo.points[0].y,
+		contactInfo.points[1].x, contactInfo.points[1].y,
+		contactInfo.normal.x, contactInfo.normal.y);*/
+	return false;
+};
+
+
+void SimpleObject::SetAsTrigger(uint32_t idx) {
+	if (HasPhysics())
+		_body->GetFixtureList()[idx].SetSensor(true);
+
+}
+void SimpleObject::ResetTrigger(uint32_t idx) {
+	if (HasPhysics())
+		_body->GetFixtureList()[idx].SetSensor(false);
 }

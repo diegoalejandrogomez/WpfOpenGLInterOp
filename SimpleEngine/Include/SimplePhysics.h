@@ -1,9 +1,13 @@
 #pragma once
 #include <Box2d/Box2D.h>
+class SimpleObject;
 
 class SimplePhysics final : public b2ContactListener {
 
 public:
+
+
+
 	SimplePhysics();
 	~SimplePhysics();
 
@@ -29,7 +33,7 @@ private:
 
 	b2World* _world;
 	glm::vec2 _gravity;
-
+	
 	static constexpr int32_t _velocityIterations = 6;
 	static constexpr int32_t _positionIterations = 4;
 

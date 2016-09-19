@@ -8,10 +8,11 @@
 SimpleCharacter::SimpleCharacter() : SimpleAnimatedEntity()
 {
 	SetSize({ 1,1 });
-	InitDynamicPhysics();
+	InitDynamicPhysics(1.0f, 0.0f, 0.0f, false);
 	FixOrientation(true);
 	_body->SetLinearDamping(15.0f);
 	
+
 }
 
 SimpleCharacter::~SimpleCharacter()

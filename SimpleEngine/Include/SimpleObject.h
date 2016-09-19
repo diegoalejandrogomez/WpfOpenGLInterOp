@@ -7,6 +7,7 @@
 #include "SimpleFactory.h"
 #include "SimpleSerializable.h"
 #include "SimpleConfiguration.h"
+#include "SimpleContactInfo.h"
 #include <Box2D\Box2D.h>
 
 using json = nlohmann::json;
@@ -54,10 +55,20 @@ public:
 	inline void SetName(SimpleID name) { _name = name; };
 	
 
-	void InitStaticPhysics();
-	void InitKinematicPhysics();
-	void InitDynamicPhysics(float density = 1.0f, float restitution = 0.0f, float friction = 0.0f);
+	void InitStaticPhysics(bool isSensor = false);
+	void InitKinematicPhysics(bool isSensor = false);
+	void InitDynamicPhysics(float density = 1.0f, float restitution = 0.0f, float friction = 0.0f, bool isSensor= false);
 	bool HasPhysics() { return _body != nullptr; }
+	void EnableCollisionCallback() { _wantsCollisions = true; }
+	void DisableCollisionCallback() { _wantsCollisions = false; }
+	bool WantsCollisionCallback() { return _wantsCollisions; }
+	void SetAsTrigger(uint32_t idx = 0);
+	void ResetTrigger(uint32_t idx = 0);
+
+	
+	//Physics callbacks
+	virtual bool OnBeginCollision(SimpleContactInfo& contactInfo);
+	virtual bool OnEndCollision(SimpleContactInfo& contactInfo);
 
 	inline const SimpleAABB& GetAABB()const { return _aabb; };
 	//Not efficient... we could do a lot better
@@ -71,7 +82,7 @@ public:
 protected:
 
 	void _DestroyPhysics();
-	void _CreateFixtures(float density = 1.0f, float restitution = 0.0f, float friction = 0.0f);
+	void _CreateFixtures(float density = 1.0f, float restitution = 0.0f, float friction = 0.0f, bool isSensor = false);
 	void _DestroyFixtures();
 
 	SimpleAABB _aabb;
@@ -80,4 +91,5 @@ protected:
 
 	//If the body exist in the physical world
 	b2Body* _body;
+	bool _wantsCollisions = true;
 };

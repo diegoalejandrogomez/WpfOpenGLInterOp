@@ -275,6 +275,9 @@
     <ClInclude Include="Include\PhysicsDebugRenderPass.h">
       <Filter>Engine\Graphics\RenderPasses</Filter>
     </ClInclude>
+    <ClInclude Include="Include\SimpleContactInfo.h">
+      <Filter>Engine\Physics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\SimpleObjectsRenderPass.cpp">
