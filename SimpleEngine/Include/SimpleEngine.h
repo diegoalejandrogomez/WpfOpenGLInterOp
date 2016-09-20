@@ -10,6 +10,7 @@
 #include <queue>
 
 class SimpleGUI;
+class SimpleNetworkManager;
 
 class SIMPLE_API SimpleEngine final{
 public:
@@ -43,6 +44,7 @@ public:
 	inline SimpleInput* GetInput() { return _input; }
 	inline SimpleGUI* GetGUI() { return _gui; }
 	inline SimplePhysics* GetPhysics() { return _physics; }
+	inline SimpleNetworkManager* GetNetwork() { return _network; }
 	inline float GetRenderFPS() const { 
 		std::chrono::duration<float> s = (_renderLastFPS.back() - _renderLastFPS.front());
 		if (s.count() > 0)
@@ -97,6 +99,7 @@ protected:
 	SimpleResourceManager *_resManager = nullptr;
 	SimpleGUI*		_gui = nullptr;
 	SimplePhysics* _physics = nullptr;
+	SimpleNetworkManager* _network = nullptr;
 
 	 //Instant frame time for logic and render update
 	std::chrono::duration<float> _renderTime;

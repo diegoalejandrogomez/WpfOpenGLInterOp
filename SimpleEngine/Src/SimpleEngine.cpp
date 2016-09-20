@@ -8,6 +8,7 @@
 #include <fstream>
 #include "SimpleGUI.h"
 #include "SimpleUtils.h"
+#include "SimpleNetworkManager.h"
 
 
 //C++ 14/17 ... but why not XD
@@ -132,6 +133,9 @@ void SimpleEngine::Initialize() {
 	_physics = new SimplePhysics();
 	_physics->Initialize();
 
+	//Init networking
+	_network = new SimpleNetworkManager();
+	_network->Initialize();
 
 	//Init GUI
 	_gui = new SimpleGUI();

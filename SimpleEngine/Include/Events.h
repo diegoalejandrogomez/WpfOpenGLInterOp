@@ -55,7 +55,6 @@ public:
 
 ///GUI Events
 
-
 class SimpleWindow;
 class WindowClosed : public SimpleEvent
 {
@@ -70,4 +69,26 @@ public:
 		return descriptor;
 	}
 	SimpleWindow* _window;
+};
+
+
+
+//Debug messages
+
+///GUI Events
+
+class SimpleWindow;
+class LogEvent : public SimpleEvent
+{
+public:
+	LogEvent(std::string message) : SimpleEvent(nullptr), msg(message) {}
+	virtual ~LogEvent() {};
+
+	static constexpr DescriptorType descriptor = "LogEvent";
+
+	virtual DescriptorType type() const
+	{
+		return descriptor;
+	}
+	std::string msg;
 };

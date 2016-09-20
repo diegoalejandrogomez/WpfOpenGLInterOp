@@ -305,8 +305,3 @@ void SimpleRenderer::ResizeWindow(int width, int height) {
 	SimpleDispatcher::Instance()->Send<WindowResizeEvent>((float)_width, (float)_height);
 
 }
-
-
-
-
-

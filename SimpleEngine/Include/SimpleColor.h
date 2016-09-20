@@ -18,4 +18,11 @@ struct SimpleColor {
 
 	//We should add on demand methods to transform color spaces, etc...
 
+	static const SimpleColor Black;
+	static const SimpleColor White;
+	static const SimpleColor Red;
+	static const SimpleColor Green;
+	static const SimpleColor Blue;
+	static const SimpleColor Yellow;
+	
 };

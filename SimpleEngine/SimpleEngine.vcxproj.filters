@@ -60,6 +60,9 @@
     <Filter Include="Engine\Physics">
       <UniqueIdentifier>{4c693c55-2c3c-44f2-8af3-e55b3524a76d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Network">
+      <UniqueIdentifier>{d5d0af06-3d2e-4198-9374-27c1e09a7997}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -278,6 +281,9 @@
     <ClInclude Include="Include\SimpleContactInfo.h">
       <Filter>Engine\Physics</Filter>
     </ClInclude>
+    <ClInclude Include="Include\SimpleNetworkManager.h">
+      <Filter>Engine\Network</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\SimpleObjectsRenderPass.cpp">
@@ -441,6 +447,12 @@
     </ClCompile>
     <ClCompile Include="Src\PhysicsDebugRenderPass.cpp">
       <Filter>Engine\Graphics\RenderPasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\SimpleNetworkManager.cpp">
+      <Filter>Engine\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\SimpleColor.cpp">
+      <Filter>Engine\Utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

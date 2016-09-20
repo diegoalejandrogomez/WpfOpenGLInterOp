@@ -5,6 +5,7 @@
 #include <IL/il.h>
 #include <IL/ilu.h>
 #include <IL/ilut.h>
+#include "SimpleDispatcher.h"
 
 inline void CheckOpenGLError(const char* stmt, const char* fname, int line)
 {
@@ -32,13 +33,17 @@ inline void CheckILError(const char* stmt, const char* fname, int line) {
 }
 
 
+#define __FILENAME__ (strrchr(__FILE__, '\\') ? strrchr(__FILE__, '\\') + 1 : __FILE__)
+
 #ifdef _DEBUG
 #define SIMPLE_LOG(format, ...) \
 	{char str[1024];				\
 	std::string f = format;		\
-	f += " -> File: %s:%d \n";		\
-	sprintf_s(str, f.c_str() , __VA_ARGS__, __FILE__, __LINE__); \
-	OutputDebugStringA(str);}
+	f += " -> File: %s:%d ";		\
+	sprintf_s(str, f.c_str() , __VA_ARGS__, __FILENAME__, __LINE__); \
+	OutputDebugStringA(str);\
+	SimpleDispatcher::Instance()->Send<LogEvent>(std::string(str));	\
+}
 
 #define SIMPLE_ASSERT(test)\
 if(! (test) ){					\

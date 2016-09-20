@@ -99,9 +99,9 @@
     <IncludePath>./External/ois/include/;./External/devil/include/;$(ProjectDir);./External/glm/;./External/glew/;./Include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_DLL|Win32'">
-    <IncludePath>./External/box2d/include;./External/mygui/include;./External/libzip/lib/libzip/include;./External/libzip/include;./External/ois/include/;./External/freetype/include;./External/devil/include/;$(ProjectDir);./External/glm/;./External/glew/;./Include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <IncludePath>./External/raknet/include;./External/box2d/include;./External/mygui/include;./External/libzip/lib/libzip/include;./External/libzip/include;./External/ois/include/;./External/freetype/include;./External/devil/include/;$(ProjectDir);./External/glm/;./External/glew/;./Include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
     <TargetName>$(ProjectName)_dyn</TargetName>
-    <LibraryPath>./External/box2d/lib/;./External/mygui/lib;./External/libzip/lib;$(SolutionDir)\SimpleEngine\External\freetype\lib;$(SolutionDir)\SimpleEngine\External\ois\lib\;$(SolutionDir)SimpleEngine\External\devil\lib\;..\Debug\;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
+    <LibraryPath>./External/raknet/lib;./External/box2d/lib/;./External/mygui/lib;./External/libzip/lib;$(SolutionDir)\SimpleEngine\External\freetype\lib;$(SolutionDir)\SimpleEngine\External\ois\lib\;$(SolutionDir)SimpleEngine\External\devil\lib\;..\Debug\;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
     <OutDir>$(SolutionDir)Debug\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -134,7 +134,7 @@ copy /Y "$(ProjectDir)\External\devil\lib\ILU.dll" "$(TargetDir)"</Command>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <AdditionalDependencies>Box2D-d.lib;MyGUI.OpenGL3Platform_d.lib;MyGUIEngine_d.lib;zip.lib;freetype-d.lib;OIS_static_d.lib;ILU.lib;DevIL.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ws2_32.lib;RakNet_LibStatic_Debug_Win32.lib;Box2D-d.lib;MyGUI.OpenGL3Platform_d.lib;MyGUIEngine_d.lib;zip.lib;freetype-d.lib;OIS_static_d.lib;ILU.lib;DevIL.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
       <TargetMachine>MachineX86</TargetMachine>
@@ -217,6 +217,7 @@ copy /Y "$(ProjectDir)\External\mygui\runtime\MyGUIEngine_d.dll" "$(TargetDir)"<
     <ClInclude Include="Include\SimpleCharacter.h" />
     <ClInclude Include="Include\SimpleFixedObject.h" />
     <ClInclude Include="Include\SimpleGUI.h" />
+    <ClInclude Include="Include\SimpleNetworkManager.h" />
     <ClInclude Include="Include\SimpleOpenGL3ImageLoader.h" />
     <ClInclude Include="Include\SimplePhysics.h" />
     <ClInclude Include="Include\SimplePlayerController.h" />
@@ -277,10 +278,12 @@ copy /Y "$(ProjectDir)\External\mygui\runtime\MyGUIEngine_d.dll" "$(TargetDir)"<
     <ClCompile Include="Src\DebugSimplePopup.cpp" />
     <ClCompile Include="Src\PhysicsDebugRenderPass.cpp" />
     <ClCompile Include="Src\SimpleAnimatedEntity.cpp" />
+    <ClCompile Include="Src\SimpleColor.cpp" />
     <ClCompile Include="Src\SimpleFixedObject.cpp" />
     <ClCompile Include="Src\DebugSimpleWindow.cpp" />
     <ClCompile Include="Src\GUIRenderPass.cpp" />
     <ClCompile Include="Src\SimpleGUI.cpp" />
+    <ClCompile Include="Src\SimpleNetworkManager.cpp" />
     <ClCompile Include="Src\SimplePhysics.cpp" />
     <ClCompile Include="Src\SimplePlayerController.cpp" />
     <ClInclude Include="stdafx.h" />

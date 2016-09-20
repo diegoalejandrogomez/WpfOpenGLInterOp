@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "GameUI.h"
+#include <shellapi.h>
 #include <SimpleEngine.h>
 #include "OnlineRpg.h"
 
@@ -19,6 +20,7 @@ BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 SimpleEngine * engine = nullptr;
+bool runAsServer;
 OnlineRpg* onlineRpg;
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
@@ -29,7 +31,19 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
 
+
     // TODO: Place code here.
+	LPWSTR *szArglist = CommandLineToArgvW(lpCmdLine, &nCmdShow);
+	
+	runAsServer = false;
+	//Check if we should run as server
+	if (nCmdShow > 1 && lstrcmpW(szArglist[0], L"server"))
+		runAsServer = true;
+
+	// Free memory allocated for CommandLineToArgvW arguments.
+
+	LocalFree(szArglist);
+
 
     // Initialize global strings
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);

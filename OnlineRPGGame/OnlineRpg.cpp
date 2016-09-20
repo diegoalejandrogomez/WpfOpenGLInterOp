@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "OnlineRpg.h"
 #include "EnemyCharacter.h"
+#include "SimpleNetworkManager.h"
 
 OnlineRpg::OnlineRpg()
 {
@@ -39,14 +40,14 @@ void OnlineRpg::Init()
 	SimpleEngine::Instance()->GetScene()->AddEntity(_character, _layer);
 	
 	int z = 0;
-	for (int i = 0; i < 50; i++)
+	for (int i = 0; i < 10; i++)
 	{
 		SimpleFixedObject* tree = new SimpleFixedObject();
 		tree->Initialize();
 		glm::vec3 position = tree->GetPosition();
 		tree->SetPosition(glm::vec3(position.x, position.y, z));
 		z--;
-		//SimpleEngine::Instance()->GetScene()->AddEntity(tree, _layerBackground);
+		SimpleEngine::Instance()->GetScene()->AddEntity(tree, _layerBackground);
 	}
 
 	for (int i = 0; i < 5; i++)
@@ -57,6 +58,7 @@ void OnlineRpg::Init()
 		SimpleEngine::Instance()->GetScene()->AddEntity(enemy, _layerBackground);
 	}
 
+	SimpleEngine::Instance()->GetNetwork()->InitClient("localhost", 0U);
 }
 
 // Inherited via SimpleGameLogic

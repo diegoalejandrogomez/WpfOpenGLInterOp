@@ -82,7 +82,7 @@ void SimpleDispatcher::_DispatchEvent(SimpleEvent *evt) const {
 		for (auto& listener : listeners)
 			listener(*evt);
 
-		SIMPLE_LOG("Sent delayed event %s", evt->type());
+		//SIMPLE_LOG("Sent delayed event %s", evt->type());
 	}
 
 	delete evt;
