@@ -218,9 +218,12 @@ copy /Y "$(ProjectDir)\External\mygui\runtime\MyGUIEngine_d.dll" "$(TargetDir)"<
     <ClInclude Include="Include\SimpleFixedObject.h" />
     <ClInclude Include="Include\SimpleGUI.h" />
     <ClInclude Include="Include\SimpleNetworkManager.h" />
+    <ClInclude Include="Include\SimpleNetworkObject.h" />
     <ClInclude Include="Include\SimpleOpenGL3ImageLoader.h" />
     <ClInclude Include="Include\SimplePhysics.h" />
     <ClInclude Include="Include\SimplePlayerController.h" />
+    <ClInclude Include="Include\SimpleReplicaConnection.h" />
+    <ClInclude Include="Include\SimpleReplicaManager.h" />
     <ClInclude Include="Include\SimpleResourceManager.h" />
     <ClInclude Include="Include\SimpleTextureRegion.h" />
     <ClInclude Include="Include\json.hpp" />
@@ -284,6 +287,7 @@ copy /Y "$(ProjectDir)\External\mygui\runtime\MyGUIEngine_d.dll" "$(TargetDir)"<
     <ClCompile Include="Src\GUIRenderPass.cpp" />
     <ClCompile Include="Src\SimpleGUI.cpp" />
     <ClCompile Include="Src\SimpleNetworkManager.cpp" />
+    <ClCompile Include="Src\SimpleNetworkObject.cpp" />
     <ClCompile Include="Src\SimplePhysics.cpp" />
     <ClCompile Include="Src\SimplePlayerController.cpp" />
     <ClInclude Include="stdafx.h" />
@@ -323,6 +327,7 @@ copy /Y "$(ProjectDir)\External\mygui\runtime\MyGUIEngine_d.dll" "$(TargetDir)"<
     <ClCompile Include="Src\SimpleObject.cpp" />
     <ClCompile Include="Src\SimpleObjectsRenderPass.cpp" />
     <ClCompile Include="Src\SimpleRenderer.cpp" />
+    <ClCompile Include="Src\SimpleReplicaConnection.cpp" />
     <ClCompile Include="Src\SimpleResourceManager.cpp" />
     <ClCompile Include="Src\SimpleScene.cpp" />
     <ClCompile Include="Src\SimpleShaderProgram.cpp" />

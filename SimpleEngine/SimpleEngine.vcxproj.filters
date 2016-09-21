@@ -284,6 +284,15 @@
     <ClInclude Include="Include\SimpleNetworkManager.h">
       <Filter>Engine\Network</Filter>
     </ClInclude>
+    <ClInclude Include="Include\SimpleReplicaConnection.h">
+      <Filter>Engine\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\SimpleNetworkObject.h">
+      <Filter>Engine\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\SimpleReplicaManager.h">
+      <Filter>Engine\Network</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\SimpleObjectsRenderPass.cpp">
@@ -453,6 +462,12 @@
     </ClCompile>
     <ClCompile Include="Src\SimpleColor.cpp">
       <Filter>Engine\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\SimpleNetworkObject.cpp">
+      <Filter>Engine\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\SimpleReplicaConnection.cpp">
+      <Filter>Engine\Network</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

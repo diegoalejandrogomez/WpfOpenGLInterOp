@@ -71,9 +71,9 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)SimpleEngine/External/box2d/include;../SimpleEngine/Include/;$(SolutionDir)\SimpleEngine\External\ois\include\;$(SolutionDir)\OnlineRPGGame;$(SolutionDir)\SimpleEngine\External\glm\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)SimpleEngine/External/raknet/include;$(SolutionDir)SimpleEngine/External/box2d/include;../SimpleEngine/Include/;$(SolutionDir)\SimpleEngine\External\ois\include\;$(SolutionDir)\OnlineRPGGame;$(SolutionDir)\SimpleEngine\External\glm\;$(IncludePath)</IncludePath>
     <ReferencePath>$(SolutionDir)SimpleEngine\External\devil\lib\;$(SolutionDir)\SimpleEngine\External\ois\lib\;$(ReferencePath)</ReferencePath>
-    <LibraryPath>$(SolutionDir)\SimpleEngine\External\ois\lib\;$(SolutionDir)SimpleEngine\External\devil\lib\;..\Debug\;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)\SimpleEngine\External\raknet\lib\;$(SolutionDir)\SimpleEngine\External\ois\lib\;$(SolutionDir)SimpleEngine\External\devil\lib\;..\Debug\;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)Debug</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -96,7 +96,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>OIS_static_d.lib;ILU.lib;DevIL.lib;opengl32.lib;SimpleEngine_dyn.lib;OnlineRPGGame.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ws2_32.lib;RakNet_LibStatic_Debug_Win32.lib;OIS_static_d.lib;ILU.lib;DevIL.lib;opengl32.lib;SimpleEngine_dyn.lib;OnlineRPGGame.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(ProjectDir)Resources\*.*" "$(SolutionDir)Debug\Resources" /Y /I /E</Command>

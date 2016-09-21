@@ -53,7 +53,7 @@ void SimpleScene::AddEntity(SimpleObject* sObj, int nLayer) {
 	SimpleLayer* layer = GetLayer(nLayer);
 	if (layer != nullptr) {
 		layer->AddEntity(sObj);
-		sObj->AddedToScene(this);
+		sObj->AddedToScene(this, layer);
 	}
 	
 }
@@ -63,13 +63,13 @@ void SimpleScene::AddEntity(SimpleObject* sObj, SimpleID layerName) {
 	SimpleLayer* layer = GetLayer(layerName);
 	if (layer != nullptr) {
 		layer->AddEntity(sObj);
-		sObj->AddedToScene(this);
+		sObj->AddedToScene(this, layer);
 	}
 }
 
 void SimpleScene::AddEntity(SimpleObject* sObj, SimpleLayer* sLay) {
 	sLay->AddEntity(sObj);
-	sObj->AddedToScene(this);
+	sObj->AddedToScene(this, sLay);
 }
 
 SimpleLayer* SimpleScene::GetLayer(int nLayer) {
@@ -94,21 +94,21 @@ void SimpleScene::RemoveEntity(SimpleObject* sObj, SimpleID sLay) {
 	auto l = GetLayer(sLay);
 	if (l != nullptr) {
 		l->RemoveEntity(sObj);
-		sObj->RemovedFromScene(this);
+		sObj->RemovedFromScene(this, l);
 	}
 }
 
 
 void SimpleScene::RemoveEntity(SimpleObject* sObj, SimpleLayer* sLay) {
 	sLay->RemoveEntity(sObj);
-	sObj->RemovedFromScene(this);
+	sObj->RemovedFromScene(this, sLay);
 }
 
 
 void SimpleScene::RemoveEntity(SimpleObject* sObj) {
 	for (auto* &layer : _layers)
 		if (layer->RemoveEntity(sObj)) {
-			sObj->RemovedFromScene(this);
+			sObj->RemovedFromScene(this, layer);
 			return;
 		}
 }

@@ -50,19 +50,19 @@ if(! (test) ){					\
 	char str[1024];				\
 	std::string f = #test;		\
 	f += " -> File: %s:%d";		\
-	sprintf_s(str, f.c_str(), __FILE__, __LINE__); \
+	sprintf_s(str, f.c_str(), __FILENAME__, __LINE__); \
 	OutputDebugStringA(str);	\
 	__debugbreak();\
 }			
 
 #define GL_CHECK(stmt) do { \
 stmt; \
-CheckOpenGLError(#stmt, __FILE__, __LINE__); \
+CheckOpenGLError(#stmt, __FILENAME__, __LINE__); \
 } while (0)
 
 #define IL_CHECK(stmt) do { \
 stmt; \
-CheckILError(#stmt, __FILE__, __LINE__); \
+CheckILError(#stmt, __FILENAME__, __LINE__); \
 } while (0)
 
 #else

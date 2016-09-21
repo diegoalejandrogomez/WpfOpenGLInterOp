@@ -37,8 +37,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	
 	runAsServer = false;
 	//Check if we should run as server
-	if (nCmdShow > 1 && lstrcmpW(szArglist[0], L"server"))
+	if (nCmdShow > 0 && lstrcmpW(szArglist[0], L"server") == 0) {
 		runAsServer = true;
+	}
 
 	// Free memory allocated for CommandLineToArgvW arguments.
 
@@ -146,6 +147,11 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    //get all pack files from resources folder
    SimpleEngine::Instance()->GetResourceManager()->SetResourcesBaseDir(".\\Resources\\");
    onlineRpg = new OnlineRpg();
+   if (runAsServer)
+	   onlineRpg->RunAsServer();
+   else
+	   onlineRpg->RunAsClient();
+   
    engine->SetGameLogic(onlineRpg);
    engine->UseInternalFrameTime(true);
    

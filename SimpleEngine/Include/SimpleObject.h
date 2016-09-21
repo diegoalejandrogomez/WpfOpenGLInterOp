@@ -8,21 +8,23 @@
 #include "SimpleSerializable.h"
 #include "SimpleConfiguration.h"
 #include "SimpleContactInfo.h"
+#include "SimpleNetworkObject.h"
 #include <Box2D\Box2D.h>
 
 using json = nlohmann::json;
 class SimpleScene;
+class SimpleLayer;
 
 class SIMPLE_API SimpleObject :public SimpleFactory<SimpleObject>,
-					public SimpleSerializable{
+					public SimpleSerializable, public SimpleNetworkSerializable{
 
 public:
 
 	SimpleObject() ;
 	virtual void Advance(float dt);
 	virtual void Render(float dt);
-	virtual void AddedToScene(SimpleScene* scene);
-	virtual void RemovedFromScene(SimpleScene* scene);
+	virtual void AddedToScene(SimpleScene* scene, SimpleLayer* layer);
+	virtual void RemovedFromScene(SimpleScene* scene, SimpleLayer* layer);
 
 	inline const glm::vec3& GetPosition() const { return _aabb.position; };
 	inline const glm::vec2& GetSize() const { return _aabb.size; };
@@ -34,8 +36,8 @@ public:
 	inline void SetPosition(const glm::vec3& pos);
 
 	inline const void SetAnchor(SimpleAABB::ANCHOR_POINT anchor) { _aabb.anchor = anchor; }
-	inline void SetSize(glm::vec2&& size) ;
-	inline void SetSize(glm::vec2& size) ;
+	inline void SetSize(const glm::vec2&& size) ;
+	inline void SetSize(const glm::vec2& size) ;
 
 	inline void SetOrientation(float&& orientation);
 	inline void SetOrientation(float& orientation);
@@ -70,6 +72,11 @@ public:
 	virtual bool OnBeginCollision(SimpleContactInfo& contactInfo);
 	virtual bool OnEndCollision(SimpleContactInfo& contactInfo);
 
+	//Net
+	void InitNetwork();
+	void Replicate();
+	SimpleNetworkObject* GetNetworkObject() { return _netObject; };
+
 	inline const SimpleAABB& GetAABB()const { return _aabb; };
 	//Not efficient... we could do a lot better
 	const glm::mat4 GetTransform() const;
@@ -79,17 +86,30 @@ public:
 	bool Deserialize(const json& node) override;
 	bool Deserialize(const json& node, std::string dir) override;
 
+
+	//Network sync
+	virtual void StatusSerialize(RakNet::BitStream *stream) ;
+	virtual void StatusDeserialize(RakNet::BitStream *stream) ;
+	virtual void CreateSerialize(RakNet::BitStream *stream) ;
+	virtual void CreateDeserialize(RakNet::BitStream *stream);
+
 protected:
 
 	void _DestroyPhysics();
 	void _CreateFixtures(float density = 1.0f, float restitution = 0.0f, float friction = 0.0f, bool isSensor = false);
 	void _DestroyFixtures();
 
+	//Layer info
+	SimpleLayer* _layer;
+
 	SimpleAABB _aabb;
 	float _orientation	= 0.0f;
 	SimpleID _name;
 
 	//If the body exist in the physical world
-	b2Body* _body;
+	b2Body* _body = nullptr;
 	bool _wantsCollisions = true;
+
+	//For networking
+	SimpleNetworkObject* _netObject = nullptr;
 };

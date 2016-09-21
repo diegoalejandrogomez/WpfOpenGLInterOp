@@ -18,12 +18,21 @@
 #include <PacketLogger.h>
 #include <RPC4Plugin.h>
 #include <HTTPConnection2.h>
+#include "SimpleNetworkObject.h"
 
 bool SimpleNetworkManager::Initialize() {
 
+	_networkIDManager = new RakNet::NetworkIDManager();
+	_replicaManager = new SimpleReplicaManager();
+	_replicaManager->SetNetworkIDManager(_networkIDManager);
+
 	return true;
+		
 }
 
+void SimpleNetworkManager::Replicate(SimpleNetworkObject* obj) {
+	_replicaManager->Reference(obj);
+}
 
 bool SimpleNetworkManager::InitServer(uint32_t port) {
 
@@ -33,10 +42,12 @@ bool SimpleNetworkManager::InitServer(uint32_t port) {
 
 	RakNet::SocketDescriptor sd(port, 0);
 	_rakPeer->Startup(MAX_CONNECTIONS, &sd, 1);
-	isServer = true;
+	_isServer = true;
 
 	SIMPLE_LOG("Starting Server on port %d", port);
 	_rakPeer->SetMaximumIncomingConnections(MAX_CONNECTIONS);
+
+	_rakPeer->AttachPlugin(_replicaManager);
 
 	return true;
 }
@@ -46,7 +57,7 @@ bool SimpleNetworkManager::InitClient(std::string ip, uint32_t port){
 	_rakPeer = RakNet::RakPeerInterface::GetInstance();
 	RakNet::SocketDescriptor sd;
 	_rakPeer->Startup(1, &sd, 1);
-	isServer = false;
+	_isServer = false;
 	if (port < 1024 || port > 65535)
 		port = DEFAULT_SERVER_PORT;
 
@@ -55,6 +66,7 @@ bool SimpleNetworkManager::InitClient(std::string ip, uint32_t port){
 	uint32_t tries = 12U;
 	uint32_t msPerTry = 500U;
 	RakNet::ConnectionAttemptResult result = _rakPeer->Connect(ip.c_str(), port, NULL, 0, NULL, 0, tries, msPerTry, 0);
+	_rakPeer->AttachPlugin(_replicaManager);
 
 	switch (result)
 	{
@@ -84,6 +96,7 @@ bool SimpleNetworkManager::InitClient(std::string ip, uint32_t port){
 		break;
 	}
 
+
 	return true;
 }
 
@@ -98,7 +111,26 @@ void SimpleNetworkManager::Shutdown() {
 	
 }
 
+//We should probably run this on another thread... someday
 void SimpleNetworkManager::Advance(float dt) {
-
-
+	
+	RakNet::Packet *packet;
+	for (packet = _rakPeer->Receive(); packet; _rakPeer->DeallocatePacket(packet), packet = _rakPeer->Receive())
+	{
+		switch (packet->data[0])
+		{
+		case ID_NEW_INCOMING_CONNECTION:
+			SIMPLE_LOG("A remote system has successfully connected");
+			break;
+		case ID_DISCONNECTION_NOTIFICATION:
+			SIMPLE_LOG("A remote system has disconnected");
+			break;
+		case ID_CONNECTION_LOST:
+			SIMPLE_LOG("A remote system lost the connection");
+			break;
+		case ID_CONNECTION_REQUEST_ACCEPTED:
+			SIMPLE_LOG("The connection to the server has been accepted");
+			break;
+		}
+	}
 }

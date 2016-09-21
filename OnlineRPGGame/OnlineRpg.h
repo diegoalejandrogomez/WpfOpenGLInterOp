@@ -17,8 +17,12 @@ public:
 	virtual bool Deserialize(const json &node) override;
 
 
+	void RunAsServer() { _isServer = true; };
+	void RunAsClient() { _isServer = false; };
 private:
 	HeroCharacter* _character;
 	SimpleLayer* _layer;
 	SimpleLayer* _layerBackground;
+
+	bool _isServer = false;
 };

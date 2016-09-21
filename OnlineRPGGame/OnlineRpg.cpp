@@ -10,7 +10,9 @@ OnlineRpg::OnlineRpg()
 	SimpleEngine::Instance()->CreateScene();
 	_character = new HeroCharacter();
 	_layer = new SimpleLayer();
+	_layer->SetName("GameLayer");
 	_layerBackground = new SimpleLayer();
+	_layerBackground->SetName("BackgroundLayer");
 }
 
 OnlineRpg::~OnlineRpg()
@@ -29,36 +31,46 @@ void OnlineRpg::Init()
 	SimpleEngine::Instance()->GetInput()->CreateMouse(true);
 
 
-	_character->Initialize();
+	/*_character->Initialize();
 	_character->SetSpeed(200);
 	_layer->SetZ(0);
-	_layerBackground->SetZ(-1);
+	_layerBackground->SetZ(-1);*/
 
 	SimpleEngine::Instance()->GetScene()->AddLayer(_layer);
 	SimpleEngine::Instance()->GetScene()->AddLayer(_layerBackground);
 
-	SimpleEngine::Instance()->GetScene()->AddEntity(_character, _layer);
+	//SimpleEngine::Instance()->GetScene()->AddEntity(_character, _layer);
 	
-	int z = 0;
-	for (int i = 0; i < 10; i++)
-	{
-		SimpleFixedObject* tree = new SimpleFixedObject();
-		tree->Initialize();
-		glm::vec3 position = tree->GetPosition();
-		tree->SetPosition(glm::vec3(position.x, position.y, z));
-		z--;
-		SimpleEngine::Instance()->GetScene()->AddEntity(tree, _layerBackground);
-	}
+	
 
-	for (int i = 0; i < 5; i++)
+	/*for (int i = 0; i < 5; i++)
 	{
 		EnemyCharacter* enemy = new EnemyCharacter();
 		enemy->SetSpeed(rand() % 100 + 100);
 		enemy->Initialize();
 		SimpleEngine::Instance()->GetScene()->AddEntity(enemy, _layerBackground);
+	}*/
+
+	if (_isServer) {
+		SimpleEngine::Instance()->GetNetwork()->InitServer(0U);
+		int z = 0;
+		for (int i = 0; i < 1; i++)
+		{
+			SimpleFixedObject* tree = new SimpleFixedObject();
+			tree->Initialize();
+			glm::vec3 position = tree->GetPosition();
+			tree->SetPosition(glm::vec3(position.x, position.y, z));
+			z--;
+			SimpleEngine::Instance()->GetScene()->AddEntity(tree, _layerBackground);
+			tree->InitNetwork();
+			tree->Replicate();
+		}
+
+	}
+	else {
+		SimpleEngine::Instance()->GetNetwork()->InitClient("127.0.0.1", 0U);
 	}
 
-	SimpleEngine::Instance()->GetNetwork()->InitClient("localhost", 0U);
 }
 
 // Inherited via SimpleGameLogic
@@ -86,3 +98,4 @@ bool OnlineRpg::Deserialize(const json &node)  {
 
 	return true;
 }
+

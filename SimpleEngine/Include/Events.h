@@ -72,9 +72,25 @@ public:
 };
 
 
+//Network events
+
+
+class IncomingConnectionEvent : public SimpleEvent
+{
+public:
+	IncomingConnectionEvent(std::string message) : SimpleEvent(nullptr) {}
+	virtual ~IncomingConnectionEvent() {};
+
+	static constexpr DescriptorType descriptor = "IncomingConnectionEvent ";
+
+	virtual DescriptorType type() const
+	{
+		return descriptor;
+	}
+};
+
 
 //Debug messages
-
 ///GUI Events
 
 class SimpleWindow;

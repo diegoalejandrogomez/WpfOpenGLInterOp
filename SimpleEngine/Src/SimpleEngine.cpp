@@ -99,6 +99,10 @@ void SimpleEngine::Advance(float dt) {
 	if (_nextGameLogic != nullptr)
 		_SwitchGameLogic();
 
+	//Receive network input
+	if (_network)
+		_network->Advance(dt);
+
 	//Capture buffered input
 	_input->Capture();
 

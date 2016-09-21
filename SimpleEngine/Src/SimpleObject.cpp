@@ -6,11 +6,11 @@
 #include "SimpleEngine.h"
 #include "SimpleScene.h"
 #include "SimpleDebug.h"
-
+#include "SimpleLayer.h"
 SimpleObject::SimpleObject() :_name("") {
 
 	_body = nullptr;
-
+	_layer = nullptr;
 }
 
 void SimpleObject::SetOrientation(float&& orientation) { 
@@ -54,10 +54,10 @@ glm::vec2 SimpleObject::GetVelocity() {
 	return{ 0.0f, 0.0f };
 }
 
-void SimpleObject::SetSize(glm::vec2&& size) { 
+void SimpleObject::SetSize(const glm::vec2&& size) { 
 	SetSize(size);	
 };
-void SimpleObject::SetSize(glm::vec2& size) { 
+void SimpleObject::SetSize(const glm::vec2& size) { 
 
 	_aabb.size = size; 
 	if (HasPhysics())
@@ -100,15 +100,18 @@ void SimpleObject::Render(float dt) {
 }
 
 
-void SimpleObject::AddedToScene(SimpleScene* scene) {
+void SimpleObject::AddedToScene(SimpleScene* scene, SimpleLayer* layer) {
 	if (HasPhysics())
 		_body->SetActive(true);
+	_layer = layer;
 }
 
 
-void SimpleObject::RemovedFromScene(SimpleScene* scene) {
+void SimpleObject::RemovedFromScene(SimpleScene* scene, SimpleLayer* layer) {
 	if (HasPhysics())
 		_body->SetActive(false);
+	_layer = nullptr;
+
 }
 
 void SimpleObject::_DestroyPhysics() {
@@ -283,6 +286,19 @@ bool SimpleObject::OnEndCollision(SimpleContactInfo& contactInfo) {
 };
 
 
+void SimpleObject::InitNetwork() {
+	if (_netObject != nullptr)
+		delete _netObject;
+	_netObject = new SimpleNetworkObject();
+	_netObject->SetNetworkType(GetType());
+	_netObject->SetOwner(this);
+
+}
+
+void SimpleObject::Replicate() {
+	_netObject->Replicate();
+}
+
 void SimpleObject::SetAsTrigger(uint32_t idx) {
 	if (HasPhysics())
 		_body->GetFixtureList()[idx].SetSensor(true);
@@ -291,4 +307,94 @@ void SimpleObject::SetAsTrigger(uint32_t idx) {
 void SimpleObject::ResetTrigger(uint32_t idx) {
 	if (HasPhysics())
 		_body->GetFixtureList()[idx].SetSensor(false);
+}
+
+
+//Network sync
+void SimpleObject::StatusSerialize(RakNet::BitStream *stream) {
+
+};
+void SimpleObject::StatusDeserialize(RakNet::BitStream *stream) {
+
+}
+
+void SimpleObject::CreateSerialize(RakNet::BitStream *stream) {
+	//We can only replicate if the simpleobject exists in a scene
+
+	stream->Write(_aabb.anchor);
+	stream->WriteVector<float>(_aabb.position.x, _aabb.position.y, _aabb.position.z);
+	stream->Write(_aabb.size.x);
+	stream->Write(_aabb.size.y);
+	stream->Write((uint32_t)_name);
+	
+	SIMPLE_ASSERT(_layer != nullptr);
+	uint32_t n = _layer->GetName();
+	stream->Write(n);
+	
+
+	//Serialize physics body
+	if (_body != nullptr) {
+		stream->Write(true); //signal we are going to send rb data
+		stream->Write(_body->GetType());
+		stream->Write(_wantsCollisions);
+		b2Fixture* f = &_body->GetFixtureList()[0];
+		stream->Write(f->IsSensor());
+		stream->Write(f->GetDensity());
+		stream->Write(f->GetFriction());
+		stream->Write(f->GetRestitution());
+	}
+	else {
+		stream->Write(false);
+	}
+	
+}
+
+void SimpleObject::CreateDeserialize(RakNet::BitStream *stream) {
+
+	stream->Read(_aabb.anchor);
+	stream->ReadVector<float>(_aabb.position.x, _aabb.position.y, _aabb.position.z);
+	stream->Read(_aabb.size.x);
+	stream->Read(_aabb.size.y);
+	uint32_t name;
+	stream->Read(name);
+	_name = name;
+
+	stream->Read(name);
+	_layer = SimpleEngine::Instance()->GetScene()->GetLayer(SimpleID(name));
+	SIMPLE_ASSERT(_layer != nullptr);
+	
+	bool hasBody;
+	stream->Read(hasBody);
+
+	//Serialize physics body
+	if (hasBody) {
+
+		b2BodyType type;
+		stream->Read(type);
+		stream->Read(_wantsCollisions);
+		bool isSensor;
+		stream->Read(isSensor);
+		float density, friction, restitution;
+		stream->Read(density);
+		stream->Read(friction);
+		stream->Read(restitution);
+		switch (type)
+		{
+		case b2_staticBody:
+			InitStaticPhysics(isSensor);
+			break;
+		case b2_kinematicBody:
+			InitKinematicPhysics(isSensor);
+			break;
+		case b2_dynamicBody:
+			InitDynamicPhysics(density, restitution, friction, isSensor);
+			break;
+		default:
+			break;
+		}
+
+		SimpleEngine::Instance()->GetScene()->AddEntity(this, _layer);
+		
+	}
+	
 }
