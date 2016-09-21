@@ -18,6 +18,14 @@ public:
 		
 		virtual void Initialize() = 0;
 		void ChangeAnimationState(std::string);
+
+		virtual SimpleID GetType() { return "SimpleAnimatedEntity"; }
+
+		virtual void StatusSerialize(RakNet::BitStream *stream);
+		virtual void StatusDeserialize(RakNet::BitStream *stream);
+		virtual void CreateSerialize(RakNet::BitStream *stream);
+		virtual void CreateDeserialize(RakNet::BitStream *stream);
+
 protected:
 	SimpleAnimator* _animator;
 };

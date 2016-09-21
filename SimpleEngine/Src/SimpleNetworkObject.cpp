@@ -30,6 +30,8 @@ void SimpleNetworkObject::DeallocReplica(RakNet::Connection_RM3 *sourceConnectio
 }
 
 RakNet::RM3ConstructionState SimpleNetworkObject::QueryConstruction(RakNet::Connection_RM3 *destinationConnection, RakNet::ReplicaManager3 *replicaManager3) {
+	SimpleNetworkManager* man = SimpleEngine::Instance()->GetNetwork();
+
 	if (_authOwner == AUTH_LOCAL)
 		return QueryConstruction_ClientConstruction(destinationConnection, SimpleEngine::Instance()->GetNetwork()->IsServer());
 	else
@@ -37,6 +39,7 @@ RakNet::RM3ConstructionState SimpleNetworkObject::QueryConstruction(RakNet::Conn
 }
 
 bool SimpleNetworkObject::QueryRemoteConstruction(RakNet::Connection_RM3 *sourceConnection) {
+	SimpleNetworkManager* man = SimpleEngine::Instance()->GetNetwork();
 	if (_authOwner == AUTH_LOCAL)
 		return QueryRemoteConstruction_ClientConstruction(sourceConnection, SimpleEngine::Instance()->GetNetwork()->IsServer());
 	else

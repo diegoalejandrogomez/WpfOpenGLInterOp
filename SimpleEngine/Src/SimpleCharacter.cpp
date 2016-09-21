@@ -3,7 +3,7 @@
 #include "SimpleDispatcher.h"
 #include "SimpleEngine.h"
 
-//FACTORY_REGISTER(SimpleObject, SimpleCharacter)
+FACTORY_REGISTER(SimpleObject, SimpleCharacter)
 
 SimpleCharacter::SimpleCharacter() : SimpleAnimatedEntity()
 {
@@ -46,4 +46,21 @@ int SimpleCharacter::GetSpeed()
 void SimpleCharacter::SetSpeed(int speed)
 {
 	this->speed = speed;
+}
+
+
+void SimpleCharacter::StatusSerialize(RakNet::BitStream *stream){
+	SimpleAnimatedEntity::StatusSerialize(stream);
+}
+void SimpleCharacter::StatusDeserialize(RakNet::BitStream *stream) {
+	SimpleAnimatedEntity::StatusDeserialize(stream);
+
+}
+void SimpleCharacter::CreateSerialize(RakNet::BitStream *stream) {
+	SimpleAnimatedEntity::CreateSerialize(stream);
+	stream->Write(speed);
+}
+void SimpleCharacter::CreateDeserialize(RakNet::BitStream *stream) {
+	SimpleAnimatedEntity::CreateDeserialize(stream);
+	stream->Read(speed);
 }

@@ -47,3 +47,48 @@ void SimpleAnimatedEntity::ChangeAnimationState(std::string newState)
 {
 	this->_animator->SwitchState(newState);
 }
+
+
+void SimpleAnimatedEntity::StatusSerialize(RakNet::BitStream *stream) {
+	SimpleObject::StatusSerialize(stream);
+	if (_animator->GetCurrentState()->IsPlaying())
+		stream->Write(RakNet::RakString(_animator->GetCurrentStateName().c_str()));
+	
+}
+
+void SimpleAnimatedEntity::StatusDeserialize(RakNet::BitStream *stream) {
+	SimpleObject::StatusDeserialize(stream);
+	RakNet::RakString state;
+	if(stream->Read(state))
+		_animator->SwitchState(state.C_String());
+
+}
+//This method assumes that the resource already exist on the other side
+void SimpleAnimatedEntity::CreateSerialize(RakNet::BitStream *stream) {
+	SimpleObject::CreateSerialize(stream);
+
+	auto _animations = _animator->GetAnimations();
+	stream->Write(_animations->size());
+	auto animIt = _animations->begin();
+	while (animIt != _animations->end()) {
+		stream->Write(RakNet::RakString(animIt->first.c_str()));
+		stream->Write(RakNet::RakString(animIt->second->GetAnimation()->GetAnimationName().c_str()));
+		++animIt;
+	}
+}
+void SimpleAnimatedEntity::CreateDeserialize(RakNet::BitStream *stream) {
+	SimpleObject::CreateDeserialize(stream);
+
+	uint32_t animCount;
+	stream->Read(animCount);
+
+	for (int i = 0; i < animCount; ++i) {
+		RakNet::RakString name, anim;
+		stream->Read(name);
+		stream->Read(anim);
+		auto animation = SimpleEngine::Instance()->GetResourceManager()->GetSpriteAnimation(anim.C_String());
+		SimpleAnimatedSpriteRenderer* animatedSpriteRenderer = new SimpleAnimatedSpriteRenderer();
+		animatedSpriteRenderer->SetAnimation(animation);
+		AddAnimation(name.C_String(), animatedSpriteRenderer);
+	}
+}

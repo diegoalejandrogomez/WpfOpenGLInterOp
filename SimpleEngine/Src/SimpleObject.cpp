@@ -58,10 +58,11 @@ void SimpleObject::SetSize(const glm::vec2&& size) {
 	SetSize(size);	
 };
 void SimpleObject::SetSize(const glm::vec2& size) { 
-
-	_aabb.size = size; 
-	if (HasPhysics())
-		_CreateFixtures();
+	if (_aabb.size != size) {
+		_aabb.size = size;
+		if (HasPhysics())
+			_CreateFixtures();
+	}
 };
 
 void SimpleObject::AddForce(glm::vec2 &&force, glm::vec2 &&point) {
@@ -289,10 +290,11 @@ bool SimpleObject::OnEndCollision(SimpleContactInfo& contactInfo) {
 void SimpleObject::InitNetwork() {
 	if (_netObject != nullptr)
 		delete _netObject;
+	
 	_netObject = new SimpleNetworkObject();
 	_netObject->SetNetworkType(GetType());
 	_netObject->SetOwner(this);
-
+	_netObject->SetAuthorityOwner(SimpleNetworkObject::AUTH_LOCAL);
 }
 
 void SimpleObject::Replicate() {
@@ -312,9 +314,25 @@ void SimpleObject::ResetTrigger(uint32_t idx) {
 
 //Network sync
 void SimpleObject::StatusSerialize(RakNet::BitStream *stream) {
-
+	
+	stream->Write(_aabb.anchor);
+	stream->WriteVector<float>(_aabb.position.x, _aabb.position.y, _aabb.position.z);
+	stream->Write(_aabb.size.x);
+	stream->Write(_aabb.size.y);
+	
 };
 void SimpleObject::StatusDeserialize(RakNet::BitStream *stream) {
+
+	glm::vec3 pos;
+	glm::vec2 size;
+	SimpleAABB::ANCHOR_POINT anchor;
+	stream->Read(anchor);
+	stream->ReadVector<float>(pos.x, pos.y, pos.z);
+	stream->Read(size.x);
+	stream->Read(size.y);
+	SetAnchor(anchor);
+	SetPosition(pos);
+	SetSize(size);
 
 }
 

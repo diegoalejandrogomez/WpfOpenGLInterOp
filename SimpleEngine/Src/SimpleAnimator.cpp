@@ -3,6 +3,7 @@
 SimpleAnimator::SimpleAnimator()
 {
 	_animations = new std::map<std::string, SimpleAnimatedSpriteRenderer*>();
+
 }
 
 SimpleAnimator::~SimpleAnimator()
@@ -40,12 +41,14 @@ void SimpleAnimator::RemoveAnimation(std::string stateName)
 
 void SimpleAnimator::SwitchState(std::string newState) 
 {
+	_currentStateName = newState;
 	auto state = _animations->at(newState);
 	if (state != nullptr)
 	{
 		//SIMPLE_LOG("Cannot swith to state, because it doesn't exist");
+		this->_currentState = state;
+		this->_currentState->PlayOnce();
 	}
 
-	this->_currentState = state;
-	this->_currentState->PlayOnce();
+	
 }

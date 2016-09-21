@@ -8,11 +8,13 @@ OnlineRpg::OnlineRpg()
 	SimpleEngine::Instance()->GetResourceManager()->ImportResources("./resources/ash.pack", "ash");
 	SimpleEngine::Instance()->GetResourceManager()->ImportResources("./resources/trees.pack", "tree");
 	SimpleEngine::Instance()->CreateScene();
-	_character = new HeroCharacter();
+	
 	_layer = new SimpleLayer();
 	_layer->SetName("GameLayer");
 	_layerBackground = new SimpleLayer();
 	_layerBackground->SetName("BackgroundLayer");
+	_layer->SetZ(0);
+	_layerBackground->SetZ(-1);
 }
 
 OnlineRpg::~OnlineRpg()
@@ -30,16 +32,9 @@ void OnlineRpg::Init()
 	SimpleEngine::Instance()->GetInput()->CreateKeyboard(true);
 	SimpleEngine::Instance()->GetInput()->CreateMouse(true);
 
-
-	/*_character->Initialize();
-	_character->SetSpeed(200);
-	_layer->SetZ(0);
-	_layerBackground->SetZ(-1);*/
-
 	SimpleEngine::Instance()->GetScene()->AddLayer(_layer);
 	SimpleEngine::Instance()->GetScene()->AddLayer(_layerBackground);
-
-	//SimpleEngine::Instance()->GetScene()->AddEntity(_character, _layer);
+	
 	
 	
 
@@ -54,13 +49,12 @@ void OnlineRpg::Init()
 	if (_isServer) {
 		SimpleEngine::Instance()->GetNetwork()->InitServer(0U);
 		int z = 0;
-		for (int i = 0; i < 1; i++)
+		for (int i = 0; i < 10; i++)
 		{
 			SimpleFixedObject* tree = new SimpleFixedObject();
 			tree->Initialize();
 			glm::vec3 position = tree->GetPosition();
 			tree->SetPosition(glm::vec3(position.x, position.y, z));
-			z--;
 			SimpleEngine::Instance()->GetScene()->AddEntity(tree, _layerBackground);
 			tree->InitNetwork();
 			tree->Replicate();
@@ -69,6 +63,14 @@ void OnlineRpg::Init()
 	}
 	else {
 		SimpleEngine::Instance()->GetNetwork()->InitClient("127.0.0.1", 0U);
+
+		_character = new HeroCharacter();
+		_character->Initialize();
+		_character->SetSpeed(200);
+				
+		SimpleEngine::Instance()->GetScene()->AddEntity(_character, _layer);
+		_character->InitNetwork();
+		_character->Replicate();
 	}
 
 }
