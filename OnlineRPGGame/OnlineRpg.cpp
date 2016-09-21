@@ -62,7 +62,7 @@ void OnlineRpg::Init()
 
 	}
 	else {
-		SimpleEngine::Instance()->GetNetwork()->InitClient("127.0.0.1", 0U);
+		SimpleEngine::Instance()->GetNetwork()->InitClient(_ip, 0U);
 
 		_character = new HeroCharacter();
 		_character->Initialize();

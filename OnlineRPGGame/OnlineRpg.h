@@ -17,12 +17,13 @@ public:
 	virtual bool Deserialize(const json &node) override;
 
 
-	void RunAsServer() { _isServer = true; };
-	void RunAsClient() { _isServer = false; };
+	void RunAsServer(std::string ip) { _isServer = true; _ip = ip; };
+	void RunAsClient(std::string ip) { _isServer = false; _ip = ip; };
 private:
 	HeroCharacter* _character;
 	SimpleLayer* _layer;
 	SimpleLayer* _layerBackground;
 
 	bool _isServer = false;
+	std::string _ip;
 };

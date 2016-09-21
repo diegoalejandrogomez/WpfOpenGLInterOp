@@ -6,7 +6,7 @@
 #include <shellapi.h>
 #include <SimpleEngine.h>
 #include "OnlineRpg.h"
-
+#include <locale>
 #define MAX_LOADSTRING 100
 
 // Global Variables:
@@ -21,6 +21,7 @@ LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 SimpleEngine * engine = nullptr;
 bool runAsServer;
+std::string ip;
 OnlineRpg* onlineRpg;
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
@@ -36,9 +37,19 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	LPWSTR *szArglist = CommandLineToArgvW(lpCmdLine, &nCmdShow);
 	
 	runAsServer = false;
+	ip = "127.0.0.1";
 	//Check if we should run as server
-	if (nCmdShow > 0 && lstrcmpW(szArglist[0], L"server") == 0) {
-		runAsServer = true;
+	if (nCmdShow > 0){
+		std::wstring warg = szArglist[0];
+		std::string arg(warg.begin(), warg.end());
+		if(arg == "server")
+			runAsServer = true;
+		else {
+			size_t epos = arg.find("=");
+			if (epos != std::string::npos) {
+				ip = arg.substr(3);
+			}
+		}
 	}
 
 	// Free memory allocated for CommandLineToArgvW arguments.
@@ -148,9 +159,9 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    SimpleEngine::Instance()->GetResourceManager()->SetResourcesBaseDir(".\\Resources\\");
    onlineRpg = new OnlineRpg();
    if (runAsServer)
-	   onlineRpg->RunAsServer();
+	   onlineRpg->RunAsServer(ip);
    else
-	   onlineRpg->RunAsClient();
+	   onlineRpg->RunAsClient(ip);
    
    engine->SetGameLogic(onlineRpg);
    engine->UseInternalFrameTime(true);
