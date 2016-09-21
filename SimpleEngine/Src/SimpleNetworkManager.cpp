@@ -19,15 +19,60 @@
 #include <RPC4Plugin.h>
 #include <HTTPConnection2.h>
 #include "SimpleNetworkObject.h"
+#include "SimpleDispatcher.h"
+#include "Events.h"
+#include "SimpleEngine.h"
 
 bool SimpleNetworkManager::Initialize() {
 
 	_networkIDManager = new RakNet::NetworkIDManager();
 	_replicaManager = new SimpleReplicaManager();
 	_replicaManager->SetNetworkIDManager(_networkIDManager);
+	_rpc4 = RPC4::GetInstance();
+
+	_rpc4->RegisterSlot("Event", [](RakNet::BitStream* userData, RakNet::Packet* packet) {
+		
+		
+		NetworkID nID;
+		userData->Read(nID);
+		SimpleNetworkObject* source = SimpleEngine::Instance()->GetNetwork()->GetNativeIDManager()->GET_OBJECT_FROM_ID<SimpleNetworkObject*>(nID);
+		RakNet::RakString msg;
+		userData->Read(msg);
+		SIMPLE_LOG("Received Event from GUID:%s : %s", packet->guid.ToString(), msg.C_String());
+		SimpleDispatcher::Instance()->Send<NetworkMessageEvent>(source,msg.C_String());
+	},
+	0);
 
 	return true;
 		
+}
+
+void SimpleNetworkManager::SendEvent(EVENT_RECIPIENT recipient, SimpleNetworkObject* sourceObject,SimpleNetworkObject* targetObject, SimpleEvent& evt) {
+	
+	
+	RakNet::BitStream stream;
+	stream.Write(sourceObject->GetNetworkID());
+	stream.Write(dynamic_cast<NetworkMessageEvent*>(&evt)->message);
+	switch (recipient) {
+		case	OWNER:
+			SIMPLE_LOG("Sending Event to Owner with GUID:%s : %s", targetObject->GetCreatingSystemGUID().ToString(), dynamic_cast<NetworkMessageEvent*>(&evt)->message.c_str() );
+			_rpc4->Signal("Event", &stream, PacketPriority::IMMEDIATE_PRIORITY, PacketReliability::RELIABLE_ORDERED_WITH_ACK_RECEIPT, 0, targetObject->GetCreatingSystemGUID(), false, false);
+			break;
+		case OTHERS:
+			SIMPLE_LOG("Sending Event to Others with GUID:%s : %s", targetObject->GetCreatingSystemGUID().ToString(), dynamic_cast<NetworkMessageEvent*>(&evt)->message.c_str());
+			_rpc4->Signal("Event", &stream, PacketPriority::IMMEDIATE_PRIORITY, PacketReliability::RELIABLE_ORDERED_WITH_ACK_RECEIPT, 0, _rakPeer->GetMyGUID(), true, false);
+			break;
+		case OTHERS_BUT_OWNER:
+			SIMPLE_LOG("Sending Event to Others but owner with GUID:%s : %s", targetObject->GetCreatingSystemGUID().ToString(), dynamic_cast<NetworkMessageEvent*>(&evt)->message.c_str());
+			_rpc4->Signal("Event", &stream, PacketPriority::IMMEDIATE_PRIORITY, PacketReliability::RELIABLE_ORDERED_WITH_ACK_RECEIPT, 0, targetObject->GetCreatingSystemGUID(), true, false);
+			break;
+		case ALL:
+			SIMPLE_LOG("Sending Event to all with GUID:%s : %s", targetObject->GetCreatingSystemGUID().ToString(), dynamic_cast<NetworkMessageEvent*>(&evt)->message.c_str());
+			_rpc4->Signal("Event", &stream, PacketPriority::IMMEDIATE_PRIORITY, PacketReliability::RELIABLE_ORDERED_WITH_ACK_RECEIPT, 0, _rakPeer->GetMyGUID(), true, true);
+			break;
+	}
+	
+
 }
 
 void SimpleNetworkManager::Replicate(SimpleNetworkObject* obj) {
@@ -45,9 +90,11 @@ bool SimpleNetworkManager::InitServer(uint32_t port) {
 	_isServer = true;
 
 	SIMPLE_LOG("Starting Server on port %d", port);
+	SIMPLE_LOG("Network GUID:%s", _rakPeer->GetMyGUID().ToString());
 	_rakPeer->SetMaximumIncomingConnections(MAX_CONNECTIONS);
 
 	_rakPeer->AttachPlugin(_replicaManager);
+	_rakPeer->AttachPlugin(_rpc4);
 
 	return true;
 }
@@ -63,10 +110,12 @@ bool SimpleNetworkManager::InitClient(std::string ip, uint32_t port){
 
 
 	SIMPLE_LOG("Starting client");
+	SIMPLE_LOG("Network GUID:%s", _rakPeer->GetMyGUID().ToString());
 	uint32_t tries = 12U;
 	uint32_t msPerTry = 500U;
 	RakNet::ConnectionAttemptResult result = _rakPeer->Connect(ip.c_str(), port, NULL, 0, NULL, 0, tries, msPerTry, 0);
 	_rakPeer->AttachPlugin(_replicaManager);
+	_rakPeer->AttachPlugin(_rpc4);
 
 	switch (result)
 	{

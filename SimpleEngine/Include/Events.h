@@ -75,18 +75,20 @@ public:
 //Network events
 
 
-class IncomingConnectionEvent : public SimpleEvent
+class NetworkMessageEvent : public SimpleEvent
 {
 public:
-	IncomingConnectionEvent(std::string message) : SimpleEvent(nullptr) {}
-	virtual ~IncomingConnectionEvent() {};
+	NetworkMessageEvent(void* source, std::string message) : SimpleEvent(source) { this->message = message; }
+	virtual ~NetworkMessageEvent() {};
 
-	static constexpr DescriptorType descriptor = "IncomingConnectionEvent ";
+	static constexpr DescriptorType descriptor = "NetworkMessageEvent";
 
 	virtual DescriptorType type() const
 	{
 		return descriptor;
 	}
+
+	std::string message;
 };
 
 

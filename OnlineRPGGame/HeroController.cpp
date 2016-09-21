@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "HeroController.h"
+#include "Events.h"
 
 HeroController::HeroController() :SimplePlayerController()
 {
@@ -56,6 +57,9 @@ void HeroController::Advance(float dt) {
 			//_character->SetPosition(glm::vec3(position.x + speed, position.y, position.z));
 		}
 
+		if (keyboard->isKeyDown(OIS::KeyCode::KC_SPACE)) {
+			SimpleEngine::Instance()->GetNetwork()->SendEvent(SimpleNetworkManager::ALL, _character->GetNetworkObject(), _character->GetNetworkObject(), NetworkMessageEvent{ this,"Test" });
+		}
 		_character->SetVelocity( glm::clamp(vel, {-speed, -speed}, { speed, speed }));
 
 	}

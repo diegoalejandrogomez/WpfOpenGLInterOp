@@ -1,7 +1,7 @@
 #pragma once
 #include "SimpleConfiguration.h"
 #include "SimpleReplicaManager.h"
-
+#include "SimpleEvent.h"
 #define DEFAULT_SERVER_PORT 60000
 #define MAX_CONNECTIONS 16
 namespace RakNet {
@@ -30,6 +30,17 @@ public:
 	void Replicate(SimpleNetworkObject* obj);
 	void Advance(float dt);
 	bool IsServer() { return _isServer; }
+
+	enum EVENT_RECIPIENT {
+		OWNER,
+		OTHERS,
+		OTHERS_BUT_OWNER,
+		ALL
+	};
+
+	void SendEvent(EVENT_RECIPIENT recipient, SimpleNetworkObject* sourceObject, SimpleNetworkObject* targetObject, SimpleEvent& evt);
+
+	RakNet::NetworkIDManager* GetNativeIDManager() { return _networkIDManager; }
 protected:
 		
 	RakNet::RakPeerInterface* _rakPeer = nullptr;						// Purpose: UDP network communication

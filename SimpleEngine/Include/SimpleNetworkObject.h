@@ -48,7 +48,7 @@ public:
 	bool IsLocal() { return creatingSystemGUID == replicaManager->GetRakPeerInterface()->GetMyGUID(); }
 
 	void Replicate();
-	
+
 private:
 	SimpleID _type;
 	SimpleNetworkSerializable* _owner;
