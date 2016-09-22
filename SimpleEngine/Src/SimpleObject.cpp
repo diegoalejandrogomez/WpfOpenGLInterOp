@@ -360,6 +360,7 @@ void SimpleObject::CreateSerialize(RakNet::BitStream *stream) {
 		stream->Write(f->GetDensity());
 		stream->Write(f->GetFriction());
 		stream->Write(f->GetRestitution());
+		stream->Write(_body->IsFixedRotation());
 	}
 	else {
 		stream->Write(false);
@@ -396,6 +397,9 @@ void SimpleObject::CreateDeserialize(RakNet::BitStream *stream) {
 		stream->Read(density);
 		stream->Read(friction);
 		stream->Read(restitution);
+		bool fixedRotation;
+		stream->Read(fixedRotation);
+
 		switch (type)
 		{
 		case b2_staticBody:
@@ -410,7 +414,7 @@ void SimpleObject::CreateDeserialize(RakNet::BitStream *stream) {
 		default:
 			break;
 		}
-
+		_body->SetFixedRotation(fixedRotation);
 		SimpleEngine::Instance()->GetScene()->AddEntity(this, _layer);
 		
 	}

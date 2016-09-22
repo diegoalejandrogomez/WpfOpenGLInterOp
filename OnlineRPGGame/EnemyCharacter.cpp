@@ -15,6 +15,13 @@ EnemyCharacter::~EnemyCharacter()
 {
 }
 
+
+void EnemyCharacter::NetworkMessageReceived(NetworkMessageEvent &evt) {
+	
+	SimpleDispatcher::Instance()->Send<LogEvent>(std::string(evt.message));
+}
+
+
 void EnemyCharacter::Initialize() // to "Enemy class"
 {
 	auto animation = SimpleEngine::Instance()->GetResourceManager()->GetSpriteAnimation("walk_rigth");

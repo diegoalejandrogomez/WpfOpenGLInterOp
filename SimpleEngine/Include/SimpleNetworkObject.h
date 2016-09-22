@@ -25,7 +25,7 @@ public:
 	virtual void ExistingDeserialize(RakNet::BitStream *stream) {};
 	virtual void DestroySerialize(RakNet::BitStream *stream) {};
 	virtual void DestroyDeserialize(RakNet::BitStream *stream) {};
-
+	virtual void NetworkMessageReceived(NetworkMessageEvent &evt) {};
 };
 
 class SIMPLE_API SimpleNetworkObject : public RakNet::Replica3{

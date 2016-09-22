@@ -4,6 +4,8 @@
 #include "SimpleEngine.h"
 #include "HeroCharacter.h"
 #include "HeroController.h"
+#include "EnemyCharacter.h"
+
 
 HeroCharacter::HeroCharacter() : SimpleCharacter()
 {
@@ -36,3 +38,19 @@ void HeroCharacter::Initialize() // to "Hero class"
 	this->SetSize(glm::vec2(60, 60));
 }
 
+
+bool HeroCharacter::OnBeginCollision(SimpleContactInfo& contactInfo) {
+
+	if (dynamic_cast<SimpleCharacter*>(contactInfo.other) != nullptr) {
+		SimpleNetworkManager *network = SimpleEngine::Instance()->GetNetwork();
+		network->SendDirectMessage(SimpleNetworkManager::OWNER, GetNetworkObject(), contactInfo.other->GetNetworkObject(), NetworkMessageEvent{ nullptr, "Touched you" });
+	}
+
+	return false;
+}
+
+bool HeroCharacter::OnEndCollision(SimpleContactInfo& contactInfo) {
+
+	return false;
+
+}

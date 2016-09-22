@@ -11,4 +11,6 @@ public:
 	~EnemyCharacter();
 
 	virtual void Initialize() override;
+
+	virtual void NetworkMessageReceived(NetworkMessageEvent &evt);
 };

@@ -41,8 +41,14 @@ public:
 		ALL
 	};
 
+	enum EVENT_TARGET {
+		EVENT_SYSTEM,
+		DIRECT_MESSAGE
+	};
+
 	void SendEvent(EVENT_RECIPIENT recipient, SimpleNetworkObject* sourceObject, SimpleNetworkObject* targetObject, NetworkMessageEvent& evt);
-	void RelayMessage(EVENT_RECIPIENT recipient, RakNet::RakNetGUID &source, RakNet::RakNetGUID &target, RakNet::NetworkID sourceObject, RakNet::RakString message);
+	void RelayMessage(EVENT_RECIPIENT recipient, EVENT_TARGET evtTarget, RakNet::RakNetGUID &source, RakNet::RakNetGUID &target, RakNet::NetworkID sourceObject, RakNet::RakString message);
+	void SendDirectMessage(EVENT_RECIPIENT recipient, SimpleNetworkObject* sourceObject, SimpleNetworkObject* targetObject, NetworkMessageEvent& evt);
 	RakNet::NetworkIDManager* GetNativeIDManager() { return _networkIDManager; }
 protected:
 		

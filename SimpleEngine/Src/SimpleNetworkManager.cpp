@@ -34,9 +34,13 @@ bool SimpleNetworkManager::Initialize() {
 		
 		SimpleNetworkManager* network = SimpleEngine::Instance()->GetNetwork();
 		EVENT_RECIPIENT recipient;
+		EVENT_TARGET evtTarget;
 		uint32_t r;
 		userData->Read<uint32_t>(r);
 		recipient = (EVENT_RECIPIENT)r;
+		userData->Read<uint32_t>(r);
+		evtTarget = (EVENT_TARGET)r;
+
 		RakNet::RakNetGUID source;
 		RakNet::RakNetGUID target;
 		userData->Read(source);
@@ -48,11 +52,17 @@ bool SimpleNetworkManager::Initialize() {
 
 		if (recipient == NONE) {
 			SimpleNetworkObject* sourceObject = network->GetNativeIDManager()->GET_OBJECT_FROM_ID<SimpleNetworkObject*>(nID);
-			SIMPLE_LOG("Received Event from GUID:%s : %s", source.ToString(), msg.C_String());
-			SimpleDispatcher::Instance()->Send<NetworkMessageEvent>(sourceObject, std::string(msg.C_String()));
+
+			if (evtTarget == EVENT_SYSTEM) {
+				SIMPLE_LOG("Received Event from GUID:%s : %s", source.ToString(), msg.C_String());
+				SimpleDispatcher::Instance()->Send<NetworkMessageEvent>(sourceObject, std::string(msg.C_String()));
+			}
+			else {
+				sourceObject->GetOwner()->NetworkMessageReceived(NetworkMessageEvent{ nullptr, msg.C_String() });
+			}
 		}
 		else {
-			network->RelayMessage(recipient, source, target, nID, msg);		
+			network->RelayMessage(recipient,evtTarget ,source, target, nID, msg);		
 		}
 	},
 	0);
@@ -61,7 +71,7 @@ bool SimpleNetworkManager::Initialize() {
 		
 }
 
-void SimpleNetworkManager::RelayMessage(EVENT_RECIPIENT recipient, RakNet::RakNetGUID &source, RakNet::RakNetGUID &target, RakNet::NetworkID sourceObject, RakNet::RakString message) {
+void SimpleNetworkManager::RelayMessage(EVENT_RECIPIENT recipient, EVENT_TARGET evtTarget, RakNet::RakNetGUID &source, RakNet::RakNetGUID &target, RakNet::NetworkID sourceObject, RakNet::RakString message) {
 
 	
 
@@ -69,6 +79,7 @@ void SimpleNetworkManager::RelayMessage(EVENT_RECIPIENT recipient, RakNet::RakNe
 
 		RakNet::BitStream stream;
 		stream.Write<uint32_t>(EVENT_RECIPIENT::NONE); //Stop relay chain
+		stream.Write<uint32_t>(evtTarget); 
 		stream.Write(source);
 		stream.Write(target);
 		stream.Write(sourceObject);
@@ -97,6 +108,7 @@ void SimpleNetworkManager::RelayMessage(EVENT_RECIPIENT recipient, RakNet::RakNe
 		//If we are a client, send the message to the server, in order for it to be relayed
 		RakNet::BitStream stream;
 		stream.Write<uint32_t>(recipient);
+		stream.Write<uint32_t>(evtTarget);
 		stream.Write(source);
 		stream.Write(target);
 		stream.Write(sourceObject);
@@ -108,6 +120,14 @@ void SimpleNetworkManager::RelayMessage(EVENT_RECIPIENT recipient, RakNet::RakNe
 
 }
 
+void SimpleNetworkManager::SendDirectMessage(EVENT_RECIPIENT recipient, SimpleNetworkObject* sourceObject, SimpleNetworkObject* targetObject, NetworkMessageEvent& evt) {
+		
+	//We can only send events from objects we own, unless we are server
+	SIMPLE_ASSERT(sourceObject->IsLocal() || IsServer());
+	
+	RelayMessage(recipient, DIRECT_MESSAGE, sourceObject->GetCreatingSystemGUID(), targetObject->GetCreatingSystemGUID(), targetObject->GetNetworkID(), evt.message.c_str());
+
+}
 void SimpleNetworkManager::SendEvent(EVENT_RECIPIENT recipient, SimpleNetworkObject* sourceObject,SimpleNetworkObject* targetObject, NetworkMessageEvent& evt) {
 	
 	//We can only send events from objects we own, unless we are server
@@ -115,8 +135,8 @@ void SimpleNetworkManager::SendEvent(EVENT_RECIPIENT recipient, SimpleNetworkObj
 
 	RakNet::RakNetGUID sourceGUID = sourceObject == nullptr ? _rakPeer->GetMyGUID() : sourceObject->GetCreatingSystemGUID();
 	RakNet::RakNetGUID targetGUID = targetObject == nullptr ? _rakPeer->GetGuidFromSystemAddress(UNASSIGNED_SYSTEM_ADDRESS) : targetObject->GetCreatingSystemGUID();
-	RakNet::NetworkID nID = targetObject == nullptr ? NetworkID() : targetObject->GetNetworkID();
-	RelayMessage(recipient, sourceGUID, targetGUID, nID, evt.message.c_str());
+	RakNet::NetworkID nID = sourceObject == nullptr ? NetworkID() : sourceObject->GetNetworkID();
+	RelayMessage(recipient,EVENT_SYSTEM ,sourceGUID, targetGUID, nID, evt.message.c_str());
 }
 
 void SimpleNetworkManager::Replicate(SimpleNetworkObject* obj) {

@@ -10,5 +10,9 @@ public:
 		HeroCharacter();
 		~HeroCharacter();
 		
+		//Physics callbacks
+		virtual bool OnBeginCollision(SimpleContactInfo& contactInfo);
+		virtual bool OnEndCollision(SimpleContactInfo& contactInfo);
+
 		virtual void Initialize() override;
 };
