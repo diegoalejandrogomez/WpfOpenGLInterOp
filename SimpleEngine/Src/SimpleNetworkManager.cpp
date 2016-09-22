@@ -32,14 +32,28 @@ bool SimpleNetworkManager::Initialize() {
 
 	_rpc4->RegisterSlot("Event", [](RakNet::BitStream* userData, RakNet::Packet* packet) {
 		
-		
+		SimpleNetworkManager* network = SimpleEngine::Instance()->GetNetwork();
+		EVENT_RECIPIENT recipient;
+		uint32_t r;
+		userData->Read<uint32_t>(r);
+		recipient = (EVENT_RECIPIENT)r;
+		RakNet::RakNetGUID source;
+		RakNet::RakNetGUID target;
+		userData->Read(source);
+		userData->Read(target);
 		NetworkID nID;
-		userData->Read(nID);
-		SimpleNetworkObject* source = SimpleEngine::Instance()->GetNetwork()->GetNativeIDManager()->GET_OBJECT_FROM_ID<SimpleNetworkObject*>(nID);
+		userData->Read(nID);	
 		RakNet::RakString msg;
 		userData->Read(msg);
-		SIMPLE_LOG("Received Event from GUID:%s : %s", packet->guid.ToString(), msg.C_String());
-		SimpleDispatcher::Instance()->Send<NetworkMessageEvent>(source,msg.C_String());
+
+		if (recipient == NONE) {
+			SimpleNetworkObject* sourceObject = network->GetNativeIDManager()->GET_OBJECT_FROM_ID<SimpleNetworkObject*>(nID);
+			SIMPLE_LOG("Received Event from GUID:%s : %s", source.ToString(), msg.C_String());
+			SimpleDispatcher::Instance()->Send<NetworkMessageEvent>(sourceObject, std::string(msg.C_String()));
+		}
+		else {
+			network->RelayMessage(recipient, source, target, nID, msg);		
+		}
 	},
 	0);
 
@@ -47,32 +61,62 @@ bool SimpleNetworkManager::Initialize() {
 		
 }
 
-void SimpleNetworkManager::SendEvent(EVENT_RECIPIENT recipient, SimpleNetworkObject* sourceObject,SimpleNetworkObject* targetObject, SimpleEvent& evt) {
-	
-	
-	RakNet::BitStream stream;
-	stream.Write(sourceObject->GetNetworkID());
-	stream.Write(dynamic_cast<NetworkMessageEvent*>(&evt)->message);
-	switch (recipient) {
-		case	OWNER:
-			SIMPLE_LOG("Sending Event to Owner with GUID:%s : %s", targetObject->GetCreatingSystemGUID().ToString(), dynamic_cast<NetworkMessageEvent*>(&evt)->message.c_str() );
-			_rpc4->Signal("Event", &stream, PacketPriority::IMMEDIATE_PRIORITY, PacketReliability::RELIABLE_ORDERED_WITH_ACK_RECEIPT, 0, targetObject->GetCreatingSystemGUID(), false, false);
-			break;
-		case OTHERS:
-			SIMPLE_LOG("Sending Event to Others with GUID:%s : %s", targetObject->GetCreatingSystemGUID().ToString(), dynamic_cast<NetworkMessageEvent*>(&evt)->message.c_str());
-			_rpc4->Signal("Event", &stream, PacketPriority::IMMEDIATE_PRIORITY, PacketReliability::RELIABLE_ORDERED_WITH_ACK_RECEIPT, 0, _rakPeer->GetMyGUID(), true, false);
-			break;
-		case OTHERS_BUT_OWNER:
-			SIMPLE_LOG("Sending Event to Others but owner with GUID:%s : %s", targetObject->GetCreatingSystemGUID().ToString(), dynamic_cast<NetworkMessageEvent*>(&evt)->message.c_str());
-			_rpc4->Signal("Event", &stream, PacketPriority::IMMEDIATE_PRIORITY, PacketReliability::RELIABLE_ORDERED_WITH_ACK_RECEIPT, 0, targetObject->GetCreatingSystemGUID(), true, false);
-			break;
-		case ALL:
-			SIMPLE_LOG("Sending Event to all with GUID:%s : %s", targetObject->GetCreatingSystemGUID().ToString(), dynamic_cast<NetworkMessageEvent*>(&evt)->message.c_str());
-			_rpc4->Signal("Event", &stream, PacketPriority::IMMEDIATE_PRIORITY, PacketReliability::RELIABLE_ORDERED_WITH_ACK_RECEIPT, 0, _rakPeer->GetMyGUID(), true, true);
-			break;
-	}
+void SimpleNetworkManager::RelayMessage(EVENT_RECIPIENT recipient, RakNet::RakNetGUID &source, RakNet::RakNetGUID &target, RakNet::NetworkID sourceObject, RakNet::RakString message) {
+
 	
 
+	if (IsServer()) {
+
+		RakNet::BitStream stream;
+		stream.Write<uint32_t>(EVENT_RECIPIENT::NONE); //Stop relay chain
+		stream.Write(source);
+		stream.Write(target);
+		stream.Write(sourceObject);
+		stream.Write(message);
+		switch (recipient) {
+		case OWNER:
+			SIMPLE_LOG("Relaying Event from GUID:%s to Owner with GUID:%s : %s", source.ToString(), target.ToString(), message.C_String());
+			_rpc4->Signal("Event", &stream, PacketPriority::IMMEDIATE_PRIORITY, PacketReliability::RELIABLE_ORDERED_WITH_ACK_RECEIPT, 0, target, false, false);
+			break;
+		case OTHERS:
+			SIMPLE_LOG("Relaying Event from GUID:%s to Others with GUID:%s : %s", source.ToString(), target.ToString(), message.C_String());
+			_rpc4->Signal("Event", &stream, PacketPriority::IMMEDIATE_PRIORITY, PacketReliability::RELIABLE_ORDERED_WITH_ACK_RECEIPT, 0, source, true, false);
+			break;
+		case OTHERS_BUT_OWNER:
+			SIMPLE_LOG("Relaying Event from GUID:%s to Others but Owner with GUID:%s : %s", source.ToString(), target.ToString(), message.C_String());
+			_rpc4->Signal("Event", &stream, PacketPriority::IMMEDIATE_PRIORITY, PacketReliability::RELIABLE_ORDERED_WITH_ACK_RECEIPT, 0, target, true, false);
+			break;
+		case ALL:
+			SIMPLE_LOG("Relaying Event from GUID:%s to All with GUID:%s : %s", source.ToString(), target.ToString(), message.C_String());
+			_rpc4->Signal("Event", &stream, PacketPriority::IMMEDIATE_PRIORITY, PacketReliability::RELIABLE_ORDERED_WITH_ACK_RECEIPT, 0, _rakPeer->GetMyGUID(), true, true);
+			break;
+		}
+	
+	}
+	else {
+		//If we are a client, send the message to the server, in order for it to be relayed
+		RakNet::BitStream stream;
+		stream.Write<uint32_t>(recipient);
+		stream.Write(source);
+		stream.Write(target);
+		stream.Write(sourceObject);
+		stream.Write(message);
+		SIMPLE_LOG("Sending Event to server for relaying with GUID:%s : %s", source.ToString(), message.C_String());
+		_rpc4->Signal("Event", &stream, PacketPriority::IMMEDIATE_PRIORITY, PacketReliability::RELIABLE_ORDERED_WITH_ACK_RECEIPT, 0, _serverAddress , false, false);
+	}
+
+
+}
+
+void SimpleNetworkManager::SendEvent(EVENT_RECIPIENT recipient, SimpleNetworkObject* sourceObject,SimpleNetworkObject* targetObject, NetworkMessageEvent& evt) {
+	
+	//We can only send events from objects we own, unless we are server
+	SIMPLE_ASSERT(sourceObject == nullptr || sourceObject->IsLocal() || IsServer());
+
+	RakNet::RakNetGUID sourceGUID = sourceObject == nullptr ? _rakPeer->GetMyGUID() : sourceObject->GetCreatingSystemGUID();
+	RakNet::RakNetGUID targetGUID = targetObject == nullptr ? _rakPeer->GetGuidFromSystemAddress(UNASSIGNED_SYSTEM_ADDRESS) : targetObject->GetCreatingSystemGUID();
+	RakNet::NetworkID nID = targetObject == nullptr ? NetworkID() : targetObject->GetNetworkID();
+	RelayMessage(recipient, sourceGUID, targetGUID, nID, evt.message.c_str());
 }
 
 void SimpleNetworkManager::Replicate(SimpleNetworkObject* obj) {
@@ -105,9 +149,12 @@ bool SimpleNetworkManager::InitClient(std::string ip, uint32_t port){
 	RakNet::SocketDescriptor sd;
 	_rakPeer->Startup(1, &sd, 1);
 	_isServer = false;
+	
+
 	if (port < 1024 || port > 65535)
 		port = DEFAULT_SERVER_PORT;
 
+	_serverAddress.FromStringExplicitPort(ip.c_str(),port) ;
 
 	SIMPLE_LOG("Starting client");
 	SIMPLE_LOG("Network GUID:%s", _rakPeer->GetMyGUID().ToString());
@@ -121,6 +168,7 @@ bool SimpleNetworkManager::InitClient(std::string ip, uint32_t port){
 	{
 		case RakNet::CONNECTION_ATTEMPT_STARTED:
 			SIMPLE_LOG("Starting client... Connecting to ip %s:%d", ip.c_str(), port);
+			
 			return true;
 		break;
 	case RakNet::INVALID_PARAMETER:

@@ -1,7 +1,8 @@
 #pragma once
 #include "SimpleConfiguration.h"
 #include "SimpleReplicaManager.h"
-#include "SimpleEvent.h"
+#include "Events.h"
+
 #define DEFAULT_SERVER_PORT 60000
 #define MAX_CONNECTIONS 16
 namespace RakNet {
@@ -32,14 +33,15 @@ public:
 	bool IsServer() { return _isServer; }
 
 	enum EVENT_RECIPIENT {
+		NONE,
 		OWNER,
 		OTHERS,
 		OTHERS_BUT_OWNER,
 		ALL
 	};
 
-	void SendEvent(EVENT_RECIPIENT recipient, SimpleNetworkObject* sourceObject, SimpleNetworkObject* targetObject, SimpleEvent& evt);
-
+	void SendEvent(EVENT_RECIPIENT recipient, SimpleNetworkObject* sourceObject, SimpleNetworkObject* targetObject, NetworkMessageEvent& evt);
+	void RelayMessage(EVENT_RECIPIENT recipient, RakNet::RakNetGUID &source, RakNet::RakNetGUID &target, RakNet::NetworkID sourceObject, RakNet::RakString message);
 	RakNet::NetworkIDManager* GetNativeIDManager() { return _networkIDManager; }
 protected:
 		
@@ -55,6 +57,7 @@ protected:
 	RakNet::FullyConnectedMesh2* _fullyConnectedMesh2 = nullptr;		// Purpose: Automatically determine and migrate the host of a peer to peer session. Avoid partial connection failures when joining peer-to-peer games.
 	RakNet::HTTPConnection2* _httpConnection2 = nullptr;				// Purpose: Helper class to parse http connection events
 	
-
 	bool _isServer = false;
+	RakNet::SystemAddress _serverAddress;
+	
 };

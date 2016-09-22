@@ -77,7 +77,17 @@ void OnlineRpg::Init()
 
 // Inherited via SimpleGameLogic
 void OnlineRpg::Advance(float dt)  {
+	using namespace std::chrono;
 
+	if (SimpleEngine::Instance()->GetNetwork()->IsServer()) {
+		static high_resolution_clock::time_point prev = high_resolution_clock::now();
+		high_resolution_clock::time_point current = high_resolution_clock::now();
+		std::chrono::duration<float> _elapsed = current - prev;
+		if (_elapsed.count() > 10.0f) {
+			prev = current;
+			SimpleEngine::Instance()->GetNetwork()->SendEvent(SimpleNetworkManager::OTHERS_BUT_OWNER, nullptr, nullptr, NetworkMessageEvent{ this,"The server is watching..." });
+		}
+	}
 
 }
 void OnlineRpg::Shutdown()  {

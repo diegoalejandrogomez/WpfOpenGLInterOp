@@ -57,7 +57,16 @@ void HeroController::Advance(float dt) {
 			//_character->SetPosition(glm::vec3(position.x + speed, position.y, position.z));
 		}
 
-		if (keyboard->isKeyDown(OIS::KeyCode::KC_SPACE)) {
+		if (keyboard->isKeyDown(OIS::KeyCode::KC_A)) {
+			SimpleEngine::Instance()->GetNetwork()->SendEvent(SimpleNetworkManager::OWNER, _character->GetNetworkObject(), _character->GetNetworkObject(), NetworkMessageEvent{ this,"Test" });
+		}
+		if (keyboard->isKeyDown(OIS::KeyCode::KC_S)) {
+			SimpleEngine::Instance()->GetNetwork()->SendEvent(SimpleNetworkManager::OTHERS, _character->GetNetworkObject(), _character->GetNetworkObject(), NetworkMessageEvent{ this,"Test" });
+		}
+		if (keyboard->isKeyDown(OIS::KeyCode::KC_D)) {
+			SimpleEngine::Instance()->GetNetwork()->SendEvent(SimpleNetworkManager::OTHERS_BUT_OWNER, _character->GetNetworkObject(), _character->GetNetworkObject(), NetworkMessageEvent{ this,"Test" });
+		}
+		if (keyboard->isKeyDown(OIS::KeyCode::KC_F)) {
 			SimpleEngine::Instance()->GetNetwork()->SendEvent(SimpleNetworkManager::ALL, _character->GetNetworkObject(), _character->GetNetworkObject(), NetworkMessageEvent{ this,"Test" });
 		}
 		_character->SetVelocity( glm::clamp(vel, {-speed, -speed}, { speed, speed }));
