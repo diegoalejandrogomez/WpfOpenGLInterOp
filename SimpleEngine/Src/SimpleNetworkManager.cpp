@@ -123,6 +123,12 @@ void SimpleNetworkManager::Replicate(SimpleNetworkObject* obj) {
 	_replicaManager->Reference(obj);
 }
 
+void SimpleNetworkManager::Sync(SimpleNetworkObject* obj, NetworkID id) {
+	obj->SetNetworkIDManager(_networkIDManager);
+	obj->SetNetworkID(id);
+	_replicaManager->Reference(obj);
+}
+
 bool SimpleNetworkManager::InitServer(uint32_t port) {
 
 	_rakPeer = RakNet::RakPeerInterface::GetInstance();

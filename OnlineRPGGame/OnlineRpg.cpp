@@ -72,7 +72,8 @@ void OnlineRpg::Init()
 		_character->InitNetwork();
 		_character->Replicate();
 	}
-
+	
+	InitNetwork();
 }
 
 // Inherited via SimpleGameLogic

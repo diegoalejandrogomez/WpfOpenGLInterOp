@@ -29,6 +29,7 @@ public:
 	bool InitServer(uint32_t port);
 	bool InitClient(std::string ip, uint32_t port);
 	void Replicate(SimpleNetworkObject* obj);
+	void Sync(SimpleNetworkObject* obj, NetworkID id);
 	void Advance(float dt);
 	bool IsServer() { return _isServer; }
 
