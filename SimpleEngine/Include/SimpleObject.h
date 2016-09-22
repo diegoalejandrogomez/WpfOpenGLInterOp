@@ -44,6 +44,8 @@ public:
 
 	inline void SetVelocity(glm::vec2 &&v);
 	inline void SetVelocity(glm::vec2 &v);
+	inline void AddVelocity(glm::vec2 &&v);
+	inline void AddVelocity(glm::vec2 &v);
 
 	inline void AddForce(glm::vec2 &&force, glm::vec2 &&point);
 	inline void AddForce(glm::vec2 &force, glm::vec2 &point);
@@ -98,6 +100,7 @@ protected:
 	void _DestroyPhysics();
 	void _CreateFixtures(float density = 1.0f, float restitution = 0.0f, float friction = 0.0f, bool isSensor = false);
 	void _DestroyFixtures();
+	void _CompensatePosition();
 
 	//Layer info
 	SimpleLayer* _layer;
@@ -112,4 +115,6 @@ protected:
 
 	//For networking
 	SimpleNetworkObject* _netObject = nullptr;
+	static constexpr float _netSpatialRecoverySpeed = 1.0f;
+	glm::vec3 _netPosition;
 };

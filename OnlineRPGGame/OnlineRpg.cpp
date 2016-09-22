@@ -38,7 +38,7 @@ void OnlineRpg::Init()
 	if (_isServer) {
 		SimpleEngine::Instance()->GetNetwork()->InitServer(0U);
 		
-		for (int i = 0; i < 5; i++)
+		for (int i = 0; i < 1; i++)
 		{
 			EnemyCharacter* enemy = new EnemyCharacter();
 			enemy->SetSpeed(rand() % 100 + 100);
@@ -48,7 +48,7 @@ void OnlineRpg::Init()
 			enemy->Replicate();		
 		}
 
-		for (int i = 0; i < 10; i++)
+		for (int i = 0; i < 0; i++)
 		{
 			SimpleFixedObject* tree = new SimpleFixedObject();
 			tree->Initialize();

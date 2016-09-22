@@ -43,9 +43,25 @@ void SimpleObject::SetVelocity(glm::vec2 &&v) {
 }
 
 void SimpleObject::SetVelocity(glm::vec2 &v) {
-	if (HasPhysics())
+	if (HasPhysics()) {
 		_body->SetLinearVelocity({ v.x, v.y });
+	}
 }
+
+
+void SimpleObject::AddVelocity(glm::vec2 &&v) {
+	AddVelocity(v);
+}
+
+void SimpleObject::AddVelocity(glm::vec2 &v) {
+	if (HasPhysics()) {
+		b2Vec2 oldVel= _body->GetLinearVelocity();
+		oldVel.x += v.x;
+		oldVel.y += v.y;
+		_body->SetLinearVelocity(oldVel);
+	}
+}
+
 glm::vec2 SimpleObject::GetVelocity() {
 	if (HasPhysics()) {
 		b2Vec2 v = _body->GetLinearVelocity();
@@ -92,6 +108,8 @@ void SimpleObject::Advance(float dt) {
 		_aabb.position.x = pos.x;
 		_aabb.position.y = pos.y;
 		_orientation = _body->GetAngle();
+		if(_netObject!= nullptr && !_netObject->IsLocal())
+			_CompensatePosition();
 	}
 
 };
@@ -320,6 +338,15 @@ void SimpleObject::StatusSerialize(RakNet::BitStream *stream) {
 	stream->Write(_aabb.size.x);
 	stream->Write(_aabb.size.y);
 	
+	if (_body != nullptr) {
+		const b2Vec2 &v = _body->GetLinearVelocity();
+		const b2Vec2 &p = _body->GetPosition();
+		stream->Write(v.x);
+		stream->Write(v.y);
+		stream->Write(p.x);
+		stream->Write(p.y);
+	}
+	
 };
 void SimpleObject::StatusDeserialize(RakNet::BitStream *stream) {
 
@@ -330,12 +357,39 @@ void SimpleObject::StatusDeserialize(RakNet::BitStream *stream) {
 	stream->ReadVector<float>(pos.x, pos.y, pos.z);
 	stream->Read(size.x);
 	stream->Read(size.y);
-	SetAnchor(anchor);
-	SetPosition(pos);
-	SetSize(size);
 
+	SetAnchor(anchor);
+	if (_body != nullptr) {
+		b2Vec2 v, p;
+		stream->Read(v.x);
+		stream->Read(v.y);
+		stream->Read(p.x);
+		stream->Read(p.y);
+
+		SetVelocity({v.x, v.y});
+		_netPosition.x = p.x;
+		_netPosition.y = p.y;
+	}
+	else {
+		SetPosition(pos); //If we don't have a physics body
+	}	
+	SetSize(size);
 }
 
+void SimpleObject::_CompensatePosition() {
+
+	glm::vec3 deltaPos;
+	glm::vec2 finalV(0.0f);
+	
+	deltaPos = _netPosition - glm::vec3{ _body->GetPosition().x, _body->GetPosition().y, 0.0f };
+	if (deltaPos.length() > 0.5) {
+		finalV = glm::vec2{ deltaPos.x , deltaPos.y } *_netSpatialRecoverySpeed;
+		AddVelocity(finalV);
+	}
+
+	
+
+}
 void SimpleObject::CreateSerialize(RakNet::BitStream *stream) {
 	//We can only replicate if the simpleobject exists in a scene
 

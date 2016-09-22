@@ -12,6 +12,10 @@ EnemyController::~EnemyController()
 }
 
 void EnemyController::Advance(float dt) {
+
+	if (_netObject != nullptr && !_netObject->IsLocal())
+		return;
+
 	auto keyboard = SimpleEngine::Instance()->GetInput()->GetKeyboard();
 	glm::vec3 position = _character->GetPosition();
 	int speed = _character->GetSpeed();

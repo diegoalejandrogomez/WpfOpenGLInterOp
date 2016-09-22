@@ -3,7 +3,7 @@
 #include "SimpleNetworkObject.h"
 #include "SimpleConfiguration.h"
 
-class SIMPLE_API SimpleGameLogic : public SimpleSerializable, SimpleNetworkSerializable {
+class SIMPLE_API SimpleGameLogic : public SimpleSerializable, public SimpleNetworkSerializable {
 public:
 
 	virtual void Init() = 0;
