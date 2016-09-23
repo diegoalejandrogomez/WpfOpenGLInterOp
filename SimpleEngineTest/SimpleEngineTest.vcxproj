@@ -102,8 +102,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_FromDll|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)SimpleEngine\External\box2d\include;$(SolutionDir)\SimpleEngine\External\glm\;$(SolutionDir)\SimpleEngine\External\ois\include\;..\SimpleEngine\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)\SimpleEngine\External\ois\lib\;$(SolutionDir)SimpleEngine\External\devil\lib\;..\Debug\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)SimpleEngine/External/raknet/include;$(SolutionDir)SimpleEngine\External\box2d\include;$(SolutionDir)\SimpleEngine\External\glm\;$(SolutionDir)\SimpleEngine\External\ois\include\;..\SimpleEngine\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\SimpleEngine\External\raknet\lib\;$(SolutionDir)\SimpleEngine\External\ois\lib\;$(SolutionDir)SimpleEngine\External\devil\lib\;..\Debug\;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)Debug\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -143,7 +143,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>OIS_static_d.lib; ILU.lib; DevIL.lib; opengl32.lib; SimpleEngine_dyn.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ws2_32.lib;RakNet_LibStatic_Debug_Win32.lib;OIS_static_d.lib; ILU.lib; DevIL.lib; opengl32.lib; SimpleEngine_dyn.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <DelayLoadDLLs>DevIL.dll</DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>
