@@ -30,5 +30,10 @@ namespace WPF
             paintViewModel.OpenGLRenderControl = openGlRender.OpenGLControl;
             DataContext = paintViewModel;
         }
+
+        private void MenuItem_Exit(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
     }
 }
