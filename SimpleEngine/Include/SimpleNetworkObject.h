@@ -1,7 +1,7 @@
 #pragma once
 #include "SimpleConfiguration.h"
 #include "SimpleNetworkObject.h"
-#include <MessageIdentifiers.h>
+#include "MessageIdentifiers.h"
 #include <ReplicaManager3.h>
 #include <NetworkIDManager.h>
 #include <VariableDeltaSerializer.h>

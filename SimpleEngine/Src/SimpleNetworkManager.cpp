@@ -237,7 +237,10 @@ void SimpleNetworkManager::Shutdown() {
 //We should probably run this on another thread... someday
 void SimpleNetworkManager::Advance(float dt) {
 	
-	RakNet::Packet *packet;
+	if (!_rakPeer) return;
+
+	RakNet::Packet *packet = nullptr;
+
 	for (packet = _rakPeer->Receive(); packet; _rakPeer->DeallocatePacket(packet), packet = _rakPeer->Receive())
 	{
 		switch (packet->data[0])

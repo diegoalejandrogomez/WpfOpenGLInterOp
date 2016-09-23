@@ -71,8 +71,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)SimpleEngine\External\box2d\include;$(SolutionDir)SimpleEngineControls\;$(SolutionDir)\SimpleEngine\External\ois\include\;$(SolutionDir)\SimpleEngine\External\glm\;..\SimpleEngine\Include;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)</IncludePath>
-    <LibraryPath>$(SolutionDir)\SimpleEngine\External\ois\lib\;$(SolutionDir)SimpleEngine\External\devil\lib\;..\Debug\;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
+    <IncludePath>$(SolutionDir)SimpleEngine/External/raknet/include;$(SolutionDir)SimpleEngine\External\box2d\include;$(SolutionDir)SimpleEngineControls\;$(SolutionDir)\SimpleEngine\External\ois\include\;$(SolutionDir)\SimpleEngine\External\glm\;..\SimpleEngine\Include;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)</IncludePath>
+    <LibraryPath>$(SolutionDir)\SimpleEngine\External\raknet\lib\;$(SolutionDir)\SimpleEngine\External\ois\lib\;$(SolutionDir)SimpleEngine\External\devil\lib\;..\Debug\;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -94,7 +94,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>OIS_static_d.lib; ILU.lib; DevIL.lib; opengl32.lib; SimpleEngine_dyn.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ws2_32.lib;RakNet_LibStatic_Debug_Win32.lib;OIS_static_d.lib; ILU.lib; DevIL.lib; opengl32.lib; SimpleEngine_dyn.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /E /Y "$(ProjectDir)media" "$(TargetDir)editorResources\media\"

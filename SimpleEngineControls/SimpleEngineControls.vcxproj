@@ -74,8 +74,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)SimpleEngine\External\box2d\include;$(SolutionDir)\SimpleEngine\External\ois\include;$(SolutionDir)\SimpleEngine\Include;$(SolutionDir)\SimpleEngine\External\glm\;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)\SimpleEngine\External\ois\lib;$(SolutionDir)\SimpleEngine\External\devil\lib\;$(SolutionDir)\Debug\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)SimpleEngine/External/raknet/include;$(SolutionDir)SimpleEngine\External\box2d\include;$(SolutionDir)\SimpleEngine\External\ois\include;$(SolutionDir)\SimpleEngine\Include;$(SolutionDir)\SimpleEngine\External\glm\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\SimpleEngine\External\raknet\lib\;$(SolutionDir)\SimpleEngine\External\ois\lib;$(SolutionDir)\SimpleEngine\External\devil\lib\;$(SolutionDir)\Debug\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -95,7 +95,7 @@
       <DisableSpecificWarnings>4251;4275</DisableSpecificWarnings>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>OIS_static_d.lib;ILU.lib;DevIL.lib ;SimpleEngine_dyn.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ws2_32.lib;RakNet_LibStatic_Debug_Win32.lib;OIS_static_d.lib;ILU.lib;DevIL.lib ;SimpleEngine_dyn.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <DelayLoadDLLs>DevIL.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
